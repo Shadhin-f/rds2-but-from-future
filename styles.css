@@ -403,17 +403,17 @@ td {
   font-size: 0.9rem;
 }
 
-social-links a {
-  color: var(--text-muted);
+.social-links a {
+  color: #fff;
   font-size: 1.2rem;
-  transition: all 0.3s ease;
+  transition: color 0.3s, transform 0.2s;
   display: flex;
   align-items: center;
 }
 
-social-links a:hover {
-  color: var(--text-color);
-  transform: translateY(-2px);
+.social-links a:hover {
+  color: var(--primary-color);
+  transform: scale(1.2) rotate(-8deg);
 }
 
 .prediction-text {
