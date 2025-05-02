@@ -60,6 +60,7 @@ animate();
 const CSV_FILENAME = 'Predicted.csv';
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
+let filteredData = []; // Add this line to store filtered data globally
 let currentPage = 1;
 const rowsPerPage = 30;
 
@@ -110,12 +111,12 @@ function parseCSV(csv) {
 document.getElementById('searchInput').addEventListener('input', debounce(function(e) {
     currentPage = 1; // Reset to first page
     const searchTerm = e.target.value.toLowerCase();
-    const filtered = courseData.filter(course => 
+    filteredData = courseData.filter(course => 
         course.Course?.toLowerCase().includes(searchTerm) ||
         course.Faculty?.toLowerCase().includes(searchTerm) ||
         course.Semester?.toLowerCase().includes(searchTerm)
     );
-    renderTable(filtered);
+    renderTable(filteredData.length > 0 || searchTerm ? filteredData : courseData);
 }, 300));
 
 function debounce(func, wait) {
@@ -166,7 +167,6 @@ function renderTable(data) {
             <td>${escapeHtml(row.Faculty || '')}</td>
             <td>${escapeHtml(row.Time || '')}</td>
             <td>${escapeHtml(row.Room || '')}</td>
-            <td>${escapeHtml(row.Semester || '')}</td>
             <td>
                 ${escapeHtml(row.Prediction || '')}
                 <button class="view-details-btn"
@@ -245,15 +245,20 @@ modal.addEventListener('click', (e) => {
 document.getElementById('prevPage').addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
-        renderTable(courseData);
+        // Use filteredData if search is active, else courseData
+        const searchTerm = document.getElementById('searchInput').value.trim();
+        renderTable(searchTerm ? filteredData : courseData);
     }
 });
 
 document.getElementById('nextPage').addEventListener('click', () => {
-    const totalPages = Math.ceil(courseData.length / rowsPerPage);
+    // Use filteredData if search is active, else courseData
+    const searchTerm = document.getElementById('searchInput').value.trim();
+    const data = searchTerm ? filteredData : courseData;
+    const totalPages = Math.ceil(data.length / rowsPerPage);
     if (currentPage < totalPages) {
         currentPage++;
-        renderTable(courseData);
+        renderTable(data);
     }
 });
 
@@ -268,5 +273,6 @@ function escapeHtml(str) {
 window.addEventListener('load', () => {
     // Clear cache on refresh
     localStorage.removeItem(CACHE_KEY);
+    filteredData = []; // Reset filteredData on load
     loadCSVData();
 });
