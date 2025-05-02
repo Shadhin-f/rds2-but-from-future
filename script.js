@@ -167,8 +167,8 @@ function renderTable(data) {
             <td>${escapeHtml(row.Faculty || '')}</td>
             <td>${escapeHtml(row.Time || '')}</td>
             <td>${escapeHtml(row.Room || '')}</td>
+            <td>${escapeHtml(row.Prediction || '')}</td>
             <td>
-                ${escapeHtml(row.Prediction || '')}
                 <button class="view-details-btn"
                     data-course="${escapeHtml(row.Course || '')}"
                     data-section="${escapeHtml(row.Section || '')}"
@@ -275,4 +275,5 @@ window.addEventListener('load', () => {
     localStorage.removeItem(CACHE_KEY);
     filteredData = []; // Reset filteredData on load
     loadCSVData();
+    
 });
