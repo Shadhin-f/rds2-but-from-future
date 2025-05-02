@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nsu Faculty Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+        <header>
+            <h1>RDS2 BUT FROM FUTURE</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search courses or faculty...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </header>
+
+        <main>
+            <div class="table-container">
+                <table id="courseTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Course Code</th>
+                            <th>Section</th>
+                            <th>Faculty</th>
+                            <th>Time</th>
+                            <th>Room</th>
+                            <th>Semester</th>
+                            <th>Predictions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Data will be loaded dynamically -->
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <button id="prevPage">&laquo; Previous</button>
+                    <span id="pageInfo">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+                    <button id="nextPage">Next &raquo;</button>
+                </div>
+            </div>
+            <div id="loading" class="loading">Loading...</div>
+            <div id="noResults" class="no-results hidden">No results found</div>
+        </main>
+        <footer class="footer">
+            <p>© 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin</p>
+            <div class="social-links">
+                <span>Follow me on</span>
+                <a href="https://facebook.com/your.profile" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://instagram.com/your.profile" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://linkedin.com/in/your.profile" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </footer>
+        
+        <!-- Modal -->
+        <div id="detailsModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Course Details</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Details will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
