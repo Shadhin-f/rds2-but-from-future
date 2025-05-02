@@ -62,10 +62,14 @@ h1 {
 .search-container {
   position: relative;
   margin-bottom: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .search-container input {
   width: 100%;
+  box-sizing: border-box;
   padding: 12px 20px;
   background: var(--surface-color);
   border: 1px solid var(--border-color);
@@ -118,6 +122,81 @@ h1 {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   border: 1px solid var(--border-color);
   overflow: hidden;
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+  }
+  table {
+    min-width: 700px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    display: revert;
+  }
+  .search-container {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  th,
+  td {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .table-container {
+    overflow-x: auto;
+  }
+  table {
+    min-width: 600px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+  .search-container {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 4px;
+  }
+  th,
+  td {
+    padding: 6px;
+    font-size: 12px;
+  }
+  .table-container {
+    overflow-x: auto;
+  }
+  table {
+    min-width: 500px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+  .search-container {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 table {
@@ -126,12 +205,18 @@ table {
 }
 
 th {
-  background-color: var(--surface-color);
-  color: var(--text-color);
-  font-weight: 500;
+  background: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--primary-gradient) 100%
+  );
+  color: #fff;
+  font-weight: 700;
   padding: 16px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--primary-color);
   text-align: center;
+  letter-spacing: 0.5px;
+  font-size: 1.05rem;
 }
 
 tr:nth-child(even) {
@@ -318,7 +403,7 @@ td {
   font-size: 0.9rem;
 }
 
-.social-links a {
+social-links a {
   color: var(--text-muted);
   font-size: 1.2rem;
   transition: all 0.3s ease;
