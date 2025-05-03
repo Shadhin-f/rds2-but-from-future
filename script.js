@@ -72,7 +72,7 @@ async function loadCSVData() {
         const csvData = await response.text();
         courseData = parseCSV(csvData);
         renderTable(courseData);
-        localStorage.setItem(CACHE_KEY, JSON.stringify(courseData));
+        // localStorage.setItem(CACHE_KEY, JSON.stringify(courseData));
     } catch (error) {
         console.error('Error loading CSV:', error);
         alert('Error loading course data');
