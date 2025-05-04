@@ -14,6 +14,7 @@
     <title>Nsu Faculty Predictor</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="chat.css">
 </head>
 <body>
     <canvas id="particleCanvas"></canvas>
@@ -88,6 +89,44 @@
             </div>
         </div>
     </div>
+
+    <!-- Floating Chat Popup -->
+    <div id="chatPopup" class="chat-popup">
+        <div class="chat-header">
+            <span>💬 Chat</span>
+            <span id="activeUsersCount" style="font-size:0.95em; font-weight:normal;"></span>
+            <button id="closeChat" title="Close">&times;</button>
+        </div>
+        <div class="chat-warning" id="chatWarning" style="display:none;">
+            <strong>Warning:</strong> Please do not share passwords, phone numbers, or any personal information in the chat.
+        </div>
+        <div id="chatNameForm" class="chat-name-form" style="display:none;">
+            <label for="chatNameInput"><strong>Set your chat name:</strong></label>
+            <input type="text" id="chatNameInput" maxlength="20" placeholder="Enter name (3-20 chars)" required>
+            <button id="setNameBtn">Start Chat</button>
+        </div>
+        <div class="chat-user-bar" id="chatUserBar" style="display:none;">
+            <span id="currentUserName"></span>
+            <button id="changeNameBtn" title="Change Name">Change Name</button>
+        </div>
+        <div class="chat-rooms" id="chatRooms" style="display:none;">
+            <button class="chat-room-tab active" data-room="global">Global <span class="unread" id="unread-global"></span></button>
+            <button class="chat-room-tab" data-room="room1">Room1 <span class="unread" id="unread-room1"></span></button>
+            <button class="chat-room-tab" data-room="room2">Room2 <span class="unread" id="unread-room2"></span></button>
+            <button class="chat-room-tab" data-room="room3">Room3 <span class="unread" id="unread-room3"></span></button>
+            <button class="chat-room-tab" data-room="room4">Room4 <span class="unread" id="unread-room4"></span></button>
+        </div>
+        <div class="chat-body" id="chatBody" style="display:none;"></div>
+        <form id="chatForm" autocomplete="off" style="display:none;">
+            <input type="text" id="chatInput" placeholder="Type a message..." maxlength="200" required />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <button id="openChatBtn" class="open-chat-btn" title="Open Chat">💬</button>
+
     <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
+    <script src="chat.js"></script>
 </body>
 </html>
