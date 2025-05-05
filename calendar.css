@@ -1,0 +1,118 @@
+.timeline {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.timeline-item {
+  position: relative;
+  background: rgba(26, 28, 35, 0.95);
+  padding: 15px 20px 15px 50px; /* increased left padding for serial number */
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 4px solid #334155;
+  transition: transform 0.2s;
+}
+
+.timeline-item.payment {
+  border-left-color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.timeline-item.advising {
+  border-left-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.timeline-item.deadline {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.timeline-item:hover {
+  transform: translateX(5px);
+}
+
+.timeline-item.payment:hover {
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.timeline-item.advising:hover {
+  background: rgba(139, 92, 246, 0.15);
+}
+
+.timeline-item.deadline:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.serial-number {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: bold;
+  min-width: 25px;
+  text-align: center;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-bottom: 5px;
+}
+
+.content {
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+/* Legend for timeline items */
+.timeline-legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-color.default {
+  background: #334155;
+}
+
+.legend-color.payment {
+  background: #22c55e;
+}
+
+.legend-color.advising {
+  background: #8b5cf6;
+}
+
+.legend-color.deadline {
+  background: #ef4444;
+}
+
+@media screen and (max-width: 600px) {
+  .timeline {
+    padding: 0 10px;
+  }
+
+  .timeline-item {
+    padding: 12px 15px 12px 40px; /* adjusted left padding for serial number */
+  }
+}

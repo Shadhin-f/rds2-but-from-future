@@ -21,6 +21,12 @@
     <div class="container">
         <header>
             <h1>RDS2 BUT FROM FUTURE</h1>
+            <nav class="nav-bar">
+                <a href="https://www.northsouth.edu/nsu-announcements/" target="_blank">Announcements</a>
+                <a href="https://www.northsouth.edu/dept-notices/fao-noticebaord/" target="_blank">Notice Board</a>
+                <a href="calendar.html">Academic Calendar</a>
+                <a href="https://rds3.northsouth.edu/index.php" target="_blank">RDS 3</a>
+            </nav>
             <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search courses or faculty...">
@@ -96,7 +102,7 @@
                 </a>
             </div>
             <br>
-            Last updated: 2025-05-03 18:42
+            Last updated: 05-05-2025 17:42
         </footer>
         
         <!-- Modal -->
@@ -147,10 +153,15 @@
     </div>
     <button id="openChatBtn" class="open-chat-btn" title="Open Chat">💬</button>
 
+    <!-- Floating Navigation Buttons -->
+    <button id="goToReviews" class="float-btn reviews-btn" title="Go to Reviews">⭐</button>
+    <button id="backToTop" class="float-btn top-btn" title="Back to Top">↑</button>
+
     <script src="script.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script src="chat.js"></script>
     <script src="comments.js"></script>
+    <script src="buttons.js"></script>
 </body>
 </html>
