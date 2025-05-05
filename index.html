@@ -21,6 +21,7 @@
     <div class="container">
         <header>
             <h1>RDS2 BUT FROM FUTURE</h1>
+            <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search courses or faculty...">
                 <i class="fas fa-search search-icon"></i>
@@ -51,6 +52,28 @@
                     <span id="pageInfo">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
                     <button id="nextPage">Next &raquo;</button>
                 </div>
+            </div>
+            <!-- Review Section -->
+            <div id="commentSection" class="table-container" style="margin-top:24px;">
+                <h2 style="text-align:left; font-size:1.15rem; margin:16px;">⭐ Review Section</h2>
+                <form id="commentForm" style="display:flex;flex-direction:column;gap:10px;">
+                    <input type="text" id="commentName" maxlength="20" placeholder="Your name (3-20 chars)" required
+                        style="padding:8px;border-radius:4px;background:#1a1c23;color:#e2e8f0;border:1px solid #334155;max-width:200px;">
+                    <textarea id="commentInput" maxlength="500" placeholder="Write a comment..." required 
+                        style="width:100%;min-height:80px;resize:vertical;padding:8px;border-radius:4px;background:#1a1c23;color:#e2e8f0;border:1px solid #334155;"></textarea>
+                    <button type="submit" style="padding:8px 16px;background:#6d28d9;color:#fff;border:none;border-radius:4px;cursor:pointer;align-self:flex-start;">
+                        Post Comment
+                    </button>
+                </form>
+                <div style="display:flex;align-items:center;gap:10px;margin:0 24px 10px 24px;">
+                    <select id="commentOrder" style="flex:0 0 170px;padding:9px 12px;border-radius:8px;border:1.5px solid #334155;background:#1a1c23;color:#e2e8f0;font-size:1rem;">
+                        <option value="recent">🕒 Recent</option>
+                        <option value="top">⭐ Top</option>
+                    </select>
+                    <input type="text" id="commentSearchInput" placeholder="Search reviews..." 
+                        style="flex:1;background:#1a1c23;color:#e2e8f0;border:1.5px solid #334155;border-radius:8px;padding:9px 12px;font-size:1rem;">
+                </div>
+                <div id="commentList"></div>
             </div>
             <div id="loading" class="loading">Loading...</div>
             <div id="noResults" class="no-results hidden">No results found</div>
@@ -128,5 +151,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script src="chat.js"></script>
+    <script src="comments.js"></script>
 </body>
 </html>

@@ -18,6 +18,35 @@ const SESSION_START = Date.now();
 let activeUserId = null;
 let activeUsersRef = db.ref("chat_active_users");
 
+// Add page viewers tracking
+const pageViewersRef = db.ref("page_viewers");
+let pageViewerId = null;
+
+// Initialize page viewer presence
+function setPageViewerPresence() {
+    if (!pageViewerId) {
+        pageViewerId = "viewer_" + Math.random().toString(36).substr(2, 9);
+    }
+    pageViewersRef.child(pageViewerId).set({
+        ts: Date.now()
+    });
+    pageViewersRef.child(pageViewerId).onDisconnect().remove();
+}
+
+function removePageViewerPresence() {
+    if (pageViewerId) {
+        pageViewersRef.child(pageViewerId).remove();
+        pageViewerId = null;
+    }
+}
+
+// Listen for page viewers count
+pageViewersRef.on("value", snap => {
+    const count = snap.numChildren();
+    const el = document.getElementById("pageActiveUsers");
+    if (el) el.textContent = `🟢 ${count} active viewer${count !== 1 ? 's' : ''}`;
+});
+
 function encrypt(text) {
     return btoa(unescape(encodeURIComponent(text.split('').map((c,i)=>String.fromCharCode(c.charCodeAt(0)^ENCRYPTION_KEY.charCodeAt(i%ENCRYPTION_KEY.length))).join(''))));
 }
@@ -220,6 +249,7 @@ chatForm.onsubmit = e => {
 window.addEventListener("beforeunload", () => {
     localStorage.removeItem("chatLastSeen");
     removeActiveUserPresence();
+    removePageViewerPresence();
 });
 
 // --- Active User Presence ---
@@ -246,4 +276,11 @@ activeUsersRef.on("value", snap => {
     const count = snap.numChildren();
     const el = document.getElementById("activeUsersCount");
     if (el) el.textContent = `🟢 ${count} active`;
+});
+
+// Update window load event
+window.addEventListener("load", () => {
+    setPageViewerPresence();
+    // Clear cache on refresh
+    localStorage.removeItem("chatLastSeen");
 });
