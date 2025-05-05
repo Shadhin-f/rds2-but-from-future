@@ -66,6 +66,12 @@ header {
   border: 1px solid var(--border-color);
 }
 
+.nav-bar a.active {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid #8b5cf6;
+  border-radius: 4px;
+}
+
 .nav-bar a:hover {
   color: #fff;
   background: var(--primary-gradient);
@@ -489,7 +495,7 @@ social-links {
   border-color: transparent;
 }
 
-.social-links a:active {
+social-links a:active {
   transform: translateY(0);
 }
 
@@ -552,11 +558,11 @@ social-links {
   width: 6px;
 }
 
-.records-list::-webkit-scrollbar-track {
+records-list::-webkit-scrollbar-track {
   background: var(--surface-color);
 }
 
-.records-list::-webkit-scrollbar-thumb {
+records-list::-webkit-scrollbar-thumb {
   background: var(--primary-color);
   border-radius: 3px;
 }
