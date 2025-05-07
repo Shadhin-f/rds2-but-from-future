@@ -115,6 +115,21 @@ header {
   }
 }
 
+.header-counters {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.header-counters .active-users-counter {
+  position: static;
+  margin: 0;
+}
+
 h1 {
   background: var(--primary-gradient);
   -webkit-background-clip: text;
@@ -386,14 +401,15 @@ td {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 30, 40, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(5px);
+  /* Prevent scrollbars on modal background */
+  overflow: auto;
 }
 
 .modal-content {
@@ -457,6 +473,23 @@ td {
 
 .hidden {
   display: none !important;
+}
+
+#previewModal > div {
+  /* Ensure modal content doesn't overflow vertically or horizontally */
+  max-width: 95vw;
+  width: 370px;
+  max-height: 90vh;
+  overflow: auto;
+  word-break: break-all;
+}
+
+#previewContent {
+  max-width: 100%;
+  overflow-x: auto;
+  word-break: break-all;
+  /* Prevent long links/text from overflowing */
+  white-space: pre-wrap;
 }
 
 social-links {
@@ -1040,4 +1073,392 @@ records-list::-webkit-scrollbar-thumb {
 
 .top-btn {
   bottom: 100px;
+}
+
+/* Shared Resources Section */
+.resource-item {
+  background: rgba(139, 92, 246, 0.13);
+  border: 2px solid #8b5cf6;
+  border-radius: 12px;
+  margin: 22px 18px 0 18px;
+  padding: 18px 20px 14px 20px;
+  box-shadow: 0 2px 16px rgba(139, 92, 246, 0.1);
+  transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+  position: relative;
+}
+
+.resource-item:hover {
+  box-shadow: 0 6px 32px rgba(139, 92, 246, 0.19);
+  border-color: #6d28d9;
+  background: rgba(139, 92, 246, 0.19);
+}
+
+.resource-meta {
+  font-size: 1.08em;
+  color: #a78bfa;
+  margin-bottom: 4px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resource-link {
+  display: block;
+  font-size: 1.09em;
+  color: #fff;
+  background: #6d28d9;
+  padding: 8px 14px;
+  border-radius: 7px;
+  margin: 10px 0 12px 0;
+  word-break: break-all;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.resource-link:hover {
+  background: #8b5cf6;
+  color: #fff;
+}
+
+.resource-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.resource-actions button {
+  background: none;
+  border: none;
+  color: #a1a1aa;
+  font-size: 1.08em;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.15s, transform 0.15s;
+}
+
+.resource-actions button:hover {
+  color: #8b5cf6;
+  transform: scale(1.13);
+}
+
+.resource-actions .resource-report {
+  color: #e11d48;
+  font-weight: bold;
+}
+
+.resource-actions .resource-report:hover {
+  color: #be123c;
+}
+
+.resource-reports {
+  font-size: 0.92em;
+  color: #e11d48;
+  margin-left: 4px;
+}
+
+@media (max-width: 600px) {
+  .resource-item {
+    padding: 12px 6px 10px 6px;
+    font-size: 0.97em;
+    margin: 16px 2px 0 2px;
+  }
+  .resource-link {
+    font-size: 1em;
+    padding: 6px 8px;
+  }
+  .resource-meta {
+    font-size: 0.98em;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  #resourceForm input[type="text"],
+  #resourceForm input[type="url"] {
+    padding: 4px 10px !important;
+    font-size: 0.98rem !important;
+    border-radius: 5px !important;
+    margin-bottom: 0 !important;
+    background: var(--surface-color) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: none !important;
+    height: auto !important;
+    line-height: 1.3 !important;
+  }
+  #resourceForm input[type="text"]:focus,
+  #resourceForm input[type="url"]:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.13) !important;
+    background: var(--surface-color) !important;
+  }
+  #resourceForm input[type="text"]::placeholder,
+  #resourceForm input[type="url"]::placeholder {
+    color: #b3b8c5 !important;
+    font-size: 0.96em !important;
+    opacity: 1 !important;
+  }
+  #resourceForm button[type="submit"] {
+    font-size: 1rem !important;
+    padding: 4px 10px !important;
+    border-radius: 5px !important;
+    margin-top: 2px !important;
+    line-height: 1.3 !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
+/* Resource Form Styling */
+#resourceForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 18px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 18px 18px 10px 18px;
+  background: transparent;
+}
+
+/* Style resource form input fields to match site-wide input style */
+#resName,
+#resSemester,
+#resCourse,
+#resLink {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  background: var(--surface-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#resName:focus,
+#resSemester:focus,
+#resCourse:focus,
+#resLink:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.13);
+  outline: none;
+  background: var(--surface-color);
+}
+
+#resourceForm input[type="text"],
+#resourceForm input[type="url"] {
+  flex: 1 1 180px;
+  min-width: 140px;
+  margin-bottom: 0;
+  margin-right: 14px;
+}
+
+#resourceForm input[type="text"]:last-child,
+#resourceForm input[type="url"]:last-child {
+  margin-right: 0;
+}
+
+#resourceForm button[type="submit"] {
+  flex: 0 0 140px;
+  margin-left: 0;
+  margin-top: 0;
+  height: 48px;
+  align-self: stretch;
+  min-width: 110px;
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.07);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+#resourceForm button[type="submit"]:hover {
+  background: var(--primary-color);
+  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.13);
+}
+
+/* Resource Form Input and Button Styling */
+.resource-input,
+.resource-submit-btn {
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  padding: 6px 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-color);
+  box-shadow: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 0;
+  line-height: 1.3;
+  box-sizing: border-box;
+}
+
+.resource-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.13);
+  background: var(--surface-color);
+  outline: none;
+}
+
+.resource-input::placeholder {
+  color: #b3b8c5;
+  font-size: 0.97em;
+  opacity: 1;
+}
+
+.resource-submit-btn {
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin-top: 2px;
+}
+
+.resource-submit-btn:hover {
+  background: var(--primary-color);
+  box-shadow: 0 4px 16px rgba(109, 40, 217, 0.13);
+}
+
+/* MOBILE: Make resource form fields even more compact */
+@media (max-width: 700px) {
+  .resource-input,
+  .resource-submit-btn {
+    padding: 4px 8px !important;
+    font-size: 0.97rem !important;
+    border-radius: 4px !important;
+    margin-bottom: 0 !important;
+    line-height: 1.2 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .resource-input,
+  .resource-submit-btn {
+    padding: 3px 7px !important;
+    font-size: 0.96rem !important;
+    border-radius: 4px !important;
+    margin-bottom: 0 !important;
+    line-height: 1.1 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}
+
+/* Remove any height set by other selectors for resource form fields on mobile */
+@media (max-width: 700px) {
+  #resourceForm input[type="text"],
+  #resourceForm input[type="url"],
+  #resourceForm button[type="submit"] {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 4px 8px !important;
+    font-size: 0.97rem !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+  }
+}
+@media (max-width: 600px) {
+  #resourceForm input[type="text"],
+  #resourceForm input[type="url"],
+  #resourceForm button[type="submit"] {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 3px 7px !important;
+    font-size: 0.96rem !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* FINAL OVERRIDE FOR RESOURCE FORM INPUTS ON MOBILE */
+@media (max-width: 700px) {
+  #resourceForm .resource-input,
+  #resourceForm .resource-submit-btn,
+  #resName,
+  #resSemester,
+  #resCourse,
+  #resLink {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 2px 8px !important;
+    font-size: 0.97rem !important;
+    border-radius: 4px !important;
+    margin-bottom: 0 !important;
+    line-height: 1.2 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #resourceForm .resource-input,
+  #resourceForm .resource-submit-btn,
+  #resName,
+  #resSemester,
+  #resCourse,
+  #resLink {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 1.5px 7px !important;
+    font-size: 0.96rem !important;
+    border-radius: 4px !important;
+    margin-bottom: 0 !important;
+    line-height: 1.1 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+#resourceList {
+  max-height: 1000px; /* Increased height */
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+/* Style the scrollbar for the shared resources box */
+#resourceList::-webkit-scrollbar {
+  width: 10px;
+  background: var(--surface-color);
+}
+
+#resourceList::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 6px;
+}
+
+#resourceList::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+#resourceList::-webkit-scrollbar-track {
+  background: var(--surface-color);
+  border-radius: 6px;
+}
+
+/* For Firefox */
+#resourceList {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--surface-color);
+}
+
+#resourceList .resource-item:first-child {
+  margin-top: 8px;
 }

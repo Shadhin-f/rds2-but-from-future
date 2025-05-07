@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Materials</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+        <header>
+            <h1>Study Materials</h1>
+            <nav class="nav-bar">
+                <a href="index.html">Faculty Prediction</a>
+                <a href="calendar.html">Academic Calendar</a>
+                <a href="resources.html" class="active">Study Materials</a>
+            </nav>
+            <div class="header-counters">
+                <div id="totalResourcesCounter" class="active-users-counter">📦 0 resources shared</div>
+                <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
+            </div>
+        </header>
+        <main>
+            <div class="table-container" style="margin-bottom:2rem;">
+                <h2 style="text-align:left; font-size:1.15rem; margin:16px;">📤 Share a Study Material</h2>
+                <form id="resourceForm" class="resource-form">
+                    <input type="text" id="resName" class="resource-input" maxlength="20" placeholder="Your Name" required>
+                    <input type="text" id="resSemester" class="resource-input" maxlength="20" placeholder="Semester (e.g. Summer 2025)" required>
+                    <input type="text" id="resCourse" class="resource-input" maxlength="120" placeholder="Material Details / Course" required>
+                    <input type="url" id="resLink" class="resource-input" maxlength="300" placeholder="Resource Link (Google Drive, etc.)" required>
+                    <button type="submit" class="resource-submit-btn">Share</button>
+                </form>
+                <!-- Preview Modal -->
+                <div id="previewModal" class="modal" style="display:none;">
+                    <div style="background:#181926;padding:32px 24px 24px 24px;border-radius:14px;max-width:95vw;width:370px;box-shadow:0 8px 32px #0008;color:#e2e8f0;position:relative;overflow:auto;max-height:90vh;">
+                        <h3 style="margin-top:0;margin-bottom:18px;font-size:1.15rem;">Confirm Submission</h3>
+                        <div id="previewContent" style="font-size:1rem;line-height:1.7;margin-bottom:20px;word-break:break-all;max-width:100%;overflow-x:auto;"></div>
+                        <div style="display:flex;gap:12px;justify-content:flex-end;">
+                            <button id="cancelPreviewBtn" type="button" style="background:#22223b;color:#fff;border:none;padding:8px 18px;border-radius:7px;cursor:pointer;">Cancel</button>
+                            <button id="confirmPreviewBtn" type="button" style="background:#a78bfa;color:#fff;border:none;padding:8px 18px;border-radius:7px;cursor:pointer;">Confirm & Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container" style="background:rgba(139,92,246,0.05);padding-bottom:24px;">
+                <h2 style="text-align:left; font-size:1.1rem; margin:18px 18px 0 18px; color:#a78bfa;">🔗 Shared Study Materials</h2>
+                <div style="display:flex;align-items:center;gap:10px;margin:0 24px 10px 24px;">
+                    <input type="text" id="resourceSearchInput" placeholder="Search study materials..." style="flex:1;background:#1a1c23;color:#e2e8f0;border:1.5px solid #334155;border-radius:8px;padding:9px 12px;font-size:1rem;">
+                </div>
+                <div id="resourceList"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>
+                © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+                <br>
+            </p>
+            <div class="social-links">
+                <span>Follow me on</span>
+                <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <br>
+            Last updated: 07-05-2025 14:42
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
+    <script src="activeUsers.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            initializeActiveUsers('resources');
+        });
+    </script>
+    <script src="resources.js"></script>
+    <script>
+    // Preview modal logic for resource form
+    const resourceForm = document.getElementById('resourceForm');
+    const previewModal = document.getElementById('previewModal');
+    const previewContent = document.getElementById('previewContent');
+    const confirmBtn = document.getElementById('confirmPreviewBtn');
+    const cancelBtn = document.getElementById('cancelPreviewBtn');
+
+    // Store latest form data for confirmation
+    let latestFormData = null;
+
+    resourceForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Always read current form values (use .value, but also check for undefined/null)
+        const nameInput = document.getElementById('resName');
+        const semesterInput = document.getElementById('resSemester');
+        const courseInput = document.getElementById('resCourse');
+        const linkInput = document.getElementById('resLink');
+        const name = nameInput ? nameInput.value : "";
+        const semester = semesterInput ? semesterInput.value : "";
+        const course = courseInput ? courseInput.value : "";
+        const link = linkInput ? linkInput.value : "";
+
+        latestFormData = { name, semester, course, link };
+
+        // Defensive: clear error message if present
+        const err = document.getElementById('modalErrorMsg');
+        if (err) err.remove();
+
+        // Build preview using divs for each field
+        previewContent.innerHTML = '';
+        function field(label, value, isLink) {
+            const wrapper = document.createElement('div');
+            wrapper.style.marginBottom = '10px';
+            const labelDiv = document.createElement('div');
+            labelDiv.style.fontWeight = 'bold';
+            labelDiv.style.color = '#a78bfa';
+            labelDiv.textContent = label;
+            const valueDiv = document.createElement('div');
+            valueDiv.style.wordBreak = 'break-all';
+            valueDiv.style.color = '#e2e8f0';
+            if (!value) {
+                valueDiv.innerHTML = '<span style="color:#e11d48;">(empty)</span>';
+            } else if (isLink) {
+                const a = document.createElement('a');
+                a.href = value;
+                a.target = '_blank';
+                a.style.color = '#a78bfa';
+                a.textContent = value;
+                valueDiv.appendChild(a);
+            } else {
+                valueDiv.textContent = value;
+            }
+            wrapper.appendChild(labelDiv);
+            wrapper.appendChild(valueDiv);
+            return wrapper;
+        }
+        previewContent.appendChild(field('Name', name));
+        previewContent.appendChild(field('Semester', semester));
+        previewContent.appendChild(field('Material Details / Course', course));
+        previewContent.appendChild(field('Link', link, true));
+        previewModal.style.display = 'flex';
+    });
+
+    confirmBtn.addEventListener('click', function() {
+        // Validate again before upload
+        if (!latestFormData) return;
+        // Use trim here for validation
+        const name = latestFormData.name.trim();
+        const semester = latestFormData.semester.trim();
+        const course = latestFormData.course.trim();
+        const link = latestFormData.link.trim();
+        if (!name || !semester || !course || !link) {
+            // Show error below the fields
+            let err = document.getElementById('modalErrorMsg');
+            if (!err) {
+                err = document.createElement('div');
+                err.id = 'modalErrorMsg';
+                err.style.color = '#e11d48';
+                err.style.marginTop = '10px';
+                previewContent.appendChild(err);
+            }
+            err.textContent = 'All fields are required.';
+            return;
+        }
+        // Push to Firebase directly
+        if (window.firebase && window.firebase.database) {
+            const db = firebase.database();
+            const resourcesRef = db.ref("shared_resources");
+            resourcesRef.push({
+                name,
+                semester,
+                course,
+                link,
+                upvotes: 0,
+                downvotes: 0,
+                reports: 0,
+                timestamp: Date.now()
+            }, function(error) {
+                if (error) {
+                    alert("Resource upload failed.");
+                }
+            });
+        }
+        // Reset form and modal
+        resourceForm.reset();
+        previewModal.style.display = 'none';
+        latestFormData = null;
+        // Remove error message if present
+        const err = document.getElementById('modalErrorMsg');
+        if (err) err.remove();
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        previewModal.style.display = 'none';
+        latestFormData = null;
+        // Remove error message if present
+        const err = document.getElementById('modalErrorMsg');
+        if (err) err.remove();
+    });
+
+    // Optional: Close modal on outside click
+    previewModal.addEventListener('click', function(e) {
+        if (e.target === previewModal) {
+            previewModal.style.display = 'none';
+            latestFormData = null;
+            // Remove error message if present
+            const err = document.getElementById('modalErrorMsg');
+            if (err) err.remove();
+        }
+    });
+    </script>
+</body>
+</html>

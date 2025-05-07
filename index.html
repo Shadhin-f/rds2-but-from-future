@@ -23,10 +23,9 @@
         <header>
             <h1>RDS2 BUT FROM FUTURE</h1>
             <nav class="nav-bar">
-                <a href="https://www.northsouth.edu/nsu-announcements/" target="_blank">Announcements</a>
-                <a href="https://www.northsouth.edu/dept-notices/fao-noticebaord/" target="_blank">Notice Board</a>
-                <a href="calendar.html" class="active">Academic Calendar</a>
-                <a href="https://rds3.northsouth.edu/index.php" target="_blank">RDS 3</a>
+                <a href="index.html" class="active">Faculty Prediction</a>
+                <a href="calendar.html">Academic Calendar</a>
+                <a href="resources.html">Study Materials</a>
             </nav>
             <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
             <div class="search-container">
@@ -161,6 +160,12 @@
     <script src="script.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
+    <script src="activeUsers.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            initializeActiveUsers('facultyPrediction');
+        });
+    </script>
     <script src="chat.js"></script>
     <script src="comments.js"></script>
     <script src="buttons.js"></script>

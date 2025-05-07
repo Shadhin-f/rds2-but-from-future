@@ -108,16 +108,19 @@ function parseCSV(csv) {
 }
 
 // Update search functionality to use exact column names
-document.getElementById('searchInput').addEventListener('input', debounce(function(e) {
-    currentPage = 1; // Reset to first page
-    const searchTerm = e.target.value.toLowerCase();
-    filteredData = courseData.filter(course => 
-        course.Course?.toLowerCase().includes(searchTerm) ||
-        course.Faculty?.toLowerCase().includes(searchTerm) ||
-        course.Semester?.toLowerCase().includes(searchTerm)
-    );
-    renderTable(filteredData.length > 0 || searchTerm ? filteredData : courseData);
-}, 300));
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+    searchInput.addEventListener('input', debounce(function(e) {
+        currentPage = 1; // Reset to first page
+        const searchTerm = e.target.value.toLowerCase();
+        filteredData = courseData.filter(course => 
+            course.Course?.toLowerCase().includes(searchTerm) ||
+            course.Faculty?.toLowerCase().includes(searchTerm) ||
+            course.Semester?.toLowerCase().includes(searchTerm)
+        );
+        renderTable(filteredData.length > 0 || searchTerm ? filteredData : courseData);
+    }, 300));
+}
 
 function debounce(func, wait) {
     let timeout;

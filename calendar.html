@@ -22,11 +22,11 @@
         <header>
             <h1>Academic Calendar</h1>
             <nav class="nav-bar">
-                <a href="index.html" class="active">Faculty Prediction</a>
-                <a href="https://www.northsouth.edu/nsu-announcements/" target="_blank">Announcements</a>
-                <a href="https://www.northsouth.edu/dept-notices/fao-noticebaord/" target="_blank">Notice Board</a>
-                <a href="https://rds3.northsouth.edu/index.php" target="_blank">RDS 3</a>
+                <a href="index.html">Faculty Prediction</a>
+                <a href="calendar.html" class="active">Academic Calendar</a>
+                <a href="resources.html">Study Materials</a>
             </nav>
+            <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
         </header>
 
         <main>
@@ -215,5 +215,34 @@
         </footer>
     </div>
     <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
+    <script>
+        if (!firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyCeNm72HlqDo5ItkDXmoeuL2jpvU2WXyOI",
+                authDomain: "rds2-but-from-future.firebaseapp.com",
+                databaseURL: "https://rds2-but-from-future-default-rtdb.firebaseio.com/",
+                projectId: "rds2-but-from-future",
+                storageBucket: "rds2-but-from-future.firebasestorage.app",
+                messagingSenderId: "458629377988",
+                appId: "1:458629377988:web:370a24b3fd97fb74657e91",
+                measurementId: "G-3K7SQY4J6V"
+            });
+        }
+    </script>
+    <script src="activeUsers.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (typeof initializeActiveUsers === "function") {
+                    console.log("[calendar.html] Calling initializeActiveUsers('calendar')");
+                    initializeActiveUsers('calendar');
+                } else {
+                    console.error("[calendar.html] initializeActiveUsers is not a function");
+                }
+            }, 400);
+        });
+    </script>
 </body>
 </html>
