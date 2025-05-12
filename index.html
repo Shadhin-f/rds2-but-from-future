@@ -13,9 +13,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nsu Faculty Predictor</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="chat.css">
+    <style>
+        .trending-link {
+            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+            border-color: #e11d48 !important;
+            color: #fff !important;
+            position: relative;
+            z-index: 2;
+        }
+        .trending-link:hover {
+            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+            background: linear-gradient(135deg, #e11d48, #be185d) !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
 <body>
     <canvas id="particleCanvas"></canvas>
@@ -23,17 +37,18 @@
         <header>
             <h1>RDS2 BUT FROM FUTURE</h1>
             <nav class="nav-bar">
-                <a href="index.html" class="active">Faculty Prediction</a>
+                <a href="index.html" class="active">RDS2</a>
                 <a href="calendar.html">Academic Calendar</a>
                 <a href="resources.html">Study Materials</a>
-                <a href="routine.html">Routine Builder</a>
+                <a href="routine.html">Routine Maker</a>
+                <a href="planner.html" class="trending-link">Semester Planner</a>
             </nav>
             <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
             <!-- Announcement Bar -->
     <div class="announcement-bar">
-        <span>⚡ Join community channel to stay updated! </span>
+        <span>⚡ Join the community to stay updated!</span>
         <a href="https://t.me/nsu_advising_helper_bot_channel" 
-           target="_blank" class="view-extension-btn">Join now</a>
+           target="_blank" class="view-extension-btn">Join now!</a>
     </div>
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search courses or faculty...">
@@ -109,8 +124,7 @@
                 </a>
             </div>
             <br>
-
-            Last updated: 11-05-2025 22:00
+            Last updated: 05-05-2025 17:42
         </footer>
         
         <!-- Modal -->

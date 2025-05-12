@@ -15,6 +15,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="calendar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .trending-link {
+            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+            border-color: #e11d48 !important;
+            color: #fff !important;
+            position: relative;
+            z-index: 2;
+        }
+        .trending-link:hover {
+            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+            background: linear-gradient(135deg, #e11d48, #be185d) !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
 <body>
     <canvas id="particleCanvas"></canvas>
@@ -22,10 +36,11 @@
         <header>
             <h1>Academic Calendar</h1>
             <nav class="nav-bar">
-                <a href="index.html">Faculty Prediction</a>
+                <a href="index.html">RDS2</a>
                 <a href="calendar.html" class="active">Academic Calendar</a>
                 <a href="resources.html">Study Materials</a>
-                <a href="routine.html">Routine Builder</a>
+                <a href="routine.html">Routine Maker</a>
+                <a href="planner.html" class="trending-link">Semester Planner</a>
             </nav>
             <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
         </header>

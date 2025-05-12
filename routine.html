@@ -89,6 +89,20 @@
             background: rgba(255, 255, 255, 0.5);
         }
 
+        .trending-link {
+            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+            border-color: #e11d48 !important;
+            color: #fff !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .trending-link:hover {
+            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+            background: linear-gradient(135deg, #e11d48, #be185d) !important;
+            color: #fff !important;
+        }
+
         .header-actions {
             display: flex;
             gap: 12px;
@@ -743,10 +757,11 @@
     <header>
         <div class="header-title">Routine Maker</div>
         <nav class="nav-bar">
-            <a href="index.html">Faculty Prediction</a>
+            <a href="index.html">RDS2</a>
             <a href="calendar.html">Academic Calendar</a>
             <a href="resources.html">Study Materials</a>
-            <a href="routine.html" class="active">Routine Builder</a>
+            <a href="routine.html" class="active">Routine Maker</a>
+            <a href="planner.html" class="trending-link">Semester Planner</a>
         </nav>
         <div class="header-actions">
             <button id="toggleDarkMode" class="header-btn">🌙 Dark Mode</button>
