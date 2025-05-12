@@ -220,7 +220,7 @@
                             </select>
                         </div>
                         <div class="topbar-row" style="margin-bottom:6px;">
-                            <input type="number" id="dropdownCourseCredit" placeholder="Credit" min="1" max="6" style="width:60px;" />
+                            <input type="number" id="dropdownCourseCredit" placeholder="Credit" min="0.1" max="6" step="0.1" style="width:60px;" />
                             <select id="dropdownSemesterSelect" style="min-width:90px;"></select>
                             <button type="button" id="addDropdownCourseBtn">Add to Semester</button>
                         </div>
@@ -229,7 +229,7 @@
                         <div class="section-title">Add manual course</div>
                         <form class="topbar-row" id="addCourseForm" autocomplete="off" style="margin-bottom:6px;">
                             <input type="text" id="newCourseName" placeholder="Course Name" required maxlength="20" style="flex:2;">
-                            <input type="number" id="newCourseCredit" placeholder="Credit" required min="1" max="6" style="width:60px;">
+                            <input type="number" id="newCourseCredit" placeholder="Credit" required min="0.1" max="6" step="0.1" style="width:60px;">
                             <select id="manualSemesterSelect" style="min-width:90px;"></select>
                             <button type="submit">Add</button>
                         </form>
@@ -349,7 +349,7 @@
         // Add course from dropdown
         document.getElementById('addDropdownCourseBtn').addEventListener('click', function() {
             const idx = document.getElementById('courseDropdown').value;
-            const credit = parseInt(document.getElementById('dropdownCourseCredit').value, 10);
+            const credit = parseFloat(document.getElementById('dropdownCourseCredit').value);
             const semIdx = parseInt(document.getElementById('dropdownSemesterSelect').value, 10);
             if (idx === "" || isNaN(credit) || isNaN(semIdx)) return;
             const course = courseListCSV[idx];
@@ -358,8 +358,6 @@
             updateCompletedCredits();
             updateCompletedSemesters();
             savePlannerData();
-            // Optionally reset only the credit input
-            // document.getElementById('dropdownCourseCredit').value = "";
         });
 
         // When course is selected, auto-fill credit box
@@ -376,7 +374,7 @@
         document.getElementById('addCourseForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('newCourseName').value.trim();
-            const credit = parseInt(document.getElementById('newCourseCredit').value, 10);
+            const credit = parseFloat(document.getElementById('newCourseCredit').value);
             const semIdx = parseInt(document.getElementById('manualSemesterSelect').value, 10);
             if (!name || isNaN(credit) || isNaN(semIdx)) return;
             semesterCourses[semIdx].push({ name, credit, done: false });
@@ -404,10 +402,15 @@
             for (let i = 0; i < semesterCourses.length; i++) {
                 const isDone = semesterCourses[i].done;
                 const doneBtnTitle = isDone ? "Mark semester as not done" : "Mark semester as done";
+                // Calculate completed credits for this semester
+                const completedCredits = semesterCourses[i]
+                    .filter(course => course.done)
+                    .reduce((sum, course) => sum + parseFloat(course.credit), 0);
+                const creditsDisplay = completedCredits % 1 === 0 ? completedCredits : completedCredits.toFixed(1);
                 grid.innerHTML += `
                     <div class="semester-box${isDone ? ' semester-done' : ''}">
                         <div class="semester-title">
-                            Semester ${i+1}
+                            Semester ${i+1} (${creditsDisplay})
                             <button class="semester-done-btn" title="${doneBtnTitle}" onclick="toggleSemesterDone(${i})" style="margin-left:8px; background:none; border:none; cursor:pointer; color:${isDone ? '#22c55e' : '#64748b'}; font-size:1.15em;">
                                 <i class="fa ${isDone ? 'fa-check-circle' : 'fa-circle'}"></i>
                             </button>
