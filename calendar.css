@@ -29,6 +29,13 @@
   background: rgba(239, 68, 68, 0.1);
 }
 
+.timeline-item.past-event {
+  opacity: 0.55;
+  filter: grayscale(0.7);
+  text-decoration: line-through;
+  pointer-events: none;
+}
+
 .timeline-item:hover {
   transform: translateX(5px);
 }

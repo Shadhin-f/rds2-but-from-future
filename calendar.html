@@ -260,5 +260,36 @@
             }, 400);
         });
     </script>
+    <script>
+      // Helper to parse date strings like "May 5, 2025 (Monday)" or "June 5-10, 2025"
+      function parseTimelineDate(dateStr) {
+        // Handle ranges like "June 5-10, 2025"
+        let match = dateStr.match(/^([A-Za-z]+) (\d+)(?:-(\d+))?, (\d{4})/);
+        if (match) {
+          let month = match[1];
+          let day = match[3] ? match[3] : match[2]; // use end day if range, else single day
+          let year = match[4];
+          return new Date(`${month} ${day}, ${year}`);
+        }
+        // Fallback: try Date.parse
+        let d = new Date(dateStr.replace(/\(.*\)/, '').trim());
+        return isNaN(d) ? null : d;
+      }
+
+      function markPastEvents() {
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        document.querySelectorAll('.timeline-item').forEach(item => {
+          const dateDiv = item.querySelector('.date');
+          if (!dateDiv) return;
+          const eventDate = parseTimelineDate(dateDiv.textContent);
+          if (eventDate && eventDate < today) {
+            item.classList.add('past-event');
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', markPastEvents);
+    </script>
 </body>
 </html>
