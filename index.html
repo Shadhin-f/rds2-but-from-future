@@ -180,10 +180,6 @@
     <button id="goToReviews" class="float-btn reviews-btn" title="Go to Reviews">⭐</button>
     <button id="backToTop" class="float-btn top-btn" title="Back to Top">↑</button>
 
-    <!-- Floating Add to Home Screen Button -->
-    <button id="a2hsBtn" style="display:none;position:fixed;bottom:90px;right:20px;z-index:9999;background:linear-gradient(90deg,#6d28d9,#a78bfa);color:#fff;border:none;border-radius:50px;padding:13px 22px;font-size:1.1rem;font-weight:600;box-shadow:0 2px 12px rgba(109,40,217,0.18);cursor:pointer;transition:background 0.2s;">
-        <i class="fa fa-plus"></i> Add to Home
-    </button>
     <script src="script.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
@@ -196,62 +192,5 @@
     <script src="chat.js"></script>
     <script src="comments.js"></script>
     <script src="buttons.js"></script>
-    <script>
-    // Floating Add to Home Screen Button (PWA)
-    let deferredPrompt = null;
-    const a2hsBtn = document.getElementById('a2hsBtn');
-
-    // Always show on mobile if not standalone
-    function shouldShowA2HS() {
-        // Only show if not already installed
-        if (window.matchMedia('(display-mode: standalone)').matches) return false;
-        // Only show on mobile devices
-        return /android|iphone|ipad|ipod/i.test(navigator.userAgent);
-    }
-
-    // Android (Chrome, Edge, etc.)
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        if (shouldShowA2HS()) a2hsBtn.style.display = 'block';
-    });
-
-    // iOS detection
-    function isIos() {
-        return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    }
-    function isInStandaloneMode() {
-        return ('standalone' in window.navigator) && window.navigator.standalone;
-    }
-    // Show button for iOS Safari
-    window.addEventListener('load', () => {
-        if (isIos() && !isInStandaloneMode()) {
-            a2hsBtn.style.display = 'block';
-        }
-    });
-
-    // Fallback: show if on mobile and not standalone (for browsers that don't fire beforeinstallprompt)
-    window.addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => {
-            if (!a2hsBtn.style.display || a2hsBtn.style.display === 'none') {
-                if (shouldShowA2HS()) a2hsBtn.style.display = 'block';
-            }
-        }, 1200);
-    });
-
-    a2hsBtn.addEventListener('click', function() {
-        // Android PWA prompt
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then(() => {
-                deferredPrompt = null;
-                a2hsBtn.style.display = 'none';
-            });
-        } else if (isIos() && !isInStandaloneMode()) {
-            // iOS instructions
-            alert("To add this app to your Home Screen:\n\n1. Tap the Share button in Safari's menu bar\n2. Tap 'Add to Home Screen'");
-        }
-    });
-    </script>
 </body>
 </html>
