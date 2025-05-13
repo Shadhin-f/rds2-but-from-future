@@ -170,7 +170,7 @@ function renderTable(data) {
             <td>${escapeHtml(row.Faculty || '')}</td>
             <td>${escapeHtml(row.Time || '')}</td>
             <td>${escapeHtml(row.Room || '')}</td>
-            <td>${escapeHtml(row.Prediction || '')}</td>
+            <td style="display: none;">${escapeHtml(row.Prediction || '')}</td>
             <td>
                 <button class="view-details-btn"
                     data-course="${escapeHtml(row.Course || '')}"
@@ -221,8 +221,8 @@ function showModal(data) {
         <p><strong>Time:</strong> ${escapeHtml(data.Time || '')}</p>
         <p><strong>Room:</strong> ${escapeHtml(data.Room || '')}</p>
         <p><strong>Semester:</strong> ${escapeHtml(data.Semester || '')}</p>
-        <p><strong>Prediction:</strong> ${escapeHtml(data.Prediction || '')}</p>
-        <div class="records-section">
+        <p style="display: none;"><strong>Prediction:</strong> ${escapeHtml(data.Prediction || '')}</p>
+        <div class="records-section" style="display: none;">
             <strong>Historical Records:</strong>
             <pre class="records-list">${escapeHtml(formattedRecords)}</pre>
         </div>
