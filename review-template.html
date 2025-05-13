@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css?v=1.1">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: #181a20; /* VS Code/Dark GitHub background */
+            color: #e2e8f0;
+            font-family: 'Segoe UI', 'Fira Mono', 'Consolas', 'monospace', 'sans-serif';
+        }
+        .review-template-container {
+            max-width: 900px;
+            margin: 48px auto 0 auto;
+            background: #23272e;
+            border-radius: 14px;
+            box-shadow: 0 4px 32px rgba(30,41,59,0.18);
+            padding: 32px 18px 24px 18px;
+            position: relative;
+            z-index: 2;
+        }
+        .review-form-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .review-form-row label {
+            font-weight: 500;
+            color: #a78bfa;
+            margin-bottom: 4px;
+        }
+        .review-form-row input[type="text"],
+        .review-form-row select,
+        .review-form-row textarea {
+            background: #181a20;
+            color: #e2e8f0;
+            border: 1px solid #30363d;
+            border-radius: 7px;
+            padding: 10px 14px;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+            min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .review-form-row select {
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .review-form-row textarea {
+            min-width: 120px;
+            min-height: 48px;
+            resize: vertical;
+        }
+        .add-course-btn {
+            background: linear-gradient(90deg,#238636,#2ea043);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 0;
+            margin-top: 6px;
+            transition: background 0.2s;
+            width: 100%;
+            max-width: 180px;
+        }
+        .add-course-btn:hover {
+            background: #2ea043;
+        }
+        .review-card-preview {
+            margin: 0 auto 24px auto;
+            max-width: 480px;
+            min-width: 320px;
+            min-height: 320px;
+            max-height: 600px;
+            width: 100%;
+            height: 420px;
+            border-radius: 0;
+            box-shadow: 0 4px 32px rgba(30,41,59,0.22);
+            background: #22272e;
+            color: #e2e8f0;
+            padding: 32px 24px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            border: 1.5px solid #30363d;
+            transition: background 0.3s, border 0.3s;
+            box-sizing: border-box;
+        }
+        .review-card-table {
+            /* width: 100%; */
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            table-layout: fixed;
+        }
+        .review-card-table th, .review-card-table td {
+            text-align: left;
+            padding: 8px 12px;
+            font-size: 1.08rem;
+            border: none;
+            background: transparent;
+            transition: color 0.2s;
+            word-break: break-word;
+            white-space: normal;
+        }
+        /* .review-card-table th,
+        .review-card-table td {
+            min-width: 80px;
+        } */
+        .review-card-table th {
+            font-weight: 600;
+            color: var(--table-header-color, #a78bfa);
+            letter-spacing: 0.03em;
+            background: none;
+            border-bottom: 1.5px solid #30363d;
+        }
+        .review-card-table td {
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        .highlight-course {
+            color: #ffa657;
+            font-weight: bold;
+            font-size: 1.13em;
+            letter-spacing: 0.02em;
+        }
+        .highlight-faculty {
+            color: #a5d6ff;
+            font-weight: bold;
+            letter-spacing: 0.01em;
+        }
+        .remove-course-btn {
+            background: #e11d48;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            transition: background 0.2s;
+        }
+        .remove-course-btn:hover {
+            background: #be185d;
+        }
+        .remove-course-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+            margin-top: 4px;
+        }
+        .remove-course-list .remove-course-btn {
+            margin: 0;
+            border-radius: 7px;
+            padding: 0 12px;
+            height: 32px;
+            width: auto;
+            font-size: 1em;
+            background: #23272e;
+            color: #e11d48;
+            border: 1.5px solid #e11d48;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+        .remove-course-list .remove-course-btn:hover {
+            background: #e11d48;
+            color: #fff;
+        }
+        .review-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            color: #79c0ff;
+            line-height: 1.2;
+        }
+        .review-card-courses {
+            width: 100%;
+            margin-bottom: 14px;
+        }
+        .review-card-desc {
+            font-size: 1.08rem;
+            margin-bottom: 10px;
+            color: #c9d1d9;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+        .download-btn {
+            background: linear-gradient(90deg,#238636,#2ea043);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 10px 28px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(30,41,59,0.10);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .download-btn:hover {
+            background: #2ea043;
+            box-shadow: 0 4px 16px rgba(46,160,67,0.18);
+        }
+        .card-bg-picker {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .card-bg-picker input[type="color"] {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            background: none;
+            cursor: pointer;
+        }
+        .card-border-picker {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .card-border-picker label {
+            color: #a78bfa;
+            font-weight: 500;
+        }
+        .card-border-picker input[type="color"] {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 6px;
+            background: none;
+            cursor: pointer;
+        }
+        .card-border-picker input[type="range"] {
+            width: 70px;
+        }
+        .card-border-picker input[type="checkbox"] {
+            accent-color: #a78bfa;
+            width: 18px;
+            height: 18px;
+        }
+        .table-color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .table-color-picker label {
+            color: #a78bfa;
+            font-weight: 500;
+        }
+        .table-color-picker input[type="color"] {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 6px;
+            background: none;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .review-template-container { padding: 8px 2vw; }
+            .review-form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .review-form-row input[type="text"],
+            .review-form-row select,
+            .review-form-row textarea {
+                font-size: 1.08rem;
+                padding: 12px 14px;
+                width: 100%;
+                min-width: 0;
+            }
+            .add-course-btn {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 6px;
+            }
+            .review-card-preview {
+                min-width: 0;
+                max-width: 100vw;
+                width: 340px;
+                height: 420px;
+                min-height: 320px;
+                max-height: 600px;
+                padding: 18px 8px 18px 8px;
+            }
+            .review-card-table th, .review-card-table td {
+                font-size: 1.01rem;
+                padding: 7px 4px;
+                /* min-width: 60px; */
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+        <header>
+            <h1>Review Template</h1>
+            <nav class="nav-bar">
+                <a href="index.html">RDS2</a>
+                <a href="calendar.html">Academic Calendar</a>
+                <a href="resources.html">Study Materials</a>
+                <a href="routine.html">Routine Maker</a>
+                <a href="planner.html">Semester Planner</a>
+                <a href="review-template.html" class="active trending-link">Review Template</a>
+            </nav>
+        </header>
+        <main>
+            <div class="review-template-container">
+                <form id="reviewForm" autocomplete="off" onsubmit="return false;">
+                    <div class="review-form-row">
+                        <label for="courseSelect">Course:</label>
+                        <select id="courseSelect" style="min-width:140px;"></select>
+                        <label for="facultySelect">Faculty:</label>
+                        <select id="facultySelect" style="min-width:120px;"></select>
+                        <button type="button" class="add-course-btn" id="addCourseBtn"><i class="fa fa-plus"></i> Add</button>
+                        <button type="button" class="add-course-btn" id="addManualBtn" style="background:linear-gradient(90deg,#f59e42,#fbbf24);color:#23272e;"><i class="fa fa-pen"></i> Manual</button>
+                    </div>
+                    <div class="review-form-row" id="manualRow" style="display:none;">
+                        <label for="manualCourse">Manual Course:</label>
+                        <input type="text" id="manualCourse" maxlength="16" placeholder="e.g. MAT112" style="width:110px;">
+                        <label for="manualFaculty">Manual Faculty:</label>
+                        <input type="text" id="manualFaculty" maxlength="16" placeholder="e.g. MSH" style="width:90px;">
+                        <button type="button" class="add-course-btn" id="addManualCourseBtn" style="background:linear-gradient(90deg,#f59e42,#fbbf24);color:#23272e;"><i class="fa fa-plus"></i> Add Manual</button>
+                    </div>
+                    <div class="review-form-row">
+                        <label for="manualTitle">Card Title:</label>
+                        <input type="text" id="manualTitle" maxlength="40" placeholder="e.g. Who is good for MAT112?" style="flex:2;">
+                        <div class="font-picker">
+                            <label for="titleFont" style="color:#a78bfa;">Font:</label>
+                            <select id="titleFont">
+                                <option value="'Segoe UI',sans-serif">Segoe UI</option>
+                                <option value="'Fira Mono',monospace">Fira Mono</option>
+                                <option value="'Consolas',monospace">Consolas</option>
+                                <option value="'Montserrat',sans-serif">Montserrat</option>
+                                <option value="'Roboto',sans-serif">Roboto</option>
+                                <option value="'Comic Sans MS',cursive">Comic Sans</option>
+                            </select>
+                        </div>
+                        <div class="color-picker">
+                            <label for="titleColor" style="color:#a78bfa;">Color:</label>
+                            <input type="color" id="titleColor" value="#a78bfa">
+                        </div>
+                    </div>
+                    <div class="review-form-row card-bg-picker">
+                        <label>Card Background:</label>
+                        <div id="defaultBgOptions" style="display:flex;gap:8px;">
+                            <button type="button" class="bg-option" data-bg="#23272e" style="background:#23272e;width:32px;height:32px;border:2px solid #444;border-radius:4px;cursor:pointer;" title="Dark Default"></button>
+                            <button type="button" class="bg-option" data-bg="#181a20" style="background:#181a20;width:32px;height:32px;border:2px solid #444;border-radius:4px;cursor:pointer;" title="VS Code Dark"></button>
+                            <button type="button" class="bg-option" data-bg="#f3f4f6" style="background:#f3f4f6;width:32px;height:32px;border:2px solid #bbb;border-radius:4px;cursor:pointer;" title="Light Gray"></button>
+                            <button type="button" class="bg-option" data-bg="#fef9c3" style="background:#fef9c3;width:32px;height:32px;border:2px solid #fbbf24;border-radius:4px;cursor:pointer;" title="Soft Yellow"></button>
+                            <button type="button" class="bg-option" data-bg="linear-gradient(90deg,#238636,#2ea043)" style="background:linear-gradient(90deg,#238636,#2ea043);width:32px;height:32px;border:2px solid #444;border-radius:4px;cursor:pointer;" title="Green Gradient"></button>
+                            <button type="button" class="bg-option" data-bg="linear-gradient(135deg,#6d28d9,#a78bfa)" style="background:linear-gradient(135deg,#6d28d9,#a78bfa);width:32px;height:32px;border:2px solid #444;border-radius:4px;cursor:pointer;" title="Purple Gradient"></button>
+                            <button type="button" class="bg-option" data-bg="linear-gradient(135deg,#f3f4f6,#fef9c3 80%)" style="background:linear-gradient(135deg,#f3f4f6,#fef9c3 80%);width:32px;height:32px;border:2px solid #bbb;border-radius:4px;cursor:pointer;" title="Light Gradient"></button>
+                        </div>
+                        <span style="color:#a78bfa;">or</span>
+                        <input type="color" id="cardBgColor" value="#23272e">
+                        <input type="text" id="cardBgGradient" placeholder="Custom CSS Gradient (optional)" style="width:180px;" />
+                    </div>
+                    <div class="card-border-picker">
+                        <label for="cardBorderToggle">Border:</label>
+                        <input type="checkbox" id="cardBorderToggle" checked>
+                        <label for="cardBorderWidth">Width:</label>
+                        <input type="range" id="cardBorderWidth" min="0" max="10" value="1.5" step="0.5" style="vertical-align:middle;">
+                        <label for="cardBorderColor">Color:</label>
+                        <input type="color" id="cardBorderColor" value="#30363d">
+                    </div>
+                    <div class="table-color-picker">
+                        <label for="tableTextColor">Table Text:</label>
+                        <input type="color" id="tableTextColor" value="#e2e8f0">
+                        <label for="tableHeaderColor">Header:</label>
+                        <input type="color" id="tableHeaderColor" value="#a78bfa">
+                    </div>
+                </form>
+                <div id="removeCourseList" class="remove-course-list"></div>
+                <div id="reviewCardPreview" class="review-card-preview">
+                    <div class="review-card-title" id="cardTitlePreview" style="z-index:1;">Who is good for MAT112?</div>
+                    <div class="review-card-courses" id="cardCoursesPreview" style="z-index:1;">
+                        <!-- Table will be rendered here -->
+                    </div>
+                </div>
+                <button class="download-btn" id="downloadCardBtn"><i class="fa fa-download"></i> Download Card</button>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>
+                © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+                <br>
+            </p>
+            <div class="social-links">
+                <span>Follow me on</span>
+                <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <br>
+            Last updated: 13-05-2025 12:35 PM
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1.5;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.opacity = Math.random() * 0.7 + 0.3;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+        }
+        draw() {
+            ctx.fillStyle = `rgba(147, 51, 234, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    const particles = Array.from({ length: 75 }, () => new Particle());
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(particle => { particle.update(); particle.draw(); });
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    const CSV_FILENAME = 'Predicted_v6.csv';
+    let courseData = [];
+    let cardCourses = [];
+
+    async function loadCSVData() {
+        try {
+            const response = await fetch(CSV_FILENAME);
+            const csvData = await response.text();
+            courseData = parseCSV(csvData);
+            populateCourseSelect();
+        } catch (error) {
+            alert('Error loading course data');
+        }
+    }
+    function parseCSV(csv) {
+        const lines = csv.split('\n').filter(line => line.trim().length > 0);
+        if (lines.length === 0) return [];
+        const result = [];
+        for (let i = 1; i < lines.length; i++) {
+            let parts = lines[i].split(',');
+            if (parts.length < 8) continue;
+            result.push({
+                Course: parts[0]?.trim() || '',
+                Section: parts[1]?.trim() || '',
+                Faculty: parts[2]?.trim() || '',
+                Time: parts[3]?.trim() || '',
+                Room: parts[4]?.trim() || '',
+                Semester: parts[5]?.trim() || '',
+                Prediction: parts[6]?.trim() || '',
+                Records: parts.slice(7).join(',').trim()
+            });
+        }
+        return result;
+    }
+
+    function populateCourseSelect() {
+        const courseSelect = document.getElementById('courseSelect');
+        const uniqueCourses = [...new Set(courseData.map(row => row.Course).filter(Boolean))];
+        courseSelect.innerHTML = `<option value="">Select course...</option>` +
+            uniqueCourses.map(c => `<option value="${c}">${c}</option>`).join('');
+        courseSelect.value = "";
+        updateFacultySelect();
+    }
+    function updateSectionSelect() {
+        const course = document.getElementById('courseSelect').value;
+        const sectionSelect = document.getElementById('sectionSelect');
+        if (!course) {
+            sectionSelect.innerHTML = `<option value="">Select section...</option>`;
+            updateFacultySelect();
+            return;
+        }
+        const sections = [...new Set(courseData.filter(row => row.Course === course).map(row => row.Section).filter(Boolean))];
+        sectionSelect.innerHTML = `<option value="">Select section...</option>` +
+            sections.map(s => `<option value="${s}">${s}</option>`).join('');
+        sectionSelect.value = "";
+        updateFacultySelect();
+    }
+    function updateFacultySelect() {
+        const course = document.getElementById('courseSelect').value;
+        const facultySelect = document.getElementById('facultySelect');
+        if (!course) {
+            facultySelect.innerHTML = `<option value="">Select faculty...</option>`;
+            return;
+        }
+        const faculties = [...new Set(courseData.filter(row => row.Course === course).map(row => row.Faculty).filter(Boolean))];
+        facultySelect.innerHTML = `<option value="">Select faculty...</option>` +
+            faculties.map(f => `<option value="${f}">${f}</option>`).join('');
+        facultySelect.value = "";
+    }
+
+    document.getElementById('addCourseBtn').addEventListener('click', function() {
+        const course = document.getElementById('courseSelect').value;
+        const faculty = document.getElementById('facultySelect').value;
+        if (!course && !faculty) return;
+        cardCourses.push({
+            Course: course,
+            Faculty: faculty
+        });
+        updateCardPreview();
+    });
+
+    document.getElementById('addManualBtn').addEventListener('click', function() {
+        const row = document.getElementById('manualRow');
+        row.style.display = row.style.display === "none" ? "flex" : "none";
+    });
+
+    document.getElementById('addManualCourseBtn').addEventListener('click', function() {
+        const course = document.getElementById('manualCourse').value.trim();
+        const faculty = document.getElementById('manualFaculty').value.trim();
+        if (!course && !faculty) return;
+        cardCourses.push({
+            Course: course,
+            Faculty: faculty
+        });
+        document.getElementById('manualCourse').value = "";
+        document.getElementById('manualFaculty').value = "";
+        updateCardPreview();
+    });
+
+    function removeCourseFromCard(idx) {
+        cardCourses.splice(idx, 1);
+        updateCardPreview();
+    }
+
+    document.querySelectorAll('.bg-option').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const bg = btn.getAttribute('data-bg');
+            // Always clear both fields first
+            document.getElementById('cardBgColor').value = '';
+            document.getElementById('cardBgGradient').value = '';
+            if (bg.startsWith('linear-gradient')) {
+                document.getElementById('cardBgGradient').value = bg;
+            } else {
+                document.getElementById('cardBgColor').value = bg;
+            }
+            updateCardPreview();
+        });
+    });
+
+    function updateCardBorderAndTableColors() {
+        const card = document.getElementById('reviewCardPreview');
+        const borderToggle = document.getElementById('cardBorderToggle').checked;
+        const borderWidth = document.getElementById('cardBorderWidth').value;
+        const borderColor = document.getElementById('cardBorderColor').value;
+        card.style.border = borderToggle ? `${borderWidth}px solid ${borderColor}` : 'none';
+
+        const tableHeaderColor = document.getElementById('tableHeaderColor').value;
+        card.style.setProperty('--table-header-color', tableHeaderColor);
+    }
+    document.getElementById('cardBorderToggle').addEventListener('change', updateCardBorderAndTableColors);
+    document.getElementById('cardBorderWidth').addEventListener('input', updateCardBorderAndTableColors);
+    document.getElementById('cardBorderColor').addEventListener('input', updateCardBorderAndTableColors);
+    document.getElementById('tableTextColor').addEventListener('input', updateCardBorderAndTableColors);
+    document.getElementById('tableHeaderColor').addEventListener('input', updateCardBorderAndTableColors);
+
+    function renderRemoveCourseList() {
+        const removeDiv = document.getElementById('removeCourseList');
+        removeDiv.innerHTML = '';
+        cardCourses.forEach((c, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'remove-course-btn';
+            btn.title = 'Remove';
+            btn.innerHTML = `<i class='fa fa-trash'></i> ${c.Course ? `<span>${c.Course}</span>` : ''}${c.Faculty ? ` - <span>${c.Faculty}</span>` : ''}`;
+            btn.onclick = () => {
+                removeCourseFromCard(idx);
+            };
+            removeDiv.appendChild(btn);
+        });
+    }
+
+    function updateCardPreview() {
+        const manualTitle = document.getElementById('manualTitle').value.trim();
+        const titleFont = document.getElementById('titleFont').value;
+        const titleColor = document.getElementById('titleColor').value;
+        const titleDiv = document.getElementById('cardTitlePreview');
+        titleDiv.textContent = manualTitle || 'Who is good for these courses/faculty?';
+        titleDiv.style.fontFamily = titleFont;
+        titleDiv.style.color = titleColor;
+
+        const card = document.getElementById('reviewCardPreview');
+        let cardBgColor = document.getElementById('cardBgColor').value;
+        let cardBgGradient = document.getElementById('cardBgGradient').value.trim();
+
+        // If both are empty, fallback to default
+        if (!cardBgColor && !cardBgGradient) {
+            cardBgColor = "#23272e";
+        }
+
+        // If both are set, prefer gradient
+        if (cardBgGradient) {
+            card.style.background = cardBgGradient;
+        } else {
+            card.style.background = cardBgColor;
+        }
+
+        const tableTextColor = document.getElementById('tableTextColor').value;
+        const coursesDiv = document.getElementById('cardCoursesPreview');
+        if (cardCourses.length) {
+            let table = `<table class="review-card-table"><thead><tr>
+                <th>Course</th><th>Faculty</th></tr></thead><tbody>`;
+            cardCourses.forEach((c) => {
+                table += `<tr>
+                    <td style="color:${tableTextColor}">${c.Course ? `<span class="highlight-course">${c.Course}</span>` : ''}</td>
+                    <td style="color:${tableTextColor}">${c.Faculty ? `<span class="highlight-faculty">${c.Faculty}</span>` : ''}</td>
+                </tr>`;
+            });
+            table += `</tbody></table>`;
+            coursesDiv.innerHTML = table;
+        } else {
+            coursesDiv.innerHTML = '';
+        }
+        updateCardBorderAndTableColors();
+        renderRemoveCourseList();
+    }
+
+    document.getElementById('downloadCardBtn').addEventListener('click', function() {
+        const card = document.getElementById('reviewCardPreview');
+        html2canvas(card, {backgroundColor: null}).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'review-card.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    });
+
+    document.getElementById('courseSelect').addEventListener('change', () => { updateFacultySelect(); });
+    document.getElementById('manualTitle').addEventListener('input', updateCardPreview);
+    document.getElementById('titleFont').addEventListener('change', updateCardPreview);
+    document.getElementById('titleColor').addEventListener('input', updateCardPreview);
+    document.getElementById('cardBgColor').addEventListener('input', updateCardPreview);
+    document.getElementById('cardBgGradient').addEventListener('input', updateCardPreview);
+
+    loadCSVData();
+    updateCardPreview();
+    </script>
+</body>
+</html>
