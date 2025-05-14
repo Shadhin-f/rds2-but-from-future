@@ -57,7 +57,7 @@ function animate() {
 
 animate();
 
-const CSV_FILENAME = 'l6.csv';
+const CSV_FILENAME = 'l7.csv';
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
@@ -219,7 +219,7 @@ function showModal(data) {
         <p><strong>Section:</strong> ${escapeHtml(data.Section || '')}</p>
         <p><strong>Faculty:</strong> ${escapeHtml(data.Faculty || '')}</p>
         <p><strong>Time:</strong> ${escapeHtml(data.Time || '')}</p>
-        <p><strong>Room:</strong> ${escapeHtml(data.Room || '')}</p>
+        <p><strong>Seats:</strong> ${escapeHtml(data.Room || '')}</p>
         <p><strong>Semester:</strong> ${escapeHtml(data.Semester || '')}</p>
         <p style="display: none;"><strong>Prediction:</strong> ${escapeHtml(data.Prediction || '')}</p>
         <div class="records-section" style="display: none;">
