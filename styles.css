@@ -93,6 +93,8 @@ header {
   font-weight: 500;
   box-shadow: 0 2px 12px rgba(109, 40, 217, 0.13);
   max-width: 600px;
+  opacity: 0.8;
+  border: 1px solid white;
 }
 
 .announcement-bar .view-extension-btn {
@@ -195,10 +197,12 @@ h1 {
 
 .search-container {
   position: relative;
+  margin-top: 2rem;
   margin-bottom: 1rem;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  opacity: 0.9;
 }
 
 .search-container input {
@@ -224,7 +228,7 @@ h1 {
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.6);
+  color: white;
 }
 
 .upload-container {
