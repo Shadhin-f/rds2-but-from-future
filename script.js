@@ -57,7 +57,7 @@ function animate() {
 
 animate();
 
-const CSV_FILENAME = 'l31.csv';
+const CSV_FILENAME = 'l32.csv';
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
