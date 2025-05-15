@@ -486,7 +486,7 @@ td {
 
 @keyframes modalPopIn {
   0% {
-    transform: scale(0.9) translateY(20px);
+    transform: scale(0.7) translateY(40px);
     opacity: 0;
   }
   100% {
@@ -497,17 +497,17 @@ td {
 
 .modal-header {
   padding: 1.1rem 1.5rem 1rem 1.5rem;
-  border-bottom: 1px solid #23263a;
+  border-bottom: 1px solid rgb(255, 255, 255);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: transparent;
+  background: white;
 }
 
 .modal-header h2 {
   margin: 0;
   font-size: 1.18rem;
-  color: #e2e8f0;
+  color: var(--primary-color);
   font-weight: 800;
   letter-spacing: 0.01em;
 }
@@ -525,8 +525,8 @@ td {
 }
 
 .close-modal:hover {
-  background: #23263a;
-  color: #fff;
+  /* background: #23263a; */
+  color: rgb(61, 31, 100);
 }
 
 .modal-body {
