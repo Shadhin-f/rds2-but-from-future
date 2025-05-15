@@ -108,8 +108,9 @@ header {
   box-shadow: 0 2px 8px rgba(109, 40, 217, 0.09);
   border: none;
   font-size: 1rem;
-  margin-left: 8px;
+  /* margin-left: 8px; */
   display: inline-block;
+  border: 1px solid rgb(255, 255, 255);
 }
 
 .announcement-bar .view-extension-btn:hover {
@@ -467,13 +468,14 @@ td {
 }
 
 .modal-content {
-  background: #181a20;
+  background: rgba(46, 18, 90, 0.66);
   border-radius: 18px;
   width: 96%;
   max-width: 420px;
   min-height: 120px;
   max-height: 90vh;
-  border: none;
+  /* border: none; */
+  border: 1px solid rgba(245, 245, 245, 0.99);
   box-shadow: 0 8px 40px 0 rgba(109, 40, 217, 0.13),
     0 1.5px 8px 0 rgba(0, 0, 0, 0.13);
   display: flex;
@@ -484,7 +486,7 @@ td {
 
 @keyframes modalPopIn {
   0% {
-    transform: scale(0.97) translateY(20px);
+    transform: scale(0.9) translateY(20px);
     opacity: 0;
   }
   100% {
@@ -506,7 +508,7 @@ td {
   margin: 0;
   font-size: 1.18rem;
   color: #e2e8f0;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.01em;
 }
 
@@ -541,11 +543,11 @@ td {
 
 .modal-body p {
   margin: 0.5rem 0;
-  color: #b3b8c5;
+  color: rgb(255, 255, 255);
 }
 
 .modal-body strong {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.73);
   font-weight: 500;
 }
 
