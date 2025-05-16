@@ -288,11 +288,11 @@ function handleVote(id, dir) {
 }
 
 // Listen for reviews (history never cleared)
-commentDb.limitToLast(50).on("value", snap => {
+commentDb.limitToLast(500).on("value", snap => {
     const val = snap.val() || {};
     // Changed sorting to be consistent with renderComments
     let comments = Object.entries(val).map(([id, c]) => ({...c, id}));
-    if (comments.length > 50) comments = comments.slice(-50);
+    if (comments.length > 500) comments = comments.slice(-50);
     allComments = comments;
     const searchTerm = (commentSearchInput && commentSearchInput.value) ? commentSearchInput.value.trim().toLowerCase() : "";
     if (searchTerm) {
