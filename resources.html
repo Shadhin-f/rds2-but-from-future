@@ -28,6 +28,17 @@
             background: linear-gradient(135deg, #e11d48, #be185d) !important;
             color: #fff !important;
         }
+        .study-material-frame{
+            width: 100%;
+            height: 80vh;
+            border: none;
+            margin: 0 auto;
+            display: block;
+            background-color: #1a1c23;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            box-shadow: 0 0 8px 2px #777677, 0 0 16px 4px #4b2591e5;
+        }
     </style>
 </head>
 <body>
@@ -38,16 +49,29 @@
             <nav class="nav-bar">
                 <a href="index.html">RDS2</a>
                 <a href="calendar.html">Academic Calendar</a>
-                <a href="resources.html" class="active">Study Materials</a>
+                <a href="resources.html" class="active" >Study Materials</a>
                 <a href="routine.html">Routine Maker</a>
-                <a href="planner.html" class="trending-link">Semester Planner</a>
+                <a href="planner.html">Semester Planner</a>
             </nav>
-            <div class="header-counters">
+            <!-- <div class="header-counters">
                 <div id="totalResourcesCounter" class="active-users-counter">📦 0 resources shared</div>
                 <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
+            </div> -->
+            <div class="announcement-bar">
+                <a href="https://forms.gle/LHJ9YfGUBTPLTbZo8" 
+                   target="_blank" class="view-extension-btn">🛩️ Share material!</a>
+                <a href="https://docs.google.com/spreadsheets/d/1mTTsmqo_F-6SyiGJSFJgMu_rMPB4LxSBVOUHypiM3rk/edit?usp=sharing" 
+                   target="_blank" class="view-extension-btn">🔎 View in sheets!</a>
+            </div>
+            <div class="announcement-bar">
+                <p>📚 Let’s grow together! Share your study materials—notes, slides, summaries, or tips—and help others succeed while building a stronger learning community. You'll also get access to helpful resources shared by fellow students. By keeping everything in one place, it becomes easier and faster for everyone to find what they need, when they need it. Let's make studying simpler, together! 🌟</p>
             </div>
         </header>
+
         <main>
+            <iframe class="study-material-frame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIqjfpp6kuuUVPRwcQ3ASGDc8PqrmEYWH2XBzc0XUpQejgJgIqsYPKaIcf_fK_mSAMfYnYkDkRCtSh/pubhtml?widget=true&amp;headers=false"></iframe>
+        </main>
+        <!-- <main>
             <div class="table-container" style="margin-bottom:2rem;">
                 <h2 style="text-align:left; font-size:1.15rem; margin:16px;">📤 Share a Study Material</h2>
                 <form id="resourceForm" class="resource-form">
@@ -58,6 +82,7 @@
                     <button type="submit" class="resource-submit-btn">Share</button>
                 </form>
                 <!-- Preview Modal -->
+            <!--
                 <div id="previewModal" class="modal" style="display:none;">
                     <div style="background:#181926;padding:32px 24px 24px 24px;border-radius:14px;max-width:95vw;width:370px;box-shadow:0 8px 32px #0008;color:#e2e8f0;position:relative;overflow:auto;max-height:90vh;">
                         <h3 style="margin-top:0;margin-bottom:18px;font-size:1.15rem;">Confirm Submission</h3>
@@ -76,7 +101,7 @@
                 </div>
                 <div id="resourceList"></div>
             </div>
-        </main>
+        </main> -->
         <footer class="footer">
             <p>
                 © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
@@ -95,7 +120,7 @@
                 </a>
             </div>
             <br>
-            Last updated: 07-05-2025 15:30
+            Last updated: 16-05-2025 15:30
         </footer>
     </div>
     <script src="script.js"></script>
