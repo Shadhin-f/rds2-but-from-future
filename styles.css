@@ -1555,3 +1555,165 @@ records-list::-webkit-scrollbar-thumb {
 #resourceList .resource-item:first-child {
   margin-top: 8px;
 }
+
+#wishlistContainer {
+  background: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.13);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+#wishlistContainer.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  #wishlistContainer.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+  }
+  #wishlistTable {
+    min-width: 700px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+  #wishlistTable thead,
+  #wishlistTable tbody,
+  #wishlistTable tr,
+  #wishlistTable th,
+  #wishlistTable td {
+    display: revert;
+  }
+}
+
+@media (max-width: 768px) {
+  #wishlistTable {
+    min-width: 600px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  #wishlistTable {
+    min-width: 500px;
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+#wishlistTable th,
+#wishlistTable td {
+  text-align: center;
+  padding: 12px;
+  color: var(--text-muted);
+}
+
+#wishlistTable th {
+  background: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--primary-gradient) 100%
+  );
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.01rem;
+}
+
+#wishlistTable tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+#wishlistTable tr:nth-child(odd) {
+  background-color: transparent;
+}
+
+#wishlistTable tr:hover {
+  background-color: rgba(109, 40, 217, 0.09);
+}
+
+.wishlist-remove-btn {
+  background: none;
+  border: none;
+  color: #e11d48;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.wishlist-remove-btn:hover {
+  color: #be185d;
+}
+
+.add-to-wishlist-btn {
+  background: none;
+  border: none;
+  color: #22c55e;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.add-to-wishlist-btn.added {
+  color: #a1a1aa;
+  cursor: not-allowed;
+}
+
+.add-to-wishlist-btn:hover:not(.added) {
+  color: #16a34a;
+}
+
+/* Make Add/Remove Wishlist buttons match the View button style */
+.view-details-btn,
+.add-to-wishlist-btn,
+.wishlist-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.08);
+  outline: none;
+  /* min-width: 90px; */
+  justify-content: center;
+}
+
+.view-details-btn:hover,
+.add-to-wishlist-btn:hover:not(.added),
+.wishlist-remove-btn:hover {
+  background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
+  color: #fff;
+}
+
+.add-to-wishlist-btn.added,
+.add-to-wishlist-btn:disabled {
+  background: #334155;
+  color: #a1a1aa;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .view-details-btn,
+  .add-to-wishlist-btn,
+  .wishlist-remove-btn {
+    font-size: 0.6rem;
+    /* padding: 8px 10px; */
+    min-width: 0;
+    margin-top: 4px;
+  }
+}

@@ -57,12 +57,95 @@ function animate() {
 
 animate();
 
-const CSV_FILENAME = 'l75.csv';
+const CSV_FILENAME = 'l76.csv';
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
 let currentPage = 1;
 const rowsPerPage = 30;
+
+const WISHLIST_KEY = 'wishlist_courses';
+let wishlist = [];
+
+// Load wishlist from localStorage
+function loadWishlist() {
+    try {
+        wishlist = JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+    } catch {
+        wishlist = [];
+    }
+}
+
+// Save wishlist to localStorage
+function saveWishlist() {
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+}
+
+// Render Wishlist Table
+function renderWishlist() {
+    const wishlistContainer = document.getElementById('wishlistContainer');
+    const wishlistBody = document.getElementById('wishlistBody');
+    wishlistBody.innerHTML = '';
+    if (!wishlist.length) {
+        wishlistContainer.style.display = 'none';
+        return;
+    }
+    wishlistContainer.style.display = 'block';
+
+    // Find latest data for each wishlisted course (by Course+Section)
+    wishlist.forEach((wish, idx) => {
+        // Find updated data from courseData
+        const updated = courseData.find(row =>
+            row.Course === wish.Course &&
+            row.Section === wish.Section
+        ) || wish; // fallback to old if not found
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${escapeHtml(updated.Course || '')}</td>
+            <td>${escapeHtml(updated.Section || '')}</td>
+            <td>${escapeHtml(updated.Faculty || '')}</td>
+            <td>${escapeHtml(updated.Time || '')}</td>
+            <td>${escapeHtml(updated.Room || '')}</td>
+            <td>
+                <button class="wishlist-remove-btn" title="Remove from Wishlist" data-course="${escapeHtml(updated.Course)}" data-section="${escapeHtml(updated.Section)}"> <i class="fas fa-minus"></i> Remove</button>
+            </td>
+        `;
+        wishlistBody.appendChild(tr);
+    });
+
+    // Remove event
+    document.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const course = btn.getAttribute('data-course');
+            const section = btn.getAttribute('data-section');
+            wishlist = wishlist.filter(item => !(item.Course === course && item.Section === section));
+            saveWishlist();
+            renderWishlist();
+            renderTable(filteredData.length ? filteredData : courseData); // update add buttons
+        });
+    });
+}
+
+// Add to Wishlist
+function addToWishlist(row) {
+    // Prevent duplicates (by Course+Section)
+    if (!wishlist.some(item => item.Course === row.Course && item.Section === row.Section)) {
+        wishlist.push({
+            Course: row.Course,
+            Section: row.Section,
+            Faculty: row.Faculty,
+            Time: row.Time,
+            Room: row.Room,
+            Semester: row.Semester,
+            Prediction: row.Prediction,
+            Records: row.Records
+        });
+        saveWishlist();
+        renderWishlist();
+    }
+}
 
 // Load CSV data directly from file
 async function loadCSVData() {
@@ -72,6 +155,7 @@ async function loadCSVData() {
         const csvData = await response.text();
         courseData = parseCSV(csvData);
         renderTable(courseData);
+        renderWishlist(); // <-- update wishlist with latest data
         // localStorage.setItem(CACHE_KEY, JSON.stringify(courseData));
     } catch (error) {
         console.error('Error loading CSV:', error);
@@ -130,6 +214,7 @@ function debounce(func, wait) {
     };
 }
 
+// Update renderTable to include Add to Wishlist button
 function renderTable(data) {
     const tableBody = document.getElementById('tableBody');
     const noResults = document.getElementById('noResults');
@@ -162,6 +247,7 @@ function renderTable(data) {
 
     // Render table rows
     paginatedData.forEach((row, index) => {
+        const isWishlisted = wishlist.some(item => item.Course === row.Course && item.Section === row.Section);
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${start + index + 1}</td>
@@ -182,6 +268,14 @@ function renderTable(data) {
                     data-prediction="${escapeHtml(row.Prediction || '')}"
                     data-records="${escapeHtml(row.Records || '')}"
                 >View</button>
+                <button class="view-details-btn add-to-wishlist-btn${isWishlisted ? ' added' : ''}" 
+                    title="${isWishlisted ? 'Already in Wishlist' : 'Add to Wishlist'}"
+                    data-course="${escapeHtml(row.Course)}" 
+                    data-section="${escapeHtml(row.Section)}"
+                    ${isWishlisted ? 'disabled' : ''}
+                >
+                    <i class="fas fa-plus"></i> Add
+                </button>
             </td>
         `;
         tableBody.appendChild(tr);
@@ -189,18 +283,41 @@ function renderTable(data) {
 
     // Attach event listeners after rendering
     document.querySelectorAll('.view-details-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            showModal({
-                Course: btn.getAttribute('data-course'),
-                Section: btn.getAttribute('data-section'),
-                Faculty: btn.getAttribute('data-faculty'),
-                Time: btn.getAttribute('data-time'),
-                Room: btn.getAttribute('data-room'),
-                Semester: btn.getAttribute('data-semester'),
-                Prediction: btn.getAttribute('data-prediction'),
-                Records: btn.getAttribute('data-records')
+        // Only attach modal event for the actual View button, not Add to Wishlist
+        if (
+            !btn.classList.contains('add-to-wishlist-btn') &&
+            !btn.classList.contains('wishlist-remove-btn')
+        ) {
+            btn.addEventListener('click', function() {
+                showModal({
+                    Course: btn.getAttribute('data-course'),
+                    Section: btn.getAttribute('data-section'),
+                    Faculty: btn.getAttribute('data-faculty'),
+                    Time: btn.getAttribute('data-time'),
+                    Room: btn.getAttribute('data-room'),
+                    Semester: btn.getAttribute('data-semester'),
+                    Prediction: btn.getAttribute('data-prediction'),
+                    Records: btn.getAttribute('data-records')
+                });
             });
-        });
+        }
+    });
+
+    // Add to Wishlist event
+    document.querySelectorAll('.add-to-wishlist-btn').forEach(btn => {
+        if (!btn.classList.contains('added')) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent triggering parent events
+                const course = btn.getAttribute('data-course');
+                const section = btn.getAttribute('data-section');
+                // Find the row in courseData
+                const row = courseData.find(item => item.Course === course && item.Section === section);
+                if (row) {
+                    addToWishlist(row);
+                    renderTable(data); // update button state
+                }
+            });
+        }
     });
 }
 
@@ -278,5 +395,6 @@ window.addEventListener('load', () => {
     localStorage.removeItem(CACHE_KEY);
     filteredData = []; // Reset filteredData on load
     loadCSVData();
-    
+    loadWishlist();
+    renderWishlist();
 });
