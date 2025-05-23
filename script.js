@@ -398,3 +398,178 @@ window.addEventListener('load', () => {
     loadWishlist();
     renderWishlist();
 });
+
+// --- Flexible Routine Maker Logic ---
+const ROUTINE_KEY = 'routine_courses';
+const routineDays = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
+const dayMap = {A:'Sat',S:'Sun',M:'Mon',T:'Tue',W:'Wed',R:'Thu',F:'Fri'};
+
+let routineCourses = [];
+
+// Load routine from localStorage
+function loadRoutine() {
+    try {
+        routineCourses = JSON.parse(localStorage.getItem(ROUTINE_KEY)) || [];
+    } catch {
+        routineCourses = [];
+    }
+}
+
+// Save routine to localStorage
+function saveRoutine() {
+    localStorage.setItem(ROUTINE_KEY, JSON.stringify(routineCourses));
+}
+
+// Parse time string like "11:20 AM - 12:50 PM RA"
+function parseRoutineTime(timeStr) {
+    const match = timeStr.match(/^(\d{1,2}:\d{2} [AP]M)\s*-\s*(\d{1,2}:\d{2} [AP]M)\s*([A-Z]+)$/i);
+    if (!match) return null;
+    const [, start, end, days] = match;
+    const dayArr = days.split('').map(d => dayMap[d]).filter(Boolean);
+    return {start, end, days: dayArr};
+}
+
+// Convert time string to minutes since midnight
+function timeToMinutes(t) {
+    const [time, ampm] = t.split(' ');
+    let [h, m] = time.split(':').map(Number);
+    if (ampm === 'PM' && h !== 12) h += 12;
+    if (ampm === 'AM' && h === 12) h = 0;
+    return h * 60 + m;
+}
+
+// Add course to routine (prevent duplicates)
+function addCourseToRoutine({Course, Section, Faculty, Time}) {
+    const parsed = parseRoutineTime(Time);
+    if (!parsed) return;
+    // Prevent duplicates by Course+Section+Faculty+Time
+    if (routineCourses.some(c =>
+        c.code === Course && c.section === Section && c.faculty === Faculty && c.start === parsed.start && c.end === parsed.end && JSON.stringify(c.days) === JSON.stringify(parsed.days)
+    )) return;
+    routineCourses.push({
+        code: Course,
+        section: Section,
+        faculty: Faculty,
+        start: parsed.start,
+        end: parsed.end,
+        startMin: timeToMinutes(parsed.start),
+        endMin: timeToMinutes(parsed.end),
+        days: parsed.days
+    });
+    saveRoutine();
+    renderRoutineTable();
+}
+
+// Remove course from routine by index
+function removeCourseFromRoutine(index) {
+    routineCourses.splice(index, 1);
+    saveRoutine();
+    renderRoutineTable();
+}
+
+// Render routine table with flexible slots and remove button
+function renderRoutineTable() {
+    const tbody = document.querySelector('#routineTable tbody');
+    tbody.innerHTML = '';
+    if (routineCourses.length === 0) return;
+
+    // Collect all unique time slots (start/end of all courses)
+    let timePoints = [];
+    routineCourses.forEach(c => {
+        timePoints.push(c.startMin, c.endMin);
+    });
+    timePoints = Array.from(new Set(timePoints)).sort((a, b) => a - b);
+
+    // Build time slot ranges
+    let timeSlots = [];
+    for (let i = 0; i < timePoints.length - 1; i++) {
+        timeSlots.push([timePoints[i], timePoints[i+1]]);
+    }
+
+    // For each slot, build a row
+    for (const [slotStart, slotEnd] of timeSlots) {
+        const row = document.createElement('tr');
+        // Time label
+        const timeLabel = document.createElement('td');
+        timeLabel.textContent = minutesToTime(slotStart) + ' - ' + minutesToTime(slotEnd);
+        row.appendChild(timeLabel);
+
+        // For each day, check if courses cover this slot
+        for (const day of routineDays) {
+            const cell = document.createElement('td');
+            // Find all courses for this slot and day (overlaps)
+            const coursesInCell = routineCourses
+                .map((c, idx) => ({...c, _idx: idx}))
+                .filter(c =>
+                    c.days.includes(day) &&
+                    c.startMin <= slotStart &&
+                    c.endMin > slotStart
+                );
+            if (coursesInCell.length > 0) {
+                cell.style.whiteSpace = "normal";
+                cell.style.padding = "2px 2px";
+                cell.innerHTML = coursesInCell.map(course => `
+                    <span class="routine-course-block" title="${course.code} Sec-${course.section} (${course.faculty})" style="margin:1px 2px;display:inline-block;">
+                        ${course.code} - ${course.section}<br>
+                        <span style="font-size:0.85em;">${course.faculty}</span>
+                        <button class="routine-remove-btn" data-index="${course._idx}" title="Remove from routine" style="margin-left:4px;background:none;border:none;color:#e11d48;cursor:pointer;font-size:1em;">✕</button>
+                    </span>
+                `).join('');
+            }
+            row.appendChild(cell);
+        }
+        tbody.appendChild(row);
+    }
+
+    // Attach remove event
+    document.querySelectorAll('.routine-remove-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const idx = parseInt(btn.getAttribute('data-index'));
+            removeCourseFromRoutine(idx);
+        });
+    });
+}
+
+// Convert minutes to "hh:mm AM/PM"
+function minutesToTime(mins) {
+    let h = Math.floor(mins / 60);
+    let m = mins % 60;
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    if (h === 0) h = 12;
+    else if (h > 12) h -= 12;
+    return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} ${ampm}`;
+}
+
+// Toggle routine visibility
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('toggleRoutineBtn');
+    const wrapper = document.getElementById('routineTableWrapper');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+            if (wrapper.style.display === 'none') {
+                wrapper.style.display = '';
+                toggleBtn.textContent = 'Hide';
+            } else {
+                wrapper.style.display = 'none';
+                toggleBtn.textContent = 'Show';
+            }
+        });
+    }
+    loadRoutine();
+    renderRoutineTable();
+});
+
+// Hook into Add to Wishlist to also add to routine
+const _origAddToWishlist = addToWishlist;
+addToWishlist = function(row) {
+    _origAddToWishlist(row);
+    addCourseToRoutine(row);
+}
+
+// On page load, load routine from storage
+window.addEventListener('load', () => {
+    // ...existing code...
+    loadRoutine();
+    renderRoutineTable();
+});
