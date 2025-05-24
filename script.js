@@ -83,37 +83,37 @@ function saveWishlist() {
 
 // Render Wishlist Table
 function renderWishlist() {
-    const wishlistContainer = document.getElementById('wishlistContainer');
     const wishlistBody = document.getElementById('wishlistBody');
     wishlistBody.innerHTML = '';
     if (!wishlist.length) {
-        wishlistContainer.style.display = 'none';
-        return;
-    }
-    wishlistContainer.style.display = 'block';
-
-    // Find latest data for each wishlisted course (by Course+Section)
-    wishlist.forEach((wish, idx) => {
-        // Find updated data from courseData
-        const updated = courseData.find(row =>
-            row.Course === wish.Course &&
-            row.Section === wish.Section
-        ) || wish; // fallback to old if not found
-
+        // Show a message row if empty, but don't hide the table
         const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${idx + 1}</td>
-            <td>${escapeHtml(updated.Course || '')}</td>
-            <td>${escapeHtml(updated.Section || '')}</td>
-            <td>${escapeHtml(updated.Faculty || '')}</td>
-            <td>${escapeHtml(updated.Time || '')}</td>
-            <td>${escapeHtml(updated.Room || '')}</td>
-            <td>
-                <button class="wishlist-remove-btn" title="Remove from Wishlist" data-course="${escapeHtml(updated.Course)}" data-section="${escapeHtml(updated.Section)}"> <i class="fas fa-minus"></i> Remove</button>
-            </td>
-        `;
+        tr.innerHTML = `<td colspan="7" style="text-align:center; color:var(--text-muted);">No courses in your wishlist.</td>`;
         wishlistBody.appendChild(tr);
-    });
+    } else {
+        // Find latest data for each wishlisted course (by Course+Section)
+        wishlist.forEach((wish, idx) => {
+            // Find updated data from courseData
+            const updated = courseData.find(row =>
+                row.Course === wish.Course &&
+                row.Section === wish.Section
+            ) || wish; // fallback to old if not found
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${idx + 1}</td>
+                <td>${escapeHtml(updated.Course || '')}</td>
+                <td>${escapeHtml(updated.Section || '')}</td>
+                <td>${escapeHtml(updated.Faculty || '')}</td>
+                <td>${escapeHtml(updated.Time || '')}</td>
+                <td>${escapeHtml(updated.Room || '')}</td>
+                <td>
+                    <button class="wishlist-remove-btn" title="Remove from Wishlist" data-course="${escapeHtml(updated.Course)}" data-section="${escapeHtml(updated.Section)}">Remove</button>
+                </td>
+            `;
+            wishlistBody.appendChild(tr);
+        });
+    }
 
     // Remove event
     document.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
@@ -268,11 +268,10 @@ function renderTable(data) {
                     data-prediction="${escapeHtml(row.Prediction || '')}"
                     data-records="${escapeHtml(row.Records || '')}"
                 >View</button>
-                <button class="view-details-btn add-to-wishlist-btn${isWishlisted ? ' added' : ''}" 
-                    title="${isWishlisted ? 'Already in Wishlist' : 'Add to Wishlist'}"
+                <button class="view-details-btn add-to-wishlist-btn"
+                    title="Add to My Courses or Routine"
                     data-course="${escapeHtml(row.Course)}" 
                     data-section="${escapeHtml(row.Section)}"
-                    ${isWishlisted ? 'disabled' : ''}
                 >
                     <i class="fas fa-plus"></i> Add
                 </button>
@@ -313,8 +312,7 @@ function renderTable(data) {
                 // Find the row in courseData
                 const row = courseData.find(item => item.Course === course && item.Section === section);
                 if (row) {
-                    addToWishlist(row);
-                    renderTable(data); // update button state
+                    showAddToModal(row);
                 }
             });
         }
@@ -359,6 +357,53 @@ modal.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.classList.add('hidden');
     }
+});
+
+// --- Add-to Modal Logic ---
+const addToModal = document.getElementById('addToModal');
+const addToModalBody = document.getElementById('addToModalBody');
+const closeAddToModal = document.getElementById('closeAddToModal');
+
+function showAddToModal(row) {
+    // Check if already in wishlist or routine
+    const inWishlist = wishlist.some(item => item.Course === row.Course && item.Section === row.Section);
+    const inRoutine = routineCourses.some(c =>
+        c.code === row.Course && c.section === row.Section && c.faculty === row.Faculty && c.start === parseRoutineTime(row.Time)?.start
+    );
+
+    addToModalBody.innerHTML = `
+      <button class="add-to-modal-btn" id="addToWishlistModalBtn" ${inWishlist ? 'disabled' : ''}>
+        ${inWishlist ? 'Already in My Courses' : 'Add to My Courses'}
+      </button>
+      <button class="add-to-modal-btn" id="addToRoutineModalBtn" ${inRoutine ? 'disabled' : ''}>
+        ${inRoutine ? 'Already in Routine' : 'Add to Routine'}
+      </button>
+    `;
+
+    // Add event listeners
+    if (!inWishlist) {
+        document.getElementById('addToWishlistModalBtn').onclick = function() {
+            addToWishlist(row);
+            addToModal.classList.add('hidden');
+            renderTable(filteredData.length ? filteredData : courseData);
+        };
+    }
+    if (!inRoutine) {
+        document.getElementById('addToRoutineModalBtn').onclick = function() {
+            addCourseToRoutine(row);
+            addToModal.classList.add('hidden');
+            renderTable(filteredData.length ? filteredData : courseData);
+        };
+    }
+    addToModal.classList.remove('hidden');
+}
+
+// Close modal logic
+if (closeAddToModal) {
+    closeAddToModal.onclick = () => addToModal.classList.add('hidden');
+}
+addToModal.addEventListener('click', (e) => {
+    if (e.target === addToModal) addToModal.classList.add('hidden');
 });
 
 // Add pagination event listeners
@@ -541,30 +586,55 @@ function minutesToTime(mins) {
     return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} ${ampm}`;
 }
 
-// Toggle routine visibility
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleBtn = document.getElementById('toggleRoutineBtn');
+// --- Wishlist Hide/Show Toggle with Persistence ---
+const WISHLIST_VIS_KEY = 'wishlist_visible';
+const ROUTINE_VIS_KEY = 'routine_visible';
+
+function setWishlistVisible(visible) {
+    const wishlistContainer = document.getElementById('wishlistContainer');
+    const btn = document.getElementById('toggleWishlistBtn');
+    if (!wishlistContainer || !btn) return;
+    wishlistContainer.style.display = visible ? 'block' : 'none';
+    btn.textContent = visible ? 'Hide' : 'Show';
+    localStorage.setItem(WISHLIST_VIS_KEY, visible ? '1' : '0');
+}
+
+function setRoutineVisible(visible) {
     const wrapper = document.getElementById('routineTableWrapper');
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', function() {
-            if (wrapper.style.display === 'none') {
-                wrapper.style.display = '';
-                toggleBtn.textContent = 'Hide';
-            } else {
-                wrapper.style.display = 'none';
-                toggleBtn.textContent = 'Show';
-            }
+    const btn = document.getElementById('toggleRoutineBtn');
+    if (!wrapper || !btn) return;
+    wrapper.style.display = visible ? '' : 'none';
+    btn.textContent = visible ? 'Hide' : 'Show';
+    localStorage.setItem(ROUTINE_VIS_KEY, visible ? '1' : '0');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Wishlist toggle
+    const wishlistBtn = document.getElementById('toggleWishlistBtn');
+    if (wishlistBtn) {
+        wishlistBtn.addEventListener('click', function() {
+            const visible = localStorage.getItem(WISHLIST_VIS_KEY) !== '0';
+            setWishlistVisible(!visible);
         });
     }
-    loadRoutine();
-    renderRoutineTable();
+    // Routine toggle (already correct)
+    const routineBtn = document.getElementById('toggleRoutineBtn');
+    if (routineBtn) {
+        routineBtn.addEventListener('click', function() {
+            const visible = localStorage.getItem(ROUTINE_VIS_KEY) !== '0';
+            setRoutineVisible(!visible);
+        });
+    }
+    // On load, set visibility from storage (default to visible if not set)
+    setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
+    setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
 });
 
 // Hook into Add to Wishlist to also add to routine
 const _origAddToWishlist = addToWishlist;
 addToWishlist = function(row) {
     _origAddToWishlist(row);
-    addCourseToRoutine(row);
+    // addCourseToRoutine(row);
 }
 
 // On page load, load routine from storage

@@ -73,27 +73,30 @@
                 <span>✅ Phase 3 (20 to 29 May) ◆ Last updated : 03:05 PM 22 May, 2025</span>
             </div>
             <!-- Wishlist Section -->
-            <div id="wishlistContainer" class="table-container" style="margin-bottom: 24px; display:none;">
-                <h2 style="text-align:left; font-size:1.1rem; margin:16px;">My courses</h2>
-                <table id="wishlistTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Course</th>
-                            <th>Section</th>
-                            <th>Faculty</th>
-                            <th>Time</th>
-                            <th>Seats</th>
-                            <th>Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody id="wishlistBody"></tbody>
-                </table>
-            </div>
-                <!-- Compact Routine Maker -->
+<div id="wishlist-header" class="wishlist-header">
+    <h2 style="text-align:left; font-size:1.1rem; margin:16px 0 16px 16px;">My courses</h2>
+    <button id="toggleWishlistBtn" class="routine-toggle-btn" style="margin-right: 18px; margin-top: 0;">Hide</button>
+</div>
+<div id="wishlistContainer" class="table-container" style="margin-bottom: 24px;">
+    <table id="wishlistTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Course</th>
+                <th>Section</th>
+                <th>Faculty</th>
+                <th>Time</th>
+                <th>Seats</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="wishlistBody"></tbody>
+    </table>
+</div>
+<!-- Compact Routine Maker -->
 <div id="routineMakerContainer" class="routine-maker-container">
     <div class="routine-header">
-        <span>🗓️ My Routine</span>
+        <span>My Routine</span>
         <button id="toggleRoutineBtn" class="routine-toggle-btn">Hide</button>
     </div>
     <div id="routineTableWrapper">
@@ -218,6 +221,18 @@
                 </div>
             </div>
         </div>
+        <!-- Add-to Modal -->
+<div id="addToModal" class="modal hidden">
+  <div class="modal-content" style="max-width:340px;">
+    <div class="modal-header">
+      <h2>Add Course</h2>
+      <button class="close-modal" id="closeAddToModal">&times;</button>
+    </div>
+    <div class="modal-body" id="addToModalBody" style="display:flex;flex-direction:column;gap:18px;">
+      <!-- Buttons will be injected here -->
+    </div>
+  </div>
+</div>
     </div>
 
     <!-- Floating Chat Popup -->

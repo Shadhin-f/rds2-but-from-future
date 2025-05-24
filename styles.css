@@ -1551,9 +1551,16 @@ records-list::-webkit-scrollbar-thumb {
 #resourceList .resource-item:first-child {
   margin-top: 8px;
 }
-
-#wishlistContainer {
+#wishlist-header {
   background: var(--surface-color);
+  border-radius: 12px;
+  margin-bottom: 8px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#wishlistContainer {
+  background: var(--surface-color) !important;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.13);
   border: 1px solid var(--border-color);
@@ -1702,6 +1709,11 @@ records-list::-webkit-scrollbar-thumb {
   cursor: not-allowed;
   box-shadow: none;
 }
+@media (max-width: 700px) {
+  .add-to-wishlist-btn {
+    margin-top: 3px;
+  }
+}
 
 /* Routine Maker Styles */
 .routine-maker-container {
@@ -1765,21 +1777,28 @@ records-list::-webkit-scrollbar-thumb {
   border-bottom: 2px solid var(--primary-color);
 }
 .routine-course-block {
-  /* background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%); */
-  background: rgba(87, 44, 173, 0.75);
+  background: linear-gradient(
+    90deg,
+    rgb(77, 51, 124) 0%,
+    rgb(59, 10, 114) 100%
+  );
+  /* background: rgba(69, 16, 167, 0.76); */
   color: #fff;
-  /* border-radius: 7px; */
+  border-radius: 5px;
   padding: 2px 4px;
   font-size: 0.93em;
   font-weight: 600;
-  /* margin: 1px 0; */
-  box-shadow: 0 1px 4px rgba(109, 40, 217, 0.13);
+  margin: 0 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   display: inline-block;
   min-width: 48px;
   max-width: 110px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.routine-course-block:hover {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 .routine-course-block .routine-remove-btn {
   margin-left: 4px;
@@ -1794,8 +1813,7 @@ records-list::-webkit-scrollbar-thumb {
   transition: background 0.15s, color 0.15s;
 }
 .routine-course-block .routine-remove-btn:hover {
-  background: #e11d48;
-  color: #fff;
+  color: #fff !important;
 }
 @media (max-width: 700px) {
   .routine-table th,
@@ -1809,4 +1827,30 @@ records-list::-webkit-scrollbar-thumb {
     font-size: 1rem;
     padding: 10px 8px 4px 8px;
   }
+}
+
+/* Add-to Modal Buttons */
+.add-to-modal-btn {
+  background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 12px 0;
+  margin: 0 0 0 0;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, opacity 0.18s;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.09);
+}
+.add-to-modal-btn:disabled {
+  background: #334155;
+  color: #a1a1aa;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.add-to-modal-btn:not(:disabled):hover {
+  background: #6d28d9;
+  color: #fff;
 }
