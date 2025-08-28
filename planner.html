@@ -1,546 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
+  <head>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
     <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-DR0D2D6C35');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DR0D2D6C35");
     </script>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Semester Planner</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css?v=1.1">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css?v=1.1" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-        /* Additional styles for planner layout */
-        .planner-container {
-            display: block;
-            margin-top: 32px;
-        }
-        .topbar-controls {
-            /* display: flex; */
-            flex-wrap: wrap;
-            gap: 18px;
-            align-items: flex-end;
-            justify-content: flex-start;
-            background: var(--surface-color);
-            border-radius: 10px;
-            padding: 18px 14px 10px 14px;
-            box-shadow: 0 2px 12px rgba(109,40,217,0.07);
-            border: 1px solid var(--border-color);
-            margin-bottom: 24px;
-        }
-        .topbar-section {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            min-width: 220px;
-        }
-        .topbar-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .topbar-row input[type="text"],
-        .topbar-row input[type="number"],
-        .topbar-row select {
-            width: 30%;
-            height: 32px;
-            font-size: 0.97rem;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            background: var(--surface-color);
-            color: var(--text-color);
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-        .topbar-row input[type="number"] {
-            min-width: 30px;
-            text-align: center;
-        }
-        /* .topbar-row select {
+      /* Additional styles for planner layout */
+      .planner-container {
+        display: block;
+        margin-top: 32px;
+      }
+      .topbar-controls {
+        /* display: flex; */
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: flex-end;
+        justify-content: flex-start;
+        background: var(--surface-color);
+        border-radius: 10px;
+        padding: 18px 14px 10px 14px;
+        box-shadow: 0 2px 12px rgba(109, 40, 217, 0.07);
+        border: 1px solid var(--border-color);
+        margin-bottom: 24px;
+      }
+      .topbar-section {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 220px;
+      }
+      .topbar-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .topbar-row input[type="text"],
+      .topbar-row input[type="number"],
+      .topbar-row select {
+        width: 30%;
+        height: 32px;
+        font-size: 0.97rem;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        background: var(--surface-color);
+        color: var(--text-color);
+        padding: 0 10px;
+        box-sizing: border-box;
+      }
+      .topbar-row input[type="number"] {
+        min-width: 30px;
+        text-align: center;
+      }
+      /* .topbar-row select {
              min-width: 90px; 
         } */
-        .topbar-row button {
-            /* width: fit-content; */
-            height: 32px;
-            font-size: 0.97rem;
-            border-radius: 6px;
-            background: var(--primary-gradient);
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            padding: 0 14px;
-            font-weight: 500;
-            transition: background 0.2s;
-            white-space: nowrap;
-        }
-        .topbar-row button:hover {
-            background: #6d28d9;
-        }
-        .topbar-section .section-title {
-            color: var(--primary-color);
-            font-size: 1.02rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            margin-top: 0;
+      .topbar-row button {
+        /* width: fit-content; */
+        height: 32px;
+        font-size: 0.97rem;
+        border-radius: 6px;
+        background: var(--primary-gradient);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        padding: 0 14px;
+        font-weight: 500;
+        transition: background 0.2s;
+        white-space: nowrap;
+      }
+      .topbar-row button:hover {
+        background: #6d28d9;
+      }
+      .topbar-section .section-title {
+        color: var(--primary-color);
+        font-size: 1.02rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+        margin-top: 0;
+      }
+      .semester-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        flex: 1;
+      }
+      .semester-box {
+        background: var(--surface-color);
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        opacity: 0.8;
+        box-shadow: 0 2px 12px rgba(109, 40, 217, 0.07);
+        padding: 14px 10px 10px 10px;
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+      }
+      .semester-title {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 1.08rem;
+      }
+      .semester-courses {
+        flex: 1;
+      }
+      .semester-course-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(139, 92, 246, 0.09);
+        border-radius: 5px;
+        padding: 5px 8px;
+        margin-bottom: 6px;
+        font-size: 0.97rem;
+      }
+      .semester-course-item.done {
+        text-decoration: line-through;
+        color: #94a3b8;
+        opacity: 0.7;
+      }
+      .semester-course-actions button {
+        background: none;
+        border: none;
+        color: #e11d48;
+        font-size: 1em;
+        cursor: pointer;
+        margin-left: 4px;
+      }
+      .semester-course-actions .toggle-done {
+        color: #6d28d9;
+      }
+      .add-to-semester-btn {
+        background: var(--primary-gradient);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 3px 10px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        margin-left: 8px;
+      }
+      @media (max-width: 900px) {
+        .topbar-controls {
+          flex-direction: column;
+          gap: 14px;
         }
         .semester-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            flex: 1;
+          grid-template-columns: repeat(2, 1fr);
         }
-        .semester-box {
-            background: var(--surface-color);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            opacity: 0.8;
-            box-shadow: 0 2px 12px rgba(109,40,217,0.07);
-            padding: 14px 10px 10px 10px;
-            min-height: 170px;
-            display: flex;
-            flex-direction: column;
+      }
+      @media (max-width: 600px) {
+        .topbar-controls {
+          flex-direction: column;
+          gap: 10px;
         }
-        .semester-title {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.08rem;
+        .semester-grid {
+          grid-template-columns: 1fr;
         }
-        .semester-courses {
-            flex: 1;
-        }
-        .semester-course-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(139,92,246,0.09);
-            border-radius: 5px;
-            padding: 5px 8px;
-            margin-bottom: 6px;
-            font-size: 0.97rem;
-        }
-        .semester-course-item.done {
-            text-decoration: line-through;
-            color: #94a3b8;
-            opacity: 0.7;
-        }
-        .semester-course-actions button {
-            background: none;
-            border: none;
-            color: #e11d48;
-            font-size: 1em;
-            cursor: pointer;
-            margin-left: 4px;
-        }
-        .semester-course-actions .toggle-done {
-            color: #6d28d9;
-        }
-        .add-to-semester-btn {
-            background: var(--primary-gradient);
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 3px 10px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            margin-left: 8px;
-        }
-        @media (max-width: 900px) {
-            .topbar-controls { flex-direction: column; gap: 14px; }
-            .semester-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .topbar-controls { flex-direction: column; gap: 10px; }
-            .semester-grid { grid-template-columns: 1fr; }
-        }
-        .credit-counter {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 18px;
-            text-align: center;
-        }
-        .semester-done {
-            opacity: 0.55;
-            background: linear-gradient(90deg, #22c55e22 0%, #64748b11 100%);
-        }
-        .semester-done .semester-title {
-            color: #22c55e !important;
-        }
-        .semester-done-btn {
-            vertical-align: middle;
-        }
-        .trending-link {
-            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
-            border-color: #e11d48 !important;
-            color: #fff !important;
-            position: relative;
-            z-index: 2;
-        }
-        .trending-link:hover {
-            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
-            background: linear-gradient(135deg, #e11d48, #be185d) !important;
-            color: #fff !important;
-        }
+      }
+      .credit-counter {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 18px;
+        text-align: center;
+      }
+      .semester-done {
+        opacity: 0.55;
+        background: linear-gradient(90deg, #22c55e22 0%, #64748b11 100%);
+      }
+      .semester-done .semester-title {
+        color: #22c55e !important;
+      }
+      .semester-done-btn {
+        vertical-align: middle;
+      }
+      .trending-link {
+        box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+        border-color: #e11d48 !important;
+        color: #fff !important;
+        position: relative;
+        z-index: 2;
+      }
+      .trending-link:hover {
+        box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+        background: linear-gradient(135deg, #e11d48, #be185d) !important;
+        color: #fff !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
-        <header>
-            <h1>Semester Planner</h1>
-            <nav class="nav-bar">
-                <a href="index.html">RDS2</a>
-                <a href="calendar.html">Academic Calendar</a>
-                <a href="resources.html" class="trending-link">Study Materials</a>
-                <a href="routine.html">Routine Maker</a>
-                <a href="planner.html" class="active">Semester Planner</a>
-                <a href="#" onclick="alert('Freshman Guides are coming soon!'); return false;">Freshman Guides</a>
-                <a href="#" onclick="alert('Course maps of all departments coming soon!'); return false;">Course map</a>
-            </nav>
-        </header>
-        <div class="credit-counter">
-            Total Completed Credits: <span id="completedCredits">0</span>
-            <br>
-            Completed Semesters: <span id="completedSemesters">0</span>
-        </div>
-        
-        <div class="planner-container">
-            <div class="topbar-controls">
-                <div class="topbar-left" style="display:flex; flex-direction:column; gap:18px;">
-                    <div class="topbar-section">
-                        <div class="section-title">Search and add course</div>
-                        <div class="topbar-row" style="margin-bottom:6px;">
-                            <input type="text" id="courseSearchInput" placeholder="Search course..." style="flex:2;">
-                            <select id="courseDropdown" style="flex:2; min-width:120px;">
-                                <option value="">Select course...</option>
-                            </select>
-                        </div>
-                        <div class="topbar-row" style="margin-bottom:6px;">
-                            <input type="number" id="dropdownCourseCredit" placeholder="Credit" min="0.1" max="6" step="0.1" style="width:60px;" />
-                            <select id="dropdownSemesterSelect" style="min-width:90px;"></select>
-                            <button type="button" id="addDropdownCourseBtn">Add to Semester</button>
-                        </div>
-                    </div>
-                    <div class="topbar-section">
-                        <div class="section-title">Add manual course</div>
-                        <form class="topbar-row" id="addCourseForm" autocomplete="off" style="margin-bottom:6px;">
-                            <input type="text" id="newCourseName" placeholder="Course Name" required maxlength="20" style="flex:2;">
-                            <input type="number" id="newCourseCredit" placeholder="Credit" required min="0.1" max="6" step="0.1" style="width:60px;">
-                            <select id="manualSemesterSelect" style="min-width:90px;"></select>
-                            <button type="submit">Add</button>
-                        </form>
-                    </div>
-                </div>
+      <header>
+        <h1>Semester Planner</h1>
+        <nav class="nav-bar">
+          <a href="index.html">RDS2</a>
+          <a href="calendar.html">Academic Calendar</a>
+          <a href="resources.html" class="trending-link">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html" class="active">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a
+            href="#"
+            onclick="alert('Course maps of all departments coming soon!'); return false;"
+            >Course map</a
+          >
+        </nav>
+      </header>
+      <div class="credit-counter">
+        Total Completed Credits: <span id="completedCredits">0</span>
+        <br />
+        Completed Semesters: <span id="completedSemesters">0</span>
+      </div>
+
+      <div class="planner-container">
+        <div class="topbar-controls">
+          <div
+            class="topbar-left"
+            style="display: flex; flex-direction: column; gap: 18px"
+          >
+            <div class="topbar-section">
+              <div class="section-title">Search and add course</div>
+              <div class="topbar-row" style="margin-bottom: 6px">
+                <input
+                  type="text"
+                  id="courseSearchInput"
+                  placeholder="Search course..."
+                  style="flex: 2"
+                />
+                <select id="courseDropdown" style="flex: 2; min-width: 120px">
+                  <option value="">Select course...</option>
+                </select>
+              </div>
+              <div class="topbar-row" style="margin-bottom: 6px">
+                <input
+                  type="number"
+                  id="dropdownCourseCredit"
+                  placeholder="Credit"
+                  min="0.1"
+                  max="6"
+                  step="0.1"
+                  style="width: 60px"
+                />
+                <select
+                  id="dropdownSemesterSelect"
+                  style="min-width: 90px"
+                ></select>
+                <button type="button" id="addDropdownCourseBtn">
+                  Add to Semester
+                </button>
+              </div>
             </div>
-            <main style="flex:1;">
-                <div class="semester-grid" id="semesterGrid">
-                    <!-- 12 semester boxes will be rendered here -->
-                </div>
-                <div style="text-align:center; margin-top:28px;">
-                    <button id="addSemesterBtn" class="add-to-semester-btn" style="font-size:1.05rem;">
-                        <i class="fa fa-plus"></i> Add Semester
-                    </button>
-                    <br><br>
-                    <button id="removeSemesterBtn" class="add-to-semester-btn" style="font-size:1.05rem; margin-left:10px; background:#e11d48; background:linear-gradient(135deg,#e11d48,#be185d);">
-                        <i class="fa fa-minus"></i> Remove Semester
-                    </button>
-                </div>
-            </main>
+            <div class="topbar-section">
+              <div class="section-title">Add manual course</div>
+              <form
+                class="topbar-row"
+                id="addCourseForm"
+                autocomplete="off"
+                style="margin-bottom: 6px"
+              >
+                <input
+                  type="text"
+                  id="newCourseName"
+                  placeholder="Course Name"
+                  required
+                  maxlength="20"
+                  style="flex: 2"
+                />
+                <input
+                  type="number"
+                  id="newCourseCredit"
+                  placeholder="Credit"
+                  required
+                  min="0.1"
+                  max="6"
+                  step="0.1"
+                  style="width: 60px"
+                />
+                <select
+                  id="manualSemesterSelect"
+                  style="min-width: 90px"
+                ></select>
+                <button type="submit">Add</button>
+              </form>
+            </div>
+          </div>
         </div>
+        <main style="flex: 1">
+          <div class="semester-grid" id="semesterGrid">
+            <!-- 12 semester boxes will be rendered here -->
+          </div>
+          <div style="text-align: center; margin-top: 28px">
+            <button
+              id="addSemesterBtn"
+              class="add-to-semester-btn"
+              style="font-size: 1.05rem"
+            >
+              <i class="fa fa-plus"></i> Add Semester
+            </button>
+            <br /><br />
+            <button
+              id="removeSemesterBtn"
+              class="add-to-semester-btn"
+              style="
+                font-size: 1.05rem;
+                margin-left: 10px;
+                background: #e11d48;
+                background: linear-gradient(135deg, #e11d48, #be185d);
+              "
+            >
+              <i class="fa fa-minus"></i> Remove Semester
+            </button>
+          </div>
+        </main>
+      </div>
     </div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-            <!-- ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5572277246422121"
-                 data-ad-slot="5845016719"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <!-- ad -->
+    <ins
+      class="adsbygoogle"
+      style="display: block"
+      data-ad-client="ca-pub-5572277246422121"
+      data-ad-slot="5845016719"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
     <footer class="footer">
-        <p>
-            © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
-            <br>
-        </p>
-        <div class="social-links">
-            <span>Follow me on</span>
-            <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-            </a>
-        </div>
-        <br>
-        Last updated: 12-05-2025 17:42
+      <p>
+        © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+        <br />
+      </p>
+      <div class="social-links">
+        <span>Follow me on</span>
+        <a
+          href="https://www.facebook.com/share/19DGPCk2wr/"
+          target="_blank"
+          title="Facebook"
+        >
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/_shadhin_f"
+          target="_blank"
+          title="Instagram"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+          target="_blank"
+          title="LinkedIn"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <br />
+      Last updated: 12-05-2025 17:42
     </footer>
     <script src="script.js"></script>
     <script>
-        let semesterCourses = Array.from({length:12}, () => []); // [{name, credit, done}]
-        let courseListCSV = []; // [{name, credit}]
-        let filteredCourseListCSV = []; // for search
+      let semesterCourses = Array.from({ length: 12 }, () => []); // [{name, credit, done}]
+      let courseListCSV = []; // [{name, credit}]
+      let filteredCourseListCSV = []; // for search
 
-        // Local Storage Keys
-        const STORAGE_KEY_SEMESTERS = "planner_semesterCourses";
+      // Local Storage Keys
+      const STORAGE_KEY_SEMESTERS = "planner_semesterCourses";
 
-        // Save to localStorage
-        function savePlannerData() {
-            localStorage.setItem(STORAGE_KEY_SEMESTERS, JSON.stringify(semesterCourses));
+      // Save to localStorage
+      function savePlannerData() {
+        localStorage.setItem(
+          STORAGE_KEY_SEMESTERS,
+          JSON.stringify(semesterCourses)
+        );
+      }
+
+      // Load from localStorage
+      function loadPlannerData() {
+        const sem = localStorage.getItem(STORAGE_KEY_SEMESTERS);
+        if (sem) {
+          try {
+            semesterCourses = JSON.parse(sem);
+          } catch {}
         }
+      }
 
-        // Load from localStorage
-        function loadPlannerData() {
-            const sem = localStorage.getItem(STORAGE_KEY_SEMESTERS);
-            if (sem) {
-                try {
-                    semesterCourses = JSON.parse(sem);
-                } catch {}
+      // Fetch CSV and populate dropdown
+      async function fetchCourseCSV() {
+        try {
+          const resp = await fetch("course_list.csv");
+          const text = await resp.text();
+          courseListCSV = [];
+          text.split("\n").forEach((line, idx) => {
+            if (idx === 0) return; // skip header
+            const [name, credit] = line.split(",").map((x) => x && x.trim());
+            if (name && credit && !isNaN(Number(credit))) {
+              courseListCSV.push({ name, credit: Number(credit) });
             }
+          });
+          populateCourseDropdown();
+        } catch (e) {
+          // fallback: no csv
         }
+      }
 
-        // Fetch CSV and populate dropdown
-        async function fetchCourseCSV() {
-            try {
-                const resp = await fetch('course_list.csv');
-                const text = await resp.text();
-                courseListCSV = [];
-                text.split('\n').forEach((line, idx) => {
-                    if (idx === 0) return; // skip header
-                    const [name, credit] = line.split(',').map(x => x && x.trim());
-                    if (name && credit && !isNaN(Number(credit))) {
-                        courseListCSV.push({ name, credit: Number(credit) });
-                    }
-                });
-                populateCourseDropdown();
-            } catch (e) {
-                // fallback: no csv
-            }
+      function populateCourseDropdown(filter = "") {
+        const dropdown = document.getElementById("courseDropdown");
+        let list = courseListCSV;
+        if (filter) {
+          const f = filter.toLowerCase();
+          list = courseListCSV.filter((c) => c.name.toLowerCase().includes(f));
         }
-
-        function populateCourseDropdown(filter = "") {
-            const dropdown = document.getElementById('courseDropdown');
-            let list = courseListCSV;
-            if (filter) {
-                const f = filter.toLowerCase();
-                list = courseListCSV.filter(c => c.name.toLowerCase().includes(f));
-            }
-            filteredCourseListCSV = list;
-            dropdown.innerHTML = `<option value="">Select course...</option>`;
-            list.forEach((c, i) => {
-                dropdown.innerHTML += `<option value="${courseListCSV.indexOf(c)}">${c.name} (${c.credit})</option>`;
-            });
-            // If only one result, select it
-            if (list.length === 1) {
-                dropdown.selectedIndex = 1;
-                dropdown.dispatchEvent(new Event('change'));
-            }
+        filteredCourseListCSV = list;
+        dropdown.innerHTML = `<option value="">Select course...</option>`;
+        list.forEach((c, i) => {
+          dropdown.innerHTML += `<option value="${courseListCSV.indexOf(c)}">${
+            c.name
+          } (${c.credit})</option>`;
+        });
+        // If only one result, select it
+        if (list.length === 1) {
+          dropdown.selectedIndex = 1;
+          dropdown.dispatchEvent(new Event("change"));
         }
+      }
 
-        // Search bar for dropdown
-        document.getElementById('courseSearchInput').addEventListener('input', function() {
-            populateCourseDropdown(this.value);
+      // Search bar for dropdown
+      document
+        .getElementById("courseSearchInput")
+        .addEventListener("input", function () {
+          populateCourseDropdown(this.value);
         });
 
-        // Populate semester selects
-        function populateSemesterSelects() {
-            const semOpts = Array.from({length: semesterCourses.length}, (_,i)=>`<option value="${i}">Semester ${i+1}</option>`).join('');
-            document.getElementById('dropdownSemesterSelect').innerHTML = semOpts;
-            document.getElementById('manualSemesterSelect').innerHTML = semOpts;
+      // Populate semester selects
+      function populateSemesterSelects() {
+        const semOpts = Array.from(
+          { length: semesterCourses.length },
+          (_, i) => `<option value="${i}">Semester ${i + 1}</option>`
+        ).join("");
+        document.getElementById("dropdownSemesterSelect").innerHTML = semOpts;
+        document.getElementById("manualSemesterSelect").innerHTML = semOpts;
+      }
+
+      // Add course from dropdown
+      document
+        .getElementById("addDropdownCourseBtn")
+        .addEventListener("click", function () {
+          const idx = document.getElementById("courseDropdown").value;
+          const credit = parseFloat(
+            document.getElementById("dropdownCourseCredit").value
+          );
+          const semIdx = parseInt(
+            document.getElementById("dropdownSemesterSelect").value,
+            10
+          );
+          if (idx === "" || isNaN(credit) || isNaN(semIdx)) return;
+          const course = courseListCSV[idx];
+          semesterCourses[semIdx].push({
+            name: course.name,
+            credit,
+            done: false,
+          });
+          renderSemesterGrid();
+          updateCompletedCredits();
+          updateCompletedSemesters();
+          savePlannerData();
+        });
+
+      // When course is selected, auto-fill credit box
+      document
+        .getElementById("courseDropdown")
+        .addEventListener("change", function () {
+          const idx = this.value;
+          if (idx !== "" && courseListCSV[idx]) {
+            document.getElementById("dropdownCourseCredit").value =
+              courseListCSV[idx].credit;
+          } else {
+            document.getElementById("dropdownCourseCredit").value = "";
+          }
+        });
+
+      // Add manual course
+      document
+        .getElementById("addCourseForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const name = document.getElementById("newCourseName").value.trim();
+          const credit = parseFloat(
+            document.getElementById("newCourseCredit").value
+          );
+          const semIdx = parseInt(
+            document.getElementById("manualSemesterSelect").value,
+            10
+          );
+          if (!name || isNaN(credit) || isNaN(semIdx)) return;
+          semesterCourses[semIdx].push({ name, credit, done: false });
+          renderSemesterGrid();
+          updateCompletedCredits();
+          updateCompletedSemesters();
+          savePlannerData();
+          this.reset();
+        });
+
+      // Add a done property for each semester
+      function ensureSemesterDoneFlags() {
+        for (let i = 0; i < semesterCourses.length; i++) {
+          if (typeof semesterCourses[i].done !== "boolean") {
+            semesterCourses[i].done = false;
+          }
         }
+      }
 
-        // Add course from dropdown
-        document.getElementById('addDropdownCourseBtn').addEventListener('click', function() {
-            const idx = document.getElementById('courseDropdown').value;
-            const credit = parseFloat(document.getElementById('dropdownCourseCredit').value);
-            const semIdx = parseInt(document.getElementById('dropdownSemesterSelect').value, 10);
-            if (idx === "" || isNaN(credit) || isNaN(semIdx)) return;
-            const course = courseListCSV[idx];
-            semesterCourses[semIdx].push({ name: course.name, credit, done: false });
-            renderSemesterGrid();
-            updateCompletedCredits();
-            updateCompletedSemesters();
-            savePlannerData();
-        });
-
-        // When course is selected, auto-fill credit box
-        document.getElementById('courseDropdown').addEventListener('change', function() {
-            const idx = this.value;
-            if (idx !== "" && courseListCSV[idx]) {
-                document.getElementById('dropdownCourseCredit').value = courseListCSV[idx].credit;
-            } else {
-                document.getElementById('dropdownCourseCredit').value = "";
-            }
-        });
-
-        // Add manual course
-        document.getElementById('addCourseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('newCourseName').value.trim();
-            const credit = parseFloat(document.getElementById('newCourseCredit').value);
-            const semIdx = parseInt(document.getElementById('manualSemesterSelect').value, 10);
-            if (!name || isNaN(credit) || isNaN(semIdx)) return;
-            semesterCourses[semIdx].push({ name, credit, done: false });
-            renderSemesterGrid();
-            updateCompletedCredits();
-            updateCompletedSemesters();
-            savePlannerData();
-            this.reset();
-        });
-
-        // Add a done property for each semester
-        function ensureSemesterDoneFlags() {
-            for (let i = 0; i < semesterCourses.length; i++) {
-                if (typeof semesterCourses[i].done !== "boolean") {
-                    semesterCourses[i].done = false;
-                }
-            }
-        }
-
-        // Render semester boxes (now dynamic count)
-        function renderSemesterGrid() {
-            ensureSemesterDoneFlags();
-            const grid = document.getElementById('semesterGrid');
-            grid.innerHTML = '';
-            for (let i = 0; i < semesterCourses.length; i++) {
-                const isDone = semesterCourses[i].done;
-                const doneBtnTitle = isDone ? "Mark semester as not done" : "Mark semester as done";
-                // Calculate completed credits for this semester
-                const completedCredits = semesterCourses[i]
-                    .filter(course => course.done)
-                    .reduce((sum, course) => sum + parseFloat(course.credit), 0);
-                const creditsDisplay = completedCredits % 1 === 0 ? completedCredits : completedCredits.toFixed(1);
-                grid.innerHTML += `
-                    <div class="semester-box${isDone ? ' semester-done' : ''}">
+      // Render semester boxes (now dynamic count)
+      function renderSemesterGrid() {
+        ensureSemesterDoneFlags();
+        const grid = document.getElementById("semesterGrid");
+        grid.innerHTML = "";
+        for (let i = 0; i < semesterCourses.length; i++) {
+          const isDone = semesterCourses[i].done;
+          const doneBtnTitle = isDone
+            ? "Mark semester as not done"
+            : "Mark semester as done";
+          // Calculate completed credits for this semester
+          const completedCredits = semesterCourses[i]
+            .filter((course) => course.done)
+            .reduce((sum, course) => sum + parseFloat(course.credit), 0);
+          const creditsDisplay =
+            completedCredits % 1 === 0
+              ? completedCredits
+              : completedCredits.toFixed(1);
+          grid.innerHTML += `
+                    <div class="semester-box${isDone ? " semester-done" : ""}">
                         <div class="semester-title">
-                            Semester ${i+1} (${creditsDisplay})
-                            <button class="semester-done-btn" title="${doneBtnTitle}" onclick="toggleSemesterDone(${i})" style="margin-left:8px; background:none; border:none; cursor:pointer; color:${isDone ? '#22c55e' : '#64748b'}; font-size:1.15em;">
-                                <i class="fa ${isDone ? 'fa-check-circle' : 'fa-circle'}"></i>
+                            Semester ${i + 1} (${creditsDisplay})
+                            <button class="semester-done-btn" title="${doneBtnTitle}" onclick="toggleSemesterDone(${i})" style="margin-left:8px; background:none; border:none; cursor:pointer; color:${
+            isDone ? "#22c55e" : "#64748b"
+          }; font-size:1.15em;">
+                                <i class="fa ${
+                                  isDone ? "fa-check-circle" : "fa-circle"
+                                }"></i>
                             </button>
                         </div>
                         <div class="semester-courses" id="semCourses${i}">
-                            ${semesterCourses[i].map((course, j) => `
-                                <div class="semester-course-item${course.done ? ' done' : ''}">
-                                    <span>${course.name} (${course.credit})</span>
+                            ${semesterCourses[i]
+                              .map(
+                                (course, j) => `
+                                <div class="semester-course-item${
+                                  course.done ? " done" : ""
+                                }">
+                                    <span>${course.name} (${
+                                  course.credit
+                                })</span>
                                     <span class="semester-course-actions">
-                                        <button class="toggle-done" title="Mark as ${course.done ? 'Not Done' : 'Done'}" onclick="toggleDone(${i},${j})">
-                                            <i class="fa ${course.done ? 'fa-undo' : 'fa-check'}"></i>
+                                        <button class="toggle-done" title="Mark as ${
+                                          course.done ? "Not Done" : "Done"
+                                        }" onclick="toggleDone(${i},${j})">
+                                            <i class="fa ${
+                                              course.done
+                                                ? "fa-undo"
+                                                : "fa-check"
+                                            }"></i>
                                         </button>
                                         <button title="Remove" onclick="removeFromSemester(${i},${j})"><i class="fa fa-trash"></i></button>
                                     </span>
                                 </div>
-                            `).join('')}
+                            `
+                              )
+                              .join("")}
                         </div>
                     </div>
                 `;
-            }
-            populateSemesterSelects();
-            savePlannerData();
         }
+        populateSemesterSelects();
+        savePlannerData();
+      }
 
-        // Remove course from semester
-        window.removeFromSemester = function(semIdx, courseIdx) {
-            semesterCourses[semIdx].splice(courseIdx, 1);
-            renderSemesterGrid();
-            updateCompletedCredits();
-            updateCompletedSemesters();
-            savePlannerData();
-        };
+      // Remove course from semester
+      window.removeFromSemester = function (semIdx, courseIdx) {
+        semesterCourses[semIdx].splice(courseIdx, 1);
+        renderSemesterGrid();
+        updateCompletedCredits();
+        updateCompletedSemesters();
+        savePlannerData();
+      };
 
-        // Toggle done/not done
-        window.toggleDone = function(semIdx, courseIdx) {
-            semesterCourses[semIdx][courseIdx].done = !semesterCourses[semIdx][courseIdx].done;
-            renderSemesterGrid();
-            updateCompletedCredits();
-            updateCompletedSemesters();
-            savePlannerData();
-        };
+      // Toggle done/not done
+      window.toggleDone = function (semIdx, courseIdx) {
+        semesterCourses[semIdx][courseIdx].done =
+          !semesterCourses[semIdx][courseIdx].done;
+        renderSemesterGrid();
+        updateCompletedCredits();
+        updateCompletedSemesters();
+        savePlannerData();
+      };
 
-        // Toggle semester done/not done
-        window.toggleSemesterDone = function(semIdx) {
-            ensureSemesterDoneFlags();
-            semesterCourses[semIdx].done = !semesterCourses[semIdx].done;
-            renderSemesterGrid();
-            updateCompletedCredits();
-            updateCompletedSemesters();
-            savePlannerData();
-        };
+      // Toggle semester done/not done
+      window.toggleSemesterDone = function (semIdx) {
+        ensureSemesterDoneFlags();
+        semesterCourses[semIdx].done = !semesterCourses[semIdx].done;
+        renderSemesterGrid();
+        updateCompletedCredits();
+        updateCompletedSemesters();
+        savePlannerData();
+      };
 
-        // Update completed credits (count each course name only once if marked done)
-        function updateCompletedCredits() {
-            let uniqueDoneCourses = new Set();
-            let total = 0;
-            semesterCourses.forEach(sem =>
-                sem.forEach && sem.forEach(course => {
-                    if (course.done && !uniqueDoneCourses.has(course.name)) {
-                        uniqueDoneCourses.add(course.name);
-                        total += course.credit;
-                    }
-                })
-            );
-            document.getElementById('completedCredits').textContent = total;
-            savePlannerData();
-        }
+      // Update completed credits (count each course name only once if marked done)
+      function updateCompletedCredits() {
+        let uniqueDoneCourses = new Set();
+        let total = 0;
+        semesterCourses.forEach(
+          (sem) =>
+            sem.forEach &&
+            sem.forEach((course) => {
+              if (course.done && !uniqueDoneCourses.has(course.name)) {
+                uniqueDoneCourses.add(course.name);
+                total += course.credit;
+              }
+            })
+        );
+        document.getElementById("completedCredits").textContent = total;
+        savePlannerData();
+      }
 
-        // Update completed semesters
-        function updateCompletedSemesters() {
-            ensureSemesterDoneFlags();
-            let count = semesterCourses.filter(sem => sem.done === true).length;
-            document.getElementById('completedSemesters').textContent = count;
-        }
+      // Update completed semesters
+      function updateCompletedSemesters() {
+        ensureSemesterDoneFlags();
+        let count = semesterCourses.filter((sem) => sem.done === true).length;
+        document.getElementById("completedSemesters").textContent = count;
+      }
 
-        // Add Semester button logic
-        document.getElementById('addSemesterBtn').addEventListener('click', function() {
-            semesterCourses.push([]);
+      // Add Semester button logic
+      document
+        .getElementById("addSemesterBtn")
+        .addEventListener("click", function () {
+          semesterCourses.push([]);
+          renderSemesterGrid();
+          updateCompletedCredits();
+          updateRemoveSemesterBtn();
+          updateCompletedSemesters();
+          savePlannerData();
+        });
+
+      // Remove Semester button logic
+      document
+        .getElementById("removeSemesterBtn")
+        .addEventListener("click", function () {
+          if (semesterCourses.length > 1) {
+            semesterCourses.pop();
             renderSemesterGrid();
             updateCompletedCredits();
             updateRemoveSemesterBtn();
             updateCompletedSemesters();
             savePlannerData();
+          }
         });
 
-        // Remove Semester button logic
-        document.getElementById('removeSemesterBtn').addEventListener('click', function() {
-            if (semesterCourses.length > 1) {
-                semesterCourses.pop();
-                renderSemesterGrid();
-                updateCompletedCredits();
-                updateRemoveSemesterBtn();
-                updateCompletedSemesters();
-                savePlannerData();
-            }
-        });
+      // Enable/disable remove button
+      function updateRemoveSemesterBtn() {
+        const btn = document.getElementById("removeSemesterBtn");
+        btn.disabled = semesterCourses.length <= 1;
+        btn.style.opacity = btn.disabled ? "0.6" : "1";
+        btn.style.cursor = btn.disabled ? "not-allowed" : "pointer";
+      }
 
-        // Enable/disable remove button
-        function updateRemoveSemesterBtn() {
-            const btn = document.getElementById('removeSemesterBtn');
-            btn.disabled = semesterCourses.length <= 1;
-            btn.style.opacity = btn.disabled ? '0.6' : '1';
-            btn.style.cursor = btn.disabled ? 'not-allowed' : 'pointer';
-        }
-
-        // Initial load from storage and render
-        loadPlannerData();
-        fetchCourseCSV().then(() => {
-            renderSemesterGrid();
-            updateCompletedCredits();
-            updateRemoveSemesterBtn();
-            updateCompletedSemesters();
-        });
+      // Initial load from storage and render
+      loadPlannerData();
+      fetchCourseCSV().then(() => {
+        renderSemesterGrid();
+        updateCompletedCredits();
+        updateRemoveSemesterBtn();
+        updateCompletedSemesters();
+      });
     </script>
-</body>
+  </body>
 </html>

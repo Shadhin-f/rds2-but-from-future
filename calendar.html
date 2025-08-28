@@ -1,166 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
     <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-DR0D2D6C35');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-DR0D2D6C35");
     </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/calendar.gif">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/calendar.gif"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academic Calendar - Summer 2025</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="calendar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="calendar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-        .trending-link {
-            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
-            border-color: #e11d48 !important;
-            color: #fff !important;
-            position: relative;
-            z-index: 2;
-        }
-        .trending-link:hover {
-            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
-            background: linear-gradient(135deg, #e11d48, #be185d) !important;
-            color: #fff !important;
-        }
+      .trending-link {
+        box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+        border-color: #e11d48 !important;
+        color: #fff !important;
+        position: relative;
+        z-index: 2;
+      }
+      .trending-link:hover {
+        box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+        background: linear-gradient(135deg, #e11d48, #be185d) !important;
+        color: #fff !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
-        <header>
-            <h1>Academic Calendar</h1>
-            <nav class="nav-bar">
-                <a href="index.html">RDS2</a>
-                <a href="calendar.html" class="active">Academic Calendar</a>
-                <a href="resources.html" class="trending-link">Study Materials</a>
-                <a href="routine.html">Routine Maker</a>
-                <a href="planner.html" >Semester Planner</a>
-                <a href="#" onclick="alert('Freshman Guides are coming soon!'); return false;">Freshman Guides</a>
-                <a href="#" onclick="alert('Course maps of all departments coming soon!'); return false;">Course map</a>
-            </nav>
-            <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
-        </header>
-        <div class="announcement-bar">
-                <span> Updated 21 May, 2025 </span>
-                <a href="https://www.northsouth.edu/academic/academic-calendar/"  
-                   target="_blank" class="view-extension-btn">🎯 View source </a>
+      <header>
+        <h1>Academic Calendar</h1>
+        <nav class="nav-bar">
+          <a href="index.html">RDS2</a>
+          <a href="calendar.html" class="active">Academic Calendar</a>
+          <a href="resources.html" class="trending-link">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a
+            href="#"
+            onclick="alert('Course maps of all departments coming soon!'); return false;"
+            >Course map</a
+          >
+        </nav>
+        <!-- <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div> -->
+      </header>
+      <div class="announcement-bar">
+        <span> Tentative Calendar (Fall 2025) </span>
+        <a
+          href="https://www.northsouth.edu/academic/academic-calendar/"
+          target="_blank"
+          class="view-extension-btn"
+          >🎯 View source
+        </a>
+      </div>
+
+      <main>
+        <div class="timeline">
+          <div class="timeline-legend">
+            <div class="legend-item">
+              <div class="legend-color default"></div>
+              <span>General Events</span>
             </div>
-            
-
-        <main>
-            <div class="timeline">
-    <div class="timeline-legend">
-        <div class="legend-item"><div class="legend-color default"></div><span>General Events</span></div>
-        <div class="legend-item"><div class="legend-color payment"></div><span>Payment Related</span></div>
-        <div class="legend-item"><div class="legend-color advising"></div><span>Registration/Advising</span></div>
-        <div class="legend-item"><div class="legend-color deadline"></div><span>Last Dates</span></div>
-    </div>
-
-        <div class="timeline-item deadline"><div class="serial-number">1</div><div class="date">May 5, 2025 (Monday)</div><div class="content">Last day of grade submission Spring 2025</div></div>
-        <div class="timeline-item"><div class="serial-number">2</div><div class="date">May 11, 2025 (Sunday)</div><div class="content">Holiday - Buddha Purnima</div></div>
-        <div class="timeline-item advising"><div class="serial-number">3</div><div class="date">May 12, 2025 (Monday)</div><div class="content">Online course registration for regular and probation students of Summer 2025: BEGINS<br>Online course add/drop/section change: BEGINS</div></div>
-        <div class="timeline-item advising"><div class="serial-number">4</div><div class="date">May 17, 2025 (Saturday)</div><div class="content">Online course registration for regular and probation students of Summer 2025: ENDS<br>Online course add/drop/section change: ENDS<br>Orientation for newly admitted undergraduate students</div></div>
-        <div class="timeline-item advising"><div class="serial-number">5</div><div class="date">May 18, 2025 (Sunday)</div><div class="content">Online course registration for newly admitted students of Summer 2025: ENDS</div></div>
-        <div class="timeline-item deadline"><div class="serial-number">6</div><div class="date">May 19, 2025 (Monday)</div><div class="content">Last day of section cancellation and merging</div></div>
-        <div class="timeline-item payment"><div class="serial-number">7</div><div class="date">May 20, 2025 (Tuesday)</div><div class="content">Classes begin (Summer 2025)<br>Payment of tuition fee: BEGINS</div></div>
-        <div class="timeline-item payment deadline"><div class="serial-number">8</div><div class="date">May 29, 2025 (Thursday)</div><div class="content">Last day of online drop of courses with 100% refund</div></div>
-        <div class="timeline-item"><div class="serial-number">9</div><div class="date">June 5–10, 2025</div><div class="content">Holiday - Eid Ul Adha (Subject to moon sighting)</div></div>
-        <div class="timeline-item"><div class="serial-number">10</div><div class="date">June 11–12, 2025</div><div class="content">No Classes</div></div>
-        <div class="timeline-item payment deadline"><div class="serial-number">11</div><div class="date">June 15, 2025 (Sunday)</div><div class="content">Last day of online drop of courses with 50% refund</div></div>
-        <div class="timeline-item payment deadline"><div class="serial-number">12</div><div class="date">June 23, 2025 (Monday)</div><div class="content">Last day of payment of tuition without late fee</div></div>
-        <div class="timeline-item payment"><div class="serial-number">13</div><div class="date">June 24, 2025 (Tuesday)</div><div class="content">Payment of tuition with late fee of Tk. 2,000/-: BEGINS</div></div>
-        <div class="timeline-item"><div class="serial-number">14</div><div class="date">July 3, 2025 (Thursday)</div><div class="content">Online Teaching Evaluation: BEGINS</div></div>
-        <div class="timeline-item"><div class="serial-number">15</div><div class="date">July 6, 2025 (Sunday)</div><div class="content">Holiday - Ashura (Subject to moon sighting)</div></div>
-        <div class="timeline-item deadline"><div class="serial-number">16</div><div class="date">July 7, 2025 (Monday)</div><div class="content">Last day of online drop of courses with 0% refund with "W" grade</div></div>
-        <div class="timeline-item payment deadline"><div class="serial-number">17</div><div class="date">July 8, 2025 (Tuesday)</div><div class="content">Last day of payment of tuition with late fee of Tk. 2,000/-</div></div>
-        <div class="timeline-item payment"><div class="serial-number">18</div><div class="date">July 9, 2025 (Wednesday)</div><div class="content">Payment of tuition fee with late fee of Tk. 2,000/- + Tk. 100/- per day: BEGINS</div></div>
-        <div class="timeline-item payment deadline"><div class="serial-number">19</div><div class="date">July 17, 2025 (Thursday)</div><div class="content">Last day of payment of tuition for financial aid recipients without late fee</div></div>
-        <div class="timeline-item"><div class="serial-number">20</div><div class="date">August 16, 2025 (Saturday)</div><div class="content">Holiday - Janmastami</div></div>
-        <div class="timeline-item deadline"><div class="serial-number">21</div><div class="date">August 18, 2025 (Monday)</div><div class="content">Last day of MW classes</div></div>
-        <div class="timeline-item deadline"><div class="serial-number">22</div><div class="date">August 19, 2025 (Tuesday)</div><div class="content">Last day of ST classes</div></div>
-        <div class="timeline-item"><div class="serial-number">23</div><div class="date">August 20, 2025 (Wednesday)</div><div class="content">Regular RA classes</div></div>
-        <div class="timeline-item deadline"><div class="serial-number">24</div><div class="date">August 21, 2025 (Thursday)</div><div class="content">Last day of RA classes<br>Online Teaching Evaluation: ENDS</div></div>
-        <div class="timeline-item"><div class="serial-number">25</div><div class="date">August 22–23, 2025</div><div class="content">No Classes</div></div>
-        <div class="timeline-item"><div class="serial-number">26</div><div class="date">August 24, 2025 (Sunday)</div><div class="content">Final Exam: BEGINS</div></div>
-        <div class="timeline-item"><div class="serial-number">27</div><div class="date">August 30, 2025 (Saturday)</div><div class="content">Final Exam: ENDS</div></div>
-        <div class="timeline-item deadline"><div class="serial-number">28</div><div class="date">September 4, 2025 (Thursday)</div><div class="content">Last day of grade submission Summer 2025</div></div>
-
-
-    </div>
-
-
-        </main>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-            <!-- ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5572277246422121"
-                 data-ad-slot="5845016719"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-
-        <footer class="footer">
-            <p>
-                © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
-                <br>
-            </p>
-            <div class="social-links">
-                <span>Follow me on</span>
-                <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
+            <div class="legend-item">
+              <div class="legend-color payment"></div>
+              <span>Payment Related</span>
             </div>
-            <br>
-            Last updated: 15-05-2025 18:55
-        </footer>
+            <div class="legend-item">
+              <div class="legend-color advising"></div>
+              <span>Registration/Advising</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color deadline"></div>
+              <span>Last Dates</span>
+            </div>
+          </div>
+
+          <div class="timeline-item deadline">
+            <div class="serial-number">1</div>
+            <div class="date">September 6, 2025 (Saturday)</div>
+            <div class="content">Last day of grade submission Summer 2025</div>
+          </div>
+          <div class="timeline-item advising">
+            <div class="serial-number">2</div>
+            <div class="date">September 9, 2025 (Tuesday)</div>
+            <div class="content">
+              On-campus course registration for newly admitted students of Fall
+              2025
+            </div>
+          </div>
+          <div class="timeline-item advising">
+            <div class="serial-number">3</div>
+            <div class="date">September 10, 2025 (Wednesday)</div>
+            <div class="content">
+              Online course registration for regular and probation students of
+              Fall 2025: BEGINS<br />
+              Online course add/drop/section change: BEGINS
+            </div>
+          </div>
+          <div class="timeline-item advising">
+            <div class="serial-number">4</div>
+            <div class="date">September 16, 2025 (Tuesday)</div>
+            <div class="content">
+              Online course registration for regular and probation students of
+              Fall 2025: ENDS<br />
+              Online course add/drop/section change: ENDS
+            </div>
+          </div>
+          <div class="timeline-item advising deadline">
+            <div class="serial-number">5</div>
+            <div class="date">September 17, 2025 (Wednesday)</div>
+            <div class="content">
+              Last day of section cancellation and merging<br />
+              Tentative Orientation Program for newly admitted undergraduate
+              students of Fall 2025
+            </div>
+          </div>
+          <div class="timeline-item payment">
+            <div class="serial-number">6</div>
+            <div class="date">September 18, 2025 (Thursday)</div>
+            <div class="content">
+              Classes begin (Fall 2025)<br />Payment of tuition fee: BEGINS
+            </div>
+          </div>
+          <div class="timeline-item payment deadline">
+            <div class="serial-number">7</div>
+            <div class="date">September 28, 2025 (Sunday)</div>
+            <div class="content">
+              Last day of online drop of courses with 100% refund
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">8</div>
+            <div class="date">September 29, 2025 (Monday)</div>
+            <div class="content">No Classes</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">9</div>
+            <div class="date">September 30, 2025 (Tuesday)</div>
+            <div class="content">No Classes</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">10</div>
+            <div class="date">October 1, 2025 (Wednesday)</div>
+            <div class="content">Holiday - Durga Puja</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">11</div>
+            <div class="date">October 2, 2025 (Thursday)</div>
+            <div class="content">Holiday - Durga Puja</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">12</div>
+            <div class="date">October 3, 2025 (Friday)</div>
+            <div class="content">No Classes</div>
+          </div>
+          <div class="timeline-item payment deadline">
+            <div class="serial-number">13</div>
+            <div class="date">October 8, 2025 (Wednesday)</div>
+            <div class="content">
+              Last day of online drop of courses with 50% refund
+            </div>
+          </div>
+          <div class="timeline-item payment deadline">
+            <div class="serial-number">14</div>
+            <div class="date">October 15, 2025 (Wednesday)</div>
+            <div class="content">
+              Last day of payment of tuition without late fee
+            </div>
+          </div>
+          <div class="timeline-item payment">
+            <div class="serial-number">15</div>
+            <div class="date">October 16, 2025 (Thursday)</div>
+            <div class="content">
+              Payment of tuition with late fee of Tk. 2,000/-: BEGINS
+            </div>
+          </div>
+          <div class="timeline-item payment deadline">
+            <div class="serial-number">16</div>
+            <div class="date">October 28, 2025 (Tuesday)</div>
+            <div class="content">
+              Last day of payment of tuition with late fee of Tk. 2,000/-
+            </div>
+          </div>
+          <div class="timeline-item payment">
+            <div class="serial-number">17</div>
+            <div class="date">October 29, 2025 (Wednesday)</div>
+            <div class="content">
+              Payment of tuition fee with late fee of Tk. 2,000/- + Tk. 100/-
+              per day: BEGINS
+            </div>
+          </div>
+          <div class="timeline-item deadline">
+            <div class="serial-number">18</div>
+            <div class="date">October 30, 2025 (Thursday)</div>
+            <div class="content">
+              Last day of online drop of courses with 0% refund with "W" grade
+            </div>
+          </div>
+          <div class="timeline-item payment deadline">
+            <div class="serial-number">19</div>
+            <div class="date">November 2, 2025 (Sunday)</div>
+            <div class="content">
+              Last day of payment of tuition for financial aid recipients
+              without late fee
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">20</div>
+            <div class="date">November 6, 2025 (Thursday)</div>
+            <div class="content">Online Teaching Evaluation: BEGINS</div>
+          </div>
+          <div class="timeline-item deadline">
+            <div class="serial-number">21</div>
+            <div class="date">December 11, 2025 (Thursday)</div>
+            <div class="content">Last day of RA classes</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">22</div>
+            <div class="date">December 13, 2025 (Saturday)</div>
+            <div class="content">Regular MW classes</div>
+          </div>
+          <div class="timeline-item deadline">
+            <div class="serial-number">23</div>
+            <div class="date">December 14, 2025 (Sunday)</div>
+            <div class="content">Last day of ST classes</div>
+          </div>
+          <div class="timeline-item deadline">
+            <div class="serial-number">24</div>
+            <div class="date">December 15, 2025 (Monday)</div>
+            <div class="content">
+              Last day of MW classes<br />Online Teaching Evaluation: ENDS
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">25</div>
+            <div class="date">December 16, 2025 (Tuesday)</div>
+            <div class="content">Holiday - Victory Day</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">26</div>
+            <div class="date">December 17, 2025 (Wednesday)</div>
+            <div class="content">No Classes</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">27</div>
+            <div class="date">December 18, 2025 (Thursday)</div>
+            <div class="content">Final Exam: BEGINS</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">28</div>
+            <div class="date">December 24, 2025 (Wednesday)</div>
+            <div class="content">Final Exam: ENDS</div>
+          </div>
+          <div class="timeline-item">
+            <div class="serial-number">29</div>
+            <div class="date">December 25, 2025 (Thursday)</div>
+            <div class="content">Holiday - Christmas Day</div>
+          </div>
+          <div class="timeline-item deadline">
+            <div class="serial-number">30</div>
+            <div class="date">December 29, 2025 (Monday)</div>
+            <div class="content">Last day of grade submission Fall 2025</div>
+          </div>
+        </div>
+      </main>
+
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+        crossorigin="anonymous"
+      ></script>
+      <!-- ad -->
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-5572277246422121"
+        data-ad-slot="5845016719"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+      <footer class="footer">
+        <p>
+          © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+          <br />
+        </p>
+        <div class="social-links">
+          <span>Follow me on</span>
+          <a
+            href="https://www.facebook.com/share/19DGPCk2wr/"
+            target="_blank"
+            title="Facebook"
+          >
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/_shadhin_f"
+            target="_blank"
+            title="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <br />
+        Last updated: 15-05-2025 18:55
+      </footer>
     </div>
     <script src="script.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script>
-        if (!firebase.apps.length) {
-            firebase.initializeApp({
-                apiKey: "AIzaSyCeNm72HlqDo5ItkDXmoeuL2jpvU2WXyOI",
-                authDomain: "rds2-but-from-future.firebaseapp.com",
-                databaseURL: "https://rds2-but-from-future-default-rtdb.firebaseio.com/",
-                projectId: "rds2-but-from-future",
-                storageBucket: "rds2-but-from-future.firebasestorage.app",
-                messagingSenderId: "458629377988",
-                appId: "1:458629377988:web:370a24b3fd97fb74657e91",
-                measurementId: "G-3K7SQY4J6V"
-            });
-        }
+      if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: "AIzaSyCeNm72HlqDo5ItkDXmoeuL2jpvU2WXyOI",
+          authDomain: "rds2-but-from-future.firebaseapp.com",
+          databaseURL:
+            "https://rds2-but-from-future-default-rtdb.firebaseio.com/",
+          projectId: "rds2-but-from-future",
+          storageBucket: "rds2-but-from-future.firebasestorage.app",
+          messagingSenderId: "458629377988",
+          appId: "1:458629377988:web:370a24b3fd97fb74657e91",
+          measurementId: "G-3K7SQY4J6V",
+        });
+      }
     </script>
     <script src="activeUsers.js"></script>
     <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                if (typeof initializeActiveUsers === "function") {
-                    console.log("[calendar.html] Calling initializeActiveUsers('calendar')");
-                    initializeActiveUsers('calendar');
-                } else {
-                    console.error("[calendar.html] initializeActiveUsers is not a function");
-                }
-            }, 400);
-        });
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          if (typeof initializeActiveUsers === "function") {
+            console.log(
+              "[calendar.html] Calling initializeActiveUsers('calendar')"
+            );
+            initializeActiveUsers("calendar");
+          } else {
+            console.error(
+              "[calendar.html] initializeActiveUsers is not a function"
+            );
+          }
+        }, 400);
+      });
     </script>
     <script>
       // Helper to parse date strings like "May 5, 2025 (Monday)" or "June 5-10, 2025"
@@ -174,24 +387,24 @@
           return new Date(`${month} ${day}, ${year}`);
         }
         // Fallback: try Date.parse
-        let d = new Date(dateStr.replace(/\(.*\)/, '').trim());
+        let d = new Date(dateStr.replace(/\(.*\)/, "").trim());
         return isNaN(d) ? null : d;
       }
 
       function markPastEvents() {
         const today = new Date();
-        today.setHours(0,0,0,0);
-        document.querySelectorAll('.timeline-item').forEach(item => {
-          const dateDiv = item.querySelector('.date');
+        today.setHours(0, 0, 0, 0);
+        document.querySelectorAll(".timeline-item").forEach((item) => {
+          const dateDiv = item.querySelector(".date");
           if (!dateDiv) return;
           const eventDate = parseTimelineDate(dateDiv.textContent);
           if (eventDate && eventDate < today) {
-            item.classList.add('past-event');
+            item.classList.add("past-event");
           }
         });
       }
 
-      document.addEventListener('DOMContentLoaded', markPastEvents);
+      document.addEventListener("DOMContentLoaded", markPastEvents);
     </script>
-</body>
+  </body>
 </html>

@@ -1,291 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-5572277246422121"> 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
     <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-DR0D2D6C35');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DR0D2D6C35");
     </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nsu Faculty Predictor</title>
-    <link rel="stylesheet" href="styles.css?v=1.1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="styles.css?v=1.1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="chat.css" />
     <style>
-        .trending-link {
-            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
-            border-color: #e11d48 !important;
-            color: #fff !important;
-            position: relative;
-            z-index: 2;
-        }
-        .trending-link:hover {
-            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
-            background: linear-gradient(135deg, #e11d48, #be185d) !important;
-            color: #fff !important;
-        }
+      .trending-link {
+        box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+        border-color: #e11d48 !important;
+        color: #fff !important;
+        position: relative;
+        z-index: 2;
+      }
+      .trending-link:hover {
+        box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+        background: linear-gradient(135deg, #e11d48, #be185d) !important;
+        color: #fff !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
-        <header>
-            <h1>RDS2 BUT FROM FUTURE</h1>
-            <nav class="nav-bar">
-                <a href="index.html" class="active">RDS2</a>
-                <a href="calendar.html">Academic Calendar</a>
-                <a href="resources.html" class="trending-link">Study Materials</a>
-                <a href="routine.html">Routine Maker</a>
-                <a href="planner.html">Semester Planner</a>
-                <a href="#" onclick="alert('Freshman Guides are coming soon!'); return false;">Freshman Guides</a>
-                <a href="#" onclick="alert('Course maps of all departments coming soon!'); return false;">Course map</a>
-            </nav>
-            <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
-            <!-- Announcement Bar -->
-             <div class="announcement-bar">
-                <a href="https://rds3.northsouth.edu/index.php" 
-                   target="_blank" class="view-extension-btn">🎓 RDS3</a>
-                <a href="https://www.northsouth.edu/nsu-announcements/" 
-                   target="_blank" class="view-extension-btn">🛎️ NSU Announcements</a>
-                <a href="https://northsouth.edu/dept-notices/fao-noticebaord/" 
-                   target="_blank" class="view-extension-btn">🔔 NSU Notices</a>
-            </div>
-            <div class="announcement-bar">
-                <a href="https://forms.gle/LHJ9YfGUBTPLTbZo8" 
-                   target="_blank" class="view-extension-btn">🛩️ Share Study material!</a>
-                <a href="resources.html" 
-                   target="_blank" class="view-extension-btn">🔎 Find Study material!</a>
-            </div>
-            <div class="announcement-bar">
-                <span>All your important links in one place! </span>
-                <a href="https://t.me/nsu_advising_helper_bot_channel" 
-                   target="_blank" class="view-extension-btn">⚡ Join community channel!</a>
-            </div>
-            <div class="announcement-bar">
-                <span>✅ Last updated : 04:45 PM 29 May, 2025</span>
-            </div>
-            <!-- Wishlist Section -->
-<div id="wishlist-header" class="wishlist-header">
-    <h2 style="text-align:left; font-size:1.1rem; margin:16px 0 16px 16px;">My courses</h2>
-    <button id="toggleWishlistBtn" class="routine-toggle-btn" style="margin-right: 18px; margin-top: 0;">Hide</button>
-</div>
-<div id="wishlistContainer" class="table-container" style="margin-bottom: 24px;">
-    <table id="wishlistTable">
-        <thead>
-            <tr>
+      <header>
+        <h1>RDS2 BUT FROM FUTURE</h1>
+        <nav class="nav-bar">
+          <a href="index.html" class="active">RDS2</a>
+          <a href="calendar.html">Academic Calendar</a>
+          <a href="resources.html" class="trending-link">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a
+            href="#"
+            onclick="alert('Course maps of all departments coming soon!'); return false;"
+            >Course map</a
+          >
+        </nav>
+        <!-- <div id="pageActiveUsers" class="active-users-counter">
+          🟢 0 active viewers
+        </div> -->
+
+        <!-- Compact Routine Maker -->
+        <div id="routineMakerContainer" class="routine-maker-container">
+          <div class="routine-header">
+            <span>Quick Routine</span>
+            <button id="toggleRoutineBtn" class="routine-toggle-btn">
+              Hide
+            </button>
+          </div>
+          <div id="routineTableWrapper">
+            <table id="routineTable" class="routine-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Sat</th>
+                  <th>Sun</th>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Routine rows will be generated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Semester Selector -->
+        <div class="semester-selector">
+          <select id="semesterSelect" class="semester-select">
+            <option value="l77.csv" data-name="Summer 2025" selected>
+              Summer 2025
+            </option>
+            <option value="l78.csv" data-name="Fall 2025">Fall 2025</option>
+          </select>
+        </div>
+
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search courses or faculty..."
+          />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div id="semesterWarning" class="semester-warning">
+          <h3>🚧 Under Development</h3>
+          <p>
+            Data for this semester will be added soon. Please check back later!
+          </p>
+          <a
+            href="https://t.me/nsu_advising_helper_bot_channel"
+            target="_blank"
+            class="telegram-btn"
+          >
+            <i class="fab fa-telegram"></i> Join Telegram Channel
+          </a>
+        </div>
+
+        <div class="table-container">
+          <table id="courseTable">
+            <thead>
+              <tr>
                 <th>#</th>
                 <th>Course</th>
                 <th>Section</th>
                 <th>Faculty</th>
                 <th>Time</th>
                 <th>Seats</th>
-                <th>Remove</th>
-            </tr>
-        </thead>
-        <tbody id="wishlistBody"></tbody>
-    </table>
-</div>
-<!-- Compact Routine Maker -->
-<div id="routineMakerContainer" class="routine-maker-container">
-    <div class="routine-header">
-        <span>My Routine</span>
-        <button id="toggleRoutineBtn" class="routine-toggle-btn">Hide</button>
-    </div>
-    <div id="routineTableWrapper">
-        <table id="routineTable" class="routine-table">
-            <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Sat</th>
-                    <th>Sun</th>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                </tr>
+                <th style="display: none">Predictions</th>
+                <th>Details</th>
+                <!-- New column for the View button -->
+              </tr>
             </thead>
-            <tbody>
-                <!-- Routine rows will be generated by JS -->
+            <tbody id="tableBody">
+              <!-- Data will be loaded dynamically -->
             </tbody>
-        </table>
-    </div>
-</div>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search courses or faculty...">
-                <i class="fas fa-search search-icon"></i>
-            </div>
-        </header>
-
-        <main>
-            <div class="table-container">
-                <table id="courseTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Course</th>
-                            <th>Section</th>
-                            <th>Faculty</th>
-                            <th>Time</th>
-                            <th>Seats</th>
-                            <th style="display: none;">Predictions</th>
-                            <th>Details</th> <!-- New column for the View button -->
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- Data will be loaded dynamically -->
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <button id="prevPage">&laquo; Previous</button>
-                    <span id="pageInfo">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
-                    <button id="nextPage">Next &raquo;</button>
-                </div>
-            </div>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-            <!-- ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5572277246422121"
-                 data-ad-slot="5845016719"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-            
-            <!-- Review Section -->
-            <div id="commentSection" class="table-container" style="margin-top:24px;">
-                <h2 style="text-align:left; font-size:1.15rem; margin:16px;">⭐ Review Section</h2>
-                <form id="commentForm" style="display:flex;flex-direction:column;gap:10px;">
-                    <input type="text" id="commentName" maxlength="20" placeholder="Your name (3-20 chars)" required
-                        style="padding:8px;border-radius:4px;background:#1a1c23;color:#e2e8f0;border:1px solid #334155;max-width:200px;">
-                    <textarea id="commentInput" maxlength="500" placeholder="Write a comment..." required 
-                        style="width:100%;min-height:80px;resize:vertical;padding:8px;border-radius:4px;background:#1a1c23;color:#e2e8f0;border:1px solid #334155;"></textarea>
-                    <button type="submit" style="padding:8px 16px;background:#6d28d9;color:#fff;border:none;border-radius:4px;cursor:pointer;align-self:flex-start;">
-                        Post Comment
-                    </button>
-                </form>
-                <div style="display:flex;align-items:center;gap:10px;margin:0 24px 10px 24px;">
-                    <select id="commentOrder" style="flex:0 0 170px;padding:9px 12px;border-radius:8px;border:1.5px solid #334155;background:#1a1c23;color:#e2e8f0;font-size:1rem;">
-                        <option value="recent">🕒 Recent</option>
-                        <option value="top">⭐ Top</option>
-                    </select>
-                    <input type="text" id="commentSearchInput" placeholder="Search reviews..." 
-                        style="flex:1;background:#1a1c23;color:#e2e8f0;border:1.5px solid #334155;border-radius:8px;padding:9px 12px;font-size:1rem;">
-                </div>
-                <div id="commentList"></div>
-            </div>
-            <div id="loading" class="loading">Loading...</div>
-            <div id="noResults" class="no-results hidden">No results found</div>
-        </main>
-        <footer class="footer">
-            <p>
-                © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
-                <br>
-            </p>
-            <div class="social-links">
-                <span>Follow me on</span>
-                <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
-            <br>
-            Last updated: 14-05-2025 04:30 AM
-        </footer>
-        
-        <!-- Modal -->
-        <div id="detailsModal" class="modal hidden">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Course Details</h2>
-                    <button class="close-modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <!-- Details will be inserted here -->
-                </div>
-            </div>
+          </table>
+          <div class="pagination">
+            <button id="prevPage">&laquo; Previous</button>
+            <span id="pageInfo"
+              >Page <span id="currentPage">1</span> of
+              <span id="totalPages">1</span></span
+            >
+            <button id="nextPage">Next &raquo;</button>
+          </div>
         </div>
-        <!-- Add-to Modal -->
-<div id="addToModal" class="modal hidden">
-  <div class="modal-content" style="max-width:340px;">
-    <div class="modal-header">
-      <h2>Add Course</h2>
-      <button class="close-modal" id="closeAddToModal">&times;</button>
-    </div>
-    <div class="modal-body" id="addToModalBody" style="display:flex;flex-direction:column;gap:18px;">
-      <!-- Buttons will be injected here -->
-    </div>
-  </div>
-</div>
+        <!-- Announcement Bar -->
+        <div class="announcement-bar">
+          <a
+            href="https://rds3.northsouth.edu/index.php"
+            target="_blank"
+            class="view-extension-btn"
+            >🎓 RDS3</a
+          >
+          <a
+            href="https://www.northsouth.edu/nsu-announcements/"
+            target="_blank"
+            class="view-extension-btn"
+            >🛎️ NSU Announcements</a
+          >
+          <a
+            href="https://northsouth.edu/dept-notices/fao-noticebaord/"
+            target="_blank"
+            class="view-extension-btn"
+            >🔔 NSU Notices</a
+          >
+        </div>
+        <div class="announcement-bar">
+          <a
+            href="https://forms.gle/LHJ9YfGUBTPLTbZo8"
+            target="_blank"
+            class="view-extension-btn"
+            >🛩️ Share Study material!</a
+          >
+          <a href="resources.html" target="_blank" class="view-extension-btn"
+            >🔎 Find Study material!</a
+          >
+        </div>
+        <div class="announcement-bar">
+          <span>All your important links in one place! </span>
+          <a
+            href="https://t.me/nsu_advising_helper_bot_channel"
+            target="_blank"
+            class="view-extension-btn"
+            >⚡ Join community channel!</a
+          >
+        </div>
+        <div class="announcement-bar">
+          <span>✅ Under Development for FALL 2025 Semester </span>
+        </div>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+          crossorigin="anonymous"
+        ></script>
+        <!-- ad -->
+        <!-- <ins
+          class="adsbygoogle"
+          style="display: block"
+          data-ad-client="ca-pub-5572277246422121"
+          data-ad-slot="5845016719"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script> -->
+
+        <!-- Review Section -->
+        <!-- <div
+          id="commentSection"
+          class="table-container"
+          style="margin-top: 24px"
+        >
+          <h2 style="text-align: left; font-size: 1.15rem; margin: 16px">
+            ⭐ Review Section
+          </h2>
+          <form
+            id="commentForm"
+            style="display: flex; flex-direction: column; gap: 10px"
+          >
+            <input
+              type="text"
+              id="commentName"
+              maxlength="20"
+              placeholder="Your name (3-20 chars)"
+              required
+              style="
+                padding: 8px;
+                border-radius: 4px;
+                background: #1a1c23;
+                color: #e2e8f0;
+                border: 1px solid #334155;
+                max-width: 200px;
+              "
+            />
+            <textarea
+              id="commentInput"
+              maxlength="500"
+              placeholder="Write a comment..."
+              required
+              style="
+                width: 100%;
+                min-height: 80px;
+                resize: vertical;
+                padding: 8px;
+                border-radius: 4px;
+                background: #1a1c23;
+                color: #e2e8f0;
+                border: 1px solid #334155;
+              "
+            ></textarea>
+            <button
+              type="submit"
+              style="
+                padding: 8px 16px;
+                background: #6d28d9;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                align-self: flex-start;
+              "
+            >
+              Post Comment
+            </button>
+          </form>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin: 0 24px 10px 24px;
+            "
+          >
+            <select
+              id="commentOrder"
+              style="
+                flex: 0 0 170px;
+                padding: 9px 12px;
+                border-radius: 8px;
+                border: 1.5px solid #334155;
+                background: #1a1c23;
+                color: #e2e8f0;
+                font-size: 1rem;
+              "
+            >
+              <option value="recent">🕒 Recent</option>
+              <option value="top">⭐ Top</option>
+            </select>
+            <input
+              type="text"
+              id="commentSearchInput"
+              placeholder="Search reviews..."
+              style="
+                flex: 1;
+                background: #1a1c23;
+                color: #e2e8f0;
+                border: 1.5px solid #334155;
+                border-radius: 8px;
+                padding: 9px 12px;
+                font-size: 1rem;
+              "
+            />
+          </div>
+          <div id="commentList"></div>
+        </div> -->
+        <div id="loading" class="loading">Loading...</div>
+        <div id="noResults" class="no-results hidden">No results found</div>
+      </main>
+      <footer class="footer">
+        <p>
+          © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+          <br />
+        </p>
+        <div class="social-links">
+          <span>Follow me on</span>
+          <a
+            href="https://www.facebook.com/share/19DGPCk2wr/"
+            target="_blank"
+            title="Facebook"
+          >
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/_shadhin_f"
+            target="_blank"
+            title="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <br />
+        Last updated: 29-08-2025 03:30 AM
+      </footer>
+
+      <!-- Modal -->
+      <div id="detailsModal" class="modal hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Course Details</h2>
+            <button class="close-modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <!-- Details will be inserted here -->
+          </div>
+        </div>
+      </div>
+      <!-- Add-to Modal -->
+      <div id="addToModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 340px">
+          <div class="modal-header">
+            <h2>Add to Routine</h2>
+            <button class="close-modal" id="closeAddToModal">&times;</button>
+          </div>
+          <div
+            class="modal-body"
+            id="addToModalBody"
+            style="display: flex; flex-direction: column; gap: 18px"
+          >
+            <!-- Only the Add to Routine button will be injected here -->
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Floating Chat Popup -->
-    <div id="chatPopup" class="chat-popup">
-        <div class="chat-header">
-            <span>💬 Chat</span>
-            <span id="activeUsersCount" style="font-size:0.95em; font-weight:normal;"></span>
-            <button id="closeChat" title="Close">&times;</button>
-        </div>
-        <div class="chat-warning" id="chatWarning" style="display:none;">
-            <strong>Warning:</strong> Please do not share passwords, phone numbers, or any personal information in the chat.
-        </div>
-        <div id="chatNameForm" class="chat-name-form" style="display:none;">
-            <label for="chatNameInput"><strong>Set your chat name:</strong></label>
-            <input type="text" id="chatNameInput" maxlength="20" placeholder="Enter name (3-20 chars)" required>
-            <button id="setNameBtn">Start Chat</button>
-        </div>
-        <div class="chat-user-bar" id="chatUserBar" style="display:none;">
-            <span id="currentUserName"></span>
-            <button id="changeNameBtn" title="Change Name">Change Name</button>
-        </div>
-        <div class="chat-rooms" id="chatRooms" style="display:none;">
-            <button class="chat-room-tab active" data-room="global">Global <span class="unread" id="unread-global"></span></button>
-            <button class="chat-room-tab" data-room="room1">Room1 <span class="unread" id="unread-room1"></span></button>
-            <button class="chat-room-tab" data-room="room2">Room2 <span class="unread" id="unread-room2"></span></button>
-            <button class="chat-room-tab" data-room="room3">Room3 <span class="unread" id="unread-room3"></span></button>
-            <button class="chat-room-tab" data-room="room4">Room4 <span class="unread" id="unread-room4"></span></button>
-        </div>
-        <div class="chat-body" id="chatBody" style="display:none;"></div>
-        <form id="chatForm" autocomplete="off" style="display:none;">
-            <input type="text" id="chatInput" placeholder="Type a message..." maxlength="200" required />
-            <button type="submit">Send</button>
-        </form>
+    <!-- <div id="chatPopup" class="chat-popup">
+      <div class="chat-header">
+        <span>💬 Chat</span>
+        <span
+          id="activeUsersCount"
+          style="font-size: 0.95em; font-weight: normal"
+        ></span>
+        <button id="closeChat" title="Close">&times;</button>
+      </div>
+      <div class="chat-warning" id="chatWarning" style="display: none">
+        <strong>Warning:</strong> Please do not share passwords, phone numbers,
+        or any personal information in the chat.
+      </div>
+      <div id="chatNameForm" class="chat-name-form" style="display: none">
+        <label for="chatNameInput"><strong>Set your chat name:</strong></label>
+        <input
+          type="text"
+          id="chatNameInput"
+          maxlength="20"
+          placeholder="Enter name (3-20 chars)"
+          required
+        />
+        <button id="setNameBtn">Start Chat</button>
+      </div>
+      <div class="chat-user-bar" id="chatUserBar" style="display: none">
+        <span id="currentUserName"></span>
+        <button id="changeNameBtn" title="Change Name">Change Name</button>
+      </div>
+      <div class="chat-rooms" id="chatRooms" style="display: none">
+        <button class="chat-room-tab active" data-room="global">
+          Global <span class="unread" id="unread-global"></span>
+        </button>
+        <button class="chat-room-tab" data-room="room1">
+          Room1 <span class="unread" id="unread-room1"></span>
+        </button>
+        <button class="chat-room-tab" data-room="room2">
+          Room2 <span class="unread" id="unread-room2"></span>
+        </button>
+        <button class="chat-room-tab" data-room="room3">
+          Room3 <span class="unread" id="unread-room3"></span>
+        </button>
+        <button class="chat-room-tab" data-room="room4">
+          Room4 <span class="unread" id="unread-room4"></span>
+        </button>
+      </div>
+      <div class="chat-body" id="chatBody" style="display: none"></div>
+      <form id="chatForm" autocomplete="off" style="display: none">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Type a message..."
+          maxlength="200"
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
     </div>
-    <button id="openChatBtn" class="open-chat-btn" title="Open Chat">💬</button>
+    <button id="openChatBtn" class="open-chat-btn" title="Open Chat">💬</button> -->
 
     <!-- Floating Navigation Buttons -->
-    <button id="goToReviews" class="float-btn reviews-btn" title="Go to Reviews">⭐</button>
-    <button id="backToTop" class="float-btn top-btn" title="Back to Top">↑</button>
-
-
+    <button
+      id="goToReviews"
+      class="float-btn reviews-btn"
+      title="Go to Reviews"
+      style="display: none"
+    >
+      ⭐
+    </button>
+    <button id="backToTop" class="float-btn top-btn" title="Back to Top">
+      ↑
+    </button>
 
     <script src="script.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script src="activeUsers.js"></script>
     <script>
-        window.addEventListener('load', () => {
-            initializeActiveUsers('facultyPrediction');
-        });
+      window.addEventListener("load", () => {
+        initializeActiveUsers("facultyPrediction");
+      });
     </script>
     <script src="chat.js"></script>
     <script src="comments.js"></script>
     <script src="buttons.js"></script>
-</body>
+  </body>
 </html>

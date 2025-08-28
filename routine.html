@@ -1,927 +1,985 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
     <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-DR0D2D6C35');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DR0D2D6C35");
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
     <title>Routine Maker</title>
     <style>
-        :root {
-            --primary-color: #004cc5;
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --light-bg: #f5f7fa;
-            --border-color: #ddd;
-            --hover-color: #f0f5ff;
-            --header-height: 60px;
-            --sidebar-width: 320px;
-            --grid-cell-height: 60px;
-        }
+      :root {
+        --primary-color: #004cc5;
+        --bg-color: #ffffff;
+        --text-color: #333333;
+        --light-bg: #f5f7fa;
+        --border-color: #ddd;
+        --hover-color: #f0f5ff;
+        --header-height: 60px;
+        --sidebar-width: 320px;
+        --grid-cell-height: 60px;
+      }
 
-        /* Dark mode variables */
-        .dark-mode {
-            --primary-color: #165297;
-            --bg-color: #2c2c2c;
-            --text-color: #e0e0e0;
-            --light-bg: #2a2a2a;
-            --border-color: #444;
-            --hover-color: #2c3142;
-        }
+      /* Dark mode variables */
+      .dark-mode {
+        --primary-color: #165297;
+        --bg-color: #2c2c2c;
+        --text-color: #e0e0e0;
+        --light-bg: #2a2a2a;
+        --border-color: #444;
+        --hover-color: #2c3142;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Roboto', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", "Roboto", sans-serif;
+      }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-        }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
 
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: var(--header-height);
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .header-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .nav-bar {
+        display: flex;
+        gap: 12px;
+      }
+
+      .nav-bar a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 4px;
+        transition: background 0.2s;
+      }
+
+      .nav-bar a:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .nav-bar a.active {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      .trending-link {
+        box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+        border-color: #e11d48 !important;
+        color: #fff !important;
+        position: relative;
+        z-index: 2;
+      }
+
+      .trending-link:hover {
+        box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+        background: linear-gradient(135deg, #e11d48, #be185d) !important;
+        color: #fff !important;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .header-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.2s;
+      }
+
+      .header-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .container {
+        display: flex;
+        height: calc(100vh - var(--header-height));
+      }
+
+      .sidebar {
+        width: var(--sidebar-width);
+        background-color: var(--light-bg);
+        padding: 20px;
+        border-right: 1px solid var(--border-color);
+        overflow-y: auto;
+        max-height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .course-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-group label {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      input,
+      textarea,
+      select {
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 14px;
+        transition: border-color 0.2s;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+
+      .day-checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .day-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        position: relative;
+      }
+
+      .day-checkbox input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 6px;
+        background: var(--bg-color);
+        outline: none;
+        cursor: pointer;
+        transition: border-color 0.18s, background 0.18s;
+        margin-right: 6px;
+        position: relative;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+
+      .day-checkbox input[type="checkbox"]:checked {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      .day-checkbox input[type="checkbox"]:checked::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 12px;
+        border: solid #fff;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+      }
+
+      .day-checkbox label {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgb(26, 166, 236);
+        cursor: pointer;
+        user-select: none;
+        padding-left: 2px;
+        letter-spacing: 0.01em;
+        transition: color 0.18s;
+      }
+
+      .day-checkbox input[type="checkbox"]:focus {
+        box-shadow: 0 0 0 2px rgba(0, 76, 197, 0.18);
+        border-color: #2563eb;
+      }
+
+      .time-inputs {
+        display: flex;
+        gap: 10px;
+      }
+
+      .time-inputs input {
+        flex: 1;
+      }
+
+      .color-preview {
+        /* width: 30px; */
+        /* height: 30px; */
+        /* border-radius: 6px; */
+        display: hidden;
+        vertical-align: middle;
+        margin-left: 10px;
+        /* border: 2px solid var(--border-color); */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: border-color 0.2s;
+      }
+
+      input[type="color"]#courseColor {
+        display: inline-block;
+        width: 50%;
+        height: 38px;
+        border: none;
+        border-radius: 8px;
+        padding: 0;
+        background: none;
+        cursor: pointer;
+        margin-left: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        transition: box-shadow 0.18s, border 0.18s;
+        vertical-align: middle;
+        outline: none;
+        margin: 0 auto;
+      }
+
+      input[type="color"]#courseColor:focus {
+        box-shadow: 0 0 0 2px var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
+
+      input[type="color"]#courseColor::-webkit-color-swatch-wrapper {
+        padding: 0;
+        border-radius: 8px;
+      }
+
+      input[type="color"]#courseColor::-webkit-color-swatch {
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+      }
+
+      input[type="color"]#courseColor::-moz-color-swatch {
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+      }
+
+      input[type="color"]#courseColor::-ms-color-swatch {
+        border-radius: 8px;
+        border: 1.5px solid var(--border-color);
+      }
+
+      button {
+        padding: 12px;
+        border-radius: 4px;
+        border: none;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background-color: var(--primary-color);
+        opacity: 0.9;
+      }
+
+      button:disabled {
+        background-color: var(--border-color);
+        cursor: not-allowed;
+      }
+
+      .btn-update,
+      .btn-cancel {
+        display: none;
+      }
+
+      .btn-delete {
+        background-color: #e63946;
+      }
+
+      .btn-cancel {
+        background-color: #6c757d;
+      }
+
+      .legend {
+        margin-top: 20px;
+      }
+
+      .legend-title {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .legend-items {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 4px;
+        background-color: var(--bg-color);
+        border: 1px solid var(--border-color);
+      }
+
+      .legend-color {
+        width: 16px;
+        height: 16px;
+        border-radius: 3px;
+      }
+
+      .legend-text {
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .legend-actions {
+        margin-left: auto;
+        display: flex;
+        gap: 6px;
+      }
+
+      .legend-action {
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+        font-size: 14px;
+      }
+
+      .legend-action:hover {
+        opacity: 1;
+      }
+
+      .main-content {
+        flex: 1;
+        overflow: auto;
+        padding: 20px;
+      }
+
+      .timetable-container {
+        position: relative;
+        overflow-x: auto;
+      }
+
+      .timetable-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        /* min-width: 100vw; */
+        min-height: 100%;
+        object-fit: cover;
+        opacity: 0.18;
+        pointer-events: none;
+        border-radius: 12px;
+      }
+
+      .timetable {
+        min-width: 700px;
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      .timetable th,
+      .timetable td {
+        /* Remove all borders except bottom */
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 0;
+        text-align: center;
+        position: relative;
+        width: 110px;
+        max-width: 110px;
+        min-width: 110px;
+        height: 1px;
+        box-sizing: border-box;
+        background: transparent;
+      }
+
+      .timetable th {
+        border-bottom: 3px solid var(--border-color);
+        height: 50px;
+        /* background-color: var(--light-bg); */
+      }
+
+      .minute-row td,
+      .minute-row th {
+        border: none;
+        /* border-bottom: 1px solid var(--border-color); */
+        padding: 0;
+        background: transparent;
+      }
+
+      .time-label-row td,
+      .time-label-row th {
+        border: none;
+        /* border-top: 1px solid var(--border-color); */
+        /* border-bottom: 1px solid var(--border-color); */
+        height: 15px;
+        vertical-align: middle;
+        background: transparent; /* Make time label row background transparent */
+      }
+
+      .time-label-row.show-border td,
+      .time-label-row.show-border th {
+        border-top: 1px solid var(--border-color);
+      }
+
+      .time-cell {
+        width: 110px;
+        font-weight: 500;
+        background-color: var(--light-bg);
+        position: sticky;
+        left: 0;
+        z-index: 5;
+        height: 48px;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      /* Highlight today's column */
+      .timetable th.today,
+      .timetable td.today {
+        background-color: #7a7a7a83 !important; /* Subtle grayish highlight */
+      }
+      .timetableContainer {
+        width: fit-content;
+      }
+
+      /* Modal fix: ensure modal is visible and styled correctly */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(30, 30, 40, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 1;
+        pointer-events: all;
+        transition: opacity 0.3s;
+      }
+
+      .modal-content {
+        background: var(--bg-color);
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 400px;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: var(--text-color);
+        cursor: pointer;
+      }
+
+      .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .modal:not(.active) {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: var(--header-height);
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
+          flex-direction: column;
+          align-items: stretch;
+          height: auto;
+          padding: 0 8px 0 8px;
         }
-
         .header-title {
-            font-size: 20px;
-            font-weight: 600;
+          text-align: center;
+          margin: 12px 0 0 0;
+          font-size: 1.2rem;
         }
-
         .nav-bar {
-            display: flex;
-            gap: 12px;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          margin: 0;
+          padding: 0;
+          width: 100%;
         }
-
         .nav-bar a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 4px;
-            transition: background 0.2s;
+          display: block;
+          width: 100%;
+          text-align: left;
+          padding: 12px 16px;
+          font-size: 1rem;
+          border-radius: 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          background: transparent;
         }
-
-        .nav-bar a:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
         .nav-bar a.active {
-            background: rgba(255, 255, 255, 0.5);
+          background: rgba(255, 255, 255, 0.18);
+          color: #222;
+          font-weight: bold;
         }
-
-        .trending-link {
-            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
-            border-color: #e11d48 !important;
-            color: #fff !important;
-            position: relative;
-            z-index: 2;
-        }
-
-        .trending-link:hover {
-            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
-            background: linear-gradient(135deg, #e11d48, #be185d) !important;
-            color: #fff !important;
-        }
-
         .header-actions {
-            display: flex;
-            gap: 12px;
+          flex-direction: column;
+          gap: 8px;
+          align-items: stretch;
+          margin: 8px 0 0 0;
+          width: 100%;
         }
-
         .header-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s;
+          width: 100%;
+          font-size: 1rem;
+          padding: 12px 0;
+          margin: 0;
         }
-
-        .header-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
         .container {
-            display: flex;
-            height: calc(100vh - var(--header-height));
+          flex-direction: column;
+          height: auto;
         }
-
         .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--light-bg);
-            padding: 20px;
-            border-right: 1px solid var(--border-color);
-            overflow-y: auto;
-            max-height: 100vh;
-            box-sizing: border-box;
+          width: 100%;
+          border-right: none;
+          border-bottom: 1px solid var(--border-color);
+          max-width: 100vw;
+          min-width: 0;
         }
-
-        .course-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        input, textarea, select {
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: 14px;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        
-        textarea {
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .day-checkboxes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .day-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            position: relative;
-        }
-
-        .day-checkbox input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--bg-color);
-            outline: none;
-            cursor: pointer;
-            transition: border-color 0.18s, background 0.18s;
-            margin-right: 6px;
-            position: relative;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-        }
-
-        .day-checkbox input[type="checkbox"]:checked {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .day-checkbox input[type="checkbox"]:checked::after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 6px;
-            top: 2px;
-            width: 6px;
-            height: 12px;
-            border: solid #fff;
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-        }
-
-        .day-checkbox label {
-            font-size: 14px;
-            font-weight: 600;
-            color: rgb(26, 166, 236);
-            cursor: pointer;
-            user-select: none;
-            padding-left: 2px;
-            letter-spacing: 0.01em;
-            transition: color 0.18s;
-        }
-
-        .day-checkbox input[type="checkbox"]:focus {
-            box-shadow: 0 0 0 2px rgba(0,76,197,0.18);
-            border-color: #2563eb;
-        }
-
-        .time-inputs {
-            display: flex;
-            gap: 10px;
-        }
-
-        .time-inputs input {
-            flex: 1;
-        }
-
-        .color-preview {
-            /* width: 30px; */
-            /* height: 30px; */
-            /* border-radius: 6px; */
-            display: hidden;
-            vertical-align: middle;
-            margin-left: 10px;
-            /* border: 2px solid var(--border-color); */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: border-color 0.2s;
-        }
-
-        input[type="color"]#courseColor {
-            display: inline-block;
-            width: 50%;
-            height: 38px;
-            border: none;
-            border-radius: 8px;
-            padding: 0;
-            background: none;
-            cursor: pointer;
-            margin-left: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            transition: box-shadow 0.18s, border 0.18s;
-            vertical-align: middle;
-            outline: none;
-            margin: 0 auto;
-        }
-
-        input[type="color"]#courseColor:focus {
-            box-shadow: 0 0 0 2px var(--primary-color);
-            border: 2px solid var(--primary-color);
-        }
-
-        input[type="color"]#courseColor::-webkit-color-swatch-wrapper {
-            padding: 0;
-            border-radius: 8px;
-        }
-
-        input[type="color"]#courseColor::-webkit-color-swatch {
-            border-radius: 8px;
-            border: 1.5px solid var(--border-color);
-        }
-
-        input[type="color"]#courseColor::-moz-color-swatch {
-            border-radius: 8px;
-            border: 1.5px solid var(--border-color);
-        }
-
-        input[type="color"]#courseColor::-ms-color-swatch {
-            border-radius: 8px;
-            border: 1.5px solid var(--border-color);
-        }
-
-        button {
-            padding: 12px;
-            border-radius: 4px;
-            border: none;
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--primary-color);
-            opacity: 0.9;
-        }
-
-        button:disabled {
-            background-color: var(--border-color);
-            cursor: not-allowed;
-        }
-
-        .btn-update, .btn-cancel {
-            display: none;
-        }
-
-        .btn-delete {
-            background-color: #e63946;
-        }
-
-        .btn-cancel {
-            background-color: #6c757d;
-        }
-
-        .legend {
-            margin-top: 20px;
-        }
-
-        .legend-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .legend-items {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 10px;
-            border-radius: 4px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-        }
-
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-        }
-
-        .legend-text {
-            font-size: 14px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .legend-actions {
-            margin-left: auto;
-            display: flex;
-            gap: 6px;
-        }
-
-        .legend-action {
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-            font-size: 14px;
-        }
-
-        .legend-action:hover {
-            opacity: 1;
-        }
-
         .main-content {
-            flex: 1;
-            overflow: auto;
-            padding: 20px;
+          padding: 10px;
+          width: 100%;
+          max-width: 100vw;
+          min-width: 0;
+          overflow: hidden;
         }
-
-        .timetable-container {
-            position: relative;
-            overflow-x: auto;
-        }
-
         .timetable-bg {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 0;
-            width: 100%;
-            height: 100%;
-            /* min-width: 100vw; */
-            min-height: 100%;
-            object-fit: cover;
-            opacity: 0.18;
-            pointer-events: none;
-            border-radius: 12px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          min-width: 100vw;
+          min-height: 100vh;
+          border-radius: 0;
+          z-index: 0;
+          object-fit: cover;
+          pointer-events: none;
         }
+      }
 
-        .timetable {
-            min-width: 700px;
-            border-collapse: collapse;
-            width: 100%;
-            table-layout: fixed;
-        }
+      .course-block {
+        position: absolute;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #333;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+        transition: transform 0.2s, box-shadow 0.2s;
+        min-height: 24px;
+        padding: 6px 4px 6px 4px;
+        text-align: center;
+        z-index: 10;
+        border: 1.5px solid rgba(0, 0, 0, 0.07);
+        backdrop-filter: blur(1.5px);
+        pointer-events: auto;
+        overflow: hidden;
+        opacity: 0.9;
+      }
 
-        .timetable th, .timetable td {
-            /* Remove all borders except bottom */
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-            padding: 0;
-            text-align: center;
-            position: relative;
-            width: 110px;
-            max-width: 110px;
-            min-width: 110px;
-            height: 1px;
-            box-sizing: border-box;
-            background: transparent;
-        }
+      .course-block .course-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 2px;
+        color: inherit;
+        letter-spacing: 0.01em;
+      }
 
-        .timetable th {
-            border-bottom: 3px solid var(--border-color);
-            height: 50px;
-            /* background-color: var(--light-bg); */
-        }
+      .course-block .course-desc {
+        margin-top: 4px;
+        font-size: 1em;
+        font-weight: 400;
+        opacity: 0.8;
+        margin-bottom: 2px;
+        color: inherit;
+        line-height: 1.2;
+      }
 
-        .minute-row td,
-        .minute-row th {
-            border: none;
-            /* border-bottom: 1px solid var(--border-color); */
-            padding: 0;
-            background: transparent;
-        }
+      .course-block .course-time {
+        font-size: 0.98em;
+        font-weight: 700;
+        opacity: 0.92;
+        margin-top: 2px;
+        color: inherit;
+        letter-spacing: 0.01em;
+      }
 
-        .time-label-row td,
-        .time-label-row th {
-            border: none;
-            /* border-top: 1px solid var(--border-color); */
-            /* border-bottom: 1px solid var(--border-color); */
-            height: 15px;
-            vertical-align: middle;
-            background: transparent; /* Make time label row background transparent */
-        }
-
-        .time-label-row.show-border td,
-        .time-label-row.show-border th {
-            border-top: 1px solid var(--border-color);
-        }
-
-        .time-cell {
-            width: 110px;
-            font-weight: 500;
-            background-color: var(--light-bg);
-            position: sticky;
-            left: 0;
-            z-index: 5;
-            height: 48px;
-            box-sizing: border-box;
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* Highlight today's column */
-        .timetable th.today,
-        .timetable td.today {
-            background-color: #7a7a7a83 !important; /* Subtle grayish highlight */
-        }
-        .timetableContainer{
-            width: fit-content;
-        }
-
-        /* Modal fix: ensure modal is visible and styled correctly */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(30, 30, 40, 0.45);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 1;
-            pointer-events: all;
-            transition: opacity 0.3s;
-        }
-
-        .modal-content {
-            background: var(--bg-color);
-            padding: 20px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: var(--text-color);
-            cursor: pointer;
-        }
-
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .modal:not(.active) {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                align-items: stretch;
-                height: auto;
-                padding: 0 8px 0 8px;
-            }
-            .header-title {
-                text-align: center;
-                margin: 12px 0 0 0;
-                font-size: 1.2rem;
-            }
-            .nav-bar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0;
-                margin: 0;
-                padding: 0;
-                width: 100%;
-            }
-            .nav-bar a {
-                display: block;
-                width: 100%;
-                text-align: left;
-                padding: 12px 16px;
-                font-size: 1rem;
-                border-radius: 0;
-                border-bottom: 1px solid rgba(255,255,255,0.08);
-                background: transparent;
-            }
-            .nav-bar a.active {
-                background: rgba(255,255,255,0.18);
-                color: #222;
-                font-weight: bold;
-            }
-            .header-actions {
-                flex-direction: column;
-                gap: 8px;
-                align-items: stretch;
-                margin: 8px 0 0 0;
-                width: 100%;
-            }
-            .header-btn {
-                width: 100%;
-                font-size: 1rem;
-                padding: 12px 0;
-                margin: 0;
-            }
-            .container {
-                flex-direction: column;
-                height: auto;
-            }
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-                max-width: 100vw;
-                min-width: 0;
-            }
-            .main-content {
-                padding: 10px;
-                width: 100%;
-                max-width: 100vw;
-                min-width: 0;
-                overflow: hidden;
-            }
-            .timetable-bg {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                min-width: 100vw;
-                min-height: 100vh;
-                border-radius: 0;
-                z-index: 0;
-                object-fit: cover;
-                pointer-events: none;
-            }
-        }
-
-        .course-block {
-            position: absolute;
-            left: 0;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.13);
-            transition: transform 0.2s, box-shadow 0.2s;
-            min-height: 24px;
-            padding: 6px 4px 6px 4px;
-            text-align: center;
-            z-index: 10;
-            border: 1.5px solid rgba(0,0,0,0.07);
-            backdrop-filter: blur(1.5px);
-            pointer-events: auto;
-            overflow: hidden;
-            opacity: .9;
-        }
-
-        .course-block .course-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 2px;
-            color: inherit;
-            letter-spacing: 0.01em;
-        }
-
-        .course-block .course-desc {
-            margin-top: 4px;
-            font-size: 1em;
-            font-weight: 400;
-            opacity: 0.8;
-            margin-bottom: 2px;
-            color: inherit;
-            line-height: 1.2;
-        }
-
-        .course-block .course-time {
-            font-size: 0.98em;
-            font-weight: 700;
-            opacity: 0.92;
-            margin-top: 2px;
-            color: inherit;
-            letter-spacing: 0.01em;
-        }
-
-        .bg-upload-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 16px;
-            margin-bottom: 16px;
-            /* Prevent overflow in sidebar */
-            overflow: visible;
-        }
-        .bg-row {
-            display: flex;
-            gap: 8px;
-            width: 100%;
-            align-items: center;
-        }
-        .bg-upload-label {
-            background: var(--primary-color);
-            color: #fff;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            border: none;
-            transition: all 0.2s;
-            text-align: center;
-            flex: 0 0 auto;
-            min-width: 0;
-            white-space: nowrap;
-            max-width: 100px;
-            overflow: hidden;
-        }
-        .bg-preview{
-            width: 50px;
-            height: 50px;
-            border-radius: 5px;
-        }
-        input[type="file"]#bgUpload {
-            display: none;
-        }
+      .bg-upload-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        /* Prevent overflow in sidebar */
+        overflow: visible;
+      }
+      .bg-row {
+        display: flex;
+        gap: 8px;
+        width: 100%;
+        align-items: center;
+      }
+      .bg-upload-label {
+        background: var(--primary-color);
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        border: none;
+        transition: all 0.2s;
+        text-align: center;
+        flex: 0 0 auto;
+        min-width: 0;
+        white-space: nowrap;
+        max-width: 100px;
+        overflow: hidden;
+      }
+      .bg-preview {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+      }
+      input[type="file"]#bgUpload {
+        display: none;
+      }
     </style>
     <style>
-        .tooltip {
-            display: none;  /* Hide by default */
-            position: fixed;
-            max-width: 280px;
-            z-index: 1000;
-            pointer-events: none;
-            transition: opacity 0.2s;
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.13);
-            padding: 12px 16px;
-            font-size: 13px;
-        }
-        .tooltip h4 {
-            margin: 0 0 8px 0;
-            color: var(--text-color);
-            font-size: 14px;
-        }
-        .tooltip p {
-            margin: 8px 0 0 0;
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-        .tooltip .tooltip-time {
-            color: var(--text-muted);
-            font-size: 12px;
-        }
+      .tooltip {
+        display: none; /* Hide by default */
+        position: fixed;
+        max-width: 280px;
+        z-index: 1000;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        background: var(--bg-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+        padding: 12px 16px;
+        font-size: 13px;
+      }
+      .tooltip h4 {
+        margin: 0 0 8px 0;
+        color: var(--text-color);
+        font-size: 14px;
+      }
+      .tooltip p {
+        margin: 8px 0 0 0;
+        color: var(--text-muted);
+        font-size: 13px;
+      }
+      .tooltip .tooltip-time {
+        color: var(--text-muted);
+        font-size: 12px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="header-title">Routine Maker</div>
-        <nav class="nav-bar">
-            <a href="index.html">RDS2</a>
-            <a href="calendar.html">Academic Calendar</a>
-            <a href="resources.html" class="trending-link">Study Materials</a>
-            <a href="routine.html" class="active">Routine Maker</a>
-            <a href="planner.html" >Semester Planner</a>
-            <a href="#" onclick="alert('Freshman Guides are coming soon!'); return false;">Freshman Guides</a>
-                <a href="#" onclick="alert('Course maps of all departments coming soon!'); return false;">Course map</a>
-        </nav>
-        <div class="header-actions">
-            <button id="toggleDarkMode" class="header-btn">🌙 Dark Mode</button>
-            <button id="clearAll" class="header-btn">🗑️ Clear All</button>
-            <button id="downloadRoutine" class="header-btn">⬇️ Download</button>
-        </div>
+      <div class="header-title">Routine Maker</div>
+      <nav class="nav-bar">
+        <a href="index.html">RDS2</a>
+        <a href="calendar.html">Academic Calendar</a>
+        <a href="resources.html" class="trending-link">Study Materials</a>
+        <a href="routine.html" class="active">Routine Maker</a>
+        <a href="planner.html">Semester Planner</a>
+        <a href="freshman.html">Freshman Guides</a>
+        <a
+          href="#"
+          onclick="alert('Course maps of all departments coming soon!'); return false;"
+          >Course map</a
+        >
+      </nav>
+      <div class="header-actions">
+        <button id="toggleDarkMode" class="header-btn">🌙 Dark Mode</button>
+        <button id="clearAll" class="header-btn">🗑️ Clear All</button>
+        <button id="downloadRoutine" class="header-btn">⬇️ Download</button>
+      </div>
     </header>
-    
 
     <div class="container">
-        <div class="sidebar">
-            <form id="courseForm" class="course-form">
-                <div class="form-group">
-                    <label for="courseName">Course Name*</label>
-                    <input type="text" id="courseName" required>
-                </div>
+      <div class="sidebar">
+        <form id="courseForm" class="course-form">
+          <div class="form-group">
+            <label for="courseName">Course Name*</label>
+            <input type="text" id="courseName" required />
+          </div>
 
-                <div class="form-group">
-                    <label for="courseDescription">Description (Optional)</label>
-                    <textarea id="courseDescription"></textarea>
-                </div>
+          <div class="form-group">
+            <label for="courseDescription">Description (Optional)</label>
+            <textarea id="courseDescription"></textarea>
+          </div>
 
-                <div class="form-group">
-                    <label>Days*</label>
-                    <div class="day-checkboxes">
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="daySat" value="Sat">
-                            <label for="daySat">Sat</label>
-                        </div>
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="daySun" value="Sun">
-                            <label for="daySun">Sun</label>
-                        </div>
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="dayMon" value="Mon">
-                            <label for="dayMon">Mon</label>
-                        </div>
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="dayTue" value="Tue">
-                            <label for="dayTue">Tue</label>
-                        </div>
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="dayWed" value="Wed">
-                            <label for="dayWed">Wed</label>
-                        </div>
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="dayThu" value="Thu">
-                            <label for="dayThu">Thu</label>
-                        </div>
-                        <div class="day-checkbox">
-                            <input type="checkbox" id="dayFri" value="Fri">
-                            <label for="dayFri">Fri</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Time Range*</label>
-                    <div class="time-inputs">
-                        <input type="time" id="startTime" required>
-                        <input type="time" id="endTime" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="courseColor">
-                        Color 
-                        <span class="color-preview" id="colorPreview"></span>
-                    </label>
-                    <input type="color" id="courseColor" value="#3a86ff">
-                </div>
-
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="toggleTimeRowBorder" checked style="width:auto;display:inline-block;margin-right:6px;">
-                        Show time row border
-                    </label>
-                </div>
-
-                <input type="hidden" id="courseId">
-                <button type="submit" id="btnAddCourse">Add Course</button>
-                <button type="button" id="btnUpdateCourse" class="btn-update">Update Course</button>
-                <button type="button" id="btnDelete" class="btn-delete">Delete Course</button>
-                <button type="button" id="btnCancel" class="btn-cancel">Cancel</button>
-            </form>
-
-            <div class="legend">
-                <div class="legend-title">Your Courses</div>
-                <div id="legendItems" class="legend-items">
-                    <!-- Legend items will be dynamically added here -->
-                </div>
+          <div class="form-group">
+            <label>Days*</label>
+            <div class="day-checkboxes">
+              <div class="day-checkbox">
+                <input type="checkbox" id="daySat" value="Sat" />
+                <label for="daySat">Sat</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="daySun" value="Sun" />
+                <label for="daySun">Sun</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="dayMon" value="Mon" />
+                <label for="dayMon">Mon</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="dayTue" value="Tue" />
+                <label for="dayTue">Tue</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="dayWed" value="Wed" />
+                <label for="dayWed">Wed</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="dayThu" value="Thu" />
+                <label for="dayThu">Thu</label>
+              </div>
+              <div class="day-checkbox">
+                <input type="checkbox" id="dayFri" value="Fri" />
+                <label for="dayFri">Fri</label>
+              </div>
             </div>
-            <div class="bg-upload-controls">
-                <div class="bg-row">
-                    <label for="bgUpload" class="bg-upload-label">Upload BG</label>
-                    <input type="file" id="bgUpload" accept="image/*">
-                </div>
-                <div class="bg-row">
-                    <input type="text" id="bgLinkInput" class="bg-link-input" placeholder="Paste image URL">
-                    <button id="bgLinkBtn" class="bg-upload-label" style="background:#2563eb;">Set Link</button>
-                </div>
-                <div class="bg-row">
-                    <img id="bgPreview" class="bg-preview" src="" alt="BG Preview" style="display:none;">
-                    <button id="bgClearBtn" class="bg-clear-btn" style="display:none;">Clear</button>
-                </div>
+          </div>
+
+          <div class="form-group">
+            <label>Time Range*</label>
+            <div class="time-inputs">
+              <input type="time" id="startTime" required />
+              <input type="time" id="endTime" required />
             </div>
+          </div>
+
+          <div class="form-group">
+            <label for="courseColor">
+              Color
+              <span class="color-preview" id="colorPreview"></span>
+            </label>
+            <input type="color" id="courseColor" value="#3a86ff" />
+          </div>
+
+          <div class="form-group">
+            <label>
+              <input
+                type="checkbox"
+                id="toggleTimeRowBorder"
+                checked
+                style="width: auto; display: inline-block; margin-right: 6px"
+              />
+              Show time row border
+            </label>
+          </div>
+
+          <input type="hidden" id="courseId" />
+          <button type="submit" id="btnAddCourse">Add Course</button>
+          <button type="button" id="btnUpdateCourse" class="btn-update">
+            Update Course
+          </button>
+          <button type="button" id="btnDelete" class="btn-delete">
+            Delete Course
+          </button>
+          <button type="button" id="btnCancel" class="btn-cancel">
+            Cancel
+          </button>
+        </form>
+
+        <div class="legend">
+          <div class="legend-title">Your Courses</div>
+          <div id="legendItems" class="legend-items">
+            <!-- Legend items will be dynamically added here -->
+          </div>
         </div>
-
-        <div class="main-content">
-            <div class="timetable-container" id="timetableContainer">
-                <img id="timetableBg" class="timetable-bg" style="display:none;">
-                <table class="timetable" id="timetable">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Sat</th>
-                            <th>Sun</th>
-                            <th>Mon</th>
-                            <th>Tue</th>
-                            <th>Wed</th>
-                            <th>Thu</th>
-                            <th>Fri</th>
-                        </tr>
-                    </thead>
-                    <tbody id="timetableBody">
-                        <!-- Time slots will be added here -->
-                    </tbody>
-                </table>
-            </div>
+        <div class="bg-upload-controls">
+          <div class="bg-row">
+            <label for="bgUpload" class="bg-upload-label">Upload BG</label>
+            <input type="file" id="bgUpload" accept="image/*" />
+          </div>
+          <div class="bg-row">
+            <input
+              type="text"
+              id="bgLinkInput"
+              class="bg-link-input"
+              placeholder="Paste image URL"
+            />
+            <button
+              id="bgLinkBtn"
+              class="bg-upload-label"
+              style="background: #2563eb"
+            >
+              Set Link
+            </button>
+          </div>
+          <div class="bg-row">
+            <img
+              id="bgPreview"
+              class="bg-preview"
+              src=""
+              alt="BG Preview"
+              style="display: none"
+            />
+            <button id="bgClearBtn" class="bg-clear-btn" style="display: none">
+              Clear
+            </button>
+          </div>
         </div>
+      </div>
+
+      <div class="main-content">
+        <div class="timetable-container" id="timetableContainer">
+          <img id="timetableBg" class="timetable-bg" style="display: none" />
+          <table class="timetable" id="timetable">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Sat</th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+              </tr>
+            </thead>
+            <tbody id="timetableBody">
+              <!-- Time slots will be added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-            <!-- ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5572277246422121"
-                 data-ad-slot="5845016719"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <!-- ad -->
+    <ins
+      class="adsbygoogle"
+      style="display: block"
+      data-ad-client="ca-pub-5572277246422121"
+      data-ad-slot="5845016719"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    ></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
     <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Confirm Action</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <p>Are you sure you want to delete all courses? This action cannot be undone.</p>
-            <div class="modal-buttons">
-                <button id="confirmCancel">Cancel</button>
-                <button id="confirmDelete" class="btn-delete">Delete All</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Confirm Action</h3>
+          <button class="modal-close">&times;</button>
         </div>
+        <p>
+          Are you sure you want to delete all courses? This action cannot be
+          undone.
+        </p>
+        <div class="modal-buttons">
+          <button id="confirmCancel">Cancel</button>
+          <button id="confirmDelete" class="btn-delete">Delete All</button>
+        </div>
+      </div>
     </div>
 
     <div id="tooltip" class="tooltip"></div>
@@ -929,695 +987,734 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // DOM Elements
-        const courseForm = document.getElementById('courseForm');
-        const timetableBody = document.getElementById('timetableBody');
-        const legendItems = document.getElementById('legendItems');
-        const colorPreview = document.getElementById('colorPreview');
-        const courseColor = document.getElementById('courseColor');
-        const btnAddCourse = document.getElementById('btnAddCourse');
-        const btnUpdateCourse = document.getElementById('btnUpdateCourse');
-        const btnDelete = document.getElementById('btnDelete');
-        const btnCancel = document.getElementById('btnCancel');
-        const tooltip = document.getElementById('tooltip');
-        const toggleDarkMode = document.getElementById('toggleDarkMode');
-        const clearAllBtn = document.getElementById('clearAll');
-        const confirmModal = document.getElementById('confirmModal');
-        const confirmCancel = document.getElementById('confirmCancel');
-        const confirmDelete = document.getElementById('confirmDelete');
-        const modalClose = document.querySelector('.modal-close');
-        const downloadRoutine = document.getElementById('downloadRoutine');
-        // BG controls
-        const bgUpload = document.getElementById('bgUpload');
-        const bgLinkInput = document.getElementById('bgLinkInput');
-        const bgLinkBtn = document.getElementById('bgLinkBtn');
-        const bgPreview = document.getElementById('bgPreview');
-        const bgClearBtn = document.getElementById('bgClearBtn');
-        const timetableBg = document.getElementById('timetableBg');
-        const timetableContainer = document.getElementById('timetableContainer');
+      // DOM Elements
+      const courseForm = document.getElementById("courseForm");
+      const timetableBody = document.getElementById("timetableBody");
+      const legendItems = document.getElementById("legendItems");
+      const colorPreview = document.getElementById("colorPreview");
+      const courseColor = document.getElementById("courseColor");
+      const btnAddCourse = document.getElementById("btnAddCourse");
+      const btnUpdateCourse = document.getElementById("btnUpdateCourse");
+      const btnDelete = document.getElementById("btnDelete");
+      const btnCancel = document.getElementById("btnCancel");
+      const tooltip = document.getElementById("tooltip");
+      const toggleDarkMode = document.getElementById("toggleDarkMode");
+      const clearAllBtn = document.getElementById("clearAll");
+      const confirmModal = document.getElementById("confirmModal");
+      const confirmCancel = document.getElementById("confirmCancel");
+      const confirmDelete = document.getElementById("confirmDelete");
+      const modalClose = document.querySelector(".modal-close");
+      const downloadRoutine = document.getElementById("downloadRoutine");
+      // BG controls
+      const bgUpload = document.getElementById("bgUpload");
+      const bgLinkInput = document.getElementById("bgLinkInput");
+      const bgLinkBtn = document.getElementById("bgLinkBtn");
+      const bgPreview = document.getElementById("bgPreview");
+      const bgClearBtn = document.getElementById("bgClearBtn");
+      const timetableBg = document.getElementById("timetableBg");
+      const timetableContainer = document.getElementById("timetableContainer");
 
-        // Constants
-        const DAYS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-        const START_HOUR = 8; // 8 AM
-        const END_HOUR = 20; // 8 PM
-        const TIME_INTERVAL = 30; // 30 minutes
+      // Constants
+      const DAYS = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+      const START_HOUR = 8; // 8 AM
+      const END_HOUR = 20; // 8 PM
+      const TIME_INTERVAL = 30; // 30 minutes
 
-        // State
-        let courses = [];
-        let editingCourseId = null;
-        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+      // State
+      let courses = [];
+      let editingCourseId = null;
+      let isDarkMode = localStorage.getItem("darkMode") === "true";
 
-        // Persist background in localStorage
-        const BG_STORAGE_KEY = 'routineTableBg';
+      // Persist background in localStorage
+      const BG_STORAGE_KEY = "routineTableBg";
 
-        function setTableBg(src) {
-            if (src) {
-                timetableBg.src = src;
-                timetableBg.style.display = '';
-                bgPreview.src = src;
-                bgPreview.style.display = '';
-                bgClearBtn.style.display = '';
-                localStorage.setItem(BG_STORAGE_KEY, src);
-            } else {
-                timetableBg.src = '';
-                timetableBg.style.display = 'none';
-                bgPreview.src = '';
-                bgPreview.style.display = 'none';
-                bgClearBtn.style.display = 'none';
-                localStorage.removeItem(BG_STORAGE_KEY);
-            }
+      function setTableBg(src) {
+        if (src) {
+          timetableBg.src = src;
+          timetableBg.style.display = "";
+          bgPreview.src = src;
+          bgPreview.style.display = "";
+          bgClearBtn.style.display = "";
+          localStorage.setItem(BG_STORAGE_KEY, src);
+        } else {
+          timetableBg.src = "";
+          timetableBg.style.display = "none";
+          bgPreview.src = "";
+          bgPreview.style.display = "none";
+          bgClearBtn.style.display = "none";
+          localStorage.removeItem(BG_STORAGE_KEY);
+        }
+      }
+
+      // Initialize
+      function init() {
+        generateTimeTable();
+        loadCoursesFromStorage();
+        renderCourses();
+        colorPreview.style.backgroundColor = courseColor.value;
+        updateDarkModeState();
+        const savedBg = localStorage.getItem(BG_STORAGE_KEY);
+        if (savedBg) setTableBg(savedBg);
+        // Set initial border state
+        setTimeout(updateTimeRowBorder, 0);
+      }
+
+      // Set up event listeners
+      function setupEventListeners() {
+        courseForm.addEventListener("submit", handleFormSubmit);
+        courseColor.addEventListener("input", updateColorPreview);
+        btnUpdateCourse.addEventListener("click", handleUpdateCourse);
+        btnDelete.addEventListener("click", handleDeleteCourse);
+        btnCancel.addEventListener("click", resetForm);
+        toggleDarkMode.addEventListener("click", toggleDarkModeHandler);
+        clearAllBtn.addEventListener("click", () =>
+          confirmModal.classList.add("active")
+        );
+        confirmCancel.addEventListener("click", () =>
+          confirmModal.classList.remove("active")
+        );
+        confirmDelete.addEventListener("click", clearAllCourses);
+        modalClose.addEventListener("click", () =>
+          confirmModal.classList.remove("active")
+        );
+        downloadRoutine.addEventListener("click", downloadRoutineHandler);
+        bgUpload.addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = function (ev) {
+            setTableBg(ev.target.result);
+          };
+          reader.readAsDataURL(file);
+        });
+        bgLinkBtn.addEventListener("click", function () {
+          const url = bgLinkInput.value.trim();
+          if (!url) return;
+          const img = new window.Image();
+          img.onload = function () {
+            setTableBg(url);
+          };
+          img.onerror = function () {
+            alert("Invalid image URL");
+          };
+          img.src = url;
+        });
+        bgClearBtn.addEventListener("click", function () {
+          setTableBg("");
+        });
+        document
+          .getElementById("toggleTimeRowBorder")
+          .addEventListener("change", updateTimeRowBorder);
+      }
+
+      // Generate time table structure with a row for each minute
+      function generateTimeTable() {
+        timetableBody.innerHTML = "";
+        const totalMinutes = (END_HOUR - START_HOUR) * 60;
+        for (let m = 0; m < totalMinutes; m++) {
+          const hour = Math.floor(m / 60) + START_HOUR;
+          const minute = m % 60;
+
+          // Only show the time label at the start of each 30-min interval
+          let isTimeLabelRow = minute % 30 === 0;
+
+          const row = document.createElement("tr");
+          row.className = isTimeLabelRow ? "time-label-row" : "minute-row";
+
+          // Time cell
+          const timeCell = document.createElement("td");
+          if (isTimeLabelRow) {
+            timeCell.className = "time-cell";
+            // Format time in 12-hour format
+            let displayHour = hour % 12;
+            displayHour = displayHour === 0 ? 12 : displayHour;
+            const ampm = hour < 12 ? "AM" : "PM";
+            const minuteFormatted = minute.toString().padStart(2, "0");
+            timeCell.textContent = `${displayHour}:${minuteFormatted} ${ampm}`;
+          } else {
+            timeCell.textContent = "";
+          }
+          row.appendChild(timeCell);
+
+          // Day cells
+          for (let i = 0; i < DAYS.length; i++) {
+            const dayCell = document.createElement("td");
+            dayCell.dataset.day = DAYS[i];
+            const hourFormatted = hour.toString().padStart(2, "0");
+            const minuteFormatted = minute.toString().padStart(2, "0");
+            dayCell.dataset.time = `${hourFormatted}:${minuteFormatted}`;
+            row.appendChild(dayCell);
+          }
+
+          timetableBody.appendChild(row);
+        }
+      }
+
+      // Load courses from localStorage
+      function loadCoursesFromStorage() {
+        const storedCourses = localStorage.getItem("universityCourses");
+        if (storedCourses) {
+          courses = JSON.parse(storedCourses);
+        }
+      }
+
+      // Save courses to localStorage
+      function saveCoursesToStorage() {
+        localStorage.setItem("universityCourses", JSON.stringify(courses));
+      }
+
+      // Handle form submission for adding a new course
+      function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const name = document.getElementById("courseName").value;
+        const description = document.getElementById("courseDescription").value;
+        const startTime = document.getElementById("startTime").value;
+        const endTime = document.getElementById("endTime").value;
+        const color = document.getElementById("courseColor").value;
+
+        // Validate
+        if (!name || !startTime || !endTime) {
+          alert("Please fill out all required fields");
+          return;
         }
 
-        // Initialize
-        function init() {
-            generateTimeTable();
-            loadCoursesFromStorage();
-            renderCourses();
-            colorPreview.style.backgroundColor = courseColor.value;
-            updateDarkModeState();
-            const savedBg = localStorage.getItem(BG_STORAGE_KEY);
-            if (savedBg) setTableBg(savedBg);
-            // Set initial border state
-            setTimeout(updateTimeRowBorder, 0);
+        // Check if end time is after start time
+        if (startTime >= endTime) {
+          alert("End time must be after start time");
+          return;
         }
 
-        // Set up event listeners
-        function setupEventListeners() {
-            courseForm.addEventListener('submit', handleFormSubmit);
-            courseColor.addEventListener('input', updateColorPreview);
-            btnUpdateCourse.addEventListener('click', handleUpdateCourse);
-            btnDelete.addEventListener('click', handleDeleteCourse);
-            btnCancel.addEventListener('click', resetForm);
-            toggleDarkMode.addEventListener('click', toggleDarkModeHandler);
-            clearAllBtn.addEventListener('click', () => confirmModal.classList.add('active'));
-            confirmCancel.addEventListener('click', () => confirmModal.classList.remove('active'));
-            confirmDelete.addEventListener('click', clearAllCourses);
-            modalClose.addEventListener('click', () => confirmModal.classList.remove('active'));
-            downloadRoutine.addEventListener('click', downloadRoutineHandler);
-            bgUpload.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    setTableBg(ev.target.result);
-                };
-                reader.readAsDataURL(file);
-            });
-            bgLinkBtn.addEventListener('click', function() {
-                const url = bgLinkInput.value.trim();
-                if (!url) return;
-                const img = new window.Image();
-                img.onload = function() {
-                    setTableBg(url);
-                };
-                img.onerror = function() {
-                    alert('Invalid image URL');
-                };
-                img.src = url;
-            });
-            bgClearBtn.addEventListener('click', function() {
-                setTableBg('');
-            });
-            document.getElementById('toggleTimeRowBorder').addEventListener('change', updateTimeRowBorder);
+        // Get selected days
+        const selectedDays = [];
+        DAYS.forEach((day) => {
+          const checkbox = document.getElementById(`day${day}`);
+          if (checkbox.checked) {
+            selectedDays.push(day);
+          }
+        });
+
+        if (selectedDays.length === 0) {
+          alert("Please select at least one day");
+          return;
         }
 
-        // Generate time table structure with a row for each minute
-        function generateTimeTable() {
-            timetableBody.innerHTML = '';
-            const totalMinutes = (END_HOUR - START_HOUR) * 60;
-            for (let m = 0; m < totalMinutes; m++) {
-                const hour = Math.floor(m / 60) + START_HOUR;
-                const minute = m % 60;
+        // Create new course object
+        const newCourse = {
+          id: Date.now().toString(),
+          name,
+          description,
+          days: selectedDays,
+          startTime,
+          endTime,
+          color,
+        };
 
-                // Only show the time label at the start of each 30-min interval
-                let isTimeLabelRow = (minute % 30 === 0);
+        // Add to courses array
+        courses.push(newCourse);
 
-                const row = document.createElement('tr');
-                row.className = isTimeLabelRow ? 'time-label-row' : 'minute-row';
+        // Save to localStorage
+        saveCoursesToStorage();
 
-                // Time cell
-                const timeCell = document.createElement('td');
-                if (isTimeLabelRow) {
-                    timeCell.className = 'time-cell';
-                    // Format time in 12-hour format
-                    let displayHour = hour % 12;
-                    displayHour = displayHour === 0 ? 12 : displayHour;
-                    const ampm = hour < 12 ? 'AM' : 'PM';
-                    const minuteFormatted = minute.toString().padStart(2, '0');
-                    timeCell.textContent = `${displayHour}:${minuteFormatted} ${ampm}`;
-                } else {
-                    timeCell.textContent = '';
-                }
-                row.appendChild(timeCell);
-
-                // Day cells
-                for (let i = 0; i < DAYS.length; i++) {
-                    const dayCell = document.createElement('td');
-                    dayCell.dataset.day = DAYS[i];
-                    const hourFormatted = hour.toString().padStart(2, '0');
-                    const minuteFormatted = minute.toString().padStart(2, '0');
-                    dayCell.dataset.time = `${hourFormatted}:${minuteFormatted}`;
-                    row.appendChild(dayCell);
-                }
-
-                timetableBody.appendChild(row);
-            }
-        }
-
-        // Load courses from localStorage
-        function loadCoursesFromStorage() {
-            const storedCourses = localStorage.getItem('universityCourses');
-            if (storedCourses) {
-                courses = JSON.parse(storedCourses);
-            }
-        }
-
-        // Save courses to localStorage
-        function saveCoursesToStorage() {
-            localStorage.setItem('universityCourses', JSON.stringify(courses));
-        }
-
-        // Handle form submission for adding a new course
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('courseName').value;
-            const description = document.getElementById('courseDescription').value;
-            const startTime = document.getElementById('startTime').value;
-            const endTime = document.getElementById('endTime').value;
-            const color = document.getElementById('courseColor').value;
-            
-            // Validate
-            if (!name || !startTime || !endTime) {
-                alert('Please fill out all required fields');
-                return;
-            }
-            
-            // Check if end time is after start time
-            if (startTime >= endTime) {
-                alert('End time must be after start time');
-                return;
-            }
-            
-            // Get selected days
-            const selectedDays = [];
-            DAYS.forEach(day => {
-                const checkbox = document.getElementById(`day${day}`);
-                if (checkbox.checked) {
-                    selectedDays.push(day);
-                }
-            });
-            
-            if (selectedDays.length === 0) {
-                alert('Please select at least one day');
-                return;
-            }
-            
-            // Create new course object
-            const newCourse = {
-                id: Date.now().toString(),
-                name,
-                description,
-                days: selectedDays,
-                startTime,
-                endTime,
-                color
-            };
-            
-            // Add to courses array
-            courses.push(newCourse);
-            
-            // Save to localStorage
-            saveCoursesToStorage();
-            
-            // Render courses
-            renderCourses();
-            
-            // Reset form
-            resetForm();
-        }
-
-        // Update color preview
-        function updateColorPreview() {
-            colorPreview.style.backgroundColor = courseColor.value;
-        }
-
-        // Render all courses on the timetable
-        function renderCourses() {
-            // Clear existing course blocks
-            const existingBlocks = document.querySelectorAll('.course-block');
-            existingBlocks.forEach(block => block.remove());
-            
-            // Clear legend items
-            legendItems.innerHTML = '';
-            
-            // Render each course
-            courses.forEach(course => {
-                renderCourse(course);
-                addLegendItem(course);
-            });
-        }
-
-        // Render a single course on the timetable (flexible block spanning correct minutes)
-        function renderCourse(course) {
-            course.days.forEach(day => {
-                const startParts = course.startTime.split(':');
-                const endParts = course.endTime.split(':');
-                let startHour = parseInt(startParts[0]);
-                let startMinute = parseInt(startParts[1]);
-                let endHour = parseInt(endParts[0]);
-                let endMinute = parseInt(endParts[1]);
-
-                // Convert times to minutes since midnight
-                const startTotal = startHour * 60 + startMinute;
-                const endTotal = endHour * 60 + endMinute;
-
-                // Find all cells for this day
-                const dayCells = Array.from(document.querySelectorAll(`td[data-day="${day}"]`));
-                const tableStartMinute = START_HOUR * 60;
-                const startIdx = startTotal - tableStartMinute;
-                const endIdx = endTotal - tableStartMinute;
-
-                if (startIdx < 0 || endIdx > dayCells.length || startIdx >= endIdx) return;
-
-                // Remove any previous course-blocks in this range (avoid stacking)
-                for (let i = startIdx; i < endIdx; i++) {
-                    if (dayCells[i]) {
-                        Array.from(dayCells[i].querySelectorAll('.course-block')).forEach(cb => cb.remove());
-                    }
-                }
-
-                // Place the course block in the start cell, but absolutely position it to span the correct rows
-                const startCell = dayCells[startIdx];
-                startCell.style.position = 'relative';
-
-                // Calculate the top offset and height by summing the heights of the minute cells
-                let topOffset = 0;
-                for (let i = 0; i < startIdx; i++) {
-                    topOffset += dayCells[i].offsetHeight || 1;
-                }
-                let blockHeight = 0;
-                for (let i = startIdx; i < endIdx; i++) {
-                    blockHeight += dayCells[i].offsetHeight || 1;
-                }
-
-                // Create course block
-                const courseBlock = document.createElement('div');
-                courseBlock.className = 'course-block';
-                courseBlock.style.backgroundColor = course.color;
-                courseBlock.style.height = `${blockHeight}px`;
-                courseBlock.style.top = `0`;
-                courseBlock.style.left = '0';
-                courseBlock.style.right = '0';
-
-                // Calculate text color for contrast
-                const hexColor = course.color.substring(1);
-                const r = parseInt(hexColor.substr(0, 2), 16);
-                const g = parseInt(hexColor.substr(2, 2), 16);
-                const b = parseInt(hexColor.substr(4, 2), 16);
-                const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-                const textColor = brightness > 128 ? '#000' : '#fff';
-                courseBlock.style.color = textColor;
-
-                // Course Name (bigger, bold)
-                const title = document.createElement('div');
-                title.className = 'course-title';
-                title.textContent = course.name;
-                courseBlock.appendChild(title);
-
-                // Details/Description (smaller, no parentheses)
-                if (course.description) {
-                    const descDiv = document.createElement('div');
-                    descDiv.className = 'course-desc';
-                    descDiv.textContent = course.description;
-                    courseBlock.appendChild(descDiv);
-                }
-
-                // Time (bolder, no parentheses)
-                const timeDiv = document.createElement('div');
-                timeDiv.className = 'course-time';
-                timeDiv.textContent = `${formatTime(course.startTime)} - ${formatTime(course.endTime)}`;
-                courseBlock.appendChild(timeDiv);
-
-                courseBlock.addEventListener('click', () => editCourse(course.id));
-                courseBlock.addEventListener('mouseenter', (e) => showTooltip(e, course));
-                courseBlock.addEventListener('mouseleave', hideTooltip);
-
-                // Absolutely position the block to span the correct minute cells
-                courseBlock.style.position = 'absolute';
-                courseBlock.style.top = '0';
-                courseBlock.style.left = '0';
-                courseBlock.style.right = '0';
-
-                startCell.appendChild(courseBlock);
-            });
-        }
-
-        // Show tooltip with course details
-        function showTooltip(event, course) {
-            const rect = event.target.getBoundingClientRect();
-
-            // Format times
-            const startTime = formatTime(course.startTime);
-            const endTime = formatTime(course.endTime);
-
-            // Set tooltip content
-            tooltip.innerHTML = `
-                <h4>${course.name}</h4>
-                <div class="tooltip-time">${startTime} - ${endTime}</div>
-                <p>${course.description || 'No description provided'}</p>
-            `;
-
-            // Position tooltip
-            tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
-            tooltip.style.left = `${rect.left + window.scrollX - 100 + rect.width / 2}px`;
-
-            // Show tooltip
-            tooltip.style.display = 'block';
-        }
-
-        // Hide tooltip
-        function hideTooltip() {
-            tooltip.style.display = 'none';
-        }
-
-        // Format time (convert 24h to 12h)
-        function formatTime(timeString) {
-            const [hours, minutes] = timeString.split(':');
-            let hour = parseInt(hours, 10);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            hour = hour % 12;
-            hour = hour ? hour : 12; // Convert 0 to 12
-            return `${hour}:${minutes} ${ampm}`;
-        }
-
-        // Add course to legend
-        function addLegendItem(course) {
-            const item = document.createElement('div');
-            item.className = 'legend-item';
-            
-            const colorSquare = document.createElement('div');
-            colorSquare.className = 'legend-color';
-            colorSquare.style.backgroundColor = course.color;
-            
-            const text = document.createElement('div');
-            text.className = 'legend-text';
-            text.textContent = course.name;
-            
-            const actions = document.createElement('div');
-            actions.className = 'legend-actions';
-            
-            const editAction = document.createElement('span');
-            editAction.className = 'legend-action';
-            editAction.textContent = '✏️';
-            editAction.title = 'Edit';
-            editAction.addEventListener('click', () => editCourse(course.id));
-            
-            const deleteAction = document.createElement('span');
-            deleteAction.className = 'legend-action';
-            deleteAction.textContent = '🗑️';
-            deleteAction.title = 'Delete';
-            deleteAction.addEventListener('click', () => {
-                deleteCourse(course.id);
-            });
-            
-            actions.appendChild(editAction);
-            actions.appendChild(deleteAction);
-            
-            item.appendChild(colorSquare);
-            item.appendChild(text);
-            item.appendChild(actions);
-            
-            legendItems.appendChild(item);
-        }
-
-        // Edit course
-        function editCourse(courseId) {
-            const course = courses.find(c => c.id === courseId);
-            if (!course) return;
-            
-            // Set form values
-            document.getElementById('courseName').value = course.name;
-            document.getElementById('courseDescription').value = course.description;
-            document.getElementById('startTime').value = course.startTime;
-            document.getElementById('endTime').value = course.endTime;
-            document.getElementById('courseColor').value = course.color;
-            colorPreview.style.backgroundColor = course.color;
-            document.getElementById('courseId').value = course.id;
-            
-            // Reset day checkboxes
-            DAYS.forEach(day => {
-                const checkbox = document.getElementById(`day${day}`);
-                checkbox.checked = course.days.includes(day);
-            });
-            
-            // Switch to edit mode
-            editingCourseId = courseId;
-            btnAddCourse.style.display = 'none';
-            btnUpdateCourse.style.display = 'block';
-            btnDelete.style.display = 'block';
-            btnCancel.style.display = 'block';
-            
-            // Scroll to form
-            document.querySelector('.sidebar').scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Update course
-        function handleUpdateCourse() {
-            if (!editingCourseId) return;
-            
-            const name = document.getElementById('courseName').value;
-            const description = document.getElementById('courseDescription').value;
-            const startTime = document.getElementById('startTime').value;
-            const endTime = document.getElementById('endTime').value;
-            const color = document.getElementById('courseColor').value;
-            
-            // Validate
-            if (!name || !startTime || !endTime) {
-                alert('Please fill out all required fields');
-                return;
-            }
-            
-            // Check if end time is after start time
-            if (startTime >= endTime) {
-                alert('End time must be after start time');
-                return;
-            }
-            
-            // Get selected days
-            const selectedDays = [];
-            DAYS.forEach(day => {
-                const checkbox = document.getElementById(`day${day}`);
-                if (checkbox.checked) {
-                    selectedDays.push(day);
-                }
-            });
-            
-            if (selectedDays.length === 0) {
-                alert('Please select at least one day');
-                return;
-            }
-            
-            // Find course index
-            const courseIndex = courses.findIndex(c => c.id === editingCourseId);
-            if (courseIndex === -1) return;
-            
-            // Update course
-            courses[courseIndex] = {
-                ...courses[courseIndex],
-                name,
-                description,
-                days: selectedDays,
-                startTime,
-                endTime,
-                color
-            };
-            
-            // Save to localStorage
-            saveCoursesToStorage();
-            
-            // Render courses
-            renderCourses();
-            
-            // Reset form
-            resetForm();
-        }
-
-        // Delete course
-        function handleDeleteCourse() {
-            if (!editingCourseId) return;
-            
-            deleteCourse(editingCourseId);
-        }
-
-        // Delete course by ID
-        function deleteCourse(courseId) {
-            // Show confirmation dialog
-            if (!confirm('Are you sure you want to remove this course?')) {
-                return; // User cancelled
-            }
-            
-            // Filter out the course
-            courses = courses.filter(course => course.id !== courseId);
-            
-            // Save to localStorage
-            saveCoursesToStorage();
-            
-            // Render courses
-            renderCourses();
-            
-            // Reset form if we were editing this course
-            if (editingCourseId === courseId) {
-                resetForm();
-            }
-        }
+        // Render courses
+        renderCourses();
 
         // Reset form
-        function resetForm() {
-            courseForm.reset();
-            colorPreview.style.backgroundColor = courseColor.value;
-            editingCourseId = null;
-            
-            // Switch back to add mode
-            btnAddCourse.style.display = 'block';
-            btnUpdateCourse.style.display = 'none';
-            btnDelete.style.display = 'none';
-            btnCancel.style.display = 'none';
-        }
+        resetForm();
+      }
 
-        // Toggle dark mode
-        function toggleDarkModeHandler() {
-            isDarkMode = !isDarkMode;
-            localStorage.setItem('darkMode', isDarkMode);
-            updateDarkModeState();
-        }
+      // Update color preview
+      function updateColorPreview() {
+        colorPreview.style.backgroundColor = courseColor.value;
+      }
 
-        // Update dark mode state
-        function updateDarkModeState() {
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-                toggleDarkMode.textContent = '☀️ Light Mode';
-            } else {
-                document.body.classList.remove('dark-mode');
-                toggleDarkMode.textContent = '🌙 Dark Mode';
-            }
-        }
+      // Render all courses on the timetable
+      function renderCourses() {
+        // Clear existing course blocks
+        const existingBlocks = document.querySelectorAll(".course-block");
+        existingBlocks.forEach((block) => block.remove());
 
-        // Clear all courses
-        function clearAllCourses() {
-            courses = [];
-            saveCoursesToStorage();
-            renderCourses();
-            confirmModal.classList.remove('active');
-        }
+        // Clear legend items
+        legendItems.innerHTML = "";
 
-        // Highlight today's column in the timetable
-        function highlightTodayColumn() {
-            // Map JS day (0=Sun, 1=Mon, ..., 6=Sat) to DAYS array
-            const jsDay = new Date().getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
-            // Our DAYS: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri']
-            // Map: 6->0, 0->1, 1->2, ..., 5->6
-            let todayIdx;
-            switch (jsDay) {
-                case 6: todayIdx = 0; break; // Saturday
-                case 0: todayIdx = 1; break; // Sunday
-                case 1: todayIdx = 2; break; // Monday
-                case 2: todayIdx = 3; break; // Tuesday
-                case 3: todayIdx = 4; break; // Wednesday
-                case 4: todayIdx = 5; break; // Thursday
-                case 5: todayIdx = 6; break; // Friday
-            }
-            // Highlight th
-            const ths = document.querySelectorAll('.timetable th');
-            if (ths[todayIdx + 1]) ths[todayIdx + 1].classList.add('today');
-            // Highlight all td in that column
-            const rows = document.querySelectorAll('.timetable tr');
-            rows.forEach(row => {
-                const tds = row.querySelectorAll('td');
-                if (tds[todayIdx + 1]) tds[todayIdx + 1].classList.add('today');
-            });
-        }
-
-        // Download Routine Table as JPG Image
-        function downloadRoutineHandler() {
-            const timetableContainer = document.querySelector('.timetable-container');
-            const timetable = document.getElementById('timetable');
-            if (!confirm('Download routine as JPG image?')) return;
-
-            // Hide tooltips/modals if visible
-            document.getElementById('tooltip').style.opacity = '0';
-            document.getElementById('confirmModal').classList.remove('active');
-
-            // If background is set, ensure it's visible for html2canvas
-            let bgWasHidden = false;
-            if (timetableBg && timetableBg.src && timetableBg.style.display === 'none') {
-                timetableBg.style.display = '';
-                bgWasHidden = true;
-            }
-
-            // --- For mobile, render the full table by cloning and setting width ---
-            let target = timetableContainer;
-            let tempWrapper = null;
-            let wasDarkMode = document.body.classList.contains('dark-mode');
-            if (window.innerWidth <= 768 || !wasDarkMode) {
-                // Clone the timetable container and set its width to fit the table
-                const clone = timetableContainer.cloneNode(true);
-                const tableClone = clone.querySelector('table.timetable');
-                if (tableClone) {
-                    tableClone.style.minWidth = timetable.scrollWidth + 'px';
-                    tableClone.style.width = timetable.scrollWidth + 'px';
-                }
-                tempWrapper = document.createElement('div');
-                tempWrapper.style.position = 'fixed';
-                tempWrapper.style.left = '-9999px';
-                tempWrapper.style.top = '0';
-                tempWrapper.style.zIndex = '-9999';
-                tempWrapper.style.background = 'transparent';
-                // Force dark mode for the clone
-                tempWrapper.className = 'dark-mode';
-                clone.classList.add('dark-mode');
-                tempWrapper.appendChild(clone);
-                document.body.appendChild(tempWrapper);
-                target = clone;
-            }
-
-            html2canvas(target, {
-                backgroundColor: null,
-                scale: 2,
-                useCORS: true
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/jpeg', 0.95);
-                link.download = 'routine.jpg';
-                link.click();
-                // Restore bg display if it was hidden
-                if (bgWasHidden) timetableBg.style.display = 'none';
-                // Remove the temp clone if used
-                if (tempWrapper) document.body.removeChild(tempWrapper);
-            });
-        }
-
-        // Update time row border
-        function updateTimeRowBorder() {
-            const checked = document.getElementById('toggleTimeRowBorder').checked;
-            document.querySelectorAll('.time-label-row').forEach(row => {
-                if (checked) {
-                    row.classList.add('show-border');
-                } else {
-                    row.classList.remove('show-border');
-                }
-            });
-        }
-
-        // Initialize the app
-        window.addEventListener('DOMContentLoaded', () => {
-            init();
-            setupEventListeners();
-            highlightTodayColumn();
+        // Render each course
+        courses.forEach((course) => {
+          renderCourse(course);
+          addLegendItem(course);
         });
+      }
+
+      // Render a single course on the timetable (flexible block spanning correct minutes)
+      function renderCourse(course) {
+        course.days.forEach((day) => {
+          const startParts = course.startTime.split(":");
+          const endParts = course.endTime.split(":");
+          let startHour = parseInt(startParts[0]);
+          let startMinute = parseInt(startParts[1]);
+          let endHour = parseInt(endParts[0]);
+          let endMinute = parseInt(endParts[1]);
+
+          // Convert times to minutes since midnight
+          const startTotal = startHour * 60 + startMinute;
+          const endTotal = endHour * 60 + endMinute;
+
+          // Find all cells for this day
+          const dayCells = Array.from(
+            document.querySelectorAll(`td[data-day="${day}"]`)
+          );
+          const tableStartMinute = START_HOUR * 60;
+          const startIdx = startTotal - tableStartMinute;
+          const endIdx = endTotal - tableStartMinute;
+
+          if (startIdx < 0 || endIdx > dayCells.length || startIdx >= endIdx)
+            return;
+
+          // Remove any previous course-blocks in this range (avoid stacking)
+          for (let i = startIdx; i < endIdx; i++) {
+            if (dayCells[i]) {
+              Array.from(dayCells[i].querySelectorAll(".course-block")).forEach(
+                (cb) => cb.remove()
+              );
+            }
+          }
+
+          // Place the course block in the start cell, but absolutely position it to span the correct rows
+          const startCell = dayCells[startIdx];
+          startCell.style.position = "relative";
+
+          // Calculate the top offset and height by summing the heights of the minute cells
+          let topOffset = 0;
+          for (let i = 0; i < startIdx; i++) {
+            topOffset += dayCells[i].offsetHeight || 1;
+          }
+          let blockHeight = 0;
+          for (let i = startIdx; i < endIdx; i++) {
+            blockHeight += dayCells[i].offsetHeight || 1;
+          }
+
+          // Create course block
+          const courseBlock = document.createElement("div");
+          courseBlock.className = "course-block";
+          courseBlock.style.backgroundColor = course.color;
+          courseBlock.style.height = `${blockHeight}px`;
+          courseBlock.style.top = `0`;
+          courseBlock.style.left = "0";
+          courseBlock.style.right = "0";
+
+          // Calculate text color for contrast
+          const hexColor = course.color.substring(1);
+          const r = parseInt(hexColor.substr(0, 2), 16);
+          const g = parseInt(hexColor.substr(2, 2), 16);
+          const b = parseInt(hexColor.substr(4, 2), 16);
+          const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+          const textColor = brightness > 128 ? "#000" : "#fff";
+          courseBlock.style.color = textColor;
+
+          // Course Name (bigger, bold)
+          const title = document.createElement("div");
+          title.className = "course-title";
+          title.textContent = course.name;
+          courseBlock.appendChild(title);
+
+          // Details/Description (smaller, no parentheses)
+          if (course.description) {
+            const descDiv = document.createElement("div");
+            descDiv.className = "course-desc";
+            descDiv.textContent = course.description;
+            courseBlock.appendChild(descDiv);
+          }
+
+          // Time (bolder, no parentheses)
+          const timeDiv = document.createElement("div");
+          timeDiv.className = "course-time";
+          timeDiv.textContent = `${formatTime(course.startTime)} - ${formatTime(
+            course.endTime
+          )}`;
+          courseBlock.appendChild(timeDiv);
+
+          courseBlock.addEventListener("click", () => editCourse(course.id));
+          courseBlock.addEventListener("mouseenter", (e) =>
+            showTooltip(e, course)
+          );
+          courseBlock.addEventListener("mouseleave", hideTooltip);
+
+          // Absolutely position the block to span the correct minute cells
+          courseBlock.style.position = "absolute";
+          courseBlock.style.top = "0";
+          courseBlock.style.left = "0";
+          courseBlock.style.right = "0";
+
+          startCell.appendChild(courseBlock);
+        });
+      }
+
+      // Show tooltip with course details
+      function showTooltip(event, course) {
+        const rect = event.target.getBoundingClientRect();
+
+        // Format times
+        const startTime = formatTime(course.startTime);
+        const endTime = formatTime(course.endTime);
+
+        // Set tooltip content
+        tooltip.innerHTML = `
+                <h4>${course.name}</h4>
+                <div class="tooltip-time">${startTime} - ${endTime}</div>
+                <p>${course.description || "No description provided"}</p>
+            `;
+
+        // Position tooltip
+        tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
+        tooltip.style.left = `${
+          rect.left + window.scrollX - 100 + rect.width / 2
+        }px`;
+
+        // Show tooltip
+        tooltip.style.display = "block";
+      }
+
+      // Hide tooltip
+      function hideTooltip() {
+        tooltip.style.display = "none";
+      }
+
+      // Format time (convert 24h to 12h)
+      function formatTime(timeString) {
+        const [hours, minutes] = timeString.split(":");
+        let hour = parseInt(hours, 10);
+        const ampm = hour >= 12 ? "PM" : "AM";
+        hour = hour % 12;
+        hour = hour ? hour : 12; // Convert 0 to 12
+        return `${hour}:${minutes} ${ampm}`;
+      }
+
+      // Add course to legend
+      function addLegendItem(course) {
+        const item = document.createElement("div");
+        item.className = "legend-item";
+
+        const colorSquare = document.createElement("div");
+        colorSquare.className = "legend-color";
+        colorSquare.style.backgroundColor = course.color;
+
+        const text = document.createElement("div");
+        text.className = "legend-text";
+        text.textContent = course.name;
+
+        const actions = document.createElement("div");
+        actions.className = "legend-actions";
+
+        const editAction = document.createElement("span");
+        editAction.className = "legend-action";
+        editAction.textContent = "✏️";
+        editAction.title = "Edit";
+        editAction.addEventListener("click", () => editCourse(course.id));
+
+        const deleteAction = document.createElement("span");
+        deleteAction.className = "legend-action";
+        deleteAction.textContent = "🗑️";
+        deleteAction.title = "Delete";
+        deleteAction.addEventListener("click", () => {
+          deleteCourse(course.id);
+        });
+
+        actions.appendChild(editAction);
+        actions.appendChild(deleteAction);
+
+        item.appendChild(colorSquare);
+        item.appendChild(text);
+        item.appendChild(actions);
+
+        legendItems.appendChild(item);
+      }
+
+      // Edit course
+      function editCourse(courseId) {
+        const course = courses.find((c) => c.id === courseId);
+        if (!course) return;
+
+        // Set form values
+        document.getElementById("courseName").value = course.name;
+        document.getElementById("courseDescription").value = course.description;
+        document.getElementById("startTime").value = course.startTime;
+        document.getElementById("endTime").value = course.endTime;
+        document.getElementById("courseColor").value = course.color;
+        colorPreview.style.backgroundColor = course.color;
+        document.getElementById("courseId").value = course.id;
+
+        // Reset day checkboxes
+        DAYS.forEach((day) => {
+          const checkbox = document.getElementById(`day${day}`);
+          checkbox.checked = course.days.includes(day);
+        });
+
+        // Switch to edit mode
+        editingCourseId = courseId;
+        btnAddCourse.style.display = "none";
+        btnUpdateCourse.style.display = "block";
+        btnDelete.style.display = "block";
+        btnCancel.style.display = "block";
+
+        // Scroll to form
+        document.querySelector(".sidebar").scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Update course
+      function handleUpdateCourse() {
+        if (!editingCourseId) return;
+
+        const name = document.getElementById("courseName").value;
+        const description = document.getElementById("courseDescription").value;
+        const startTime = document.getElementById("startTime").value;
+        const endTime = document.getElementById("endTime").value;
+        const color = document.getElementById("courseColor").value;
+
+        // Validate
+        if (!name || !startTime || !endTime) {
+          alert("Please fill out all required fields");
+          return;
+        }
+
+        // Check if end time is after start time
+        if (startTime >= endTime) {
+          alert("End time must be after start time");
+          return;
+        }
+
+        // Get selected days
+        const selectedDays = [];
+        DAYS.forEach((day) => {
+          const checkbox = document.getElementById(`day${day}`);
+          if (checkbox.checked) {
+            selectedDays.push(day);
+          }
+        });
+
+        if (selectedDays.length === 0) {
+          alert("Please select at least one day");
+          return;
+        }
+
+        // Find course index
+        const courseIndex = courses.findIndex((c) => c.id === editingCourseId);
+        if (courseIndex === -1) return;
+
+        // Update course
+        courses[courseIndex] = {
+          ...courses[courseIndex],
+          name,
+          description,
+          days: selectedDays,
+          startTime,
+          endTime,
+          color,
+        };
+
+        // Save to localStorage
+        saveCoursesToStorage();
+
+        // Render courses
+        renderCourses();
+
+        // Reset form
+        resetForm();
+      }
+
+      // Delete course
+      function handleDeleteCourse() {
+        if (!editingCourseId) return;
+
+        deleteCourse(editingCourseId);
+      }
+
+      // Delete course by ID
+      function deleteCourse(courseId) {
+        // Show confirmation dialog
+        if (!confirm("Are you sure you want to remove this course?")) {
+          return; // User cancelled
+        }
+
+        // Filter out the course
+        courses = courses.filter((course) => course.id !== courseId);
+
+        // Save to localStorage
+        saveCoursesToStorage();
+
+        // Render courses
+        renderCourses();
+
+        // Reset form if we were editing this course
+        if (editingCourseId === courseId) {
+          resetForm();
+        }
+      }
+
+      // Reset form
+      function resetForm() {
+        courseForm.reset();
+        colorPreview.style.backgroundColor = courseColor.value;
+        editingCourseId = null;
+
+        // Switch back to add mode
+        btnAddCourse.style.display = "block";
+        btnUpdateCourse.style.display = "none";
+        btnDelete.style.display = "none";
+        btnCancel.style.display = "none";
+      }
+
+      // Toggle dark mode
+      function toggleDarkModeHandler() {
+        isDarkMode = !isDarkMode;
+        localStorage.setItem("darkMode", isDarkMode);
+        updateDarkModeState();
+      }
+
+      // Update dark mode state
+      function updateDarkModeState() {
+        if (isDarkMode) {
+          document.body.classList.add("dark-mode");
+          toggleDarkMode.textContent = "☀️ Light Mode";
+        } else {
+          document.body.classList.remove("dark-mode");
+          toggleDarkMode.textContent = "🌙 Dark Mode";
+        }
+      }
+
+      // Clear all courses
+      function clearAllCourses() {
+        courses = [];
+        saveCoursesToStorage();
+        renderCourses();
+        confirmModal.classList.remove("active");
+      }
+
+      // Highlight today's column in the timetable
+      function highlightTodayColumn() {
+        // Map JS day (0=Sun, 1=Mon, ..., 6=Sat) to DAYS array
+        const jsDay = new Date().getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+        // Our DAYS: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+        // Map: 6->0, 0->1, 1->2, ..., 5->6
+        let todayIdx;
+        switch (jsDay) {
+          case 6:
+            todayIdx = 0;
+            break; // Saturday
+          case 0:
+            todayIdx = 1;
+            break; // Sunday
+          case 1:
+            todayIdx = 2;
+            break; // Monday
+          case 2:
+            todayIdx = 3;
+            break; // Tuesday
+          case 3:
+            todayIdx = 4;
+            break; // Wednesday
+          case 4:
+            todayIdx = 5;
+            break; // Thursday
+          case 5:
+            todayIdx = 6;
+            break; // Friday
+        }
+        // Highlight th
+        const ths = document.querySelectorAll(".timetable th");
+        if (ths[todayIdx + 1]) ths[todayIdx + 1].classList.add("today");
+        // Highlight all td in that column
+        const rows = document.querySelectorAll(".timetable tr");
+        rows.forEach((row) => {
+          const tds = row.querySelectorAll("td");
+          if (tds[todayIdx + 1]) tds[todayIdx + 1].classList.add("today");
+        });
+      }
+
+      // Download Routine Table as JPG Image
+      function downloadRoutineHandler() {
+        const timetableContainer = document.querySelector(
+          ".timetable-container"
+        );
+        const timetable = document.getElementById("timetable");
+        if (!confirm("Download routine as JPG image?")) return;
+
+        // Hide tooltips/modals if visible
+        document.getElementById("tooltip").style.opacity = "0";
+        document.getElementById("confirmModal").classList.remove("active");
+
+        // If background is set, ensure it's visible for html2canvas
+        let bgWasHidden = false;
+        if (
+          timetableBg &&
+          timetableBg.src &&
+          timetableBg.style.display === "none"
+        ) {
+          timetableBg.style.display = "";
+          bgWasHidden = true;
+        }
+
+        // --- For mobile, render the full table by cloning and setting width ---
+        let target = timetableContainer;
+        let tempWrapper = null;
+        let wasDarkMode = document.body.classList.contains("dark-mode");
+        if (window.innerWidth <= 768 || !wasDarkMode) {
+          // Clone the timetable container and set its width to fit the table
+          const clone = timetableContainer.cloneNode(true);
+          const tableClone = clone.querySelector("table.timetable");
+          if (tableClone) {
+            tableClone.style.minWidth = timetable.scrollWidth + "px";
+            tableClone.style.width = timetable.scrollWidth + "px";
+          }
+          tempWrapper = document.createElement("div");
+          tempWrapper.style.position = "fixed";
+          tempWrapper.style.left = "-9999px";
+          tempWrapper.style.top = "0";
+          tempWrapper.style.zIndex = "-9999";
+          tempWrapper.style.background = "transparent";
+          // Force dark mode for the clone
+          tempWrapper.className = "dark-mode";
+          clone.classList.add("dark-mode");
+          tempWrapper.appendChild(clone);
+          document.body.appendChild(tempWrapper);
+          target = clone;
+        }
+
+        html2canvas(target, {
+          backgroundColor: null,
+          scale: 2,
+          useCORS: true,
+        }).then((canvas) => {
+          const link = document.createElement("a");
+          link.href = canvas.toDataURL("image/jpeg", 0.95);
+          link.download = "routine.jpg";
+          link.click();
+          // Restore bg display if it was hidden
+          if (bgWasHidden) timetableBg.style.display = "none";
+          // Remove the temp clone if used
+          if (tempWrapper) document.body.removeChild(tempWrapper);
+        });
+      }
+
+      // Update time row border
+      function updateTimeRowBorder() {
+        const checked = document.getElementById("toggleTimeRowBorder").checked;
+        document.querySelectorAll(".time-label-row").forEach((row) => {
+          if (checked) {
+            row.classList.add("show-border");
+          } else {
+            row.classList.remove("show-border");
+          }
+        });
+      }
+
+      // Initialize the app
+      window.addEventListener("DOMContentLoaded", () => {
+        init();
+        setupEventListeners();
+        highlightTodayColumn();
+      });
     </script>
-</body>
+  </body>
 </html>

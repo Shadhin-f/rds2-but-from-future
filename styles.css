@@ -88,7 +88,7 @@ header {
   color: #fff;
   padding: 12px 18px;
   border-radius: 10px;
-  margin: 0 auto 18px auto;
+  margin: 18px auto 18px auto;
   font-size: 1.08rem;
   font-weight: 500;
   box-shadow: 0 2px 12px rgba(109, 40, 217, 0.13);
@@ -1853,4 +1853,97 @@ records-list::-webkit-scrollbar-thumb {
 .add-to-modal-btn:not(:disabled):hover {
   background: #6d28d9;
   color: #fff;
+}
+
+.semester-selector {
+  margin: 0 auto 16px auto;
+  /* max-width: 800px; */
+  text-align: right;
+  /* padding: 0 12px; */
+}
+
+.semester-select {
+  background: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--primary-gradient) 100%
+  );
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.15);
+}
+
+.semester-select:hover {
+  background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+}
+
+.semester-select option {
+  background: var(--surface-color);
+  color: #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .semester-selector {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+}
+
+/* Warning card for unavailable semesters */
+.semester-warning {
+  background: linear-gradient(
+    135deg,
+    rgba(225, 29, 72, 0.1),
+    rgba(190, 24, 93, 0.1)
+  );
+  border: 1px solid #e11d48;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+  display: none; /* Hidden by default */
+}
+
+.semester-warning h3 {
+  color: #e11d48;
+  font-size: 1.1rem;
+  margin: 0 0 10px 0;
+}
+
+.semester-warning p {
+  color: var(--text-color);
+  margin: 0 0 15px 0;
+  font-size: 0.95rem;
+}
+
+.semester-warning .telegram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #229ed9;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.semester-warning .telegram-btn:hover {
+  background: #1c89bd;
+}
+
+@media (max-width: 600px) {
+  .semester-warning {
+    margin: 15px 0;
+    padding: 15px;
+  }
 }

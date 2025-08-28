@@ -155,8 +155,8 @@ async function loadCSVData() {
         const csvData = await response.text();
         courseData = parseCSV(csvData);
         renderTable(courseData);
-        renderWishlist(); // <-- update wishlist with latest data
-        // localStorage.setItem(CACHE_KEY, JSON.stringify(courseData));
+        // Remove this line as we no longer render the wishlist table
+        // renderWishlist();
     } catch (error) {
         console.error('Error loading CSV:', error);
         alert('Error loading course data');
@@ -191,20 +191,49 @@ function parseCSV(csv) {
     return result;
 }
 
-// Update search functionality to use exact column names
-const searchInput = document.getElementById('searchInput');
-if (searchInput) {
-    searchInput.addEventListener('input', debounce(function(e) {
-        currentPage = 1; // Reset to first page
-        const searchTerm = e.target.value.toLowerCase();
-        filteredData = courseData.filter(course => 
-            course.Course?.toLowerCase().includes(searchTerm) ||
-            course.Faculty?.toLowerCase().includes(searchTerm) ||
-            course.Semester?.toLowerCase().includes(searchTerm)
-        );
-        renderTable(filteredData.length > 0 || searchTerm ? filteredData : courseData);
-    }, 300));
-}
+// Remove this existing search code (it's too early)
+// const searchInput = document.getElementById('searchInput');
+// if (searchInput) {
+//     searchInput.addEventListener('input', debounce(function(e) {...}));
+// }
+
+// Add the search initialization to DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize search functionality
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(function(e) {
+            currentPage = 1; // Reset to first page
+            const searchTerm = e.target.value.toLowerCase();
+            filteredData = courseData.filter(course => 
+                course.Course?.toLowerCase().includes(searchTerm) ||
+                course.Faculty?.toLowerCase().includes(searchTerm) ||
+                course.Semester?.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filteredData.length > 0 || searchTerm ? filteredData : courseData);
+        }, 300));
+    }
+
+    // Add semester change handler
+    const semesterSelect = document.getElementById('semesterSelect');
+    if (semesterSelect) {
+        semesterSelect.addEventListener('change', async function() {
+            const selectedFile = this.value;
+            const selectedOption = this.options[this.selectedIndex];
+            
+            await changeSemester(selectedFile);
+            
+            // Update page title only if file exists
+            const fileExists = await checkSemesterFileExists(selectedFile);
+            if (fileExists) {
+                document.title = `RDS2 - ${selectedOption.getAttribute('data-name')}`;
+            }
+        });
+        
+        // Check initial semester on load
+        changeSemester(semesterSelect.value);
+    }
+});
 
 function debounce(func, wait) {
     let timeout;
@@ -247,7 +276,7 @@ function renderTable(data) {
 
     // Render table rows
     paginatedData.forEach((row, index) => {
-        const isWishlisted = wishlist.some(item => item.Course === row.Course && item.Section === row.Section);
+        const isInRoutineAlready = isInRoutine(row.Course, row.Section);
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${start + index + 1}</td>
@@ -268,12 +297,14 @@ function renderTable(data) {
                     data-prediction="${escapeHtml(row.Prediction || '')}"
                     data-records="${escapeHtml(row.Records || '')}"
                 >View</button>
-                <button class="view-details-btn add-to-wishlist-btn"
-                    title="Add to My Courses or Routine"
+                <button class="view-details-btn add-to-wishlist-btn${isInRoutineAlready ? ' added' : ''}"
+                    title="${isInRoutineAlready ? 'Already in Routine' : 'Add to Routine'}"
                     data-course="${escapeHtml(row.Course)}" 
                     data-section="${escapeHtml(row.Section)}"
+                    ${isInRoutineAlready ? 'disabled' : ''}
                 >
-                    <i class="fas fa-plus"></i> Add
+                    <i class="fas fa-${isInRoutineAlready ? 'check' : 'plus'}"></i> 
+                    ${isInRoutineAlready ? 'Added' : 'Add'}
                 </button>
             </td>
         `;
@@ -361,41 +392,40 @@ modal.addEventListener('click', (e) => {
 
 // --- Add-to Modal Logic ---
 const addToModal = document.getElementById('addToModal');
-const addToModalBody = document.getElementById('addToModalBody');
 const closeAddToModal = document.getElementById('closeAddToModal');
 
 function showAddToModal(row) {
-    // Check if already in wishlist or routine
-    const inWishlist = wishlist.some(item => item.Course === row.Course && item.Section === row.Section);
-    const inRoutine = routineCourses.some(c =>
-        c.code === row.Course && c.section === row.Section && c.faculty === row.Faculty && c.start === parseRoutineTime(row.Time)?.start
-    );
+    // Instead of showing modal, directly add to routine
+    addCourseToRoutine(row);
+    // Update the add button state in the table
+    updateAddButtonState(row.Course, row.Section);
+}
 
-    addToModalBody.innerHTML = `
-      <button class="add-to-modal-btn" id="addToWishlistModalBtn" ${inWishlist ? 'disabled' : ''}>
-        ${inWishlist ? 'Already in My Courses' : 'Add to My Courses'}
-      </button>
-      <button class="add-to-modal-btn" id="addToRoutineModalBtn" ${inRoutine ? 'disabled' : ''}>
-        ${inRoutine ? 'Already in Routine' : 'Add to Routine'}
-      </button>
-    `;
+// Add this new function to update button states
+function updateAddButtonState(course, section) {
+    document.querySelectorAll('.add-to-wishlist-btn').forEach(btn => {
+        if (
+            btn.getAttribute('data-course') === course &&
+            btn.getAttribute('data-section') === section
+        ) {
+            if (isInRoutine(course, section)) {
+                btn.classList.add('added');
+                btn.disabled = true;
+                btn.title = 'Already in Routine';
+                btn.innerHTML = '<i class="fas fa-check"></i> Added';
+            } else {
+                btn.classList.remove('added');
+                btn.disabled = false;
+                btn.title = 'Add to Routine';
+                btn.innerHTML = '<i class="fas fa-plus"></i> Add';
+            }
+        }
+    });
+}
 
-    // Add event listeners
-    if (!inWishlist) {
-        document.getElementById('addToWishlistModalBtn').onclick = function() {
-            addToWishlist(row);
-            addToModal.classList.add('hidden');
-            renderTable(filteredData.length ? filteredData : courseData);
-        };
-    }
-    if (!inRoutine) {
-        document.getElementById('addToRoutineModalBtn').onclick = function() {
-            addCourseToRoutine(row);
-            addToModal.classList.add('hidden');
-            renderTable(filteredData.length ? filteredData : courseData);
-        };
-    }
-    addToModal.classList.remove('hidden');
+// Add this helper function to check if a course is in routine
+function isInRoutine(course, section) {
+    return routineCourses.some(c => c.code === course && c.section === section);
 }
 
 // Close modal logic
@@ -441,7 +471,8 @@ window.addEventListener('load', () => {
     filteredData = []; // Reset filteredData on load
     loadCSVData();
     loadWishlist();
-    renderWishlist();
+    // Remove this line as we no longer render the wishlist table
+    // renderWishlist();
 });
 
 // --- Flexible Routine Maker Logic ---
@@ -487,10 +518,10 @@ function timeToMinutes(t) {
 function addCourseToRoutine({Course, Section, Faculty, Time}) {
     const parsed = parseRoutineTime(Time);
     if (!parsed) return;
-    // Prevent duplicates by Course+Section+Faculty+Time
-    if (routineCourses.some(c =>
-        c.code === Course && c.section === Section && c.faculty === Faculty && c.start === parsed.start && c.end === parsed.end && JSON.stringify(c.days) === JSON.stringify(parsed.days)
-    )) return;
+    
+    // Check for existing course
+    if (isInRoutine(Course, Section)) return;
+    
     routineCourses.push({
         code: Course,
         section: Section,
@@ -501,15 +532,23 @@ function addCourseToRoutine({Course, Section, Faculty, Time}) {
         endMin: timeToMinutes(parsed.end),
         days: parsed.days
     });
+    
     saveRoutine();
     renderRoutineTable();
+    // Update the add button state
+    updateAddButtonState(Course, Section);
 }
 
 // Remove course from routine by index
 function removeCourseFromRoutine(index) {
+    const removed = routineCourses[index];
     routineCourses.splice(index, 1);
     saveRoutine();
     renderRoutineTable();
+    // Update the add button state for the removed course
+    if (removed) {
+        updateAddButtonState(removed.code, removed.section);
+    }
 }
 
 // Render routine table with flexible slots and remove button
@@ -586,18 +625,117 @@ function minutesToTime(mins) {
     return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} ${ampm}`;
 }
 
-// --- Wishlist Hide/Show Toggle with Persistence ---
-const WISHLIST_VIS_KEY = 'wishlist_visible';
-const ROUTINE_VIS_KEY = 'routine_visible';
+// Update your DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    // Keep only the routine toggle
+    const routineBtn = document.getElementById('toggleRoutineBtn');
+    if (routineBtn) {
+        routineBtn.addEventListener('click', function() {
+            const visible = localStorage.getItem(ROUTINE_VIS_KEY) !== '0';
+            setRoutineVisible(!visible);
+        });
+    }
+    
+    // Remove wishlist visibility setting
+    // setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
+    setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
+    
+    // Keep the rest of your initialization code
+    // ...existing code...
+});
 
-function setWishlistVisible(visible) {
-    const wishlistContainer = document.getElementById('wishlistContainer');
-    const btn = document.getElementById('toggleWishlistBtn');
-    if (!wishlistContainer || !btn) return;
-    wishlistContainer.style.display = visible ? 'block' : 'none';
-    btn.textContent = visible ? 'Hide' : 'Show';
-    localStorage.setItem(WISHLIST_VIS_KEY, visible ? '1' : '0');
+// Update the DOMContentLoaded event listener to remove wishlist visibility toggle
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove the wishlist toggle button code
+    // const wishlistBtn = document.getElementById('toggleWishlistBtn');
+    // if (wishlistBtn) {...}
+
+    // Keep only the routine toggle
+    const routineBtn = document.getElementById('toggleRoutineBtn');
+    if (routineBtn) {
+        routineBtn.addEventListener('click', function() {
+            const visible = localStorage.getItem(ROUTINE_VIS_KEY) !== '0';
+            setRoutineVisible(!visible);
+        });
+    }
+    
+    // Remove wishlist visibility setting
+    // setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
+    setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
+    
+    // Keep the rest of your initialization code
+    // ...existing code...
+});
+
+// Update loadCSVData to remove wishlist rendering
+async function loadCSVData() {
+    try {
+        document.getElementById('loading').style.display = 'block';
+        const response = await fetch(CSV_FILENAME);
+        const csvData = await response.text();
+        courseData = parseCSV(csvData);
+        renderTable(courseData);
+        // Remove this line as we no longer render the wishlist table
+        // renderWishlist();
+    } catch (error) {
+        console.error('Error loading CSV:', error);
+        alert('Error loading course data');
+    } finally {
+        document.getElementById('loading').style.display = 'none';
+    }
 }
+
+// Keep the wishlist data structure and storage functions
+// but remove the rendering function
+// const WISHLIST_KEY = 'wishlist_courses';
+// let wishlist = [];
+
+function loadWishlist() {
+    try {
+        wishlist = JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+    } catch {
+        wishlist = [];
+    }
+}
+
+function saveWishlist() {
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+}
+
+// Remove the renderWishlist function since we don't show the table anymore
+// function renderWishlist() {...}
+
+// Keep the addToWishlist function for other features that might use it
+function addToWishlist(row) {
+    if (!wishlist.some(item => item.Course === row.Course && item.Section === row.Section)) {
+        wishlist.push({
+            Course: row.Course,
+            Section: row.Section,
+            Faculty: row.Faculty,
+            Time: row.Time,
+            Room: row.Room,
+            Semester: row.Semester,
+            Prediction: row.Prediction,
+            Records: row.Records
+        });
+        saveWishlist();
+        // Remove this line as we no longer render the wishlist table
+        // renderWishlist();
+    }
+}
+
+// Update window load event
+window.addEventListener('load', () => {
+    localStorage.removeItem(CACHE_KEY);
+    filteredData = [];
+    loadCSVData();
+    loadWishlist();
+    // Remove this line as we no longer render the wishlist table
+    // renderWishlist();
+});
+
+// --- Routine Visibility Toggle ---
+const ROUTINE_VIS_KEY = 'routine_visible';
 
 function setRoutineVisible(visible) {
     const wrapper = document.getElementById('routineTableWrapper');
@@ -609,14 +747,6 @@ function setRoutineVisible(visible) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Wishlist toggle
-    const wishlistBtn = document.getElementById('toggleWishlistBtn');
-    if (wishlistBtn) {
-        wishlistBtn.addEventListener('click', function() {
-            const visible = localStorage.getItem(WISHLIST_VIS_KEY) !== '0';
-            setWishlistVisible(!visible);
-        });
-    }
     // Routine toggle (already correct)
     const routineBtn = document.getElementById('toggleRoutineBtn');
     if (routineBtn) {
@@ -626,7 +756,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     // On load, set visibility from storage (default to visible if not set)
-    setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
     setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
 });
 
@@ -642,4 +771,71 @@ window.addEventListener('load', () => {
     // ...existing code...
     loadRoutine();
     renderRoutineTable();
+});
+
+// Add these at the top with your other constants
+const DEFAULT_SEMESTER = 'l77.csv';
+let currentSemester = DEFAULT_SEMESTER;
+
+// Add this function to handle semester changes
+async function changeSemester(semesterFile) {
+    const warningCard = document.getElementById('semesterWarning');
+    const fileExists = await checkSemesterFileExists(semesterFile);
+    
+    if (!fileExists) {
+        // Show warning card
+        warningCard.style.display = 'block';
+        // Hide table and pagination
+        document.querySelector('.table-container').style.display = 'none';
+        document.querySelector('.pagination').style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('noResults').classList.add('hidden');
+        return;
+    }
+
+    // Hide warning card and show table
+    warningCard.style.display = 'none';
+    document.querySelector('.table-container').style.display = 'block';
+    
+    // Continue with normal semester change
+    currentSemester = semesterFile;
+    currentPage = 1;
+    document.getElementById('searchInput').value = '';
+    filteredData = [];
+    loadCSVData();
+}
+
+// Add this function to check if semester file exists
+async function checkSemesterFileExists(filename) {
+    try {
+        const response = await fetch(filename, { method: 'HEAD' });
+        return response.ok;
+    } catch {
+        return false;
+    }
+}
+
+// Update your DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    // ...existing code...
+
+    // Add semester change handler
+    const semesterSelect = document.getElementById('semesterSelect');
+    if (semesterSelect) {
+        semesterSelect.addEventListener('change', async function() {
+            const selectedFile = this.value;
+            const selectedOption = this.options[this.selectedIndex];
+            
+            await changeSemester(selectedFile);
+            
+            // Update page title only if file exists
+            const fileExists = await checkSemesterFileExists(selectedFile);
+            if (fileExists) {
+                document.title = `RDS2 - ${selectedOption.getAttribute('data-name')}`;
+            }
+        });
+        
+        // Check initial semester on load
+        changeSemester(semesterSelect.value);
+    }
 });

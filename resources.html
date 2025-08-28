@@ -1,94 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
     <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-DR0D2D6C35');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DR0D2D6C35");
     </script>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Study Materials</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-        .trending-link {
-            box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
-            border-color: #e11d48 !important;
-            color: #fff !important;
-            position: relative;
-            z-index: 2;
-        }
-        .trending-link:hover {
-            box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
-            background: linear-gradient(135deg, #e11d48, #be185d) !important;
-            color: #fff !important;
-        }
-        .study-material-frame{
-            width: 100%;
-            height: 80vh;
-            border: none;
-            margin: 0 auto;
-            display: block;
-            background-color: #1a1c23;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            box-shadow: 0 0 8px 2px #777677, 0 0 16px 4px #4b2591e5;
-        }
+      .trending-link {
+        box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+        border-color: #e11d48 !important;
+        color: #fff !important;
+        position: relative;
+        z-index: 2;
+      }
+      .trending-link:hover {
+        box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+        background: linear-gradient(135deg, #e11d48, #be185d) !important;
+        color: #fff !important;
+      }
+      .study-material-frame {
+        width: 100%;
+        height: 80vh;
+        border: none;
+        margin: 0 auto;
+        display: block;
+        background-color: #1a1c23;
+        border-radius: 8px;
+        border: 1px solid #334155;
+        box-shadow: 0 0 8px 2px #777677, 0 0 16px 4px #4b2591e5;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
-        <header>
-            <h1>Study Materials</h1>
-            <nav class="nav-bar">
-                <a href="index.html">RDS2</a>
-                <a href="calendar.html">Academic Calendar</a>
-                <a href="resources.html" class="active" >Study Materials</a>
-                <a href="routine.html">Routine Maker</a>
-                <a href="planner.html">Semester Planner</a>
-                <a href="#" onclick="alert('Freshman Guides are coming soon!'); return false;">Freshman Guides</a>
-                <a href="#" onclick="alert('Course maps of all departments coming soon!'); return false;">Course map</a>
-            </nav>
-            <!-- <div class="header-counters">
+      <header>
+        <h1>Study Materials</h1>
+        <nav class="nav-bar">
+          <a href="index.html">RDS2</a>
+          <a href="calendar.html">Academic Calendar</a>
+          <a href="resources.html" class="active">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a
+            href="#"
+            onclick="alert('Course maps of all departments coming soon!'); return false;"
+            >Course map</a
+          >
+        </nav>
+        <!-- <div class="header-counters">
                 <div id="totalResourcesCounter" class="active-users-counter">📦 0 resources shared</div>
                 <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div>
             </div> -->
-            <div class="announcement-bar">
-                <a href="https://forms.gle/LHJ9YfGUBTPLTbZo8" 
-                   target="_blank" class="view-extension-btn">🛩️ Share material!</a>
-                <a href="https://docs.google.com/spreadsheets/d/1mTTsmqo_F-6SyiGJSFJgMu_rMPB4LxSBVOUHypiM3rk/edit?usp=sharing" 
-                   target="_blank" class="view-extension-btn">🔎 View in sheets!</a>
-            </div>
-            <div class="announcement-bar">
-                <p>📚 Let’s grow together! Share your study materials—notes, slides, summaries, or tips—and help others succeed while building a stronger learning community. You'll also get access to helpful resources shared by fellow students. By keeping everything in one place, it becomes easier and faster for everyone to find what they need, when they need it. Let's make studying simpler, together! 🌟</p>
-            </div>
-        </header>
-        
+        <div class="announcement-bar">
+          <a
+            href="https://forms.gle/LHJ9YfGUBTPLTbZo8"
+            target="_blank"
+            class="view-extension-btn"
+            >🛩️ Share material!</a
+          >
+          <a
+            href="https://docs.google.com/spreadsheets/d/1mTTsmqo_F-6SyiGJSFJgMu_rMPB4LxSBVOUHypiM3rk/edit?usp=sharing"
+            target="_blank"
+            class="view-extension-btn"
+            >🔎 View in sheets!</a
+          >
+        </div>
+        <div class="announcement-bar">
+          <p>
+            📚 Let’s grow together! Share your study materials—notes, slides,
+            summaries, or tips—and help others succeed while building a stronger
+            learning community. You'll also get access to helpful resources
+            shared by fellow students. By keeping everything in one place, it
+            becomes easier and faster for everyone to find what they need, when
+            they need it. Let's make studying simpler, together! 🌟
+          </p>
+        </div>
+      </header>
 
-        <main>
-            <iframe class="study-material-frame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIqjfpp6kuuUVPRwcQ3ASGDc8PqrmEYWH2XBzc0XUpQejgJgIqsYPKaIcf_fK_mSAMfYnYkDkRCtSh/pubhtml?widget=true&amp;headers=false"></iframe>
-        </main>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-     crossorigin="anonymous"></script>
-            <!-- ad -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5572277246422121"
-                 data-ad-slot="5845016719"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        <!-- <main>
+      <main>
+        <iframe
+          class="study-material-frame"
+          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIqjfpp6kuuUVPRwcQ3ASGDc8PqrmEYWH2XBzc0XUpQejgJgIqsYPKaIcf_fK_mSAMfYnYkDkRCtSh/pubhtml?widget=true&amp;headers=false"
+        ></iframe>
+      </main>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+        crossorigin="anonymous"
+      ></script>
+      <!-- ad -->
+      <ins
+        class="adsbygoogle"
+        style="display: block"
+        data-ad-client="ca-pub-5572277246422121"
+        data-ad-slot="5845016719"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+      <!-- <main>
             <div class="table-container" style="margin-bottom:2rem;">
                 <h2 style="text-align:left; font-size:1.15rem; margin:16px;">📤 Share a Study Material</h2>
                 <form id="resourceForm" class="resource-form">
@@ -99,7 +136,7 @@
                     <button type="submit" class="resource-submit-btn">Share</button>
                 </form>
                 <!-- Preview Modal -->
-            <!--
+      <!--
                 <div id="previewModal" class="modal" style="display:none;">
                     <div style="background:#181926;padding:32px 24px 24px 24px;border-radius:14px;max-width:95vw;width:370px;box-shadow:0 8px 32px #0008;color:#e2e8f0;position:relative;overflow:auto;max-height:90vh;">
                         <h3 style="margin-top:0;margin-bottom:18px;font-size:1.15rem;">Confirm Submission</h3>
@@ -119,55 +156,67 @@
                 <div id="resourceList"></div>
             </div>
         </main> -->
-        <footer class="footer">
-            <p>
-                © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
-                <br>
-            </p>
-            <div class="social-links">
-                <span>Follow me on</span>
-                <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
-            <br>
-            Last updated: 16-05-2025 15:30
-        </footer>
+      <footer class="footer">
+        <p>
+          © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+          <br />
+        </p>
+        <div class="social-links">
+          <span>Follow me on</span>
+          <a
+            href="https://www.facebook.com/share/19DGPCk2wr/"
+            target="_blank"
+            title="Facebook"
+          >
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/_shadhin_f"
+            target="_blank"
+            title="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <br />
+        Last updated: 16-05-2025 15:30
+      </footer>
     </div>
     <script src="script.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script src="activeUsers.js"></script>
     <script>
-        window.addEventListener('load', () => {
-            initializeActiveUsers('resources');
-        });
+      window.addEventListener("load", () => {
+        initializeActiveUsers("resources");
+      });
     </script>
     <script src="resources.js"></script>
     <script>
-    // Preview modal logic for resource form
-    const resourceForm = document.getElementById('resourceForm');
-    const previewModal = document.getElementById('previewModal');
-    const previewContent = document.getElementById('previewContent');
-    const confirmBtn = document.getElementById('confirmPreviewBtn');
-    const cancelBtn = document.getElementById('cancelPreviewBtn');
+      // Preview modal logic for resource form
+      const resourceForm = document.getElementById("resourceForm");
+      const previewModal = document.getElementById("previewModal");
+      const previewContent = document.getElementById("previewContent");
+      const confirmBtn = document.getElementById("confirmPreviewBtn");
+      const cancelBtn = document.getElementById("cancelPreviewBtn");
 
-    // Store latest form data for confirmation
-    let latestFormData = null;
+      // Store latest form data for confirmation
+      let latestFormData = null;
 
-    resourceForm.addEventListener('submit', function(e) {
+      resourceForm.addEventListener("submit", function (e) {
         e.preventDefault();
         // Always read current form values (use .value, but also check for undefined/null)
-        const nameInput = document.getElementById('resName');
-        const semesterInput = document.getElementById('resSemester');
-        const courseInput = document.getElementById('resCourse');
-        const linkInput = document.getElementById('resLink');
+        const nameInput = document.getElementById("resName");
+        const semesterInput = document.getElementById("resSemester");
+        const courseInput = document.getElementById("resCourse");
+        const linkInput = document.getElementById("resLink");
         const name = nameInput ? nameInput.value : "";
         const semester = semesterInput ? semesterInput.value : "";
         const course = courseInput ? courseInput.value : "";
@@ -176,45 +225,45 @@
         latestFormData = { name, semester, course, link };
 
         // Defensive: clear error message if present
-        const err = document.getElementById('modalErrorMsg');
+        const err = document.getElementById("modalErrorMsg");
         if (err) err.remove();
 
         // Build preview using divs for each field
-        previewContent.innerHTML = '';
+        previewContent.innerHTML = "";
         function field(label, value, isLink) {
-            const wrapper = document.createElement('div');
-            wrapper.style.marginBottom = '10px';
-            const labelDiv = document.createElement('div');
-            labelDiv.style.fontWeight = 'bold';
-            labelDiv.style.color = '#a78bfa';
-            labelDiv.textContent = label;
-            const valueDiv = document.createElement('div');
-            valueDiv.style.wordBreak = 'break-all';
-            valueDiv.style.color = '#e2e8f0';
-            if (!value) {
-                valueDiv.innerHTML = '<span style="color:#e11d48;">(empty)</span>';
-            } else if (isLink) {
-                const a = document.createElement('a');
-                a.href = value;
-                a.target = '_blank';
-                a.style.color = '#a78bfa';
-                a.textContent = value;
-                valueDiv.appendChild(a);
-            } else {
-                valueDiv.textContent = value;
-            }
-            wrapper.appendChild(labelDiv);
-            wrapper.appendChild(valueDiv);
-            return wrapper;
+          const wrapper = document.createElement("div");
+          wrapper.style.marginBottom = "10px";
+          const labelDiv = document.createElement("div");
+          labelDiv.style.fontWeight = "bold";
+          labelDiv.style.color = "#a78bfa";
+          labelDiv.textContent = label;
+          const valueDiv = document.createElement("div");
+          valueDiv.style.wordBreak = "break-all";
+          valueDiv.style.color = "#e2e8f0";
+          if (!value) {
+            valueDiv.innerHTML = '<span style="color:#e11d48;">(empty)</span>';
+          } else if (isLink) {
+            const a = document.createElement("a");
+            a.href = value;
+            a.target = "_blank";
+            a.style.color = "#a78bfa";
+            a.textContent = value;
+            valueDiv.appendChild(a);
+          } else {
+            valueDiv.textContent = value;
+          }
+          wrapper.appendChild(labelDiv);
+          wrapper.appendChild(valueDiv);
+          return wrapper;
         }
-        previewContent.appendChild(field('Name', name));
-        previewContent.appendChild(field('Semester', semester));
-        previewContent.appendChild(field('Material Details / Course', course));
-        previewContent.appendChild(field('Link', link, true));
-        previewModal.style.display = 'flex';
-    });
+        previewContent.appendChild(field("Name", name));
+        previewContent.appendChild(field("Semester", semester));
+        previewContent.appendChild(field("Material Details / Course", course));
+        previewContent.appendChild(field("Link", link, true));
+        previewModal.style.display = "flex";
+      });
 
-    confirmBtn.addEventListener('click', function() {
+      confirmBtn.addEventListener("click", function () {
         // Validate again before upload
         if (!latestFormData) return;
         // Use trim here for validation
@@ -223,64 +272,67 @@
         const course = latestFormData.course.trim();
         const link = latestFormData.link.trim();
         if (!name || !semester || !course || !link) {
-            // Show error below the fields
-            let err = document.getElementById('modalErrorMsg');
-            if (!err) {
-                err = document.createElement('div');
-                err.id = 'modalErrorMsg';
-                err.style.color = '#e11d48';
-                err.style.marginTop = '10px';
-                previewContent.appendChild(err);
-            }
-            err.textContent = 'All fields are required.';
-            return;
+          // Show error below the fields
+          let err = document.getElementById("modalErrorMsg");
+          if (!err) {
+            err = document.createElement("div");
+            err.id = "modalErrorMsg";
+            err.style.color = "#e11d48";
+            err.style.marginTop = "10px";
+            previewContent.appendChild(err);
+          }
+          err.textContent = "All fields are required.";
+          return;
         }
         // Push to Firebase directly
         if (window.firebase && window.firebase.database) {
-            const db = firebase.database();
-            const resourcesRef = db.ref("shared_resources");
-            resourcesRef.push({
-                name,
-                semester,
-                course,
-                link,
-                upvotes: 0,
-                downvotes: 0,
-                reports: 0,
-                timestamp: Date.now()
-            }, function(error) {
-                if (error) {
-                    alert("Resource upload failed.");
-                }
-            });
+          const db = firebase.database();
+          const resourcesRef = db.ref("shared_resources");
+          resourcesRef.push(
+            {
+              name,
+              semester,
+              course,
+              link,
+              upvotes: 0,
+              downvotes: 0,
+              reports: 0,
+              timestamp: Date.now(),
+            },
+            function (error) {
+              if (error) {
+                alert("Resource upload failed.");
+              }
+            }
+          );
         }
         // Reset form and modal
         resourceForm.reset();
-        previewModal.style.display = 'none';
+        previewModal.style.display = "none";
         latestFormData = null;
         // Remove error message if present
-        const err = document.getElementById('modalErrorMsg');
+        const err = document.getElementById("modalErrorMsg");
         if (err) err.remove();
-    });
+      });
 
-    cancelBtn.addEventListener('click', function() {
-        previewModal.style.display = 'none';
+      cancelBtn.addEventListener("click", function () {
+        previewModal.style.display = "none";
         latestFormData = null;
         // Remove error message if present
-        const err = document.getElementById('modalErrorMsg');
+        const err = document.getElementById("modalErrorMsg");
         if (err) err.remove();
-    });
+      });
 
-    // Optional: Close modal on outside click
-    previewModal.addEventListener('click', function(e) {
+      // Optional: Close modal on outside click
+      previewModal.addEventListener("click", function (e) {
         if (e.target === previewModal) {
-            previewModal.style.display = 'none';
-            latestFormData = null;
-            // Remove error message if present
-            const err = document.getElementById('modalErrorMsg');
-            if (err) err.remove();
+          previewModal.style.display = "none";
+          latestFormData = null;
+          // Remove error message if present
+          const err = document.getElementById("modalErrorMsg");
+          if (err) err.remove();
         }
-    });
+      });
     </script>
-</body>
+  </body>
 </html>
