@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Map - NSU</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="coursemap.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+      <header>
+        <h1>Course Map</h1>
+        <nav class="nav-bar">
+          <a href="index.html">RDS2</a>
+          <a href="calendar.html">Academic Calendar</a>
+          <a href="resources.html">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a href="coursemap.html" class="active">Course Map</a>
+        </nav>
+        <div class="announcement-bar">
+          <span>
+            To stay updated join community channel!
+            <a
+              href="https://t.me/nsu_advising_helper_bot_channel"
+              target="_blank"
+              class="view-extension-btn"
+              >⚡ Join now!
+            </a></span
+          >
+        </div>
+
+        <div class="major-selector">
+          <button class="major-btn active" data-major="cse">CSE</button>
+          <button class="major-btn" data-major="eee" disabled>EEE</button>
+          <button class="major-btn" data-major="bba" disabled>BBA</button>
+          <button class="major-btn" data-major="cee" disabled>CEE</button>
+          <button class="major-btn" data-major="Announcment" disabled>
+            More Coming Soon
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <div class="controls">
+          <button id="resetMap" class="control-btn">
+            <i class="fas fa-undo"></i> Reset Map
+          </button>
+          <button id="saveMap" class="control-btn">
+            <i class="fas fa-save"></i> Save Changes
+          </button>
+          <div class="info-panel">
+            <span class="info-text">
+              <i class="fas fa-info-circle"></i> Drag courses between semesters
+            </span>
+            <div class="legend">
+              <span class="legend-item">
+                <span class="color-box prerequisite"></span> Prerequisites
+              </span>
+              <span class="legend-item">
+                <span class="color-box selected"></span> Selected Course
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="semester-grid">
+          <!-- Semesters will be populated by JavaScript -->
+        </div>
+      </main>
+    </div>
+    <footer class="footer">
+      <p>
+        © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+        <br />
+      </p>
+      <div class="social-links">
+        <span>Follow me on</span>
+        <a
+          href="https://www.facebook.com/share/19DGPCk2wr/"
+          target="_blank"
+          title="Facebook"
+        >
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/_shadhin_f"
+          target="_blank"
+          title="Instagram"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+          target="_blank"
+          title="LinkedIn"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <br />
+      Last updated: 30-08-2025 03:30 AM
+    </footer>
+    <script src="coursemap.js"></script>
+  </body>
+</html>

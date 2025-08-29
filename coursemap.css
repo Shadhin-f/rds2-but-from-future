@@ -1,0 +1,237 @@
+.major-selector {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 0 20px;
+  flex-wrap: wrap;
+}
+
+.major-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.major-btn:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.major-btn.active {
+  background: linear-gradient(
+    90deg,
+    var(--primary-color) 0%,
+    var(--primary-gradient) 100%
+  );
+  border-color: transparent;
+  color: #fff;
+}
+
+.major-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 20px;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-btn:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.info-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.semester-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+.semester-box {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 200px;
+}
+
+.semester-title {
+  color: var(--text-color);
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 100px;
+}
+
+.course-item {
+  background: rgba(109, 40, 217, 0.1);
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  cursor: move;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.course-item:hover {
+  background: rgba(109, 40, 217, 0.2);
+  transform: translateY(-2px);
+}
+
+.course-item.dragging {
+  opacity: 0.5;
+  background: rgba(109, 40, 217, 0.3);
+}
+
+.course-item.selected {
+  background: rgba(79, 70, 229, 0.2);
+  border-color: rgba(79, 70, 229, 0.4);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+}
+
+.course-item.prerequisite {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.course-item.prerequisite-missing {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.course-code {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.course-credits {
+  background: rgba(109, 40, 217, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--primary-color);
+}
+
+.course-name {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.course-prereqs {
+  font-size: 0.85rem;
+  color: #f59e0b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.course-prereqs i {
+  font-size: 0.8rem;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.color-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.color-box.prerequisite {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.color-box.selected {
+  background: rgba(79, 70, 229, 0.2);
+  border: 1px solid rgba(79, 70, 229, 0.4);
+}
+
+.semester-credits {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .semester-grid {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 20px;
+  }
+
+  .info-text {
+    text-align: center;
+    justify-content: center;
+  }
+}
