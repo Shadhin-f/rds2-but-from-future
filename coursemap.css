@@ -89,6 +89,7 @@
   border-radius: 12px;
   padding: 16px;
   min-height: 200px;
+  min-width: 280px;
 }
 
 .semester-title {

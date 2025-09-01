@@ -463,7 +463,7 @@ td {
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(2px); /* Subtle blur for depth */
+  backdrop-filter: blur(6px); /* Subtle blur for depth */
   transition: background 0.2s;
 }
 
@@ -481,7 +481,7 @@ td {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: modalPopIn 0.18s cubic-bezier(0.4, 2, 0.6, 1) 1;
+  animation: modalPopIn 0.3s cubic-bezier(0.4, 2, 0.6, 1) 1;
 }
 
 @keyframes modalPopIn {
