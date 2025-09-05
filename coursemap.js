@@ -3,11 +3,39 @@ let currentMajor = 'cse';
 let courseMapData = [];
 let userMapData = null;
 
+// Map majors to CSV filenames
+const MAJOR_CSV_MAP = {
+    cse: 'CourseMaps/cse.csv',
+    eee: 'CourseMaps/eee.csv',
+    ete: 'CourseMaps/ete.csv',
+    cee: 'CourseMaps/cee.csv',
+    arch: 'CourseMaps/arch.csv',
+    bbt: 'CourseMaps/bbt.csv',
+    envscience: 'CourseMaps/envscience.csv',
+    envmanage: 'CourseMaps/envmanagement.csv',
+    mic: 'CourseMaps/mic.csv',
+    bpharm: 'CourseMaps/bpharm.csv',
+    act: 'CourseMaps/act.csv',
+    fin: 'CourseMaps/fin.csv',
+    eco: 'CourseMaps/eco.csv',
+    etr: 'CourseMaps/etr.csv',
+    hrm: 'CourseMaps/hrm.csv',
+    ib: 'CourseMaps/ib.csv',
+    mgt: 'CourseMaps/mgt.csv',
+    mis: 'CourseMaps/mis.csv',
+    mkt: 'CourseMaps/mkt.csv',
+    scm: 'CourseMaps/scm.csv',
+    bseco: 'CourseMaps/bseco.csv',
+    eng: 'CourseMaps/eng.csv',
+    law: 'CourseMaps/law.csv',
+    mcj: 'CourseMaps/mcj.csv',
+};
+
 // Load CSV data with better error handling
-async function loadCourseData() {
+async function loadCourseData(csvFile = MAJOR_CSV_MAP[currentMajor]) {
     try {
         console.log('Starting to load CSV data...');
-        const response = await fetch('curriculum.csv');
+        const response = await fetch(csvFile);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -53,11 +81,15 @@ function parseCSV(csv) {
         // Check for new format columns
         const hasNewPrereq = headers.includes('Prerequisite1');
         const hasCreditReq = headers.includes('CreditReq');
+        const hasPrereq4 = headers.includes('Prerequisite4');
 
         // Required columns for both formats
         const baseColumns = ['Semester', 'Course', 'Credits'];
         const oldColumns = ['Credits/Sem', 'Prerequisites'];
-        const newColumns = ['Prerequisite1', 'Prerequisite2', 'Prerequisite3', 'CreditReq'];
+        // Now support up to Prerequisite4
+        const newColumns = hasPrereq4
+            ? ['Prerequisite1', 'Prerequisite2', 'Prerequisite3', 'Prerequisite4', 'CreditReq']
+            : ['Prerequisite1', 'Prerequisite2', 'Prerequisite3', 'CreditReq'];
 
         let missingColumns = baseColumns.filter(col => !headers.includes(col));
         if (hasNewPrereq && hasCreditReq) {
@@ -84,7 +116,9 @@ function parseCSV(csv) {
             let creditsPerSem = 0;
 
             if (hasNewPrereq && hasCreditReq) {
-                prereqs = ['Prerequisite1', 'Prerequisite2', 'Prerequisite3']
+                // Collect up to 4 prerequisites
+                prereqs = ['Prerequisite1', 'Prerequisite2', 'Prerequisite3', 'Prerequisite4']
+                    .filter(key => headers.includes(key))
                     .map(key => courseData[key])
                     .filter(p => p && p !== '');
                 creditReq = courseData.CreditReq && !isNaN(courseData.CreditReq) ? parseInt(courseData.CreditReq) : null;
@@ -348,17 +382,21 @@ function resetMap() {
 
 // Handle major selection
 function handleMajorChange(major) {
+    currentMajor = major;
+    if (MAJOR_CSV_MAP[major]) {
+        loadCourseData(MAJOR_CSV_MAP[major]);
+    }
     if (major === 'cse') {
         document.querySelector('.semester-grid').style.display = 'grid';
         const comingSoon = document.getElementById('comingSoon');
         if (comingSoon) comingSoon.classList.add('hidden');
     } else {
-        document.querySelector('.semester-grid').style.display = 'none';
+        document.querySelector('.semester-grid').style.display = 'grid';
         let comingSoon = document.getElementById('comingSoon');
         if (!comingSoon) {
             comingSoon = document.createElement('div');
             comingSoon.id = 'comingSoon';
-            comingSoon.textContent = 'Coming Soon!';
+            comingSoon.textContent = '';
             comingSoon.className = '';
             document.querySelector('main').appendChild(comingSoon);
         }
@@ -381,7 +419,7 @@ function handleDragOver(e) {
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM Content Loaded, starting course map initialization...');
-    loadCourseData();
+    loadCourseData(MAJOR_CSV_MAP[currentMajor]);
 
     // Add null checks for all button references
     const resetButton = document.getElementById('resetMap');
