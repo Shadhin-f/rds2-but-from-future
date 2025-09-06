@@ -8,12 +8,12 @@
 }
 
 .major-btn {
-  padding: 10px 24px;
+  padding: 8px 15px;
   border-radius: 8px;
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--text-color);
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -29,7 +29,8 @@
     var(--primary-color) 0%,
     var(--primary-gradient) 100%
   );
-  border-color: transparent;
+  /* border-color: transparent; */
+  border: 1px solid #fff;
   color: #fff;
 }
 
