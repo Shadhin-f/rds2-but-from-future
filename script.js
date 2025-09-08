@@ -57,7 +57,7 @@ function animate() {
 
 animate();
 
-const CSV_FILENAME = 'l77.csv';
+let CSV_FILENAME = 'l77.csv'; // Make this variable mutable
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
@@ -155,8 +155,6 @@ async function loadCSVData() {
         const csvData = await response.text();
         courseData = parseCSV(csvData);
         renderTable(courseData);
-        // Remove this line as we no longer render the wishlist table
-        // renderWishlist();
     } catch (error) {
         console.error('Error loading CSV:', error);
         alert('Error loading course data');
@@ -215,24 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add semester change handler
-    const semesterSelect = document.getElementById('semesterSelect');
-    if (semesterSelect) {
-        semesterSelect.addEventListener('change', async function() {
-            const selectedFile = this.value;
-            const selectedOption = this.options[this.selectedIndex];
-            
-            await changeSemester(selectedFile);
-            
-            // Update page title only if file exists
-            const fileExists = await checkSemesterFileExists(selectedFile);
-            if (fileExists) {
-                document.title = `RDS2 - ${selectedOption.getAttribute('data-name')}`;
-            }
-        });
-        
-        // Check initial semester on load
-        changeSemester(semesterSelect.value);
-    }
+    setupSemesterChange();
 });
 
 function debounce(func, wait) {
@@ -815,27 +796,26 @@ async function checkSemesterFileExists(filename) {
     }
 }
 
+// Add semester change handler
+function setupSemesterChange() {
+    const semesterSelect = document.getElementById('semesterSelect');
+    if (semesterSelect) {
+        semesterSelect.addEventListener('change', async function() {
+            CSV_FILENAME = this.value;
+            currentPage = 1;
+            filteredData = [];
+            await loadCSVData();
+        });
+        // Initial load
+        CSV_FILENAME = semesterSelect.value;
+        loadCSVData();
+    }
+}
+
 // Update your DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
     // ...existing code...
 
     // Add semester change handler
-    const semesterSelect = document.getElementById('semesterSelect');
-    if (semesterSelect) {
-        semesterSelect.addEventListener('change', async function() {
-            const selectedFile = this.value;
-            const selectedOption = this.options[this.selectedIndex];
-            
-            await changeSemester(selectedFile);
-            
-            // Update page title only if file exists
-            const fileExists = await checkSemesterFileExists(selectedFile);
-            if (fileExists) {
-                document.title = `RDS2 - ${selectedOption.getAttribute('data-name')}`;
-            }
-        });
-        
-        // Check initial semester on load
-        changeSemester(semesterSelect.value);
-    }
+    setupSemesterChange();
 });
