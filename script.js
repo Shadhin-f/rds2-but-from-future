@@ -774,7 +774,7 @@ window.addEventListener('load', () => {
 });
 
 // Add these at the top with your other constants
-const DEFAULT_SEMESTER = 'l77.csv';
+const DEFAULT_SEMESTER = '253_v2.csv';
 let currentSemester = DEFAULT_SEMESTER;
 
 // Add this function to handle semester changes
