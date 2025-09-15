@@ -755,7 +755,7 @@ window.addEventListener('load', () => {
 });
 
 // Add these at the top with your other constants
-const DEFAULT_SEMESTER = 'live_23.csv';
+const DEFAULT_SEMESTER = 'live_24.csv';
 let currentSemester = DEFAULT_SEMESTER;
 
 // Add this function to handle semester changes
