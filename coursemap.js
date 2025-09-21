@@ -34,7 +34,7 @@ const MAJOR_CSV_MAP = {
 // Load CSV data with better error handling
 async function loadCourseData(csvFile = MAJOR_CSV_MAP[currentMajor]) {
     try {
-        console.log('Starting to load CSV data...');
+        //console.log('Starting to load CSV data...');
         const response = await fetch(csvFile);
         
         if (!response.ok) {
@@ -42,14 +42,14 @@ async function loadCourseData(csvFile = MAJOR_CSV_MAP[currentMajor]) {
         }
         
         const csvText = await response.text();
-        console.log('CSV content:', csvText); // Debug log
+        //console.log('CSV content:', csvText); // Debug log
         
         if (!csvText) {
             throw new Error('CSV file is empty');
         }
 
         courseMapData = parseCSV(csvText);
-        console.log('Parsed course data:', courseMapData);
+        //console.log('Parsed course data:', courseMapData);
         
         if (courseMapData.length === 0) {
             throw new Error('No courses were parsed from the CSV');
@@ -76,7 +76,7 @@ function parseCSV(csv) {
 
         // Get headers
         const headers = lines[0].split(delimiter).map(header => header.trim());
-        console.log('CSV Headers:', headers);
+        //console.log('CSV Headers:', headers);
 
         // Check for new format columns
         const hasNewPrereq = headers.includes('Prerequisite1');
@@ -152,7 +152,7 @@ function parseCSV(csv) {
 // Initialize map with error handling
 function initializeMap() {
     try {
-        console.log('Initializing map...');
+        //console.log('Initializing map...');
         const semesterGrid = document.querySelector('.semester-grid');
         
         if (!semesterGrid) {
@@ -170,7 +170,7 @@ function initializeMap() {
         loadUserData();
         renderCourses();
         
-        console.log('Map initialized successfully');
+        //console.log('Map initialized successfully');
     } catch (error) {
         console.error('Error initializing map:', error);
         alert(`Error initializing course map: ${error.message}`);
@@ -199,14 +199,14 @@ function createSemesterBox(semesterNum) {
 // Render courses with error handling
 function renderCourses() {
     try {
-        console.log('Starting to render courses...');
-        console.log('Total courses to render:', courseMapData.length);
+        //console.log('Starting to render courses...');
+        //console.log('Total courses to render:', courseMapData.length);
 
         const courseLists = document.querySelectorAll('.course-list');
         courseLists.forEach(list => list.innerHTML = '');
 
         courseMapData.forEach((course, index) => {
-            console.log(`Rendering course ${index + 1}:`, course);
+            //console.log(`Rendering course ${index + 1}:`, course);
             const semester = userMapData?.[course.courseCode] || course.semester;
             const courseElement = createCourseElement(course);
             const targetList = document.querySelector(`.course-list[data-semester="${semester}"]`);
@@ -219,7 +219,7 @@ function renderCourses() {
             }
         });
 
-        console.log('Finished rendering courses');
+        //console.log('Finished rendering courses');
     } catch (error) {
         console.error('Error rendering courses:', error);
         alert(`Error rendering courses: ${error.message}`);
@@ -418,7 +418,7 @@ function handleDragOver(e) {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Content Loaded, starting course map initialization...');
+    //console.log('DOM Content Loaded, starting course map initialization...');
     loadCourseData(MAJOR_CSV_MAP[currentMajor]);
 
     // Add null checks for all button references
