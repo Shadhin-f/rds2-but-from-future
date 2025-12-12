@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSU Final Exam Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #667eea;
+            min-height: 100vh;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1.8em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(odd) {
+            background: #f9fafb;
+        }
+
+        .day-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .time-slot {
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .note {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #742a2a;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Final Examination Schedule</h1>
+        <p class="subtitle">Fall 2025 - Undergraduate Programs</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Class Days</th>
+                    <th>Final Exam Date</th>
+                    <th>Class Time Slots</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="day-badge">RA</span></td>
+                    <td>Dec 18, 2025<br>Thursday</td>
+                    <td class="time-slot">
+                        08:00 AM - 09:30 AM<br>
+                        11:20 AM - 12:50 PM<br>
+                        02:40 PM - 04:10 PM<br>
+                        05:00 PM - 06:30 PM*
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="day-badge">RA</span></td>
+                    <td>Dec 20, 2025<br>Saturday</td>
+                    <td class="time-slot">
+                        09:40 AM - 11:10 AM<br>
+                        01:00 PM - 02:30 PM<br>
+                        04:20 PM - 05:50 PM
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="day-badge">ST</span></td>
+                    <td>Dec 21, 2025<br>Sunday</td>
+                    <td class="time-slot">
+                        08:00 AM - 09:30 AM<br>
+                        11:20 AM - 12:50 PM<br>
+                        02:40 PM - 04:10 PM<br>
+                        05:00 PM - 06:30 PM*
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="day-badge">ST</span></td>
+                    <td>Dec 22, 2025<br>Monday</td>
+                    <td class="time-slot">
+                        09:40 AM - 11:10 AM<br>
+                        01:00 PM - 02:30 PM<br>
+                        04:20 PM - 05:50 PM
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="day-badge">MW</span></td>
+                    <td>Dec 23, 2025<br>Tuesday</td>
+                    <td class="time-slot">
+                        08:00 AM - 09:30 AM<br>
+                        11:20 AM - 12:50 PM<br>
+                        02:40 PM - 04:10 PM<br>
+                        05:00 PM - 06:30 PM*
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="day-badge">MW</span></td>
+                    <td>Dec 24, 2025<br>Wednesday</td>
+                    <td class="time-slot">
+                        09:40 AM - 11:10 AM<br>
+                        01:00 PM - 02:30 PM<br>
+                        04:20 PM - 05:50 PM
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note">
+            * Regular Class Slot: 06:00 PM - 07:30 PM
+        </div>
+    </div>
+</body>
+</html>
