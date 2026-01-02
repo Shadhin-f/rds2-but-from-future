@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DR0D2D6C35");
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NSU Library Shelf Finder</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .search-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+      .search-field {
+        position: relative;
+      }
+      .search-field input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 36px 12px 12px;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+      .search-field input[type="text"]:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.2);
+      }
+      .search-field .search-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+      }
+      .results {
+        display: grid;
+        gap: 12px;
+      }
+      .result-card {
+        background: var(--surface-color);
+        border-radius: 12px;
+        padding: 16px 18px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+        position: relative;
+        overflow: hidden;
+      }
+      .result-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 6px;
+        background: var(--primary-gradient);
+      }
+      .result-card:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 6px 24px rgba(109, 40, 217, 0.18);
+      }
+      .shelf-location {
+        display: inline-block;
+        background: rgba(139, 92, 246, 0.15);
+        border: 1px solid #8b5cf6;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-size: 0.95em;
+      }
+      .call-number-range {
+        color: var(--text-color);
+        font-size: 1.05em;
+        font-weight: 700;
+        margin-bottom: 8px;
+        font-family: "Courier New", monospace;
+      }
+      .subjects {
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+      .floor-info {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border-color);
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 0.88em;
+        color: var(--text-color);
+        margin-top: 6px;
+      }
+      .info-text {
+        color: var(--text-muted);
+        font-size: 0.9em;
+        margin-top: 6px;
+      }
+      .no-results {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 1rem;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+      }
+      @media (max-width: 900px) {
+        .search-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+      <header>
+        <h1>Where is my book?</h1>
+        <nav class="nav-bar">
+          <a href="index.html">RDS2</a>
+          <a href="calendar.html">Academic Calendar</a>
+          <a href="resources.html" class="trending-link">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a href="coursemap.html">Course map</a>
+          <a href="shelf_search.html" class="active">Library Shelf Finder</a>
+        </nav>
+      </header>
+
+      <div class="announcement-bar">
+        <span
+          >Search and get the "call number" of your book of choice from nsu
+          library website and then using the "call number" you can easily find
+          shelf location of the book.</span
+        >
+        <a
+          href="https://library.northsouth.edu/"
+          target="_blank"
+          class="view-extension-btn"
+          >🔗 NSU Library</a
+        >
+      </div>
+
+      <div class="search-grid">
+        <div class="search-field">
+          <input
+            type="text"
+            id="shelfInput"
+            placeholder="Shelf Location (e.g., 1A, 27B)"
+          />
+          <i class="fas fa-layer-group search-icon"></i>
+        </div>
+        <div class="search-field">
+          <input
+            type="text"
+            id="callInput"
+            placeholder="Call Number (e.g., BF293, BQ120)"
+          />
+          <i class="fas fa-book search-icon"></i>
+        </div>
+        <div class="search-field">
+          <input
+            type="text"
+            id="genreInput"
+            placeholder="Genre / Subject (e.g., Psychology, Finance)"
+          />
+          <i class="fas fa-tags search-icon"></i>
+        </div>
+      </div>
+      <p class="info-text">Type in any box. Results update instantly.</p>
+
+      <div id="message"></div>
+      <div id="results" class="results"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script>
+      let libraryData = [];
+      let isLoading = false;
+      const DEBOUNCE_MS = 200;
+      let debounceTimer = null;
+
+      // Load CSV file
+      function loadCSV() {
+        isLoading = true;
+        document.getElementById("message").innerHTML =
+          '<div class="loading">Loading library data...</div>';
+
+        Papa.parse("Library_shelfs.csv", {
+          download: true,
+          header: true,
+          skipEmptyLines: true,
+          complete: function (results) {
+            libraryData = results.data;
+            isLoading = false;
+            document.getElementById("message").innerHTML = "";
+            console.log("Loaded " + libraryData.length + " records");
+          },
+          error: function (error) {
+            isLoading = false;
+            document.getElementById("message").innerHTML =
+              '<div class="error">Error loading CSV file: ' +
+              error.message +
+              "</div>";
+          },
+        });
+      }
+
+      // Call number parsing helpers
+      function normalizeCallNumber(callNum) {
+        if (!callNum) return "";
+        return callNum.toString().toUpperCase().replace(/\s+/g, "").trim();
+      }
+
+      // Parse call number into letter prefix and optional first numeric part
+      function parseCallNumber(callNum) {
+        if (!callNum) return null;
+        const s = normalizeCallNumber(callNum);
+        const match = s.match(/^([A-Z]+)(\d+(?:\.\d+)?)?/);
+        if (!match) return null;
+        return {
+          letters: match[1],
+          number: match[2] !== undefined ? parseFloat(match[2]) : null,
+          original: s,
+        };
+      }
+
+      function comparePrefixes(a, b) {
+        return a.localeCompare(b, "en", { sensitivity: "base" });
+      }
+
+      // Check if a call number token is in a range (supports letters-only tokens)
+      function isInRange(searchCallNum, rangeStart, rangeEnd) {
+        const search = parseCallNumber(searchCallNum);
+        const start = parseCallNumber(rangeStart);
+        const end = parseCallNumber(rangeEnd);
+        if (!search || !start || !end) return false;
+
+        const cmpStart = comparePrefixes(search.letters, start.letters);
+        const cmpEnd = comparePrefixes(search.letters, end.letters);
+
+        if (cmpStart < 0 || cmpEnd > 0) return false;
+
+        // If the search token has a numeric part, apply boundary numeric checks when letters match
+        if (search.number !== null) {
+          if (
+            cmpStart === 0 &&
+            start.number !== null &&
+            search.number < start.number
+          )
+            return false;
+          if (cmpEnd === 0 && end.number !== null && search.number > end.number)
+            return false;
+        }
+
+        // Letters-only tokens that fall alphabetically between start and end are valid
+        return true;
+      }
+
+      // Search function (separate inputs, AND across non-empty fields)
+      function performSearchMulti() {
+        const resultsDiv = document.getElementById("results");
+        const shelfQuery = document.getElementById("shelfInput").value.trim();
+        const callQuery = document.getElementById("callInput").value.trim();
+        const genreQuery = document.getElementById("genreInput").value.trim();
+
+        if (!shelfQuery && !callQuery && !genreQuery) {
+          resultsDiv.innerHTML = "";
+          return;
+        }
+
+        const shelfTokens = shelfQuery
+          .toUpperCase()
+          .split(/\s+/)
+          .filter(Boolean);
+        const callTokens = callQuery.toUpperCase().split(/\s+/).filter(Boolean);
+        const genreTokens = genreQuery
+          .toUpperCase()
+          .split(/\s+/)
+          .filter(Boolean);
+
+        const results = [];
+
+        for (let row of libraryData) {
+          let passesShelf = true,
+            passesCall = true,
+            passesGenre = true;
+
+          // Shelf filter (OR across tokens)
+          if (shelfTokens.length) {
+            const shelfField = (row["Shelf Location"] || "")
+              .toString()
+              .toUpperCase();
+            passesShelf = shelfTokens.some((t) => shelfField.includes(t));
+          }
+
+          // Call filter: direct includes OR in-range (OR across tokens)
+          if (callTokens.length) {
+            const callField = (row["Call Number Range"] || "")
+              .toString()
+              .toUpperCase();
+            const range = callField.split(/\s*-\s*/).map((s) => s.trim());
+            passesCall = callTokens.some((t) => {
+              if (!t) return false;
+              if (callField.includes(t)) return true;
+              if (
+                range.length === 2 &&
+                (/^[A-Z]+\d/.test(t) || /^[A-Z]+$/.test(t))
+              ) {
+                return isInRange(t, range[0], range[1]);
+              }
+              return false;
+            });
+          }
+
+          // Genre/Subject filter (OR across tokens)
+          if (genreTokens.length) {
+            const genreField = (row["Subjects / Description"] || "")
+              .toString()
+              .toUpperCase();
+            passesGenre = genreTokens.some((t) => genreField.includes(t));
+          }
+
+          if (passesShelf && passesCall && passesGenre) {
+            results.push(row);
+          }
+        }
+
+        displayResults(results);
+      }
+
+      // Display results
+      function displayResults(results) {
+        const resultsDiv = document.getElementById("results");
+
+        if (results.length === 0) {
+          resultsDiv.innerHTML =
+            '<div class="no-results">No results found. Try searching for a different term.</div>';
+          return;
+        }
+
+        const limited = results.slice(0, 10);
+        let html = "";
+        for (let result of limited) {
+          const shelfLocation = result["Shelf Location"] || "N/A";
+          const callNumberRange = result["Call Number Range"] || "N/A";
+          const subjects =
+            result["Subjects / Description"] || "No description available";
+          const location = result["Floor"] || "";
+
+          html += `
+                    <div class="result-card">
+                        <div class="shelf-location">${shelfLocation}</div>
+                        <div class="call-number-range">${callNumberRange}</div>
+                        <div class="subjects">${subjects}</div>
+                        ${
+                          location
+                            ? `<div class="floor-info">📍 ${location}</div>`
+                            : ""
+                        }
+                    </div>
+                `;
+        }
+
+        resultsDiv.innerHTML = html;
+      }
+
+      // Event listeners
+      function scheduleSearch() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          if (!isLoading) performSearchMulti();
+        }, DEBOUNCE_MS);
+      }
+
+      document
+        .getElementById("shelfInput")
+        .addEventListener("input", scheduleSearch);
+      document
+        .getElementById("callInput")
+        .addEventListener("input", scheduleSearch);
+      document
+        .getElementById("genreInput")
+        .addEventListener("input", scheduleSearch);
+
+      // Load CSV on page load
+      loadCSV();
+    </script>
+    <footer class="footer">
+      <p>
+        © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+        <br />
+      </p>
+      <div class="social-links">
+        <span>Follow me on</span>
+        <a
+          href="https://www.facebook.com/share/19DGPCk2wr/"
+          target="_blank"
+          title="Facebook"
+        >
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/_shadhin_f"
+          target="_blank"
+          title="Instagram"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+          target="_blank"
+          title="LinkedIn"
+        >
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <br />
+      Last updated: 02-01-2026
+    </footer>
+    <script src="script.js"></script>
+    <script src="buttons.js"></script>
+  </body>
+</html>
