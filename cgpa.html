@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DR0D2D6C35");
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NSU CGPA Calculator</title>
+    <link rel="stylesheet" href="styles.css?v=1.1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding-bottom: 2.5rem;
+        max-width: 960px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .calculator-hero {
+        text-align: center;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .calculator-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.6rem);
+        margin-bottom: 0.5rem;
+      }
+      .calculator-hero p {
+        color: var(--text-muted);
+        max-width: 640px;
+        margin: 0 auto 2rem;
+        line-height: 1.5;
+      }
+      .calc-card {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        padding: 1.75rem 1.5rem;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+        width: 100%;
+      }
+      .calc-card h2 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+      .form-control,
+      select.form-control {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 10px;
+        color: #f8fafc;
+        padding: 0.85rem 1rem;
+        font-size: 1rem;
+      }
+      .form-control:focus,
+      select.form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.25);
+      }
+      table.cgpa-table {
+        width: 100%;
+        min-width: 480px;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+      table.cgpa-table th,
+      table.cgpa-table td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        vertical-align: middle;
+      }
+      table.cgpa-table th {
+        text-align: left;
+        padding: 0.8rem 0.5rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+      table.cgpa-table th:nth-child(1) { width: 38%; }
+      table.cgpa-table th:nth-child(2) { width: 22%; }
+      table.cgpa-table th:nth-child(3) { width: 22%; }
+      table.cgpa-table th:nth-child(4) { width: 18%; }
+      table.cgpa-table td {
+        padding: 0.6rem 0.5rem;
+      }
+      table.cgpa-table td .form-control,
+      table.cgpa-table td select.form-control {
+        width: 100%;
+        min-width: 0;
+      }
+      .course-inputs {
+        display: grid;
+        grid-template-columns: 1fr 140px 140px;
+        gap: 0.8rem;
+      }
+      .courses-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .courses-wrapper::-webkit-scrollbar {
+        height: 6px;
+      }
+      .courses-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.3);
+        border-radius: 3px;
+      }
+      .actions-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.75rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        padding: 0.85rem 1.4rem;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        border-color: #22c55e;
+        color: #22c55e;
+      }
+      .btn-outline:hover {
+        box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+      }
+      .btn-primary {
+        background: #22c55e;
+        color: #0f172a;
+      }
+      .btn-primary:hover {
+        box-shadow: 0 12px 32px rgba(34, 197, 94, 0.25);
+      }
+      .results-panel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+        width: 100%;
+      }
+      .result-box {
+        border-radius: 12px;
+        padding: 1.2rem 1.6rem;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+      .result-box.highlight {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: #0f172a;
+        border: none;
+      }
+      .result-box span {
+        display: block;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.6rem;
+        color: rgba(248, 250, 252, 0.8);
+      }
+      .result-box h3 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+      .result-box.highlight span,
+      .result-box.highlight h3 {
+        color: #042f1a;
+      }
+      .result-box.highlight h3 {
+        font-size: 2.4rem;
+      }
+      .calc-message {
+        margin-top: 1rem;
+        color: #fb7185;
+        min-height: 1.2rem;
+      }
+      .remove-course {
+        border: none;
+        border-radius: 999px;
+        width: 40px;
+        height: 40px;
+        background: rgba(248, 250, 252, 0.08);
+        color: #f87171;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+      .remove-course:hover {
+        background: rgba(248, 113, 113, 0.15);
+        transform: translateY(-1px);
+      }
+      .course-row:last-child td {
+        border-bottom: none;
+      }
+      .course-note {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+      @media (max-width: 720px) {
+        .calc-card {
+          padding: 1rem 0.75rem;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .actions-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .btn {
+          width: 100%;
+        }
+        .results-panel {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="particleCanvas"></canvas>
+    <div class="container">
+      <header>
+        <h1>NSU CGPA Calculator</h1>
+        <nav class="nav-bar">
+          <a href="index.html">RDS2</a>
+          <a href="calendar.html">Academic Calendar</a>
+          <a href="resources.html" class="trending-link">Study Materials</a>
+          <a href="routine.html">Routine Maker</a>
+          <a href="planner.html">Semester Planner</a>
+          <a href="freshman.html">Freshman Guides</a>
+          <a href="coursemap.html">Course map</a>
+          <a href="booksearch.html">NSU Library Book Locator</a>
+          <a href="shelf_search.html">Library Shelf Finder</a>
+          <a href="cgpa.html" class="active">CGPA Calculator</a>
+          <a href="retake.html">Retake Calculator</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="calculator-hero">
+          <p>
+            Calculate your updated CGPA instantly. Add course grades, include previous credits,
+            and let the calculator crunch accurate results without waiting for RDS updates.
+          </p>
+        </section>
+
+        <section class="calc-card">
+          <h2>Previous Summary</h2>
+          <div class="form-grid">
+            <div>
+              <label for="prevCr">Credits Completed</label>
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                id="prevCr"
+                class="form-control"
+                placeholder="e.g., 63"
+              />
+            </div>
+            <div>
+              <label for="prevCg">Current CGPA</label>
+              <input
+                type="number"
+                min="0"
+                max="4"
+                step="0.01"
+                id="prevCg"
+                class="form-control"
+                placeholder="e.g., 3.25"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section class="calc-card">
+          <h2>Current Semester Courses</h2>
+          <div class="courses-wrapper">
+            <table class="cgpa-table">
+              <thead>
+                <tr>
+                  <th>Course Initial</th>
+                  <th>Credits</th>
+                  <th>Grade</th>
+                  <th style="width: 70px">Remove</th>
+                </tr>
+              </thead>
+              <tbody id="courseRows"></tbody>
+            </table>
+          </div>
+          <div class="actions-row">
+            <button id="addCourse" class="btn btn-outline">
+              <i class="fas fa-plus"></i> Add Course
+            </button>
+            <div style="flex: 1"></div>
+            <button id="calculateCg" class="btn btn-primary">
+              <i class="fas fa-calculator"></i> Calculate CGPA
+            </button>
+          </div>
+          <div id="calcMessage" class="calc-message"></div>
+        </section>
+
+        <div class="results-panel">
+          <div class="result-box">
+            <span>Credits Passed</span>
+            <h3 id="creditPassed">0.00</h3>
+          </div>
+          <div class="result-box highlight">
+            <span>CGPA</span>
+            <h3 id="cgpaValue">0.00</h3>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>
+          © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+          <br />
+        </p>
+        <div class="social-links">
+          <span>Follow me on</span>
+          <a
+            href="https://www.facebook.com/share/19DGPCk2wr/"
+            target="_blank"
+            title="Facebook"
+          >
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/_shadhin_f"
+            target="_blank"
+            title="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            target="_blank"
+            title="LinkedIn"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+        <br />
+        Last updated: 04-01-2026
+      </footer>
+    </div>
+
+    <script>
+      const gradePoints = {
+        "A": 4.0,
+        "A-": 3.7,
+        "B+": 3.3,
+        "B": 3.0,
+        "B-": 2.7,
+        "C+": 2.3,
+        "C": 2.0,
+        "C-": 1.7,
+        "D+": 1.3,
+        "D": 1.0,
+        "F": 0,
+      };
+
+      const courseRows = document.getElementById("courseRows");
+      const addCourseBtn = document.getElementById("addCourse");
+      const calcBtn = document.getElementById("calculateCg");
+      const creditPassedEl = document.getElementById("creditPassed");
+      const cgpaValueEl = document.getElementById("cgpaValue");
+      const messageEl = document.getElementById("calcMessage");
+
+      let courseCount = 0;
+
+      function createSelect(id) {
+        const select = document.createElement("select");
+        select.id = id;
+        select.className = "form-control";
+        for (const grade of Object.keys(gradePoints)) {
+          const option = document.createElement("option");
+          option.value = grade;
+          option.textContent = grade;
+          select.appendChild(option);
+        }
+        return select;
+      }
+
+      function addCourseRow() {
+        courseCount += 1;
+        const row = document.createElement("tr");
+        row.className = "course-row";
+        row.dataset.index = courseCount;
+        const creditId = `cr${courseCount}`;
+        const gradeId = `gr${courseCount}`;
+
+        row.innerHTML = `
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Course"
+              maxlength="10"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              min="0"
+              step="0.5"
+              class="form-control"
+              id="${creditId}"
+              placeholder="Cr"
+            />
+          </td>
+          <td id="${gradeId}-cell"></td>
+          <td class="remove-cell">
+            <button type="button" class="remove-course" aria-label="Remove course">
+              <i class="fas fa-xmark"></i>
+            </button>
+          </td>
+        `;
+
+        courseRows.appendChild(row);
+        const gradeCell = document.getElementById(`${gradeId}-cell`);
+        const select = createSelect(gradeId);
+        gradeCell.appendChild(select);
+        row.querySelector(".remove-course").addEventListener("click", () => {
+          removeCourseRow(row);
+        });
+      }
+
+      function removeCourseRow(row) {
+        if (courseRows.children.length <= 1) {
+          messageEl.textContent = "At least one course row is required.";
+          return;
+        }
+        row.remove();
+        messageEl.textContent = "Removed course row.";
+      }
+
+      function initializeRows() {
+        for (let i = 0; i < 3; i += 1) {
+          addCourseRow();
+        }
+      }
+
+      function calculateCgpa() {
+        const prevCredits = Number(document.getElementById("prevCr").value) || 0;
+        const prevCgpa = Number(document.getElementById("prevCg").value) || 0;
+
+        let semesterCredits = 0;
+        let semesterGradePoints = 0;
+        let hasInput = false;
+
+        for (let i = 1; i <= courseCount; i += 1) {
+          const creditInput = document.getElementById(`cr${i}`);
+          const gradeSelect = document.getElementById(`gr${i}`);
+          if (!creditInput || !gradeSelect) continue;
+
+          const credits = Number(creditInput.value);
+          if (!credits) continue;
+          hasInput = true;
+          const grade = gradeSelect.value;
+          const point = gradePoints[grade] ?? 0;
+          semesterCredits += credits;
+          semesterGradePoints += credits * point;
+        }
+
+        const previousPoints = prevCredits * prevCgpa;
+        const totalCredits = prevCredits + semesterCredits;
+        const totalPoints = previousPoints + semesterGradePoints;
+
+        if (!totalCredits) {
+          messageEl.textContent = "Please enter at least one valid course or previous record.";
+          creditPassedEl.textContent = "0.00";
+          cgpaValueEl.textContent = "0.00";
+          return;
+        }
+
+        const finalCgpa = totalPoints / totalCredits;
+        messageEl.textContent = hasInput
+          ? "CGPA updated successfully."
+          : "Using previous record only.";
+        creditPassedEl.textContent = totalCredits.toFixed(2);
+        cgpaValueEl.textContent = finalCgpa.toFixed(2);
+      }
+
+      addCourseBtn.addEventListener("click", () => {
+        addCourseRow();
+        messageEl.textContent = "Added a new course row.";
+      });
+
+      calcBtn.addEventListener("click", calculateCgpa);
+
+      initializeRows();
+    </script>
+    <script src="script.js"></script>
+    <script src="buttons.js"></script>
+  </body>
+</html>
