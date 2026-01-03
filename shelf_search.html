@@ -156,6 +156,7 @@
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
           <a href="coursemap.html">Course map</a>
+          <a href="booksearch.html">NSU Library Book Locator</a>
           <a href="shelf_search.html" class="active">Library Shelf Finder</a>
         </nav>
       </header>
@@ -384,11 +385,11 @@
           html += `
                     <div class="result-card">
                         <div class="shelf-location">${shelfLocation}</div>
-                        <div class="call-number-range">${callNumberRange}</div>
+                        <div class="call-number-range">⚙ Call Number: ${callNumberRange}</div>
                         <div class="subjects">${subjects}</div>
                         ${
                           location
-                            ? `<div class="floor-info">📍 ${location}</div>`
+                            ? `<div class="floor-info">📍 ${location} Floor</div>`
                             : ""
                         }
                     </div>
