@@ -391,11 +391,10 @@
 
       function extractCallNumbers(availability) {
         if (!availability) return [];
-        const matches = availability
-          .toUpperCase()
-          .match(/([A-Z]{1,4}\d{1,4}(?:\.\d+)?(?:\.[A-Z0-9]+)*)/g);
+        const pattern = /[A-Z]{1,4}\d{1,4}(?:\s*\.\s*[A-Z0-9]+)*/g;
+        const matches = availability.toUpperCase().match(pattern);
         if (!matches) return [];
-        return [...new Set(matches.map((m) => m.trim()))];
+        return [...new Set(matches.map((m) => normalizeCallNumber(m)))];
       }
 
       function formatAvailability(raw) {
