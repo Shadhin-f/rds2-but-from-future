@@ -35,7 +35,8 @@ class Particle {
     }
 
     draw() {
-        ctx.fillStyle = `rgba(147, 51, 234, ${this.opacity})`; // Brighter purple color
+        // ctx.fillStyle = `rgba(147, 51, 234, ${this.opacity})`; // Brighter purple color
+        ctx.fillStyle = `rgba(20, 138, 173, ${this.opacity})`; // Teal color
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();

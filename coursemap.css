@@ -109,8 +109,8 @@
 }
 
 .course-item {
-  background: rgba(109, 40, 217, 0.1);
-  border: 1px solid rgba(109, 40, 217, 0.2);
+  background: var(--tr-hover-color);
+  border: 1px solid rgba(239, 237, 241, 0.2);
   border-radius: 8px;
   padding: 16px;
   cursor: move;
@@ -119,7 +119,7 @@
 }
 
 .course-item:hover {
-  background: rgba(109, 40, 217, 0.2);
+  background: var(--border-color);
   transform: translateY(-2px);
 }
 
@@ -162,7 +162,7 @@
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 0.85rem;
-  color: var(--primary-color);
+  color: var(--text-muted);
 }
 
 .course-name {
