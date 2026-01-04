@@ -439,7 +439,8 @@ td {
 
 .view-details-btn {
   padding: 4px 8px;
-  background: var(--primary-gradient);
+  /* background: var(--primary-gradient); */
+  background: var(--border-color);
   border: none;
   border-radius: 4px;
   color: white;
@@ -458,7 +459,7 @@ td {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(20, 22, 30, 0.72); /* Softer, darker overlay */
+  background: rgba(30, 30, 41, 0.505); /* Softer, darker overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -468,7 +469,8 @@ td {
 }
 
 .modal-content {
-  background: rgba(46, 18, 90, 0.66);
+  /* background: rgba(46, 18, 90, 0.66); */
+  background: rgba(23, 33, 56, 0.523);
   border-radius: 18px;
   width: 96%;
   max-width: 420px;
@@ -507,7 +509,8 @@ td {
 .modal-header h2 {
   margin: 0;
   font-size: 1.18rem;
-  color: var(--primary-color);
+  /* color: var(--primary-color); */
+  color: var(--border-color);
   font-weight: 800;
   letter-spacing: 0.01em;
 }
@@ -515,7 +518,7 @@ td {
 .close-modal {
   background: none;
   border: none;
-  color: #a1a1aa;
+  color: var(--bg-color);
   font-size: 1.7rem;
   cursor: pointer;
   padding: 0 0 0 12px;
@@ -1656,7 +1659,7 @@ records-list::-webkit-scrollbar-thumb {
 }
 
 .add-to-wishlist-btn {
-  background: none;
+  background: var(--border-color);
   border: none;
   color: #22c55e;
   font-size: 1.2em;
@@ -1681,7 +1684,7 @@ records-list::-webkit-scrollbar-thumb {
   align-items: center;
   gap: 6px;
   padding: 5px 8px;
-  background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
+  /* background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%); */
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -1698,8 +1701,9 @@ records-list::-webkit-scrollbar-thumb {
 .view-details-btn:hover,
 .add-to-wishlist-btn:hover:not(.added),
 .wishlist-remove-btn:hover {
-  background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%);
-  color: #fff;
+  /* background: linear-gradient(90deg, #7c3aed 0%, #a21caf 100%); */
+  background: var(--text-color);
+  color: var(--bg-color);
 }
 
 .add-to-wishlist-btn.added,
