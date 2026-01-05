@@ -1018,8 +1018,85 @@
         const bestPossibleCGPA = bestPossibleQP / totalCredits;
 
         if (currentCgpa >= targetCgpa) {
-          gradResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(2)}</strong>!<br>
-            You can graduate by completing the remaining <strong>${remainingCredits}</strong> credits with any passing grades.`;
+          // Even if current CGPA meets target, need to maintain it through remaining courses
+          const neededQP = totalCredits * targetCgpa;
+          const additionalQPNeeded = neededQP - currentQualityPoints;
+          const avgGradeNeeded = additionalQPNeeded / remainingCredits;
+
+          // If avgGradeNeeded is negative or very low, they have buffer room
+          if (avgGradeNeeded <= 0) {
+            const maxDropQP = currentQualityPoints - (totalCredits * targetCgpa);
+            const minAvgGrade = (currentQualityPoints - maxDropQP) / totalCredits;
+            
+            gradResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(2)}</strong>!<br>
+              You can graduate by completing the remaining <strong>${remainingCredits}</strong> credits with any passing grades (even all D's will keep you at <strong>${targetCgpa.toFixed(2)}</strong>).`;
+            gradResultDiv.style.background = "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
+            gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
+            gradResultDiv.style.display = "block";
+            gradScenariosDiv.style.display = "none";
+            return;
+          }
+
+          // Need to maintain certain grades to keep the target CGPA
+          let gradeText = "";
+          if (avgGradeNeeded >= 4.0) {
+            gradeText = "all A grades";
+          } else if (avgGradeNeeded >= 3.7) {
+            gradeText = "mostly A and A-";
+          } else if (avgGradeNeeded >= 3.3) {
+            gradeText = "mostly A- and B+";
+          } else if (avgGradeNeeded >= 3.0) {
+            gradeText = "mostly B+ and B";
+          } else if (avgGradeNeeded >= 2.7) {
+            gradeText = "mostly B and B-";
+          } else if (avgGradeNeeded >= 2.3) {
+            gradeText = "mostly B- and C+";
+          } else if (avgGradeNeeded >= 2.0) {
+            gradeText = "at least C average";
+          } else if (avgGradeNeeded >= 1.7) {
+            gradeText = "at least C- average";
+          } else {
+            gradeText = "at least D+ average";
+          }
+
+          // Calculate how many courses of each grade needed
+          const coursesNeeded = Math.ceil(remainingCredits / 3);
+          
+          const aNeeded = Math.ceil(additionalQPNeeded / (4.0 * 3));
+          const bPlusNeeded = Math.ceil(additionalQPNeeded / (3.3 * 3));
+          const bNeeded = Math.ceil(additionalQPNeeded / (3.0 * 3));
+          const bMinusNeeded = Math.ceil(additionalQPNeeded / (2.7 * 3));
+
+          let gradeBreakdown = "";
+          if (avgGradeNeeded >= 0.1) {
+            gradeBreakdown = `<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(148, 163, 184, 0.2);">
+              <div style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                <strong>Minimum Grade Requirements (3-credit courses):</strong>
+              </div>
+              <div style="display: grid; gap: 0.5rem; font-size: 0.9rem;">`;
+            
+            if (aNeeded <= coursesNeeded && aNeeded > 0) {
+              const remaining = coursesNeeded - aNeeded;
+              gradeBreakdown += `<div>• <strong>${aNeeded}</strong> A's${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            if (bPlusNeeded <= coursesNeeded && bPlusNeeded > 0) {
+              const remaining = coursesNeeded - bPlusNeeded;
+              gradeBreakdown += `<div>• <strong>${bPlusNeeded}</strong> B+'s${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            if (bNeeded <= coursesNeeded && bNeeded > 0) {
+              const remaining = coursesNeeded - bNeeded;
+              gradeBreakdown += `<div>• <strong>${bNeeded}</strong> B's${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            if (bMinusNeeded <= coursesNeeded && bMinusNeeded > 0) {
+              const remaining = coursesNeeded - bMinusNeeded;
+              gradeBreakdown += `<div>• <strong>${bMinusNeeded}</strong> B-'s${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            
+            gradeBreakdown += `</div></div>`;
+          }
+
+          gradResultText.innerHTML = `✅ Current CGPA: <strong>${currentCgpa.toFixed(2)}</strong> (Target: <strong>${targetCgpa.toFixed(2)}</strong>)<br>
+            To <strong>maintain</strong> your target CGPA, complete the remaining <strong>${remainingCredits}</strong> credits with an average of at least <strong>${avgGradeNeeded.toFixed(2)}</strong> (${gradeText}).${gradeBreakdown}`;
           gradResultDiv.style.background = "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
           gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
           gradResultDiv.style.display = "block";
