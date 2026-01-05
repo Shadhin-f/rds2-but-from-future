@@ -97,7 +97,7 @@
         text-decoration: none;
       }
       .result-card h3 a:hover {
-        color: var(--primary-color);
+        color: var(--text-muted);
       }
       .book-meta {
         display: flex;
@@ -114,7 +114,8 @@
         margin-top: 0.5rem;
       }
       .call-chip {
-        background: rgba(139, 92, 246, 0.12);
+        /* background: rgba(139, 92, 246, 0.12); */
+        background: var(--tr-hover-color);
         border: 1px solid rgba(139, 92, 246, 0.3);
         border-radius: 12px;
         padding: 10px 12px;
@@ -139,11 +140,15 @@
         display: inline-flex;
         align-items: center;
         gap: 0.3rem;
-        background: rgba(255, 255, 255, 0.08);
+        /* background: rgba(255, 255, 255, 0.08); */
+        background: var(--border-color);
         border: 1px solid var(--border-color);
         border-radius: 999px;
         padding: 4px 10px;
         font-size: 0.85rem;
+      }
+      .location-tag:hover{
+        background: var(--primary-gradient);
       }
       .subjects {
         color: var(--text-muted);
