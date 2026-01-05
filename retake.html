@@ -251,6 +251,108 @@
         .results-panel {
           grid-template-columns: 1fr;
         }
+        .stats-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      /* Stats Grid Styling */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .stat-card {
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--primary-color);
+      }
+
+      .stat-card.reached {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        border: none;
+      }
+
+      .stat-card .target-label {
+        display: block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.4rem;
+        color: var(--text-muted);
+      }
+
+      .stat-card.reached .target-label {
+        color: rgba(4, 47, 26, 0.8);
+      }
+
+      .stat-card .target-cgpa {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
+        color: var(--text-color);
+      }
+
+      .stat-card.reached .target-cgpa {
+        color: #042f1a;
+      }
+
+      .stat-card .retake-count {
+        font-size: 1rem;
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      .stat-card.reached .retake-count {
+        color: #042f1a;
+        font-size: 1.1rem;
+      }
+
+      .scenario-section {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.15);
+        font-size: 0.8rem;
+        text-align: left;
+      }
+
+      .scenario-item {
+        margin-bottom: 0.5rem;
+        padding: 0.4rem;
+        background: rgba(15, 23, 42, 0.5);
+        border-radius: 6px;
+      }
+
+      .scenario-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .scenario-title {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.2rem;
+        font-size: 0.8rem;
+      }
+
+      .scenario-details {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        line-height: 1.4;
+      }
+
+      .scenario-details strong {
+        color: var(--text-color);
       }
     </style>
   </head>
@@ -349,6 +451,168 @@
             <h3 id="cgpaValue">0.00</h3>
           </div>
         </div>
+
+        <!-- Target CGPA Calculator Section -->
+        <section class="calc-card" style="margin-top: 2rem;">
+          <h2>Target CGPA Calculator</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+            Set your target CGPA to see how many 3-credit courses with A grade you need to retake to reach it.
+          </p>
+          <div class="form-grid">
+            <div>
+              <label for="targetCredits">Current Credits Completed</label>
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                id="targetCredits"
+                class="form-control"
+                placeholder="e.g., 90"
+              />
+            </div>
+            <div>
+              <label for="targetCurrentCgpa">Current CGPA</label>
+              <input
+                type="number"
+                min="0"
+                max="4"
+                step="0.01"
+                id="targetCurrentCgpa"
+                class="form-control"
+                placeholder="e.g., 2.85"
+              />
+            </div>
+            <div>
+              <label for="targetCgpa">Target CGPA</label>
+              <input
+                type="number"
+                min="0"
+                max="4"
+                step="0.01"
+                id="targetCgpa"
+                class="form-control"
+                placeholder="e.g., 3.50"
+              />
+            </div>
+          </div>
+          <div class="actions-row" style="justify-content: center;">
+            <button id="calculateTargetBtn" class="btn btn-primary">
+              <i class="fas fa-bullseye"></i> Calculate Required Retakes
+            </button>
+          </div>
+          <div id="targetResult" style="margin-top: 1.5rem; padding: 1.2rem; background: rgba(109, 40, 217, 0.1); border-radius: 12px; border: 1px solid rgba(109, 40, 217, 0.3); display: none;">
+            <div style="text-align: center; font-size: 1.1rem; color: var(--text-color); margin-bottom: 1rem;">
+              <strong id="targetResultText"></strong>
+            </div>
+            <div id="targetScenarios" style="display: none;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="scenario-item">
+                  <div class="scenario-title">B- → A Scenario</div>
+                  <div class="scenario-details" id="targetScenarioBMinus"></div>
+                </div>
+                <div class="scenario-item">
+                  <div class="scenario-title">C → A Scenario</div>
+                  <div class="scenario-details" id="targetScenarioC"></div>
+                </div>
+                <div class="scenario-item">
+                  <div class="scenario-title">D → A Scenario</div>
+                  <div class="scenario-details" id="targetScenarioD"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Statistics Section moved here -->
+          <div id="statsSection" style="margin-top: 2rem; display: none;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-color);">All Target CGPAs - Retake Breakdown</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+              Based on your current summary, here's how many 3-credit courses with A grade you need to retake to reach different CGPA targets.
+            </p>
+            <div class="stats-grid" id="statsGrid"></div>
+          </div>
+        </section>
+
+        <!-- Graduation Planning Section -->
+        <section class="calc-card" style="margin-top: 2rem;">
+          <h2>Graduation Planning Calculator</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+            Check if you can graduate with your target CGPA, or if you need retakes before completing your degree.
+          </p>
+          <div class="form-grid">
+            <div>
+              <label for="gradCurrentCredits">Current Credits Completed</label>
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                id="gradCurrentCredits"
+                class="form-control"
+                placeholder="e.g., 90"
+              />
+            </div>
+            <div>
+              <label for="gradCurrentCgpa">Current CGPA</label>
+              <input
+                type="number"
+                min="0"
+                max="4"
+                step="0.01"
+                id="gradCurrentCgpa"
+                class="form-control"
+                placeholder="e.g., 2.85"
+              />
+            </div>
+            <div>
+              <label for="gradTargetCgpa">Target CGPA</label>
+              <input
+                type="number"
+                min="0"
+                max="4"
+                step="0.01"
+                id="gradTargetCgpa"
+                class="form-control"
+                placeholder="e.g., 3.50"
+              />
+            </div>
+            <div>
+              <label for="gradTotalCredits">Total Department Credits</label>
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                id="gradTotalCredits"
+                class="form-control"
+                placeholder="e.g., 126"
+              />
+            </div>
+          </div>
+          <div class="actions-row" style="justify-content: center;">
+            <button id="calculateGradBtn" class="btn btn-primary">
+              <i class="fas fa-graduation-cap"></i> Check Graduation Plan
+            </button>
+          </div>
+          <div id="gradResult" style="margin-top: 1.5rem; padding: 1.2rem; background: rgba(109, 40, 217, 0.1); border-radius: 12px; border: 1px solid rgba(109, 40, 217, 0.3); display: none;">
+            <div style="text-align: center; font-size: 1.1rem; color: var(--text-color); margin-bottom: 1rem;">
+              <strong id="gradResultText"></strong>
+            </div>
+            <div id="gradScenarios" style="display: none;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="scenario-item">
+                  <div class="scenario-title">B- → A Scenario</div>
+                  <div class="scenario-details" id="gradScenarioBMinus"></div>
+                </div>
+                <div class="scenario-item">
+                  <div class="scenario-title">C → A Scenario</div>
+                  <div class="scenario-details" id="gradScenarioC"></div>
+                </div>
+                <div class="scenario-item">
+                  <div class="scenario-title">D → A Scenario</div>
+                  <div class="scenario-details" id="gradScenarioD"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="footer">
@@ -489,6 +753,7 @@
           messageEl.textContent = "Please enter your current credits and CGPA.";
           creditDisplayEl.textContent = "0.00";
           cgpaValueEl.textContent = "0.00";
+          document.getElementById("statsSection").style.display = "none";
           return;
         }
 
@@ -518,6 +783,7 @@
           messageEl.textContent = "Add at least one retake course with credits.";
           creditDisplayEl.textContent = prevCredits.toFixed(2);
           cgpaValueEl.textContent = prevCgpa.toFixed(2);
+          document.getElementById("statsSection").style.display = "none";
           return;
         }
 
@@ -525,6 +791,350 @@
         messageEl.textContent = "Projected CGPA calculated successfully.";
         creditDisplayEl.textContent = totalCredits.toFixed(2);
         cgpaValueEl.textContent = newCgpa.toFixed(2);
+
+        // Generate statistics
+        generateStatistics(prevCredits, prevCgpa);
+      }
+
+      function calculateRetakesNeeded(currentCredits, currentCgpa, targetCgpa) {
+        // Formula: To reach target CGPA by retaking courses with grade A (4.0)
+        // Each 3-credit retake replaces F (0.0) with A (4.0), adding 12 quality points
+        // New CGPA = (current quality points + added quality points) / total credits
+        // Target = (currentCredits * currentCgpa + n * 3 * 4.0) / currentCredits
+        // Solving for n: n = (currentCredits * (targetCgpa - currentCgpa)) / 12
+        
+        if (currentCgpa >= targetCgpa) {
+          return 0; // Already reached
+        }
+
+        const currentQualityPoints = currentCredits * currentCgpa;
+        const neededQualityPoints = currentCredits * targetCgpa;
+        const qualityPointsPerRetake = 3 * 4.0; // 3 credits * 4.0 (A grade)
+        
+        const retakesNeeded = Math.ceil((neededQualityPoints - currentQualityPoints) / qualityPointsPerRetake);
+        return retakesNeeded;
+      }
+
+      function calculateRetakesForScenario(currentCredits, currentCgpa, targetCgpa, fromGrade) {
+        // fromGrade: the grade being replaced (B-, C, D)
+        // toGrade: A (4.0)
+        if (currentCgpa >= targetCgpa) {
+          return 0;
+        }
+
+        const fromPoint = gradePoints[fromGrade] ?? 0;
+        const toPoint = 4.0; // A grade
+        const qualityPointsGain = (toPoint - fromPoint) * 3; // per 3-credit course
+
+        const currentQualityPoints = currentCredits * currentCgpa;
+        const neededQualityPoints = currentCredits * targetCgpa;
+        const requiredGain = neededQualityPoints - currentQualityPoints;
+
+        const retakesNeeded = Math.ceil(requiredGain / qualityPointsGain);
+        return retakesNeeded;
+      }
+
+      function generateStatistics(currentCredits, currentCgpa) {
+        const targets = [4.0, 3.8, 3.7, 3.5, 3.3, 3.0, 2.8, 2.5, 2.0];
+        const statsGrid = document.getElementById("statsGrid");
+        statsGrid.innerHTML = "";
+
+        targets.forEach(target => {
+          const isReached = currentCgpa >= target;
+
+          const card = document.createElement("div");
+          card.className = isReached ? "stat-card reached" : "stat-card";
+          
+          if (isReached) {
+            card.innerHTML = `
+              <span class="target-label">Target CGPA</span>
+              <span class="target-cgpa">${target.toFixed(1)}</span>
+              <span class="retake-count">✓ Reached</span>
+            `;
+          } else {
+            // Calculate for three scenarios
+            const retakesBMinus = calculateRetakesForScenario(currentCredits, currentCgpa, target, "B-");
+            const retakesC = calculateRetakesForScenario(currentCredits, currentCgpa, target, "C");
+            const retakesD = calculateRetakesForScenario(currentCredits, currentCgpa, target, "D");
+
+            const creditsBMinus = retakesBMinus * 3;
+            const creditsC = retakesC * 3;
+            const creditsD = retakesD * 3;
+
+            const costBMinus6500 = creditsBMinus * 6500;
+            const costBMinus8000 = creditsBMinus * 8000;
+            const costC6500 = creditsC * 6500;
+            const costC8000 = creditsC * 8000;
+            const costD6500 = creditsD * 6500;
+            const costD8000 = creditsD * 8000;
+
+            card.innerHTML = `
+              <span class="target-label">Target CGPA</span>
+              <span class="target-cgpa">${target.toFixed(1)}</span>
+              <div class="scenario-section">
+                <div class="scenario-item">
+                  <div class="scenario-title">B- → A Scenario</div>
+                  <div class="scenario-details">
+                    <strong>${retakesBMinus}</strong> retakes (${creditsBMinus} cr)<br>
+                    ৳${costBMinus6500.toLocaleString()} / ৳${costBMinus8000.toLocaleString()}
+                  </div>
+                </div>
+                <div class="scenario-item">
+                  <div class="scenario-title">C → A Scenario</div>
+                  <div class="scenario-details">
+                    <strong>${retakesC}</strong> retakes (${creditsC} cr)<br>
+                    ৳${costC6500.toLocaleString()} / ৳${costC8000.toLocaleString()}
+                  </div>
+                </div>
+                <div class="scenario-item">
+                  <div class="scenario-title">D → A Scenario</div>
+                  <div class="scenario-details">
+                    <strong>${retakesD}</strong> retakes (${creditsD} cr)<br>
+                    ৳${costD6500.toLocaleString()} / ৳${costD8000.toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+          
+          statsGrid.appendChild(card);
+        });
+
+        document.getElementById("statsSection").style.display = "block";
+      }
+
+      function calculateTargetRetakes() {
+        const targetCredits = Number(document.getElementById("targetCredits").value) || 0;
+        const targetCurrentCgpa = Number(document.getElementById("targetCurrentCgpa").value) || 0;
+        const targetCgpa = Number(document.getElementById("targetCgpa").value) || 0;
+        const targetResultDiv = document.getElementById("targetResult");
+        const targetResultText = document.getElementById("targetResultText");
+        const targetScenariosDiv = document.getElementById("targetScenarios");
+
+        if (!targetCredits || !targetCurrentCgpa || !targetCgpa) {
+          targetResultText.textContent = "Please fill in all fields.";
+          targetResultDiv.style.background = "rgba(251, 113, 133, 0.1)";
+          targetResultDiv.style.borderColor = "rgba(251, 113, 133, 0.3)";
+          targetResultDiv.style.display = "block";
+          targetScenariosDiv.style.display = "none";
+          document.getElementById("statsSection").style.display = "none";
+          return;
+        }
+
+        if (targetCgpa > 4.0 || targetCgpa < 0) {
+          targetResultText.textContent = "Target CGPA must be between 0 and 4.0";
+          targetResultDiv.style.background = "rgba(251, 113, 133, 0.1)";
+          targetResultDiv.style.borderColor = "rgba(251, 113, 133, 0.3)";
+          targetResultDiv.style.display = "block";
+          targetScenariosDiv.style.display = "none";
+          document.getElementById("statsSection").style.display = "none";
+          return;
+        }
+
+        if (targetCurrentCgpa >= targetCgpa) {
+          targetResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(2)}</strong>!`;
+          targetResultDiv.style.background = "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
+          targetResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
+          targetResultDiv.style.display = "block";
+          targetScenariosDiv.style.display = "none";
+          document.getElementById("statsSection").style.display = "none";
+          return;
+        }
+
+        // Calculate for three scenarios
+        const retakesBMinus = calculateRetakesForScenario(targetCredits, targetCurrentCgpa, targetCgpa, "B-");
+        const retakesC = calculateRetakesForScenario(targetCredits, targetCurrentCgpa, targetCgpa, "C");
+        const retakesD = calculateRetakesForScenario(targetCredits, targetCurrentCgpa, targetCgpa, "D");
+
+        const creditsBMinus = retakesBMinus * 3;
+        const creditsC = retakesC * 3;
+        const creditsD = retakesD * 3;
+
+        const costBMinus6500 = creditsBMinus * 6500;
+        const costBMinus8000 = creditsBMinus * 8000;
+        const costC6500 = creditsC * 6500;
+        const costC8000 = creditsC * 8000;
+        const costD6500 = creditsD * 6500;
+        const costD8000 = creditsD * 8000;
+
+        targetResultText.innerHTML = `📚 To reach a CGPA of <strong>${targetCgpa.toFixed(2)}</strong>, you need:`;
+        targetResultDiv.style.background = "rgba(109, 40, 217, 0.1)";
+        targetResultDiv.style.borderColor = "rgba(109, 40, 217, 0.3)";
+
+        document.getElementById("targetScenarioBMinus").innerHTML = `
+          <strong>${retakesBMinus}</strong> retakes (${creditsBMinus} cr)<br>
+          ৳${costBMinus6500.toLocaleString()} / ৳${costBMinus8000.toLocaleString()}
+        `;
+        document.getElementById("targetScenarioC").innerHTML = `
+          <strong>${retakesC}</strong> retakes (${creditsC} cr)<br>
+          ৳${costC6500.toLocaleString()} / ৳${costC8000.toLocaleString()}
+        `;
+        document.getElementById("targetScenarioD").innerHTML = `
+          <strong>${retakesD}</strong> retakes (${creditsD} cr)<br>
+          ৳${costD6500.toLocaleString()} / ৳${costD8000.toLocaleString()}
+        `;
+
+        targetScenariosDiv.style.display = "block";
+        targetResultDiv.style.display = "block";
+
+        // Generate statistics for all targets
+        generateStatistics(targetCredits, targetCurrentCgpa);
+      }
+
+      function calculateGraduation() {
+        const currentCredits = Number(document.getElementById("gradCurrentCredits").value) || 0;
+        const currentCgpa = Number(document.getElementById("gradCurrentCgpa").value) || 0;
+        const targetCgpa = Number(document.getElementById("gradTargetCgpa").value) || 0;
+        const totalCredits = Number(document.getElementById("gradTotalCredits").value) || 0;
+        
+        const gradResultDiv = document.getElementById("gradResult");
+        const gradResultText = document.getElementById("gradResultText");
+        const gradScenariosDiv = document.getElementById("gradScenarios");
+
+        // Validation
+        if (!currentCredits || !currentCgpa || !targetCgpa || !totalCredits) {
+          gradResultText.textContent = "Please fill in all fields.";
+          gradResultDiv.style.background = "rgba(251, 113, 133, 0.1)";
+          gradResultDiv.style.borderColor = "rgba(251, 113, 133, 0.3)";
+          gradResultDiv.style.display = "block";
+          gradScenariosDiv.style.display = "none";
+          return;
+        }
+
+        if (currentCredits >= totalCredits) {
+          gradResultText.textContent = "You have already completed all credits. Consider using the Target CGPA Calculator for retakes.";
+          gradResultDiv.style.background = "rgba(251, 191, 36, 0.1)";
+          gradResultDiv.style.borderColor = "rgba(251, 191, 36, 0.3)";
+          gradResultDiv.style.display = "block";
+          gradScenariosDiv.style.display = "none";
+          return;
+        }
+
+        const remainingCredits = totalCredits - currentCredits;
+        const currentQualityPoints = currentCredits * currentCgpa;
+        
+        // Best case: All remaining courses with A (4.0)
+        const bestPossibleQP = currentQualityPoints + (remainingCredits * 4.0);
+        const bestPossibleCGPA = bestPossibleQP / totalCredits;
+
+        if (currentCgpa >= targetCgpa) {
+          gradResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(2)}</strong>!<br>
+            You can graduate by completing the remaining <strong>${remainingCredits}</strong> credits with any passing grades.`;
+          gradResultDiv.style.background = "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
+          gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
+          gradResultDiv.style.display = "block";
+          gradScenariosDiv.style.display = "none";
+          return;
+        }
+
+        if (bestPossibleCGPA < targetCgpa) {
+          // Cannot reach target even with all A's - need retakes
+          gradResultText.innerHTML = `⚠️ Cannot reach target CGPA of <strong>${targetCgpa.toFixed(2)}</strong> even with all A's in remaining courses.<br>
+            Best possible: <strong>${bestPossibleCGPA.toFixed(2)}</strong><br>
+            <strong>Retakes are required:</strong>`;
+          gradResultDiv.style.background = "rgba(251, 191, 36, 0.1)";
+          gradResultDiv.style.borderColor = "rgba(251, 191, 36, 0.3)";
+
+          // Calculate retakes needed for three scenarios
+          const retakesBMinus = calculateRetakesForScenario(currentCredits, currentCgpa, targetCgpa, "B-");
+          const retakesC = calculateRetakesForScenario(currentCredits, currentCgpa, targetCgpa, "C");
+          const retakesD = calculateRetakesForScenario(currentCredits, currentCgpa, targetCgpa, "D");
+
+          const creditsBMinus = retakesBMinus * 3;
+          const creditsC = retakesC * 3;
+          const creditsD = retakesD * 3;
+
+          const costBMinus6500 = creditsBMinus * 6500;
+          const costBMinus8000 = creditsBMinus * 8000;
+          const costC6500 = creditsC * 6500;
+          const costC8000 = creditsC * 8000;
+          const costD6500 = creditsD * 6500;
+          const costD8000 = creditsD * 8000;
+
+          document.getElementById("gradScenarioBMinus").innerHTML = `
+            <strong>${retakesBMinus}</strong> retakes (${creditsBMinus} cr)<br>
+            ৳${costBMinus6500.toLocaleString()} / ৳${costBMinus8000.toLocaleString()}
+          `;
+          document.getElementById("gradScenarioC").innerHTML = `
+            <strong>${retakesC}</strong> retakes (${creditsC} cr)<br>
+            ৳${costC6500.toLocaleString()} / ৳${costC8000.toLocaleString()}
+          `;
+          document.getElementById("gradScenarioD").innerHTML = `
+            <strong>${retakesD}</strong> retakes (${creditsD} cr)<br>
+            ৳${costD6500.toLocaleString()} / ৳${costD8000.toLocaleString()}
+          `;
+
+          gradScenariosDiv.style.display = "block";
+        } else {
+          // Can reach target without retakes
+          const neededQP = totalCredits * targetCgpa;
+          const additionalQPNeeded = neededQP - currentQualityPoints;
+          const avgGradeNeeded = additionalQPNeeded / remainingCredits;
+
+          let gradeText = "";
+          if (avgGradeNeeded <= 0) {
+            gradeText = "any passing grades";
+          } else if (avgGradeNeeded >= 4.0) {
+            gradeText = "all A grades";
+          } else if (avgGradeNeeded >= 3.7) {
+            gradeText = "mostly A and A-";
+          } else if (avgGradeNeeded >= 3.3) {
+            gradeText = "mostly A- and B+";
+          } else if (avgGradeNeeded >= 3.0) {
+            gradeText = "mostly B+ and B";
+          } else if (avgGradeNeeded >= 2.7) {
+            gradeText = "mostly B and B-";
+          } else if (avgGradeNeeded >= 2.3) {
+            gradeText = "mostly B- and C+";
+          } else {
+            gradeText = "at least C average";
+          }
+
+          // Calculate how many courses of each grade needed (assuming 3-credit courses)
+          const coursesNeeded = Math.ceil(remainingCredits / 3);
+          
+          // Calculate different combinations
+          const aNeeded = Math.ceil(additionalQPNeeded / (4.0 * 3)); // All A's
+          const bPlusNeeded = Math.ceil(additionalQPNeeded / (3.3 * 3)); // All B+'s
+          const bNeeded = Math.ceil(additionalQPNeeded / (3.0 * 3)); // All B's
+          const bMinusNeeded = Math.ceil(additionalQPNeeded / (2.7 * 3)); // All B-'s
+
+          let gradeBreakdown = "";
+          if (avgGradeNeeded >= 0.1) {
+            gradeBreakdown = `<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(148, 163, 184, 0.2);">
+              <div style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+                <strong>Grade Requirements (assuming 3-credit courses):</strong>
+              </div>
+              <div style="display: grid; gap: 0.5rem; font-size: 0.9rem;">`;
+            
+            if (aNeeded <= coursesNeeded && aNeeded > 0) {
+              const remaining = coursesNeeded - aNeeded;
+              gradeBreakdown += `<div>• <strong>${aNeeded}</strong> A's${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            if (bPlusNeeded <= coursesNeeded && bPlusNeeded > 0) {
+              const remaining = coursesNeeded - bPlusNeeded;
+              gradeBreakdown += `<div>• <strong>${bPlusNeeded}</strong> B+'s${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            if (bNeeded <= coursesNeeded && bNeeded > 0) {
+              const remaining = coursesNeeded - bNeeded;
+              gradeBreakdown += `<div>• <strong>${bNeeded}</strong> B's${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            if (bMinusNeeded <= coursesNeeded && bMinusNeeded > 0) {
+              const remaining = coursesNeeded - bMinusNeeded;
+              gradeBreakdown += `<div>• <strong>${bMinusNeeded}</strong> B-'s${remaining > 0 ? ` + ${remaining} course(s) with any grade` : ''}</div>`;
+            }
+            
+            gradeBreakdown += `</div></div>`;
+          }
+
+          gradResultText.innerHTML = `✅ You can graduate with your target CGPA of <strong>${targetCgpa.toFixed(2)}</strong> without retakes!<br>
+            Complete the remaining <strong>${remainingCredits}</strong> credits with an average of <strong>${avgGradeNeeded.toFixed(2)}</strong> (${gradeText}).${gradeBreakdown}`;
+          gradResultDiv.style.background = "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
+          gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
+          gradScenariosDiv.style.display = "none";
+        }
+
+        gradResultDiv.style.display = "block";
       }
 
       addCourseBtn.addEventListener("click", () => {
@@ -533,6 +1143,8 @@
       });
 
       calcBtn.addEventListener("click", calculate);
+      document.getElementById("calculateTargetBtn").addEventListener("click", calculateTargetRetakes);
+      document.getElementById("calculateGradBtn").addEventListener("click", calculateGraduation);
 
       initializeRows();
     </script>
