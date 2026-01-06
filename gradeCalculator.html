@@ -50,6 +50,8 @@
         max-width: 960px;
         margin: 0 auto;
         width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
       }
       .calculator-hero {
         text-align: center;
@@ -73,6 +75,8 @@
         padding: 1.75rem 1.5rem;
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
         width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
       }
       .calc-card h2 {
         margin-top: 0;
@@ -188,17 +192,22 @@
       }
       .results-panel {
         display: none;
-        display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
         margin-top: 2rem;
         width: 100%;
+        box-sizing: border-box;
       }
       .result-box {
+        flex: 1 1 calc(20% - 0.6rem);
+        min-width: 140px;
+        max-width: 240px;
         border-radius: 12px;
-        padding: 1.2rem 1.6rem;
+        padding: 1rem 1.1rem;
         background: rgba(15, 23, 42, 0.85);
         border: 1px solid rgba(148, 163, 184, 0.2);
+        box-sizing: border-box;
       }
       .result-box.highlight {
         background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -225,14 +234,6 @@
       .result-box.highlight h3 {
         font-size: 2.3rem;
       }
-      .summary-section {
-        grid-column: 1 / -1;
-        margin-top: 1rem;
-      }
-      .summary-section h3 {
-        font-size: 1.05rem;
-        margin-bottom: 0.75rem;
-      }
       .summary-table {
         width: 100%;
         border-collapse: collapse;
@@ -254,21 +255,68 @@
       .grade-D { color: #f97316; }
       .grade-F { color: #ef4444; }
       @media (max-width: 720px) {
+        main {
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+          gap: 1.5rem;
+        }
         .calc-card {
-          padding: 1rem 0.75rem;
+          padding: 0.75rem 0.5rem;
+        }
+        .courses-wrapper {
+          margin: 0 -0.5rem;
+          padding: 0 0.5rem;
         }
         table.grade-table {
-          min-width: 480px;
+          min-width: 100%;
+          font-size: 0.85rem;
+        }
+        table.grade-table th,
+        table.grade-table td {
+          padding: 0.4rem 0.25rem;
+        }
+        table.grade-table input,
+        table.grade-table select {
+          padding: 0.35rem 0.4rem;
+          font-size: 0.85rem;
         }
         .actions-row {
           flex-direction: column;
           align-items: stretch;
+          gap: 0.75rem;
         }
         .btn {
           width: 100%;
+          padding: 0.7rem 1rem;
+          font-size: 0.9rem;
+        }
+        .course-note {
+          font-size: 0.8rem;
         }
         .results-panel {
-          grid-template-columns: 1fr;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        .result-box {
+          flex: 0 0 auto;
+          min-width: auto;
+          max-width: 100%;
+          width: 100%;
+          padding: 0.75rem 0.75rem;
+        }
+        .result-box h3 {
+          font-size: 1.5rem;
+          word-break: break-word;
+        }
+        .result-box span {
+          font-size: 0.75rem;
+        }
+        .summary-table {
+          font-size: 0.85rem;
+        }
+        .summary-table th,
+        .summary-table td {
+          padding: 0.5rem 0.3rem;
         }
       }
     </style>
@@ -357,23 +405,23 @@
             <span>One Grade Curve</span>
             <h3 id="oneGradeCurve">-</h3>
           </div>
+        </div>
 
-          <section class="summary-section">
-            <h3>Mark Distribution Summary</h3>
-            <div class="courses-wrapper">
-              <table class="summary-table">
-                <thead>
-                  <tr>
-                    <th>Component</th>
-                    <th>Marks Used</th>
-                    <th>Weight (%)</th>
-                    <th>Contribution</th>
-                  </tr>
-                </thead>
-                <tbody id="summaryBody"></tbody>
-              </table>
-            </div>
-          </section>
+        <div class="calc-card" id="summarySection" style="display: none">
+          <h3>Mark Distribution Summary</h3>
+          <div class="courses-wrapper">
+            <table class="summary-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Marks Used</th>
+                  <th>Weight (%)</th>
+                  <th>Contribution</th>
+                </tr>
+              </thead>
+              <tbody id="summaryBody"></tbody>
+            </table>
+          </div>
         </div>
       </main>
 
@@ -648,7 +696,8 @@
         `;
         summaryBody.appendChild(totalRow);
 
-        document.getElementById("resultsPanel").style.display = "grid";
+        document.getElementById("resultsPanel").style.display = "flex";
+        document.getElementById("summarySection").style.display = "block";
         document
           .getElementById("resultsPanel")
           .scrollIntoView({ behavior: "smooth", block: "nearest" });
