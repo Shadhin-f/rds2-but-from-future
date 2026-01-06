@@ -1748,6 +1748,11 @@ records-list::-webkit-scrollbar-thumb {
   /* background: var(--primary-gradient); */
   border-radius: 12px 12px 0 0;
 }
+.routine-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .routine-toggle-btn {
   background: none;
   border: none;

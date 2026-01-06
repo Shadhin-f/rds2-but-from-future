@@ -537,19 +537,37 @@ function removeCourseFromRoutine(index) {
 function renderRoutineTable() {
     const tbody = document.querySelector('#routineTable tbody');
     tbody.innerHTML = '';
-    if (routineCourses.length === 0) return;
+    if (routineCourses.length === 0) {
+        // No courses, nothing to render
+        return;
+    }
 
-    // Collect all unique time slots (start/end of all courses)
+    // Pre-compute clash segments and per-course-name colors
+    const { segments: clashSegments, courseColor } = computeClashSegmentsWithColors();
+
+    // Collect all unique time points (start/end of all courses)
     let timePoints = [];
     routineCourses.forEach(c => {
         timePoints.push(c.startMin, c.endMin);
     });
     timePoints = Array.from(new Set(timePoints)).sort((a, b) => a - b);
 
-    // Build time slot ranges
+    // Build time slot ranges, skipping 10-minute empty gaps
     let timeSlots = [];
     for (let i = 0; i < timePoints.length - 1; i++) {
-        timeSlots.push([timePoints[i], timePoints[i+1]]);
+        const slotStart = timePoints[i];
+        const slotEnd = timePoints[i + 1];
+        const duration = slotEnd - slotStart;
+
+        // Check if any course uses this interval on any day
+        const hasAnyCourse = routineCourses.some(c =>
+            c.startMin < slotEnd && c.endMin > slotStart
+        );
+
+        // If this is a 10-minute completely empty gap, skip rendering this row
+        if (duration === 10 && !hasAnyCourse) continue;
+
+        timeSlots.push([slotStart, slotEnd]);
     }
 
     // For each slot, build a row
@@ -574,13 +592,25 @@ function renderRoutineTable() {
             if (coursesInCell.length > 0) {
                 cell.style.whiteSpace = "normal";
                 cell.style.padding = "2px 2px";
-                cell.innerHTML = coursesInCell.map(course => `
-                    <span class="routine-course-block" title="${course.code} Sec-${course.section} (${course.faculty})" style="margin:1px 2px;display:inline-block;">
+                cell.innerHTML = coursesInCell.map(course => {
+                    // Find a clash segment matching this day, slot, and course
+                    const segment = clashSegments.find(seg =>
+                        seg.day === day &&
+                        (seg.aIdx === course._idx || seg.bIdx === course._idx) &&
+                        seg.overlapStartMin <= slotStart &&
+                        seg.overlapEndMin > slotStart
+                    );
+                    // Use the course name (code) to look up a stable color
+                    const color = segment ? courseColor.get(course.code) : null;
+                    const borderStyle = color ? `border:1px solid ${color};border-radius:4px;` : '';
+                    return `
+                    <span class="routine-course-block" title="${course.code} Sec-${course.section} (${course.faculty})" style="margin:1px 2px;display:inline-block;${borderStyle}">
                         ${course.code} - ${course.section}<br>
                         <span style="font-size:0.85em;">${course.faculty}</span>
                         <button class="routine-remove-btn" data-index="${course._idx}" title="Remove from routine" style="margin-left:4px;background:none;border:none;color:#e11d48;cursor:pointer;font-size:1em;">✕</button>
                     </span>
-                `).join('');
+                `;
+                }).join('');
             }
             row.appendChild(cell);
         }
@@ -753,6 +783,11 @@ window.addEventListener('load', () => {
     // ...existing code...
     loadRoutine();
     renderRoutineTable();
+    // Hook up PDF download button
+    const pdfBtn = document.getElementById('downloadRoutinePdfBtn');
+    if (pdfBtn) {
+        pdfBtn.addEventListener('click', generateRoutinePdf);
+    }
 });
 
 // Add these at the top with your other constants
@@ -820,3 +855,251 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add semester change handler
     setupSemesterChange();
 });
+
+// Compute time clashes among routine courses
+function computeTimeClashes() {
+    const clashes = [];
+    for (const day of routineDays) {
+        const dayCourses = routineCourses
+            .map((c, idx) => ({ ...c, _idx: idx }))
+            .filter(c => c.days.includes(day));
+        for (let i = 0; i < dayCourses.length; i++) {
+            for (let j = i + 1; j < dayCourses.length; j++) {
+                const a = dayCourses[i], b = dayCourses[j];
+                const overlap = a.startMin < b.endMin && b.startMin < a.endMin;
+                if (overlap) {
+                    const startOverlap = Math.max(a.startMin, b.startMin);
+                    const endOverlap = Math.min(a.endMin, b.endMin);
+                    clashes.push({
+                        day,
+                        a,
+                        b,
+                        aIdx: a._idx,
+                        bIdx: b._idx,
+                        overlapStart: minutesToTime(startOverlap),
+                        overlapEnd: minutesToTime(endOverlap),
+                        overlapStartMin: startOverlap,
+                        overlapEndMin: endOverlap
+                    });
+                }
+            }
+        }
+    }
+    return clashes;
+}
+
+// Compute clash segments and assign a consistent color per course name
+function computeClashSegmentsWithColors() {
+    const raw = computeTimeClashes();
+    const palette = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6'];
+    const courseColor = new Map(); // course code -> color
+    let colorIndex = 0;
+
+    function getColorForCourseCode(code) {
+        if (!courseColor.has(code)) {
+            const color = palette[colorIndex % palette.length];
+            courseColor.set(code, color);
+            colorIndex++;
+        }
+        return courseColor.get(code);
+    }
+
+    const segments = raw.map(c => {
+        // Use course code (name) for color grouping
+        const aCode = c.a.code;
+        const bCode = c.b.code;
+        // Ensure both course codes have assigned colors
+        getColorForCourseCode(aCode);
+        getColorForCourseCode(bCode);
+
+        return {
+            day: c.day,
+            overlapStartMin: c.overlapStartMin,
+            overlapEndMin: c.overlapEndMin,
+            aIdx: c.aIdx,
+            bIdx: c.bIdx,
+            aCode,
+            bCode
+        };
+    });
+
+    return { segments, courseColor };
+}
+
+// Generate a properly formatted PDF of the routine with header and credit
+async function generateRoutinePdf() {
+    const hasJsPdf = window.jspdf && typeof window.jspdf.jsPDF === 'function';
+    const h2c = window.html2canvas || window.html2Canvas;
+    if (!hasJsPdf || typeof h2c !== 'function') {
+        alert('PDF libraries not loaded yet. Please wait a moment and try again.');
+        return;
+    }
+    if (routineCourses.length === 0) {
+        alert('Your routine is empty. Add courses before exporting.');
+        return;
+    }
+
+    // Prepare timestamp for info and filename
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const min = String(now.getMinutes()).padStart(2, '0');
+
+    // Build a light-themed temporary routine table for export
+    const tempContainer = document.createElement('div');
+    tempContainer.id = 'printRoutineContainer';
+    tempContainer.style.position = 'fixed';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.top = '0';
+    tempContainer.style.background = '#ffffff';
+    tempContainer.style.color = '#000000';
+    tempContainer.style.padding = '16px';
+    tempContainer.style.fontFamily = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    tempContainer.style.fontSize = '16px';
+    tempContainer.style.lineHeight = '1.4';
+
+    const titleEl = document.createElement('h2');
+    titleEl.textContent = 'Quick Routine';
+    titleEl.style.margin = '0 0 6px 0';
+    titleEl.style.fontSize = '20px';
+    titleEl.style.fontWeight = '700';
+    titleEl.style.color = '#000000';
+    tempContainer.appendChild(titleEl);
+
+    const infoEl = document.createElement('div');
+    infoEl.textContent = `Generated on: ${yyyy}-${mm}-${dd} ${hh}:${min}`;
+    infoEl.style.marginBottom = '10px';
+    infoEl.style.fontSize = '13px';
+    infoEl.style.color = '#000000';
+    tempContainer.appendChild(infoEl);
+
+    const table = document.createElement('table');
+    table.style.borderCollapse = 'collapse';
+    table.style.width = '100%';
+
+    const thead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    const headerCells = ['Time', ...routineDays];
+    headerCells.forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        th.style.border = '1px solid #000';
+        th.style.padding = '6px 8px';
+        th.style.background = '#e5e7eb';
+        th.style.fontWeight = '600';
+        th.style.fontSize = '13px';
+        th.style.color = '#000000';
+        headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    // Reuse the same time-slot logic as the on-page routine,
+    // including skipping 10-minute empty gaps
+    let timePoints = [];
+    routineCourses.forEach(c => {
+        timePoints.push(c.startMin, c.endMin);
+    });
+    timePoints = Array.from(new Set(timePoints)).sort((a, b) => a - b);
+
+    const timeSlots = [];
+    for (let i = 0; i < timePoints.length - 1; i++) {
+        const slotStart = timePoints[i];
+        const slotEnd = timePoints[i + 1];
+        const duration = slotEnd - slotStart;
+
+        const hasAnyCourse = routineCourses.some(c =>
+            c.startMin < slotEnd && c.endMin > slotStart
+        );
+
+        if (duration === 10 && !hasAnyCourse) continue;
+
+        timeSlots.push([slotStart, slotEnd]);
+    }
+
+    timeSlots.forEach(([slotStart, slotEnd]) => {
+        const tr = document.createElement('tr');
+        const timeCell = document.createElement('td');
+        timeCell.textContent = `${minutesToTime(slotStart)} - ${minutesToTime(slotEnd)}`;
+        timeCell.style.border = '1px solid #000';
+        timeCell.style.padding = '6px 8px';
+        timeCell.style.fontWeight = '600';
+        timeCell.style.fontSize = '13px';
+        timeCell.style.color = '#000000';
+        tr.appendChild(timeCell);
+
+        routineDays.forEach(day => {
+            const td = document.createElement('td');
+            td.style.border = '1px solid #000';
+            td.style.padding = '6px 8px';
+            td.style.fontSize = '13px';
+            td.style.whiteSpace = 'pre-line';
+            td.style.color = '#000000';
+
+            const coursesInCell = routineCourses.filter(c =>
+                c.days.includes(day) &&
+                c.startMin <= slotStart &&
+                c.endMin > slotStart
+            );
+
+            if (coursesInCell.length > 0) {
+                const lines = coursesInCell.map(c => `${c.code} - ${c.section} (${c.faculty})`);
+                td.textContent = lines.join('\n');
+            }
+
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    tempContainer.appendChild(table);
+    document.body.appendChild(tempContainer);
+
+    try {
+        // Capture the light-themed routine table area
+        const canvas = await h2c(tempContainer, { scale: 2, backgroundColor: '#ffffff' });
+        const imgData = canvas.toDataURL('image/png');
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 12;
+
+        // Add routine image scaled to fit width
+        const imgWidth = pageWidth - margin * 2;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let y = margin;
+        pdf.addImage(imgData, 'PNG', margin, y, imgWidth, imgHeight);
+        y += imgHeight + 8;
+
+        // Credit
+        if (y > pageHeight - 30) {
+            pdf.addPage();
+            y = margin + 8;
+        }
+        pdf.setFontSize(11);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text('Generated from RDS2 But From Future', margin, y);
+        y += 6;
+        pdf.text('https://shadhin-f.github.io/rds2-but-from-future/', margin, y);
+
+        // Save the PDF
+        pdf.save(`routine_${yyyy}-${mm}-${dd}.pdf`);
+    } catch (err) {
+        console.error('PDF generation failed:', err);
+        alert('Failed to generate PDF. Please try again.');
+    } finally {
+        // Clean up temporary container
+        if (tempContainer && tempContainer.parentNode) {
+            tempContainer.parentNode.removeChild(tempContainer);
+        }
+    }
+}

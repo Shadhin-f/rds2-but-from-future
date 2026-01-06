@@ -101,9 +101,14 @@
         <div id="routineMakerContainer" class="routine-maker-container">
           <div class="routine-header">
             <span>Quick Routine</span>
-            <button id="toggleRoutineBtn" class="routine-toggle-btn">
-              Hide
-            </button>
+            <div class="routine-header-actions">
+              <button id="toggleRoutineBtn" class="routine-toggle-btn">
+                Hide
+              </button>
+              <button id="downloadRoutinePdfBtn" class="routine-toggle-btn">
+                Download PDF
+              </button>
+            </div>
           </div>
           <div id="routineTableWrapper">
             <table id="routineTable" class="routine-table">
@@ -124,6 +129,10 @@
               </tbody>
             </table>
           </div>
+          <div
+            id="routineClashes"
+            style="margin-top: 10px; font-size: 0.95rem; color: #e2e8f0"
+          ></div>
         </div>
       </header>
 
@@ -484,6 +493,17 @@
     </button>
 
     <script src="script.js"></script>
+    <!-- PDF generation libraries -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script src="activeUsers.js"></script> -->
