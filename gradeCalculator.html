@@ -69,7 +69,7 @@
         line-height: 1.5;
       }
       .calc-card {
-        background: rgba(15, 23, 42, 0.7);
+        background:  var(--surface-color);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 18px;
         padding: 1.75rem 1.5rem;
@@ -123,7 +123,7 @@
       table.grade-table select {
         width: 100%;
         box-sizing: border-box;
-        background: rgba(15, 23, 42, 0.9);
+        background: var(--surface-color);
         border: 1px solid rgba(148, 163, 184, 0.35);
         border-radius: 8px;
         color: #f8fafc;
@@ -205,7 +205,7 @@
         max-width: 240px;
         border-radius: 12px;
         padding: 1rem 1.1rem;
-        background: rgba(15, 23, 42, 0.85);
+        background: var(--surface-color);
         border: 1px solid rgba(148, 163, 184, 0.2);
         box-sizing: border-box;
       }
@@ -301,11 +301,14 @@
           flex: 0 0 auto;
           min-width: auto;
           max-width: 100%;
+          min-height: 100px;
           width: 100%;
           padding: 0.75rem 0.75rem;
+          text-align: center;
+          font-size: 2rem !important;
         }
         .result-box h3 {
-          font-size: 1.5rem;
+          font-size: 2rem !important;
           word-break: break-word;
         }
         .result-box span {
@@ -346,9 +349,7 @@
       <main>
         <section class="calculator-hero">
           <p>
-            Put every quiz, mid, assignment, final and attendance in a single table.
-            The calculator will apply your weight distribution, compute total marks,
-            apply the 10X curve, and show the final NSU letter grade.
+            Enter best quize scores, midterm, final exam marks along with their weight distribution to calculate your expected course grade. You can add multiple rows for quizzes, assignments or any other components that share the same weight.
           </p>
         </section>
 
@@ -359,7 +360,6 @@
               <thead>
                 <tr>
                   <th>Component</th>
-                  <th>Label</th>
                   <th>Obtained</th>
                   <th>Total</th>
                   <th>Weight (%)</th>
@@ -394,7 +394,7 @@
             <h3 id="rawGrade">-</h3>
           </div>
           <div class="result-box">
-            <span>Curved Marks (10x)</span>
+            <span>Curved Marks (10√x)</span>
             <h3 id="curvedMarks">0.00</h3>
           </div>
           <div class="result-box">
@@ -422,12 +422,18 @@
               <tbody id="summaryBody"></tbody>
             </table>
           </div>
+          <div class="actions-row" style="margin-top: 1.5rem;">
+            <div style="flex: 1"></div>
+            <button type="button" class="btn btn-primary" onclick="downloadPDF()">
+              <i class="fas fa-download"></i> Download as PDF
+            </button>
+          </div>
         </div>
       </main>
 
       <footer class="footer">
         <p>
-           a9 2025 RDS2 BUT FROM FUTURE  b7 Created by Tahshan Jamil Shadhin
+           © 2026 RDS2 BUT FROM FUTURE • Created by Tahshan Jamil Shadhin
           <br />
         </p>
         <div class="social-links">
@@ -501,9 +507,6 @@
               <option value="Class Performance">Class Performance</option>
               <option value="Other">Other</option>
             </select>
-          </td>
-          <td>
-            <input type="text" class="comp-label" placeholder="e.g., Quiz 1" />
           </td>
           <td>
             <input type="number" class="comp-obtained" min="0" step="0.5" />
@@ -581,14 +584,12 @@
 
         rows.forEach((row) => {
           const type = (row.querySelector(".comp-type").value || "").trim() || "Other";
-          const label = row.querySelector(".comp-label").value.trim();
           const obtained = parseFloat(row.querySelector(".comp-obtained").value) || 0;
           const total = parseFloat(row.querySelector(".comp-total").value) || 0;
           const weight = parseFloat(row.querySelector(".comp-weight").value) || 0;
 
           if (!groups[type]) {
             groups[type] = {
-              labels: [],
               marks: [],
               percentages: [],
               weight: 0,
@@ -599,7 +600,6 @@
             const percentage = (obtained / total) * 100;
             groups[type].percentages.push(percentage);
             groups[type].marks.push({ obtained, total });
-            groups[type].labels.push(label || type);
           }
 
           if (weight > 0) {
@@ -707,7 +707,110 @@
         addComponentRow();
         addComponentRow();
       });
+
+      function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Header with website credit
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(100);
+        doc.text('Generated using RDS2 But From Future', 105, 12, { align: 'center' });
+        doc.setTextColor(0, 0, 255);
+        doc.textWithLink('https://shadhin-f.github.io/rds2-but-from-future/', 105, 17, { 
+          align: 'center',
+          url: 'https://shadhin-f.github.io/rds2-but-from-future/'
+        });
+        doc.setTextColor(0);
+
+        // Title
+        doc.setFontSize(18);
+        doc.setFont(undefined, 'bold');
+        doc.text('Course Grade Summary', 105, 28, { align: 'center' });
+        
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.text('NSU Grade Calculator Report', 105, 36, { align: 'center' });
+        doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 42, { align: 'center' });
+
+        // Grade Results Section
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('Final Grades', 20, 58);
+
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'normal');
+        const rawMarks = document.getElementById('totalMarks').textContent;
+        const rawGrade = document.getElementById('rawGrade').textContent;
+        const curvedMarks = document.getElementById('curvedMarks').textContent;
+        const curvedGrade = document.getElementById('curvedGrade').textContent;
+        const oneGradeCurve = document.getElementById('oneGradeCurve').textContent;
+
+        let yPos = 68;
+        doc.text(`Raw Marks: ${rawMarks}`, 25, yPos);
+        yPos += 8;
+        doc.text(`Raw Grade: ${rawGrade}`, 25, yPos);
+        yPos += 8;
+        doc.text(`Curved Marks (10√X): ${curvedMarks}`, 25, yPos);
+        yPos += 8;
+        doc.text(`Curved Grade: ${curvedGrade}`, 25, yPos);
+        yPos += 8;
+        doc.text(`One Grade Curve: ${oneGradeCurve}`, 25, yPos);
+        yPos += 15;
+
+        // Mark Distribution Table
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text('Mark Distribution Summary', 20, yPos);
+        yPos += 10;
+
+        // Table headers
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'bold');
+        doc.text('Component', 20, yPos);
+        doc.text('Marks Used', 70, yPos);
+        doc.text('Weight (%)', 120, yPos);
+        doc.text('Contribution', 160, yPos);
+        yPos += 2;
+        doc.line(20, yPos, 190, yPos);
+        yPos += 6;
+
+        // Table rows
+        doc.setFont(undefined, 'normal');
+        const summaryRows = document.querySelectorAll('#summaryBody tr');
+        summaryRows.forEach((row) => {
+          const cells = row.querySelectorAll('td');
+          if (cells.length >= 4) {
+            doc.text(cells[0].textContent.trim(), 20, yPos);
+            doc.text(cells[1].textContent.trim(), 70, yPos);
+            doc.text(cells[2].textContent.trim(), 120, yPos);
+            doc.text(cells[3].textContent.trim(), 160, yPos);
+            yPos += 7;
+            
+            // Add new page if needed
+            if (yPos > 270) {
+              doc.addPage();
+              yPos = 20;
+            }
+          }
+        });
+
+        // Footer
+        const pageCount = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= pageCount; i++) {
+          doc.setPage(i);
+          doc.setFontSize(8);
+          doc.setTextColor(128);
+          doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
+          doc.text('Generated by RDS2 Grade Calculator', 105, 285, { align: 'center' });
+        }
+
+        // Download
+        doc.save('NSU_Grade_Summary.pdf');
+      }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
     <script src="buttons.js"></script>
   </body>
