@@ -189,7 +189,7 @@
       .results-panel {
         display: none;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 1rem;
         margin-top: 2rem;
         width: 100%;
@@ -353,6 +353,10 @@
             <span>Curved Grade</span>
             <h3 id="curvedGrade">-</h3>
           </div>
+          <div class="result-box">
+            <span>One Grade Curve</span>
+            <h3 id="oneGradeCurve">-</h3>
+          </div>
 
           <section class="summary-section">
             <h3>Mark Distribution Summary</h3>
@@ -408,6 +412,31 @@
     </div>
 
     <script>
+      function syncWeightsByType() {
+        const rows = document.querySelectorAll("#componentsBody tr");
+        const typeMap = {};
+
+        rows.forEach((row) => {
+          const typeSel = row.querySelector(".comp-type");
+          const weightInput = row.querySelector(".comp-weight");
+          if (!typeSel || !weightInput) return;
+          const type = (typeSel.value || "").trim() || "Other";
+          if (!typeMap[type]) typeMap[type] = [];
+          typeMap[type].push(weightInput);
+        });
+
+        Object.values(typeMap).forEach((inputs) => {
+          if (!inputs.length) return;
+          const first = inputs[0];
+          first.disabled = false;
+          const baseValue = first.value;
+          for (let i = 1; i < inputs.length; i++) {
+            inputs[i].disabled = true;
+            if (baseValue !== "") inputs[i].value = baseValue;
+          }
+        });
+      }
+
       function addComponentRow() {
         const tbody = document.getElementById("componentsBody");
         const tr = document.createElement("tr");
@@ -444,20 +473,41 @@
           </td>
         `;
         tbody.appendChild(tr);
+
+        const typeSelect = tr.querySelector(".comp-type");
+        const weightInput = tr.querySelector(".comp-weight");
+        if (typeSelect) typeSelect.addEventListener("change", syncWeightsByType);
+        if (weightInput) weightInput.addEventListener("input", syncWeightsByType);
+
+        syncWeightsByType();
       }
 
+      const gradePointsByLetter = {
+        "A": 4.0,
+        "A-": 3.7,
+        "B+": 3.3,
+        "B": 3.0,
+        "B-": 2.7,
+        "C+": 2.3,
+        "C": 2.0,
+        "C-": 1.7,
+        "D+": 1.3,
+        "D": 1.0,
+        "F": 0.0
+      };
+
       function getLetterGrade(marks) {
-        if (marks >= 93) return { letter: "A", point: 4.0, desc: "Excellent" };
-        if (marks >= 90) return { letter: "A-", point: 3.7, desc: "" };
-        if (marks >= 87) return { letter: "B+", point: 3.3, desc: "" };
-        if (marks >= 83) return { letter: "B", point: 3.0, desc: "Good" };
-        if (marks >= 80) return { letter: "B-", point: 2.7, desc: "" };
-        if (marks >= 77) return { letter: "C+", point: 2.3, desc: "" };
-        if (marks >= 73) return { letter: "C", point: 2.0, desc: "Average" };
-        if (marks >= 70) return { letter: "C-", point: 1.7, desc: "" };
-        if (marks >= 67) return { letter: "D+", point: 1.3, desc: "" };
-        if (marks >= 60) return { letter: "D", point: 1.0, desc: "Poor" };
-        return { letter: "F", point: 0.0, desc: "Failure" };
+        if (marks >= 93) return { letter: "A", point: gradePointsByLetter["A"], desc: "Excellent" };
+        if (marks >= 90) return { letter: "A-", point: gradePointsByLetter["A-"], desc: "" };
+        if (marks >= 87) return { letter: "B+", point: gradePointsByLetter["B+"], desc: "" };
+        if (marks >= 83) return { letter: "B", point: gradePointsByLetter["B"], desc: "Good" };
+        if (marks >= 80) return { letter: "B-", point: gradePointsByLetter["B-"], desc: "" };
+        if (marks >= 77) return { letter: "C+", point: gradePointsByLetter["C+"], desc: "" };
+        if (marks >= 73) return { letter: "C", point: gradePointsByLetter["C"], desc: "Average" };
+        if (marks >= 70) return { letter: "C-", point: gradePointsByLetter["C-"], desc: "" };
+        if (marks >= 67) return { letter: "D+", point: gradePointsByLetter["D+"], desc: "" };
+        if (marks >= 60) return { letter: "D", point: gradePointsByLetter["D"], desc: "Poor" };
+        return { letter: "F", point: gradePointsByLetter["F"], desc: "Failure" };
       }
 
       function getGradeClass(letter) {
@@ -466,6 +516,13 @@
         if (letter.startsWith("C")) return "grade-C";
         if (letter.startsWith("D")) return "grade-D";
         return "grade-F";
+      }
+
+      function getOneGradeCurveLetter(letter) {
+        const order = ["F", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"];
+        const idx = order.indexOf(letter);
+        if (idx === -1) return letter;
+        return order[Math.min(idx + 1, order.length - 1)];
       }
 
       function calculateGrade() {
@@ -547,6 +604,11 @@
         const rawClass = getGradeClass(rawGradeInfo.letter);
         const curvedClass = getGradeClass(curvedGradeInfo.letter);
 
+        // One-grade-up curve applied on top of the RAW grade
+        const oneCurveLetter = getOneGradeCurveLetter(rawGradeInfo.letter);
+        const oneCurvePoint = gradePointsByLetter[oneCurveLetter] ?? rawGradeInfo.point;
+        const oneCurveClass = getGradeClass(oneCurveLetter);
+
         document.getElementById("totalMarks").textContent = totalScore.toFixed(2);
         document.getElementById("curvedMarks").textContent = curvedScore.toFixed(2);
 
@@ -557,6 +619,10 @@
         const curvedGradeEl = document.getElementById("curvedGrade");
         curvedGradeEl.textContent = `${curvedGradeInfo.letter} (${curvedGradeInfo.point.toFixed(1)})`;
         curvedGradeEl.className = curvedClass;
+
+        const oneCurveEl = document.getElementById("oneGradeCurve");
+        oneCurveEl.textContent = `${oneCurveLetter} (${oneCurvePoint.toFixed(1)})`;
+        oneCurveEl.className = oneCurveClass;
 
         const summaryBody = document.getElementById("summaryBody");
         summaryBody.innerHTML = "";
