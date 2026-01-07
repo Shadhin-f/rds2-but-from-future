@@ -228,21 +228,24 @@ function debounce(func, wait) {
 // Update renderTable to include Add to Wishlist button
 function renderTable(data) {
     const tableBody = document.getElementById('tableBody');
+    if (!tableBody) return; // Table not present on this page
+
     const noResults = document.getElementById('noResults');
     const loading = document.getElementById('loading');
+    const pagination = document.querySelector('.pagination');
 
     tableBody.innerHTML = '';
 
     if(!data || data.length === 0) {
-        noResults.classList.remove('hidden');
-        loading.style.display = 'none';
-        document.querySelector('.pagination').style.display = 'none';
+        if (noResults) noResults.classList.remove('hidden');
+        if (loading) loading.style.display = 'none';
+        if (pagination) pagination.style.display = 'none';
         return;
     }
 
-    noResults.classList.add('hidden');
-    loading.style.display = 'none';
-    document.querySelector('.pagination').style.display = 'flex';
+    if (noResults) noResults.classList.add('hidden');
+    if (loading) loading.style.display = 'none';
+    if (pagination) pagination.style.display = 'flex';
 
     // Calculate pagination
     const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -250,11 +253,16 @@ function renderTable(data) {
     const end = start + rowsPerPage;
     const paginatedData = data.slice(start, end);
 
-    // Update pagination info
-    document.getElementById('currentPage').textContent = currentPage;
-    document.getElementById('totalPages').textContent = totalPages;
-    document.getElementById('prevPage').disabled = currentPage === 1;
-    document.getElementById('nextPage').disabled = currentPage === totalPages;
+    // Update pagination info (if controls exist)
+    const currentPageEl = document.getElementById('currentPage');
+    const totalPagesEl = document.getElementById('totalPages');
+    const prevPageEl = document.getElementById('prevPage');
+    const nextPageEl = document.getElementById('nextPage');
+
+    if (currentPageEl) currentPageEl.textContent = currentPage;
+    if (totalPagesEl) totalPagesEl.textContent = totalPages;
+    if (prevPageEl) prevPageEl.disabled = currentPage === 1;
+    if (nextPageEl) nextPageEl.disabled = currentPage === totalPages;
 
     // Render table rows
     paginatedData.forEach((row, index) => {
@@ -334,7 +342,8 @@ function renderTable(data) {
 
 function showModal(data) {
     const modalBody = document.querySelector('.modal-body');
-    
+    if (!modalBody) return;
+
     // Format records by splitting on pipe and joining with newlines
     const formattedRecords = (data.Records || '')
         .split('|')
@@ -355,22 +364,26 @@ function showModal(data) {
             <pre class="records-list">${escapeHtml(formattedRecords)}</pre>
         </div>
     `;
-    modal.classList.remove('hidden');
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
 }
 
-// Add modal functionality
+// Add modal functionality (guard for pages without the modal)
 const modal = document.getElementById('detailsModal');
 const closeModal = document.querySelector('.close-modal');
 
-closeModal.addEventListener('click', () => {
-    modal.classList.add('hidden');
-});
-
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
+if (modal && closeModal) {
+    closeModal.addEventListener('click', () => {
         modal.classList.add('hidden');
-    }
-});
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+}
 
 // --- Add-to Modal Logic ---
 const addToModal = document.getElementById('addToModal');
@@ -411,33 +424,39 @@ function isInRoutine(course, section) {
 }
 
 // Close modal logic
-if (closeAddToModal) {
-    closeAddToModal.onclick = () => addToModal.classList.add('hidden');
+if (addToModal) {
+    if (closeAddToModal) {
+        closeAddToModal.onclick = () => addToModal.classList.add('hidden');
+    }
+    addToModal.addEventListener('click', (e) => {
+        if (e.target === addToModal) addToModal.classList.add('hidden');
+    });
 }
-addToModal.addEventListener('click', (e) => {
-    if (e.target === addToModal) addToModal.classList.add('hidden');
-});
 
-// Add pagination event listeners
-document.getElementById('prevPage').addEventListener('click', () => {
-    if (currentPage > 1) {
-        currentPage--;
-        // Use filteredData if search is active, else courseData
+// Add pagination event listeners (only if controls exist on this page)
+const prevPageBtn = document.getElementById('prevPage');
+if (prevPageBtn) {
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            renderTable(searchTerm ? filteredData : courseData);
+        }
+    });
+}
+
+const nextPageBtn = document.getElementById('nextPage');
+if (nextPageBtn) {
+    nextPageBtn.addEventListener('click', () => {
         const searchTerm = document.getElementById('searchInput').value.trim();
-        renderTable(searchTerm ? filteredData : courseData);
-    }
-});
-
-document.getElementById('nextPage').addEventListener('click', () => {
-    // Use filteredData if search is active, else courseData
-    const searchTerm = document.getElementById('searchInput').value.trim();
-    const data = searchTerm ? filteredData : courseData;
-    const totalPages = Math.ceil(data.length / rowsPerPage);
-    if (currentPage < totalPages) {
-        currentPage++;
-        renderTable(data);
-    }
-});
+        const data = searchTerm ? filteredData : courseData;
+        const totalPages = Math.ceil(data.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable(data);
+        }
+    });
+}
 
 function escapeHtml(str) {
     if (!str) return '';
@@ -497,7 +516,7 @@ function timeToMinutes(t) {
 }
 
 // Add course to routine (prevent duplicates)
-function addCourseToRoutine({Course, Section, Faculty, Time}) {
+function addCourseToRoutine({Course, Section, Faculty, Time, Room}) {
     const parsed = parseRoutineTime(Time);
     if (!parsed) return;
     
@@ -508,6 +527,7 @@ function addCourseToRoutine({Course, Section, Faculty, Time}) {
         code: Course,
         section: Section,
         faculty: Faculty,
+        room: Room,
         start: parsed.start,
         end: parsed.end,
         startMin: timeToMinutes(parsed.start),
@@ -536,6 +556,7 @@ function removeCourseFromRoutine(index) {
 // Render routine table with flexible slots and remove button
 function renderRoutineTable() {
     const tbody = document.querySelector('#routineTable tbody');
+    if (!tbody) return; // Routine table not present on this page
     tbody.innerHTML = '';
     if (routineCourses.length === 0) {
         // No courses, nothing to render
@@ -679,21 +700,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // ...existing code...
 });
 
-// Update loadCSVData to remove wishlist rendering
+// Update loadCSVData to remove wishlist rendering and be safe on other pages
 async function loadCSVData() {
+    const loadingEl = document.getElementById('loading');
+    const tableBody = document.getElementById('tableBody');
+
+    // If the core table UI is not present (e.g., on routine.html), skip loading
+    if (!loadingEl || !tableBody) {
+        return;
+    }
+
     try {
-        document.getElementById('loading').style.display = 'block';
+        loadingEl.style.display = 'block';
         const response = await fetch(CSV_FILENAME);
         const csvData = await response.text();
         courseData = parseCSV(csvData);
         renderTable(courseData);
-        // Remove this line as we no longer render the wishlist table
-        // renderWishlist();
+        // renderWishlist(); // no longer needed
     } catch (error) {
         console.error('Error loading CSV:', error);
         alert('Error loading course data');
     } finally {
-        document.getElementById('loading').style.display = 'none';
+        loadingEl.style.display = 'none';
     }
 }
 
@@ -968,13 +996,6 @@ async function generateRoutinePdf() {
     titleEl.style.color = '#000000';
     tempContainer.appendChild(titleEl);
 
-    const infoEl = document.createElement('div');
-    infoEl.textContent = `Generated on: ${yyyy}-${mm}-${dd} ${hh}:${min}`;
-    infoEl.style.marginBottom = '10px';
-    infoEl.style.fontSize = '13px';
-    infoEl.style.color = '#000000';
-    tempContainer.appendChild(infoEl);
-
     const table = document.createElement('table');
     table.style.borderCollapse = 'collapse';
     table.style.width = '100%';
@@ -1047,7 +1068,10 @@ async function generateRoutinePdf() {
             );
 
             if (coursesInCell.length > 0) {
-                const lines = coursesInCell.map(c => `${c.code} - ${c.section} (${c.faculty})`);
+                const lines = coursesInCell.map(c => {
+                    const base = `${c.code} - ${c.section} (${c.faculty})`;
+                    return c.room ? `${base} [${c.room}]` : base;
+                });
                 td.textContent = lines.join('\n');
             }
 
@@ -1073,23 +1097,26 @@ async function generateRoutinePdf() {
         const pageHeight = pdf.internal.pageSize.getHeight();
         const margin = 12;
 
-        // Add routine image scaled to fit width
+        // Top-centered header with credit, link, and timestamp
+        const headerLines = [
+            'RDS2 BUT FROM FUTURE',
+            'https://shadhin-f.github.io/rds2-but-from-future/',
+            `Generated on: ${yyyy}-${mm}-${dd} ${hh}:${min}`
+        ];
+
+        pdf.setTextColor(0, 0, 0);
+        pdf.setFontSize(12);
+        let headerY = margin;
+        headerLines.forEach((line) => {
+            pdf.text(line, pageWidth / 2, headerY, { align: 'center' });
+            headerY += 5;
+        });
+
+        // Add routine image scaled to fit width, below header
         const imgWidth = pageWidth - margin * 2;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let y = margin;
-        pdf.addImage(imgData, 'PNG', margin, y, imgWidth, imgHeight);
-        y += imgHeight + 8;
-
-        // Credit
-        if (y > pageHeight - 30) {
-            pdf.addPage();
-            y = margin + 8;
-        }
-        pdf.setFontSize(11);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text('Generated from RDS2 But From Future', margin, y);
-        y += 6;
-        pdf.text('https://shadhin-f.github.io/rds2-but-from-future/', margin, y);
+        const imageY = headerY + 4;
+        pdf.addImage(imgData, 'PNG', margin, imageY, imgWidth, imgHeight);
 
         // Save the PDF
         pdf.save(`routine_${yyyy}-${mm}-${dd}.pdf`);
