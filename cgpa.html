@@ -108,10 +108,18 @@
         color: var(--text-muted);
         white-space: nowrap;
       }
-      table.cgpa-table th:nth-child(1) { width: 38%; }
-      table.cgpa-table th:nth-child(2) { width: 22%; }
-      table.cgpa-table th:nth-child(3) { width: 22%; }
-      table.cgpa-table th:nth-child(4) { width: 18%; }
+      table.cgpa-table th:nth-child(1) {
+        width: 38%;
+      }
+      table.cgpa-table th:nth-child(2) {
+        width: 22%;
+      }
+      table.cgpa-table th:nth-child(3) {
+        width: 22%;
+      }
+      table.cgpa-table th:nth-child(4) {
+        width: 18%;
+      }
       table.cgpa-table td {
         padding: 0.6rem 0.5rem;
       }
@@ -286,10 +294,20 @@
       </header>
 
       <main>
+        <div class="announcement-bar">
+          <span>🎓 Join telegram group to stay updated</span>
+          <a
+            href="https://t.me/nsu_advising_helper_bot_channel"
+            target="_blank"
+            class="view-extension-btn"
+            >⚡ Join now</a
+          >
+        </div>
         <section class="calculator-hero">
           <p>
-            Calculate your updated CGPA instantly. Add course grades, include previous credits,
-            and let the calculator crunch accurate results without waiting for RDS updates.
+            Calculate your updated CGPA instantly. Add course grades, include
+            previous credits, and let the calculator crunch accurate results
+            without waiting for RDS updates.
           </p>
         </section>
 
@@ -397,17 +415,17 @@
 
     <script>
       const gradePoints = {
-        "A": 4.0,
+        A: 4.0,
         "A-": 3.7,
         "B+": 3.3,
-        "B": 3.0,
+        B: 3.0,
         "B-": 2.7,
         "C+": 2.3,
-        "C": 2.0,
+        C: 2.0,
         "C-": 1.7,
         "D+": 1.3,
-        "D": 1.0,
-        "F": 0,
+        D: 1.0,
+        F: 0,
       };
 
       const courseRows = document.getElementById("courseRows");
@@ -492,7 +510,8 @@
       }
 
       function calculateCgpa() {
-        const prevCredits = Number(document.getElementById("prevCr").value) || 0;
+        const prevCredits =
+          Number(document.getElementById("prevCr").value) || 0;
         const prevCgpa = Number(document.getElementById("prevCg").value) || 0;
 
         let semesterCredits = 0;
@@ -518,7 +537,8 @@
         const totalPoints = previousPoints + semesterGradePoints;
 
         if (!totalCredits) {
-          messageEl.textContent = "Please enter at least one valid course or previous record.";
+          messageEl.textContent =
+            "Please enter at least one valid course or previous record.";
           creditPassedEl.textContent = "0.00";
           cgpaValueEl.textContent = "0.00";
           return;

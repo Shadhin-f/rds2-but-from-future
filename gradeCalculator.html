@@ -69,7 +69,7 @@
         line-height: 1.5;
       }
       .calc-card {
-        background:  var(--surface-color);
+        background: var(--surface-color);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 18px;
         padding: 1.75rem 1.5rem;
@@ -113,12 +113,24 @@
         white-space: nowrap;
         font-size: 0.85rem;
       }
-      table.grade-table th:nth-child(1) { width: 20%; }
-      table.grade-table th:nth-child(2) { width: 24%; }
-      table.grade-table th:nth-child(3) { width: 14%; }
-      table.grade-table th:nth-child(4) { width: 14%; }
-      table.grade-table th:nth-child(5) { width: 14%; }
-      table.grade-table th:nth-child(6) { width: 14%; }
+      table.grade-table th:nth-child(1) {
+        width: 20%;
+      }
+      table.grade-table th:nth-child(2) {
+        width: 24%;
+      }
+      table.grade-table th:nth-child(3) {
+        width: 14%;
+      }
+      table.grade-table th:nth-child(4) {
+        width: 14%;
+      }
+      table.grade-table th:nth-child(5) {
+        width: 14%;
+      }
+      table.grade-table th:nth-child(6) {
+        width: 14%;
+      }
       table.grade-table input,
       table.grade-table select {
         width: 100%;
@@ -249,11 +261,21 @@
         font-weight: 600;
         color: var(--text-muted);
       }
-      .grade-A { color: #22c55e; }
-      .grade-B { color: #3b82f6; }
-      .grade-C { color: #eab308; }
-      .grade-D { color: #f97316; }
-      .grade-F { color: #ef4444; }
+      .grade-A {
+        color: #22c55e;
+      }
+      .grade-B {
+        color: #3b82f6;
+      }
+      .grade-C {
+        color: #eab308;
+      }
+      .grade-D {
+        color: #f97316;
+      }
+      .grade-F {
+        color: #ef4444;
+      }
       @media (max-width: 720px) {
         main {
           padding-left: 0.5rem;
@@ -341,15 +363,29 @@
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
           <a href="retake.html">Retake Calculator</a>
-          <a href="gradeCalculator.html" class="active">Course Grade Calculator</a>
+          <a href="gradeCalculator.html" class="active"
+            >Course Grade Calculator</a
+          >
           <a href="about.html">About Dev</a>
         </nav>
       </header>
 
       <main>
+        <div class="announcement-bar">
+          <span>🎓 Join telegram group to stay updated</span>
+          <a
+            href="https://t.me/nsu_advising_helper_bot_channel"
+            target="_blank"
+            class="view-extension-btn"
+            >⚡ Join now</a
+          >
+        </div>
         <section class="calculator-hero">
           <p>
-            Enter best quize scores, midterm, final exam marks along with their weight distribution to calculate your expected course grade. You can add multiple rows for quizzes, assignments or any other components that share the same weight.
+            Enter best quize scores, midterm, final exam marks along with their
+            weight distribution to calculate your expected course grade. You can
+            add multiple rows for quizzes, assignments or any other components
+            that share the same weight.
           </p>
         </section>
 
@@ -370,11 +406,19 @@
             </table>
           </div>
           <div class="actions-row">
-            <button type="button" class="btn btn-outline" onclick="addComponentRow()">
+            <button
+              type="button"
+              class="btn btn-outline"
+              onclick="addComponentRow()"
+            >
               <i class="fas fa-plus"></i> Add Row
             </button>
             <div style="flex: 1"></div>
-            <button type="button" class="btn btn-primary" onclick="calculateGrade()">
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="calculateGrade()"
+            >
               <i class="fas fa-calculator"></i> Calculate Grade
             </button>
           </div>
@@ -422,9 +466,13 @@
               <tbody id="summaryBody"></tbody>
             </table>
           </div>
-          <div class="actions-row" style="margin-top: 1.5rem;">
+          <div class="actions-row" style="margin-top: 1.5rem">
             <div style="flex: 1"></div>
-            <button type="button" class="btn btn-primary" onclick="downloadPDF()">
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="downloadPDF()"
+            >
               <i class="fas fa-download"></i> Download as PDF
             </button>
           </div>
@@ -433,7 +481,7 @@
 
       <footer class="footer">
         <p>
-           © 2026 RDS2 BUT FROM FUTURE • Created by Tahshan Jamil Shadhin
+          © 2026 RDS2 BUT FROM FUTURE • Created by Tahshan Jamil Shadhin
           <br />
         </p>
         <div class="social-links">
@@ -527,38 +575,62 @@
 
         const typeSelect = tr.querySelector(".comp-type");
         const weightInput = tr.querySelector(".comp-weight");
-        if (typeSelect) typeSelect.addEventListener("change", syncWeightsByType);
-        if (weightInput) weightInput.addEventListener("input", syncWeightsByType);
+        if (typeSelect)
+          typeSelect.addEventListener("change", syncWeightsByType);
+        if (weightInput)
+          weightInput.addEventListener("input", syncWeightsByType);
 
         syncWeightsByType();
       }
 
       const gradePointsByLetter = {
-        "A": 4.0,
+        A: 4.0,
         "A-": 3.7,
         "B+": 3.3,
-        "B": 3.0,
+        B: 3.0,
         "B-": 2.7,
         "C+": 2.3,
-        "C": 2.0,
+        C: 2.0,
         "C-": 1.7,
         "D+": 1.3,
-        "D": 1.0,
-        "F": 0.0
+        D: 1.0,
+        F: 0.0,
       };
 
       function getLetterGrade(marks) {
-        if (marks >= 93) return { letter: "A", point: gradePointsByLetter["A"], desc: "Excellent" };
-        if (marks >= 90) return { letter: "A-", point: gradePointsByLetter["A-"], desc: "" };
-        if (marks >= 87) return { letter: "B+", point: gradePointsByLetter["B+"], desc: "" };
-        if (marks >= 83) return { letter: "B", point: gradePointsByLetter["B"], desc: "Good" };
-        if (marks >= 80) return { letter: "B-", point: gradePointsByLetter["B-"], desc: "" };
-        if (marks >= 77) return { letter: "C+", point: gradePointsByLetter["C+"], desc: "" };
-        if (marks >= 73) return { letter: "C", point: gradePointsByLetter["C"], desc: "Average" };
-        if (marks >= 70) return { letter: "C-", point: gradePointsByLetter["C-"], desc: "" };
-        if (marks >= 67) return { letter: "D+", point: gradePointsByLetter["D+"], desc: "" };
-        if (marks >= 60) return { letter: "D", point: gradePointsByLetter["D"], desc: "Poor" };
-        return { letter: "F", point: gradePointsByLetter["F"], desc: "Failure" };
+        if (marks >= 93)
+          return {
+            letter: "A",
+            point: gradePointsByLetter["A"],
+            desc: "Excellent",
+          };
+        if (marks >= 90)
+          return { letter: "A-", point: gradePointsByLetter["A-"], desc: "" };
+        if (marks >= 87)
+          return { letter: "B+", point: gradePointsByLetter["B+"], desc: "" };
+        if (marks >= 83)
+          return { letter: "B", point: gradePointsByLetter["B"], desc: "Good" };
+        if (marks >= 80)
+          return { letter: "B-", point: gradePointsByLetter["B-"], desc: "" };
+        if (marks >= 77)
+          return { letter: "C+", point: gradePointsByLetter["C+"], desc: "" };
+        if (marks >= 73)
+          return {
+            letter: "C",
+            point: gradePointsByLetter["C"],
+            desc: "Average",
+          };
+        if (marks >= 70)
+          return { letter: "C-", point: gradePointsByLetter["C-"], desc: "" };
+        if (marks >= 67)
+          return { letter: "D+", point: gradePointsByLetter["D+"], desc: "" };
+        if (marks >= 60)
+          return { letter: "D", point: gradePointsByLetter["D"], desc: "Poor" };
+        return {
+          letter: "F",
+          point: gradePointsByLetter["F"],
+          desc: "Failure",
+        };
       }
 
       function getGradeClass(letter) {
@@ -570,7 +642,19 @@
       }
 
       function getOneGradeCurveLetter(letter) {
-        const order = ["F", "D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"];
+        const order = [
+          "F",
+          "D",
+          "D+",
+          "C-",
+          "C",
+          "C+",
+          "B-",
+          "B",
+          "B+",
+          "A-",
+          "A",
+        ];
         const idx = order.indexOf(letter);
         if (idx === -1) return letter;
         return order[Math.min(idx + 1, order.length - 1)];
@@ -583,10 +667,13 @@
         const groups = {};
 
         rows.forEach((row) => {
-          const type = (row.querySelector(".comp-type").value || "").trim() || "Other";
-          const obtained = parseFloat(row.querySelector(".comp-obtained").value) || 0;
+          const type =
+            (row.querySelector(".comp-type").value || "").trim() || "Other";
+          const obtained =
+            parseFloat(row.querySelector(".comp-obtained").value) || 0;
           const total = parseFloat(row.querySelector(".comp-total").value) || 0;
-          const weight = parseFloat(row.querySelector(".comp-weight").value) || 0;
+          const weight =
+            parseFloat(row.querySelector(".comp-weight").value) || 0;
 
           if (!groups[type]) {
             groups[type] = {
@@ -636,7 +723,9 @@
         });
 
         if (summaryData.length === 0) {
-          alert("Please add at least one component with total, obtained and weight.");
+          alert(
+            "Please add at least one component with total, obtained and weight."
+          );
           return;
         }
 
@@ -654,22 +743,31 @@
 
         // One-grade-up curve applied on top of the RAW grade
         const oneCurveLetter = getOneGradeCurveLetter(rawGradeInfo.letter);
-        const oneCurvePoint = gradePointsByLetter[oneCurveLetter] ?? rawGradeInfo.point;
+        const oneCurvePoint =
+          gradePointsByLetter[oneCurveLetter] ?? rawGradeInfo.point;
         const oneCurveClass = getGradeClass(oneCurveLetter);
 
-        document.getElementById("totalMarks").textContent = totalScore.toFixed(2);
-        document.getElementById("curvedMarks").textContent = curvedScore.toFixed(2);
+        document.getElementById("totalMarks").textContent =
+          totalScore.toFixed(2);
+        document.getElementById("curvedMarks").textContent =
+          curvedScore.toFixed(2);
 
         const rawGradeEl = document.getElementById("rawGrade");
-        rawGradeEl.textContent = `${rawGradeInfo.letter} (${rawGradeInfo.point.toFixed(1)})`;
+        rawGradeEl.textContent = `${
+          rawGradeInfo.letter
+        } (${rawGradeInfo.point.toFixed(1)})`;
         rawGradeEl.className = rawClass;
 
         const curvedGradeEl = document.getElementById("curvedGrade");
-        curvedGradeEl.textContent = `${curvedGradeInfo.letter} (${curvedGradeInfo.point.toFixed(1)})`;
+        curvedGradeEl.textContent = `${
+          curvedGradeInfo.letter
+        } (${curvedGradeInfo.point.toFixed(1)})`;
         curvedGradeEl.className = curvedClass;
 
         const oneCurveEl = document.getElementById("oneGradeCurve");
-        oneCurveEl.textContent = `${oneCurveLetter} (${oneCurvePoint.toFixed(1)})`;
+        oneCurveEl.textContent = `${oneCurveLetter} (${oneCurvePoint.toFixed(
+          1
+        )})`;
         oneCurveEl.className = oneCurveClass;
 
         const summaryBody = document.getElementById("summaryBody");
@@ -714,38 +812,48 @@
 
         // Header with website credit
         doc.setFontSize(10);
-        doc.setFont(undefined, 'normal');
+        doc.setFont(undefined, "normal");
         doc.setTextColor(100);
-        doc.text('Generated using RDS2 But From Future', 105, 12, { align: 'center' });
-        doc.setTextColor(0, 0, 255);
-        doc.textWithLink('https://shadhin-f.github.io/rds2-but-from-future/', 105, 17, { 
-          align: 'center',
-          url: 'https://shadhin-f.github.io/rds2-but-from-future/'
+        doc.text("Generated using RDS2 But From Future", 105, 12, {
+          align: "center",
         });
+        doc.setTextColor(0, 0, 255);
+        doc.textWithLink(
+          "https://shadhin-f.github.io/rds2-but-from-future/",
+          105,
+          17,
+          {
+            align: "center",
+            url: "https://shadhin-f.github.io/rds2-but-from-future/",
+          }
+        );
         doc.setTextColor(0);
 
         // Title
         doc.setFontSize(18);
-        doc.setFont(undefined, 'bold');
-        doc.text('Course Grade Summary', 105, 28, { align: 'center' });
-        
+        doc.setFont(undefined, "bold");
+        doc.text("Course Grade Summary", 105, 28, { align: "center" });
+
         doc.setFontSize(10);
-        doc.setFont(undefined, 'normal');
-        doc.text('NSU Grade Calculator Report', 105, 36, { align: 'center' });
-        doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 42, { align: 'center' });
+        doc.setFont(undefined, "normal");
+        doc.text("NSU Grade Calculator Report", 105, 36, { align: "center" });
+        doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 42, {
+          align: "center",
+        });
 
         // Grade Results Section
         doc.setFontSize(14);
-        doc.setFont(undefined, 'bold');
-        doc.text('Final Grades', 20, 58);
+        doc.setFont(undefined, "bold");
+        doc.text("Final Grades", 20, 58);
 
         doc.setFontSize(11);
-        doc.setFont(undefined, 'normal');
-        const rawMarks = document.getElementById('totalMarks').textContent;
-        const rawGrade = document.getElementById('rawGrade').textContent;
-        const curvedMarks = document.getElementById('curvedMarks').textContent;
-        const curvedGrade = document.getElementById('curvedGrade').textContent;
-        const oneGradeCurve = document.getElementById('oneGradeCurve').textContent;
+        doc.setFont(undefined, "normal");
+        const rawMarks = document.getElementById("totalMarks").textContent;
+        const rawGrade = document.getElementById("rawGrade").textContent;
+        const curvedMarks = document.getElementById("curvedMarks").textContent;
+        const curvedGrade = document.getElementById("curvedGrade").textContent;
+        const oneGradeCurve =
+          document.getElementById("oneGradeCurve").textContent;
 
         let yPos = 68;
         doc.text(`Raw Marks: ${rawMarks}`, 25, yPos);
@@ -761,33 +869,33 @@
 
         // Mark Distribution Table
         doc.setFontSize(14);
-        doc.setFont(undefined, 'bold');
-        doc.text('Mark Distribution Summary', 20, yPos);
+        doc.setFont(undefined, "bold");
+        doc.text("Mark Distribution Summary", 20, yPos);
         yPos += 10;
 
         // Table headers
         doc.setFontSize(10);
-        doc.setFont(undefined, 'bold');
-        doc.text('Component', 20, yPos);
-        doc.text('Marks Used', 70, yPos);
-        doc.text('Weight (%)', 120, yPos);
-        doc.text('Contribution', 160, yPos);
+        doc.setFont(undefined, "bold");
+        doc.text("Component", 20, yPos);
+        doc.text("Marks Used", 70, yPos);
+        doc.text("Weight (%)", 120, yPos);
+        doc.text("Contribution", 160, yPos);
         yPos += 2;
         doc.line(20, yPos, 190, yPos);
         yPos += 6;
 
         // Table rows
-        doc.setFont(undefined, 'normal');
-        const summaryRows = document.querySelectorAll('#summaryBody tr');
+        doc.setFont(undefined, "normal");
+        const summaryRows = document.querySelectorAll("#summaryBody tr");
         summaryRows.forEach((row) => {
-          const cells = row.querySelectorAll('td');
+          const cells = row.querySelectorAll("td");
           if (cells.length >= 4) {
             doc.text(cells[0].textContent.trim(), 20, yPos);
             doc.text(cells[1].textContent.trim(), 70, yPos);
             doc.text(cells[2].textContent.trim(), 120, yPos);
             doc.text(cells[3].textContent.trim(), 160, yPos);
             yPos += 7;
-            
+
             // Add new page if needed
             if (yPos > 270) {
               doc.addPage();
@@ -802,12 +910,14 @@
           doc.setPage(i);
           doc.setFontSize(8);
           doc.setTextColor(128);
-          doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-          doc.text('Generated by RDS2 Grade Calculator', 105, 285, { align: 'center' });
+          doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: "center" });
+          doc.text("Generated by RDS2 Grade Calculator", 105, 285, {
+            align: "center",
+          });
         }
 
         // Download
-        doc.save('NSU_Grade_Summary.pdf');
+        doc.save("NSU_Grade_Summary.pdf");
       }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
