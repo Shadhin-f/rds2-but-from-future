@@ -58,7 +58,11 @@ function animate() {
 
 animate();
 
-let CSV_FILENAME = '261_v1.csv'; // Make this variable mutable
+// ========== CHANGE THIS VALUE TO UPDATE DEFAULT SEMESTER ==========
+const DEFAULT_SEMESTER = '261_v2.csv';
+// ===================================================================
+
+let CSV_FILENAME = DEFAULT_SEMESTER;
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
@@ -145,22 +149,6 @@ function addToWishlist(row) {
         });
         saveWishlist();
         renderWishlist();
-    }
-}
-
-// Load CSV data directly from file
-async function loadCSVData() {
-    try {
-        document.getElementById('loading').style.display = 'block';
-        const response = await fetch(CSV_FILENAME);
-        const csvData = await response.text();
-        courseData = parseCSV(csvData);
-        renderTable(courseData);
-    } catch (error) {
-        console.error('Error loading CSV:', error);
-        alert('Error loading course data');
-    } finally {
-        document.getElementById('loading').style.display = 'none';
     }
 }
 
@@ -464,17 +452,6 @@ function escapeHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
-
-// Replace load event listener
-window.addEventListener('load', () => {
-    // Clear cache on refresh
-    localStorage.removeItem(CACHE_KEY);
-    filteredData = []; // Reset filteredData on load
-    loadCSVData();
-    loadWishlist();
-    // Remove this line as we no longer render the wishlist table
-    // renderWishlist();
-});
 
 // --- Flexible Routine Maker Logic ---
 const ROUTINE_KEY = 'routine_courses';
@@ -883,16 +860,6 @@ function addToWishlist(row) {
     }
 }
 
-// Update window load event
-window.addEventListener('load', () => {
-    localStorage.removeItem(CACHE_KEY);
-    filteredData = [];
-    loadCSVData();
-    loadWishlist();
-    // Remove this line as we no longer render the wishlist table
-    // renderWishlist();
-});
-
 // --- Routine Visibility Toggle ---
 const ROUTINE_VIS_KEY = 'routine_visible';
 
@@ -925,11 +892,19 @@ addToWishlist = function(row) {
     // addCourseToRoutine(row);
 }
 
-// On page load, load routine from storage
+// On page load, initialize everything
 window.addEventListener('load', () => {
-    // ...existing code...
+    // Clear cache on refresh
+    localStorage.removeItem(CACHE_KEY);
+    filteredData = [];
+    
+    // Load wishlist
+    loadWishlist();
+    
+    // Load routine from storage
     loadRoutine();
     renderRoutineTable();
+    
     // Hook up PDF download button
     const pdfBtn = document.getElementById('downloadRoutinePdfBtn');
     if (pdfBtn) {
@@ -937,8 +912,6 @@ window.addEventListener('load', () => {
     }
 });
 
-// Add these at the top with your other constants
-const DEFAULT_SEMESTER = '261_v1.csv';
 let currentSemester = DEFAULT_SEMESTER;
 
 // Add this function to handle semester changes
