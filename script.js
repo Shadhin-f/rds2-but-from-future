@@ -481,6 +481,47 @@ const ROUTINE_KEY = 'routine_courses';
 const routineDays = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
 const dayMap = {A:'Sat',S:'Sun',M:'Mon',T:'Tue',W:'Wed',R:'Thu',F:'Fri'};
 
+// Exam day groups: courses with same day group have exams on same dates
+// ST = Sun+Tue, MW = Mon+Wed, RA = Thu+Sat
+const EXAM_DAY_GROUPS = {
+    'ST': ['Sun', 'Tue'],
+    'MW': ['Mon', 'Wed'],
+    'RA': ['Thu', 'Sat']
+};
+
+// Map each day to its group
+const DAY_TO_EXAM_GROUP = {};
+Object.entries(EXAM_DAY_GROUPS).forEach(([group, days]) => {
+    days.forEach(day => { DAY_TO_EXAM_GROUP[day] = group; });
+});
+
+// Exam slots grouped by exam date within each day group
+// Date 1 slots: 8:00-9:30, 11:20-12:50, 2:40-4:10
+// Date 2 slots: 9:40-11:10, 1:00-2:30, 4:20-5:50
+const EXAM_DATE_1_SLOTS = [
+    { label: '8:00 AM - 9:30 AM', start: '8:00 AM', end: '9:30 AM' },
+    { label: '11:20 AM - 12:50 PM', start: '11:20 AM', end: '12:50 PM' },
+    { label: '2:40 PM - 4:10 PM', start: '2:40 PM', end: '4:10 PM' }
+];
+const EXAM_DATE_2_SLOTS = [
+    { label: '9:40 AM - 11:10 AM', start: '9:40 AM', end: '11:10 AM' },
+    { label: '1:00 PM - 2:30 PM', start: '1:00 PM', end: '2:30 PM' },
+    { label: '4:20 PM - 5:50 PM', start: '4:20 PM', end: '5:50 PM' }
+];
+
+// Build a map: "startMin-endMin" -> { dateGroup: 1 or 2, label }
+const EXAM_SLOT_INFO = new Map();
+EXAM_DATE_1_SLOTS.forEach(slot => {
+    const startMin = timeToMinutes(slot.start);
+    const endMin = timeToMinutes(slot.end);
+    EXAM_SLOT_INFO.set(`${startMin}-${endMin}`, { dateGroup: 1, label: slot.label });
+});
+EXAM_DATE_2_SLOTS.forEach(slot => {
+    const startMin = timeToMinutes(slot.start);
+    const endMin = timeToMinutes(slot.end);
+    EXAM_SLOT_INFO.set(`${startMin}-${endMin}`, { dateGroup: 2, label: slot.label });
+});
+
 let routineCourses = [];
 
 // Load routine from localStorage
@@ -556,10 +597,14 @@ function removeCourseFromRoutine(index) {
 // Render routine table with flexible slots and remove button
 function renderRoutineTable() {
     const tbody = document.querySelector('#routineTable tbody');
-    if (!tbody) return; // Routine table not present on this page
+    if (!tbody) {
+        updateExamConflictWarnings();
+        return; // Routine table not present on this page
+    }
     tbody.innerHTML = '';
     if (routineCourses.length === 0) {
         // No courses, nothing to render
+        updateExamConflictWarnings();
         return;
     }
 
@@ -645,6 +690,80 @@ function renderRoutineTable() {
             const idx = parseInt(btn.getAttribute('data-index'));
             removeCourseFromRoutine(idx);
         });
+    });
+    updateExamConflictWarnings();
+}
+
+// Compute same-day exam conflicts based on day groups and exam date slots
+// Conflict occurs when: same day group (ST/MW/RA) AND same exam date (Date 1 or Date 2)
+function computeExamConflicts() {
+    if (!routineCourses.length) return [];
+    
+    // Group courses by: dayGroup + dateGroup (e.g., "ST|1" or "MW|2")
+    const conflictsByKey = new Map();
+
+    routineCourses.forEach(course => {
+        const slotKey = `${course.startMin}-${course.endMin}`;
+        const slotInfo = EXAM_SLOT_INFO.get(slotKey);
+        if (!slotInfo) return; // Not a recognized exam slot
+
+        // Get the day group(s) for this course's days
+        const dayGroups = new Set();
+        course.days.forEach(day => {
+            const group = DAY_TO_EXAM_GROUP[day];
+            if (group) dayGroups.add(group);
+        });
+
+        // For each day group this course belongs to, add to conflict tracking
+        dayGroups.forEach(dayGroup => {
+            const key = `${dayGroup}|${slotInfo.dateGroup}`;
+            if (!conflictsByKey.has(key)) {
+                conflictsByKey.set(key, {
+                    dayGroup,
+                    dateGroup: slotInfo.dateGroup,
+                    courses: []
+                });
+            }
+            conflictsByKey.get(key).courses.push({
+                ...course,
+                slotLabel: slotInfo.label
+            });
+        });
+    });
+
+    // Filter to only entries with 2+ courses (actual conflicts)
+    return Array.from(conflictsByKey.values()).filter(entry => entry.courses.length > 1);
+}
+
+function formatCourseLabel(course) {
+    const code = course.code || 'Course';
+    const section = course.section ? ` Sec-${course.section}` : '';
+    return `${code}${section}`;
+}
+
+function updateExamConflictWarnings() {
+    const warningEl = document.getElementById('routineClashes');
+    if (!warningEl) return;
+    const conflicts = computeExamConflicts();
+    if (!conflicts.length) {
+        warningEl.textContent = '';
+        return;
+    }
+
+    warningEl.innerHTML = '';
+    const title = document.createElement('div');
+    title.textContent = '⚠️ Same-day final exam conflicts detected:';
+    title.style.fontWeight = '600';
+    title.style.color = '#fbbf24';
+    title.style.marginBottom = '6px';
+    warningEl.appendChild(title);
+
+    conflicts.forEach(conflict => {
+        const line = document.createElement('div');
+        const courseList = conflict.courses.map(c => `${formatCourseLabel(c)} (${conflict.dayGroup})`).join(', ');
+        line.textContent = courseList;
+        line.style.marginLeft = '8px';
+        warningEl.appendChild(line);
     });
 }
 
@@ -1083,6 +1202,25 @@ async function generateRoutinePdf() {
 
     table.appendChild(tbody);
     tempContainer.appendChild(table);
+
+    const examConflicts = computeExamConflicts();
+    if (examConflicts.length) {
+        const warningWrapper = document.createElement('div');
+        warningWrapper.style.marginTop = '12px';
+        warningWrapper.style.color = '#b45309';
+        const warningTitle = document.createElement('strong');
+        warningTitle.textContent = '⚠️ Same-day final exam conflicts detected:';
+        warningWrapper.appendChild(warningTitle);
+        examConflicts.forEach(conflict => {
+            const line = document.createElement('div');
+            const courseList = conflict.courses.map(c => `${formatCourseLabel(c)} (${conflict.dayGroup})`).join(', ');
+            line.textContent = courseList;
+            line.style.marginLeft = '8px';
+            warningWrapper.appendChild(line);
+        });
+        tempContainer.appendChild(warningWrapper);
+    }
+
     document.body.appendChild(tempContainer);
 
     try {
