@@ -58,7 +58,7 @@ function animate() {
 
 animate();
 
-let CSV_FILENAME = 'l77.csv'; // Make this variable mutable
+let CSV_FILENAME = '261_v1.csv'; // Make this variable mutable
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
@@ -819,7 +819,7 @@ window.addEventListener('load', () => {
 });
 
 // Add these at the top with your other constants
-const DEFAULT_SEMESTER = 'fall2025.csv';
+const DEFAULT_SEMESTER = '261_v1.csv';
 let currentSemester = DEFAULT_SEMESTER;
 
 // Add this function to handle semester changes
