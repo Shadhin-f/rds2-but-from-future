@@ -379,7 +379,7 @@
 
       .planner-table td:first-child {
         font-weight: 600;
-        background: rgba(109, 40, 217, 0.1);
+        background: var(--border-color);
         white-space: nowrap;
         font-size: 0.8rem;
       }
@@ -387,7 +387,7 @@
       .course-block {
         display: inline-flex;
         flex-direction: column;
-        background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+        background: var(--border-color);
         color: #fff;
         border-radius: 8px;
         padding: 6px 10px;
@@ -430,7 +430,7 @@
 
       .course-block .remove-btn {
         position: absolute;
-        top: 2px;
+        bottom: 2px;
         right: 2px;
         background: rgba(0, 0, 0, 0.2);
         border: none;
@@ -641,8 +641,9 @@
               <div class="section-title">Search & Add from Course List</div>
               <div class="search-row">
                 <select id="semesterSelect">
-                  <option value="summer25.csv">Summer 2025</option>
-                  <option value="fall2025.csv" selected>Fall 2025</option>
+                  <option value="summer25.csv" disabled>Summer 2025</option>
+                  <option value="fall2025.csv" disabled>Fall 2025</option>
+                  <option value="261_v2.csv" selected>Spring 2026</option>
                 </select>
                 <input
                   type="text"
@@ -1007,7 +1008,7 @@
         });
 
         // Show max 30 results (or first 20 if no search term)
-        const maxResults = term ? 30 : 20;
+        const maxResults = term ? 100: 20;
 
         if (!filtered.length) {
           container.innerHTML = `<div style="padding:12px;text-align:center;color:var(--text-muted);">No courses found for "${term}".</div>`;
