@@ -255,10 +255,19 @@ function renderTable(data) {
     // Render table rows
     paginatedData.forEach((row, index) => {
         const isInRoutineAlready = isInRoutine(row.Course, row.Section);
+        // Check for time conflict and exam clash (only if not already in routine)
+        const hasTimeConflict = !isInRoutineAlready && hasTimeConflictWithRoutine(row.Time);
+        const hasExamClash = !isInRoutineAlready && hasExamClashWithRoutine(row.Time);
+        
+        // Build course display with indicators
+        let courseDisplay = escapeHtml(row.Course || '');
+        if (hasTimeConflict) courseDisplay += ' 🕛';
+        if (hasExamClash) courseDisplay += ' ⚠️';
+        
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${start + index + 1}</td>
-            <td>${escapeHtml(row.Course || '')}</td>
+            <td>${courseDisplay}</td>
             <td>${escapeHtml(row.Section || '')}</td>
             <td>${escapeHtml(row.Faculty || '')}</td>
             <td>${escapeHtml(row.Time || '')}</td>
@@ -411,6 +420,70 @@ function isInRoutine(course, section) {
     return routineCourses.some(c => c.code === course && c.section === section);
 }
 
+// Check if a course's time overlaps with any course in the routine
+function hasTimeConflictWithRoutine(timeStr) {
+    if (!routineCourses.length) return false;
+    const parsed = parseRoutineTime(timeStr);
+    if (!parsed) return false;
+    
+    const courseStartMin = timeToMinutes(parsed.start);
+    const courseEndMin = timeToMinutes(parsed.end);
+    const courseDays = parsed.days;
+    
+    for (const routineCourse of routineCourses) {
+        // Check if days overlap
+        const daysOverlap = courseDays.some(day => routineCourse.days.includes(day));
+        if (!daysOverlap) continue;
+        
+        // Check if times overlap
+        const timesOverlap = !(courseEndMin <= routineCourse.startMin || courseStartMin >= routineCourse.endMin);
+        if (timesOverlap) return true;
+    }
+    return false;
+}
+
+// Check if a course would have an exam clash with any course in the routine
+function hasExamClashWithRoutine(timeStr) {
+    if (!routineCourses.length) return false;
+    const parsed = parseRoutineTime(timeStr);
+    if (!parsed) return false;
+    
+    const courseStartMin = timeToMinutes(parsed.start);
+    const courseEndMin = timeToMinutes(parsed.end);
+    const slotKey = `${courseStartMin}-${courseEndMin}`;
+    const slotInfo = EXAM_SLOT_INFO.get(slotKey);
+    if (!slotInfo) return false; // Not a recognized exam slot
+    
+    // Get the day group(s) for this course's days
+    const courseDayGroups = new Set();
+    parsed.days.forEach(day => {
+        const group = DAY_TO_EXAM_GROUP[day];
+        if (group) courseDayGroups.add(group);
+    });
+    
+    // Check each routine course for potential exam clash
+    for (const routineCourse of routineCourses) {
+        const routineSlotKey = `${routineCourse.startMin}-${routineCourse.endMin}`;
+        const routineSlotInfo = EXAM_SLOT_INFO.get(routineSlotKey);
+        if (!routineSlotInfo) continue;
+        
+        // Get day groups for routine course
+        const routineDayGroups = new Set();
+        routineCourse.days.forEach(day => {
+            const group = DAY_TO_EXAM_GROUP[day];
+            if (group) routineDayGroups.add(group);
+        });
+        
+        // Check if same day group AND same exam date (Date 1 or Date 2)
+        for (const dayGroup of courseDayGroups) {
+            if (routineDayGroups.has(dayGroup) && slotInfo.dateGroup === routineSlotInfo.dateGroup) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 // Close modal logic
 if (addToModal) {
     if (closeAddToModal) {
@@ -557,6 +630,8 @@ function addCourseToRoutine({Course, Section, Faculty, Time, Room}) {
     renderRoutineTable();
     // Update the add button state
     updateAddButtonState(Course, Section);
+    // Re-render main table to update conflict indicators
+    renderTable(filteredData.length ? filteredData : courseData);
 }
 
 // Remove course from routine by index
@@ -569,6 +644,8 @@ function removeCourseFromRoutine(index) {
     if (removed) {
         updateAddButtonState(removed.code, removed.section);
     }
+    // Re-render main table to update conflict indicators
+    renderTable(filteredData.length ? filteredData : courseData);
 }
 
 // Render routine table with flexible slots and remove button
