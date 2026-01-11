@@ -59,7 +59,7 @@ function animate() {
 animate();
 
 // ========== CHANGE THIS VALUE TO UPDATE DEFAULT SEMESTER ==========
-const DEFAULT_SEMESTER = '261_v5.csv';
+const DEFAULT_SEMESTER = '261_v6.csv';
 // ===================================================================
 
 let CSV_FILENAME = DEFAULT_SEMESTER;
@@ -974,8 +974,10 @@ const ROUTINE_VIS_KEY = 'routine_visible';
 function setRoutineVisible(visible) {
     const wrapper = document.getElementById('routineTableWrapper');
     const btn = document.getElementById('toggleRoutineBtn');
+    const clashesEl = document.getElementById('routineClashes');
     if (!wrapper || !btn) return;
     wrapper.style.display = visible ? '' : 'none';
+    if (clashesEl) clashesEl.style.display = visible ? '' : 'none';
     btn.textContent = visible ? 'Hide' : 'Show';
     localStorage.setItem(ROUTINE_VIS_KEY, visible ? '1' : '0');
 }
