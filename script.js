@@ -59,7 +59,7 @@ function animate() {
 animate();
 
 // ========== CHANGE THIS VALUE TO UPDATE DEFAULT SEMESTER ==========
-const DEFAULT_SEMESTER = '261_v3.csv';
+const DEFAULT_SEMESTER = '261_v4.csv';
 // ===================================================================
 
 let CSV_FILENAME = DEFAULT_SEMESTER;
