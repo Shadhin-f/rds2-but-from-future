@@ -43,6 +43,44 @@
         background: linear-gradient(135deg, #e11d48, #be185d) !important;
         color: #fff !important;
       }
+
+      /* Search row layout */
+      .search-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      .search-row .search-container {
+        margin: 0;
+      }
+      .search-row .search-main {
+        flex: 2;
+        min-width: 200px;
+      }
+      .search-row .search-small {
+        flex: 1;
+        min-width: 150px;
+      }
+      .search-row .search-small input {
+        /* font-size: 0.9rem; */
+        padding: 10px 16px;
+      }
+      .search-row .search-small .search-icon {
+        /* font-size: 0.9rem; */
+      }
+
+      @media (max-width: 768px) {
+        .search-row {
+          flex-direction: column;
+        }
+        .search-row .search-main,
+        .search-row .search-small {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
@@ -81,7 +119,7 @@
           >
         </div>
         <div class="announcement-bar">
-          <span>⏳Last Updated: 11-01-26, 12:30 PM</span>
+          <span>⏳Last Updated: 11-01-26, 01:30 PM</span>
           <a
             href="https://t.me/nsu_advising_helper_bot_channel"
             target="_blank"
@@ -146,19 +184,37 @@
             <option value="fall2025.csv" data-name="Fall 2025">
               Fall 2025
             </option>
-            <option value="261_v4.csv" data-name="Spring 2026" selected>
+            <option value="261_v5.csv" data-name="Spring 2026" selected>
               Spring 2026
             </option>
           </select>
         </div>
 
-        <div class="search-container">
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Search courses or faculty..."
-          />
-          <i class="fas fa-search search-icon"></i>
+        <div class="search-row">
+          <div class="search-container search-main">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search courses or faculty..."
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+          <div class="search-container search-small">
+            <input
+              type="text"
+              id="timeSearchInput"
+              placeholder="Filter by time (e.g. ST, MW)"
+            />
+            <i class="fas fa-clock search-icon"></i>
+          </div>
+          <div class="search-container search-small">
+            <input
+              type="text"
+              id="facultySearchInput"
+              placeholder="Filter by faculty name"
+            />
+            <i class="fas fa-user search-icon"></i>
+          </div>
         </div>
 
         <div id="semesterWarning" class="semester-warning">
@@ -186,8 +242,8 @@
             color: var(--text-muted);
           "
         >
-          <span>🕛 Time conflict with routine</span>
-          <span>⚠️ Exam clash with routine</span>
+          <span>🕛 Time conflict</span>
+          <span>⚠️ Same day exam based on quick routine</span>
         </div>
 
         <div class="table-container">
@@ -216,6 +272,17 @@
               <span id="totalPages">1</span></span
             >
             <button id="nextPage">Next &raquo;</button>
+          </div>
+          <div
+            id="totalEntries"
+            style="
+              text-align: center;
+              padding: 8px;
+              color: var(--text-muted);
+              font-size: 0.9rem;
+            "
+          >
+            Total entries: <span id="entryCount">0</span>
           </div>
         </div>
         <!-- Announcement Bar -->

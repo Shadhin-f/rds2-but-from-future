@@ -59,7 +59,7 @@ function animate() {
 animate();
 
 // ========== CHANGE THIS VALUE TO UPDATE DEFAULT SEMESTER ==========
-const DEFAULT_SEMESTER = '261_v4.csv';
+const DEFAULT_SEMESTER = '261_v5.csv';
 // ===================================================================
 
 let CSV_FILENAME = DEFAULT_SEMESTER;
@@ -188,17 +188,46 @@ function parseCSV(csv) {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize search functionality
     const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', debounce(function(e) {
-            currentPage = 1; // Reset to first page
-            const searchTerm = e.target.value.toLowerCase();
-            filteredData = courseData.filter(course => 
+    const timeSearchInput = document.getElementById('timeSearchInput');
+    const facultySearchInput = document.getElementById('facultySearchInput');
+    
+    function applyFilters() {
+        currentPage = 1; // Reset to first page
+        const searchTerm = (searchInput?.value || '').toLowerCase();
+        const timeTerm = (timeSearchInput?.value || '').toLowerCase();
+        const facultyTerm = (facultySearchInput?.value || '').toLowerCase();
+        
+        filteredData = courseData.filter(course => {
+            // Main search filter (course, faculty, semester)
+            const matchesMain = !searchTerm || 
                 course.Course?.toLowerCase().includes(searchTerm) ||
                 course.Faculty?.toLowerCase().includes(searchTerm) ||
-                course.Semester?.toLowerCase().includes(searchTerm)
-            );
-            renderTable(filteredData.length > 0 || searchTerm ? filteredData : courseData);
-        }, 300));
+                course.Semester?.toLowerCase().includes(searchTerm);
+            
+            // Time filter
+            const matchesTime = !timeTerm || 
+                course.Time?.toLowerCase().includes(timeTerm);
+            
+            // Faculty filter
+            const matchesFaculty = !facultyTerm || 
+                course.Faculty?.toLowerCase().includes(facultyTerm);
+            
+            return matchesMain && matchesTime && matchesFaculty;
+        });
+        
+        renderTable(filteredData.length > 0 || searchTerm || timeTerm || facultyTerm ? filteredData : courseData);
+    }
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(applyFilters, 300));
+    }
+    
+    if (timeSearchInput) {
+        timeSearchInput.addEventListener('input', debounce(applyFilters, 300));
+    }
+    
+    if (facultySearchInput) {
+        facultySearchInput.addEventListener('input', debounce(applyFilters, 300));
     }
 
     // Add semester change handler
@@ -246,11 +275,13 @@ function renderTable(data) {
     const totalPagesEl = document.getElementById('totalPages');
     const prevPageEl = document.getElementById('prevPage');
     const nextPageEl = document.getElementById('nextPage');
+    const entryCountEl = document.getElementById('entryCount');
 
     if (currentPageEl) currentPageEl.textContent = currentPage;
     if (totalPagesEl) totalPagesEl.textContent = totalPages;
     if (prevPageEl) prevPageEl.disabled = currentPage === 1;
     if (nextPageEl) nextPageEl.disabled = currentPage === totalPages;
+    if (entryCountEl) entryCountEl.textContent = data.length;
 
     // Render table rows
     paginatedData.forEach((row, index) => {
