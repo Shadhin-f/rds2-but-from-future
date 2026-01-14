@@ -411,7 +411,7 @@
               class="btn btn-outline"
               onclick="addComponentRow()"
             >
-              <i class="fas fa-plus"></i> Add Row
+              <i class="fas fa-plus"></i> ADD COMPONENT
             </button>
             <div style="flex: 1"></div>
             <button
@@ -433,7 +433,7 @@
             <span>Raw Marks</span>
             <h3 id="totalMarks">0.00</h3>
           </div>
-          <div class="result-box">
+          <div class="result-box highlight">
             <span>Raw Grade</span>
             <h3 id="rawGrade">-</h3>
           </div>
@@ -442,7 +442,7 @@
             <h3 id="curvedMarks">0.00</h3>
           </div>
           <div class="result-box">
-            <span>Curved Grade</span>
+            <span>Curved Grade (10√X)</span>
             <h3 id="curvedGrade">-</h3>
           </div>
           <div class="result-box">
@@ -862,7 +862,7 @@
         yPos += 8;
         doc.text(`Curved Marks (10√X): ${curvedMarks}`, 25, yPos);
         yPos += 8;
-        doc.text(`Curved Grade: ${curvedGrade}`, 25, yPos);
+        doc.text(`Curved Grade (10√X): ${curvedGrade}`, 25, yPos);
         yPos += 8;
         doc.text(`One Grade Curve: ${oneGradeCurve}`, 25, yPos);
         yPos += 15;
