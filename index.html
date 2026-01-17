@@ -31,12 +31,164 @@
     />
     <link rel="stylesheet" href="chat.css" />
     <style>
+      /* Light Mode Variables */
+      body.light-mode {
+        --primary-color: #2d2d36;
+        --primary-gradient: linear-gradient(135deg, #26263b, #736b91);
+        --bg-color: #f1f5f9;
+        --surface-color: #ffffff;
+        --text-color: #323841;
+        --text-muted: #80838a;
+        --border-color: #9fa2a7;
+        --tr-hover-color: #f1f5f9;
+        background-color: #f1f5f9 !important;
+        color: var(--text-color);
+        background-image: radial-gradient(
+          circle at top right,
+          rgba(79, 70, 229, 0.08),
+          transparent
+        );
+      }
+
+      body.light-mode .nav-bar a {
+        background: var(--surface-color);
+        border-color: var(--border-color);
+        color: var(--text-muted);
+      }
+
+      body.light-mode .nav-bar a.active,
+      body.light-mode .nav-bar a:hover {
+        color: #030303;
+      }
+
+      body.light-mode .table-container,
+      body.light-mode .search-container input {
+        background: var(--surface-color);
+        border-color: var(--border-color);
+        color: var(--text-color);
+      }
+
+      body.light-mode .search-icon {
+        color: var(--text-muted);
+      }
+
+      body.light-mode table th {
+        background: #f8fafc;
+        color: var(--text-color);
+      }
+
+      body.light-mode table td {
+        color: var(--text-color);
+        border-color: var(--border-color);
+      }
+
+      body.light-mode table tr:hover {
+        background: var(--tr-hover-color);
+      }
+
+      body.light-mode h1 {
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      body.light-mode .routine-maker-container {
+        background: var(--surface-color);
+        border-color: var(--border-color);
+      }
+
+      body.light-mode .routine-header {
+        background: #f8fafc;
+        color: var(--text-color);
+      }
+
+      body.light-mode .routine-table th,
+      body.light-mode .routine-table td {
+        border-color: var(--border-color);
+        color: var(--text-color);
+      }
+
+      body.light-mode #routineClashes {
+        color: var(--text-color) !important;
+      }
+
+      body.light-mode .modal-content {
+        background: var(--surface-color);
+        color: var(--text-color);
+      }
+
+      body.light-mode .modal-header {
+        border-color: var(--border-color);
+      }
+
+      body.light-mode .pagination button {
+        background: var(--surface-color);
+        color: var(--text-color);
+        border-color: var(--border-color);
+      }
+
+      body.light-mode .semester-select {
+        background: var(--surface-color);
+        color: var(--text-color);
+        border-color: var(--border-color);
+      }
+
+      body.light-mode .footer {
+        color: var(--text-muted);
+      }
+
+      body.light-mode .announcement-bar {
+        opacity: 1;
+      }
+
+      /* Theme Toggle Button */
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      body.light-mode .theme-toggle {
+        background: #e1e2e2;
+        border-color: #232c3a;
+        color: #fbbf24;
+      }
+
+      @media (max-width: 768px) {
+        .theme-toggle {
+          top: 10px;
+          right: 10px;
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
+        }
+      }
+
       .trending-link {
         box-shadow:
           0 0 8px 2px #e11d48,
           0 0 16px 4px #be185d;
         border-color: #e11d48 !important;
-        color: #fff !important;
+        color: #0abcdb !important;
         position: relative;
         z-index: 2;
       }
@@ -85,6 +237,14 @@
     </style>
   </head>
   <body>
+    <!-- Theme Toggle Button -->
+    <button
+      id="themeToggle"
+      class="theme-toggle"
+      title="Toggle Light/Dark Mode"
+    >
+      🌙
+    </button>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -601,5 +761,42 @@
     <!-- <script src="chat.js"></script> -->
     <!-- <script src="comments.js"></script> -->
     <script src="buttons.js"></script>
+    <script>
+      // Theme Toggle Functionality
+      (function () {
+        const themeToggle = document.getElementById("themeToggle");
+        const body = document.body;
+        const THEME_KEY = "rds2-theme-preference";
+
+        // Load saved theme preference
+        function loadTheme() {
+          const savedTheme = localStorage.getItem(THEME_KEY);
+          if (savedTheme === "light") {
+            body.classList.add("light-mode");
+            themeToggle.textContent = "☀️";
+          } else {
+            body.classList.remove("light-mode");
+            themeToggle.textContent = "🌙";
+          }
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+          if (body.classList.contains("light-mode")) {
+            body.classList.remove("light-mode");
+            localStorage.setItem(THEME_KEY, "dark");
+            themeToggle.textContent = "🌙";
+          } else {
+            body.classList.add("light-mode");
+            localStorage.setItem(THEME_KEY, "light");
+            themeToggle.textContent = "☀️";
+          }
+        }
+
+        // Initialize
+        loadTheme();
+        themeToggle.addEventListener("click", toggleTheme);
+      })();
+    </script>
   </body>
 </html>

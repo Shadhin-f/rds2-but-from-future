@@ -100,6 +100,13 @@ function animate() {
 
 animate();
 
+// Console Easter Egg for Developers
+console.log(`
+%c🎓 RDS2 BUT FROM FUTURE 🎓
+%cBuilt with ❤️ for NSUers
+%cFound a bug? Report it on Telegram!
+`, 'font-size: 24px; color: #6d28d9;', 'font-size: 14px;', 'font-size: 12px; color: gray;');
+
 // ========== CHANGE THIS VALUE TO UPDATE DEFAULT SEMESTER ==========
 const DEFAULT_SEMESTER = '261_v14.csv';
 // ===================================================================
@@ -303,6 +310,11 @@ document.addEventListener('DOMContentLoaded', function() {
             searchTerm.includes('dbs')
         ) {
             triggerPageShake();
+        }
+        
+        // Easter egg: Check if search term is "thank you" or "thanks"
+        if (searchTerm === 'thank you' || searchTerm === 'thanks') {
+            alert('You are welcome!! 😊');
         }
         
         filteredData = courseData.filter(course => {
