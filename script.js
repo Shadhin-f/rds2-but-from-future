@@ -10,6 +10,17 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
+// Shape cycling for particles
+let currentShape = 'circle'; // Start with circle
+const shapes = ['circle', 'triangle', 'rectangle'];
+let shapeIndex = 0;
+
+// Change shape every 10 seconds
+setInterval(() => {
+    shapeIndex = (shapeIndex + 1) % shapes.length;
+    currentShape = shapes[shapeIndex];
+}, 10000);
+
 // Particle class
 class Particle {
     constructor() {
@@ -35,11 +46,42 @@ class Particle {
     }
 
     draw() {
-        // ctx.fillStyle = `rgba(147, 51, 234, ${this.opacity})`; // Brighter purple color
         ctx.fillStyle = `rgba(20, 138, 173, ${this.opacity})`; // Teal color
+        
+        switch(currentShape) {
+            case 'circle':
+                this.drawCircle();
+                break;
+            case 'triangle':
+                this.drawTriangle();
+                break;
+            case 'rectangle':
+                this.drawRectangle();
+                break;
+        }
+    }
+    
+    drawCircle() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+    }
+    
+    drawTriangle() {
+        const height = this.size * 2;
+        const width = this.size * 1.8;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y - height / 2);
+        ctx.lineTo(this.x - width / 2, this.y + height / 2);
+        ctx.lineTo(this.x + width / 2, this.y + height / 2);
+        ctx.closePath();
+        ctx.fill();
+    }
+    
+    drawRectangle() {
+        const width = this.size * 1.6;
+        const height = this.size * 1.6;
+        ctx.fillRect(this.x - width / 2, this.y - height / 2, width, height);
     }
 }
 
@@ -184,6 +226,50 @@ function parseCSV(csv) {
 //     searchInput.addEventListener('input', debounce(function(e) {...}));
 // }
 
+// Easter egg: Make page blink when "TBA" is typed
+function triggerPageBlink() {
+    const body = document.body;
+    body.style.animation = 'pageBlink 0.8s';
+    setTimeout(() => {
+        body.style.animation = '';
+    }, 800);
+}
+
+// Easter egg: Make page transparent when "vanish" is typed
+function triggerPageVanish() {
+    const container = document.querySelector('.container');
+    if (container) {
+        container.style.transition = 'opacity 1s ease-in-out';
+        container.style.opacity = '0';
+        
+        // Make particles move much faster
+        particles.forEach(particle => {
+            particle.speedX *= 5;
+            particle.speedY *= 5;
+        });
+        
+        // Restore opacity and particle speed after 10 seconds
+        setTimeout(() => {
+            container.style.opacity = '1';
+            
+            // Restore original particle speeds
+            particles.forEach(particle => {
+                particle.speedX /= 5;
+                particle.speedY /= 5;
+            });
+        }, 10000);
+    }
+}
+
+// Easter egg: Make page shake when "shake" is typed
+function triggerPageShake() {
+    const body = document.body;
+    body.style.animation = 'pageShake 4s';
+    setTimeout(() => {
+        body.style.animation = '';
+    }, 4000);
+}
+
 // Add the search initialization to DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize search functionality
@@ -196,6 +282,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = (searchInput?.value || '').toLowerCase();
         const timeTerm = (timeSearchInput?.value || '').toLowerCase();
         const facultyTerm = (facultySearchInput?.value || '').toLowerCase();
+        
+        // Easter egg: Check if search term is "tba"
+        if (searchTerm === 'tba') {
+            triggerPageBlink();
+        }
+        
+        // Easter egg: Check if search term is "vanish" or "snap"
+        if (searchTerm === 'vanish' || searchTerm === 'snap') {
+            triggerPageVanish();
+        }
+        
+        // Easter egg: Check if search term is "shake" or "msk1"
+        if (searchTerm === 'shake' || searchTerm === 'msk1') {
+            triggerPageShake();
+        }
         
         filteredData = courseData.filter(course => {
             // Main search filter (course, faculty, semester)
