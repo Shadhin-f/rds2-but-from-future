@@ -293,8 +293,15 @@ document.addEventListener('DOMContentLoaded', function() {
             triggerPageVanish();
         }
         
-        // Easter egg: Check if search term is "shake" or "msk1"
-        if (searchTerm === 'shake' || searchTerm === 'msk1') {
+        // Easter egg: Check if search term triggers page shake
+        // Existing triggers: exact 'shake' or 'msk1'
+        // New triggers: includes 'mana' or 'dbs search' (case-insensitive)
+        if (
+            searchTerm === 'shake' ||
+            searchTerm === 'msk1' ||
+            searchTerm.includes('mana') ||
+            searchTerm.includes('dbs')
+        ) {
             triggerPageShake();
         }
         
