@@ -531,8 +531,11 @@ if (prevPageBtn) {
     prevPageBtn.addEventListener('click', () => {
         if (currentPage > 1) {
             currentPage--;
-            const searchTerm = document.getElementById('searchInput').value.trim();
-            renderTable(searchTerm ? filteredData : courseData);
+            const searchTerm = document.getElementById('searchInput')?.value.trim() || '';
+            const timeTerm = document.getElementById('timeSearchInput')?.value.trim() || '';
+            const facultyTerm = document.getElementById('facultySearchInput')?.value.trim() || '';
+            const hasAnyFilter = searchTerm || timeTerm || facultyTerm;
+            renderTable(hasAnyFilter ? filteredData : courseData);
         }
     });
 }
@@ -540,8 +543,11 @@ if (prevPageBtn) {
 const nextPageBtn = document.getElementById('nextPage');
 if (nextPageBtn) {
     nextPageBtn.addEventListener('click', () => {
-        const searchTerm = document.getElementById('searchInput').value.trim();
-        const data = searchTerm ? filteredData : courseData;
+        const searchTerm = document.getElementById('searchInput')?.value.trim() || '';
+        const timeTerm = document.getElementById('timeSearchInput')?.value.trim() || '';
+        const facultyTerm = document.getElementById('facultySearchInput')?.value.trim() || '';
+        const hasAnyFilter = searchTerm || timeTerm || facultyTerm;
+        const data = hasAnyFilter ? filteredData : courseData;
         const totalPages = Math.ceil(data.length / rowsPerPage);
         if (currentPage < totalPages) {
             currentPage++;
