@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <script
@@ -29,14 +29,18 @@
     />
     <style>
       .trending-link {
-        box-shadow: 0 0 8px 2px #e11d48, 0 0 16px 4px #be185d;
+        box-shadow:
+          0 0 8px 2px #e11d48,
+          0 0 16px 4px #be185d;
         border-color: #e11d48 !important;
         color: #fff !important;
         position: relative;
         z-index: 2;
       }
       .trending-link:hover {
-        box-shadow: 0 0 16px 4px #e11d48, 0 0 24px 8px #be185d;
+        box-shadow:
+          0 0 16px 4px #e11d48,
+          0 0 24px 8px #be185d;
         background: linear-gradient(135deg, #e11d48, #be185d) !important;
         color: #fff !important;
       }
@@ -110,7 +114,9 @@
         background: var(--bg-color);
         color: var(--text-color);
         font-size: 0.9rem;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
         outline: none;
         width: 100%;
         box-sizing: border-box;
@@ -203,7 +209,9 @@
         font-weight: 600;
         cursor: pointer;
         margin-top: 10px;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
       }
 
       .btn-submit:hover {
@@ -236,7 +244,9 @@
         flex: 1;
         min-height: 42px;
         outline: none;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
 
       .search-row select:focus,
@@ -643,7 +653,7 @@
                 <select id="semesterSelect">
                   <option value="summer25.csv" disabled>Summer 2025</option>
                   <option value="fall2025.csv" disabled>Fall 2025</option>
-                  <option value="261_v13.csv" selected>Spring 2026</option>
+                  <option value="261_v14.csv" selected>Spring 2026</option>
                 </select>
                 <input
                   type="text"
@@ -779,7 +789,7 @@
       // Parse CSV time format "11:20 AM - 12:50 PM RA"
       function parseCsvTime(timeStr) {
         const match = timeStr.match(
-          /^(\d{1,2}:\d{2} [AP]M)\s*-\s*(\d{1,2}:\d{2} [AP]M)\s*([A-Z]+)$/i
+          /^(\d{1,2}:\d{2} [AP]M)\s*-\s*(\d{1,2}:\d{2} [AP]M)\s*([A-Z]+)$/i,
         );
         if (!match) return null;
         const [, startStr, endStr, daysCode] = match;
@@ -806,7 +816,7 @@
       // Check if course already in planner
       function isInPlanner(code, section) {
         return plannerCourses.some(
-          (c) => c.code === code && c.section === section
+          (c) => c.code === code && c.section === section,
         );
       }
 
@@ -856,7 +866,7 @@
           const duration = slotEnd - slotStart;
 
           const hasAnyCourse = plannerCourses.some(
-            (c) => c.startMin < slotEnd && c.endMin > slotStart
+            (c) => c.startMin < slotEnd && c.endMin > slotStart,
           );
 
           if (duration <= 10 && !hasAnyCourse) continue;
@@ -870,7 +880,7 @@
           // Time cell
           const timeCell = document.createElement("td");
           timeCell.textContent = `${formatTime(slotStart)} - ${formatTime(
-            slotEnd
+            slotEnd,
           )}`;
           tr.appendChild(timeCell);
 
@@ -884,7 +894,7 @@
                 (c) =>
                   c.days.includes(day) &&
                   c.startMin <= slotStart &&
-                  c.endMin > slotStart
+                  c.endMin > slotStart,
               );
 
             if (coursesInSlot.length > 0) {
@@ -895,8 +905,8 @@
                     c.section || "N/A"
                   } (${c.faculty || "TBA"})${c.room ? " | " + c.room : ""}">
                     <span class="course-name">${c.code}${
-                    c.section ? " - " + c.section : ""
-                  }</span>
+                      c.section ? " - " + c.section : ""
+                    }</span>
                     ${
                       c.faculty
                         ? `<span class="faculty">${c.faculty}</span>`
@@ -907,7 +917,7 @@
                       c._idx
                     }" title="Remove">✕</button>
                   </span>
-                `
+                `,
                 )
                 .join("");
             }
@@ -1026,15 +1036,15 @@
             <div class="search-result-item">
               <div class="result-info">
                 <div class="result-course">${c.Course || "N/A"} - Sec ${
-              c.Section || "?"
-            }</div>
+                  c.Section || "?"
+                }</div>
                 <div class="result-meta">${c.Faculty || "TBA"} | ${
-              c.Time || "N/A"
-            } | ${c.Room || ""}</div>
+                  c.Time || "N/A"
+                } | ${c.Room || ""}</div>
               </div>
               <button class="btn-add" data-course="${courseData}" ${
-              inPlanner ? "disabled" : ""
-            }>
+                inPlanner ? "disabled" : ""
+              }>
                 ${inPlanner ? "Added" : "Add"}
               </button>
             </div>
@@ -1053,7 +1063,7 @@
             btn.addEventListener("click", function () {
               const courseStr = this.getAttribute("data-course");
               const c = JSON.parse(
-                courseStr.replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+                courseStr.replace(/&quot;/g, '"').replace(/&#39;/g, "'"),
               );
               const parsed = parseCsvTime(c.Time);
               if (!parsed) {
@@ -1126,7 +1136,7 @@
             const start = document.getElementById("manualStart").value;
             const end = document.getElementById("manualEnd").value;
             const days = [...document.querySelectorAll(".day-cb:checked")].map(
-              (cb) => cb.value
+              (cb) => cb.value,
             );
 
             console.log("Form data:", {
@@ -1141,7 +1151,7 @@
 
             if (!code || !start || !end || !days.length) {
               alert(
-                "Please fill all required fields and select at least one day."
+                "Please fill all required fields and select at least one day.",
               );
               return;
             }
@@ -1220,7 +1230,7 @@
         if (searchInput) {
           searchInput.addEventListener(
             "input",
-            debounce(refreshSearchResults, 300)
+            debounce(refreshSearchResults, 300),
           );
         }
 
