@@ -108,7 +108,7 @@ console.log(`
 `, 'font-size: 24px; color: #6d28d9;', 'font-size: 14px;', 'font-size: 12px; color: gray;');
 
 // ========== CHANGE THIS VALUE TO UPDATE DEFAULT SEMESTER ==========
-const DEFAULT_SEMESTER = '261_v14.csv';
+const DEFAULT_SEMESTER = '261_v15.csv';
 // ===================================================================
 
 let CSV_FILENAME = DEFAULT_SEMESTER;
