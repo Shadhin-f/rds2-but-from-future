@@ -55,6 +55,29 @@
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.2);
       }
+      .search-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (max-width: 640px) {
+        .search-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .search-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .search-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .search-group label i {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+      }
       .search-panel .search-icon {
         position: relative;
         display: inline-flex;
@@ -201,6 +224,142 @@
         border: 1px solid rgba(16, 185, 129, 0.35);
         color: #34d399;
       }
+      .title-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.35rem;
+      }
+      .title-row h3 {
+        margin: 0;
+      }
+      .check-availability-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #fff;
+        background: var(--primary-gradient, linear-gradient(135deg, #6d28d9, #8b5cf6));
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
+      }
+      .check-availability-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(109, 40, 217, 0.45);
+        filter: brightness(1.1);
+      }
+      .check-availability-btn:active {
+        transform: translateY(0);
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+        flex-wrap: wrap;
+      }
+      .pagination-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-color);
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .pagination-btn:hover:not(:disabled) {
+        border-color: var(--primary-color);
+        background: rgba(109, 40, 217, 0.1);
+      }
+      .pagination-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .pagination-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+      .page-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 8px;
+        background: var(--primary-gradient, linear-gradient(135deg, #6d28d9, #8b5cf6));
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+      }
+      .page-jump {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .page-jump input {
+        width: 60px;
+        padding: 8px 10px;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+      .page-jump input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
+      .page-jump-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-color);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .page-jump-btn:hover {
+        border-color: var(--primary-color);
+      }
+      .per-page-select {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .per-page-select select {
+        padding: 6px 10px;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-color);
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+      .per-page-select select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+      }
     </style>
   </head>
   <body>
@@ -232,18 +391,26 @@
       </div>
 
       <div class="search-panel">
-        <label for="bookQuery">Search by book title or author</label>
-        <input
-          type="text"
-          id="bookQuery"
-          placeholder="e.g., Game Theory, Kieso, Marketing"
-          autocomplete="off"
-        />
-        <!-- <div class="search-icon">
-          <i class="fas fa-circle-notch"></i>
-          Results update automatically as you type. We search titles and
-          authors from the NSU catalog dump.
-        </div> -->
+        <div class="search-row">
+          <div class="search-group">
+            <label for="bookQuery"><i class="fas fa-search"></i> Search by title or author</label>
+            <input
+              type="text"
+              id="bookQuery"
+              placeholder="e.g., Game Theory, Kieso, Marketing"
+              autocomplete="off"
+            />
+          </div>
+          <div class="search-group">
+            <label for="authorFilter"><i class="fas fa-user-pen"></i> Filter by author</label>
+            <input
+              type="text"
+              id="authorFilter"
+              placeholder="e.g., Kotler, Weygandt, Mankiw"
+              autocomplete="off"
+            />
+          </div>
+        </div>
       </div>
       <p class="info-text">
         Tip: Copy the exact spelling from the NSU OPAC for best matches. We
@@ -252,13 +419,14 @@
 
       <div id="message"></div>
       <div id="results" class="results"></div>
+      <div id="pagination" class="pagination"></div>
       <div id="resultsSummary" class="results-summary"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-      const MAX_RESULTS = 25;
       const DEBOUNCE_MS = 280;
+      const DEFAULT_PER_PAGE = 15;
 
       const state = {
         shelves: [],
@@ -267,13 +435,18 @@
         booksLoading: false,
         shelvesError: null,
         booksError: null,
+        filteredBooks: [],
+        currentPage: 1,
+        perPage: DEFAULT_PER_PAGE,
       };
 
       const els = {
         message: document.getElementById("message"),
         results: document.getElementById("results"),
         summary: document.getElementById("resultsSummary"),
+        pagination: document.getElementById("pagination"),
         search: document.getElementById("bookQuery"),
+        authorFilter: document.getElementById("authorFilter"),
       };
 
       let debounceTimer = null;
@@ -450,15 +623,24 @@
           : "";
         const publication = book.publication ? book.publication.trim() : "";
 
+        const availabilityBtn = book.detail_url
+          ? `<a href="${book.detail_url}" target="_blank" rel="noopener" class="check-availability-btn">
+               <i class="fas fa-external-link-alt"></i> Check Availability
+             </a>`
+          : '';
+
         return `
           <div class="result-card">
-            <h3>
-              ${
-                book.detail_url
-                  ? `<a href="${book.detail_url}" target="_blank" rel="noopener">${book.title || "Untitled"}</a>`
-                  : `${book.title || "Untitled"}`
-              }
-            </h3>
+            <div class="title-row">
+              <h3>
+                ${
+                  book.detail_url
+                    ? `<a href="${book.detail_url}" target="_blank" rel="noopener">${book.title || "Untitled"}</a>`
+                    : `${book.title || "Untitled"}`
+                }
+              </h3>
+              ${availabilityBtn}
+            </div>
             <div class="book-meta">
               <span><i class="fas fa-user-pen"></i> ${authors}</span>
               ${material ? `<span><i class="fas fa-book-open"></i> ${material}</span>` : ""}
@@ -472,32 +654,140 @@
           </div>`;
       }
 
-      function displayResults(list, totalMatches) {
-        if (!list.length) {
+      function displayResults() {
+        const totalMatches = state.filteredBooks.length;
+        
+        if (!totalMatches) {
           els.results.innerHTML = `
             <div class="no-results">
               No matches yet. Try a different spelling or search for another author/title.
             </div>`;
           els.summary.textContent = "";
+          els.pagination.innerHTML = "";
           return;
         }
 
-        const cards = list.map((book) => renderBookCard(book)).join("\n");
-        const summaryText = totalMatches > MAX_RESULTS
-          ? `Showing first ${MAX_RESULTS} of ${totalMatches.toLocaleString()} matches. Refine your search for more precise results.`
-          : `Found ${totalMatches.toLocaleString()} matching records.`;
+        const totalPages = Math.ceil(totalMatches / state.perPage);
+        
+        // Ensure current page is valid
+        if (state.currentPage > totalPages) {
+          state.currentPage = totalPages;
+        }
+        if (state.currentPage < 1) {
+          state.currentPage = 1;
+        }
+
+        const startIndex = (state.currentPage - 1) * state.perPage;
+        const endIndex = Math.min(startIndex + state.perPage, totalMatches);
+        const pageBooks = state.filteredBooks.slice(startIndex, endIndex);
+
+        const cards = pageBooks.map((book) => renderBookCard(book)).join("\n");
         els.results.innerHTML = cards;
+        
+        // Summary text
+        const summaryText = `Showing ${startIndex + 1}–${endIndex} of ${totalMatches.toLocaleString()} matching records.`;
         els.summary.textContent = summaryText;
+
+        // Render pagination
+        renderPagination(totalPages, totalMatches);
+      }
+
+      function renderPagination(totalPages, totalMatches) {
+        if (totalPages <= 1) {
+          els.pagination.innerHTML = "";
+          return;
+        }
+
+        els.pagination.innerHTML = `
+          <button class="pagination-btn" id="prevPage" ${state.currentPage === 1 ? 'disabled' : ''}>
+            <i class="fas fa-chevron-left"></i> Previous
+          </button>
+          
+          <div class="pagination-info">
+            Page <span class="page-number">${state.currentPage}</span> of ${totalPages}
+          </div>
+          
+          <button class="pagination-btn" id="nextPage" ${state.currentPage === totalPages ? 'disabled' : ''}>
+            Next <i class="fas fa-chevron-right"></i>
+          </button>
+          
+          <div class="page-jump">
+            <input type="number" id="pageInput" min="1" max="${totalPages}" value="${state.currentPage}" />
+            <button class="page-jump-btn" id="goToPage">Go</button>
+          </div>
+          
+          <div class="per-page-select">
+            <label for="perPageSelect">Per page:</label>
+            <select id="perPageSelect">
+              <option value="10" ${state.perPage === 10 ? 'selected' : ''}>10</option>
+              <option value="15" ${state.perPage === 15 ? 'selected' : ''}>15</option>
+              <option value="25" ${state.perPage === 25 ? 'selected' : ''}>25</option>
+              <option value="50" ${state.perPage === 50 ? 'selected' : ''}>50</option>
+            </select>
+          </div>
+        `;
+
+        // Add event listeners
+        document.getElementById('prevPage').addEventListener('click', () => {
+          if (state.currentPage > 1) {
+            state.currentPage--;
+            displayResults();
+            scrollToResults();
+          }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+          if (state.currentPage < totalPages) {
+            state.currentPage++;
+            displayResults();
+            scrollToResults();
+          }
+        });
+
+        document.getElementById('goToPage').addEventListener('click', () => {
+          const input = document.getElementById('pageInput');
+          const page = parseInt(input.value, 10);
+          if (page >= 1 && page <= totalPages) {
+            state.currentPage = page;
+            displayResults();
+            scrollToResults();
+          }
+        });
+
+        document.getElementById('pageInput').addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            const page = parseInt(e.target.value, 10);
+            if (page >= 1 && page <= totalPages) {
+              state.currentPage = page;
+              displayResults();
+              scrollToResults();
+            }
+          }
+        });
+
+        document.getElementById('perPageSelect').addEventListener('change', (e) => {
+          state.perPage = parseInt(e.target.value, 10);
+          state.currentPage = 1; // Reset to first page
+          displayResults();
+        });
+      }
+
+      function scrollToResults() {
+        els.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
       function performSearch() {
         const query = els.search.value.trim();
-        if (!query) {
+        const authorQuery = els.authorFilter.value.trim();
+        
+        if (!query && !authorQuery) {
           els.results.innerHTML = `
             <div class="no-results">
               Start typing a book title or author to see matching records.
             </div>`;
           els.summary.textContent = "";
+          els.pagination.innerHTML = "";
+          state.filteredBooks = [];
           return;
         }
 
@@ -505,30 +795,38 @@
           els.results.innerHTML = `
             <div class="no-results">Still loading data. Please hold on...</div>`;
           els.summary.textContent = "";
+          els.pagination.innerHTML = "";
           return;
         }
 
         const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
-        if (!tokens.length) {
+        const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
+        
+        if (!tokens.length && !authorTokens.length) {
           els.results.innerHTML = "";
           els.summary.textContent = "";
+          els.pagination.innerHTML = "";
+          state.filteredBooks = [];
           return;
         }
 
-        let totalMatches = 0;
-        const limited = [];
-
-        for (const book of state.books) {
+        // Filter all matching books
+        state.filteredBooks = state.books.filter((book) => {
           const haystack = book.searchText;
-          const matches = tokens.every((token) => haystack.includes(token));
-          if (!matches) continue;
-          totalMatches += 1;
-          if (limited.length < MAX_RESULTS) {
-            limited.push(book);
-          }
-        }
+          const authorHaystack = (book.authors || "").toLowerCase();
+          
+          // Main search: matches title or author
+          const mainMatch = tokens.length === 0 || tokens.every((token) => haystack.includes(token));
+          
+          // Author filter: matches only author field
+          const authorMatch = authorTokens.length === 0 || authorTokens.every((token) => authorHaystack.includes(token));
+          
+          return mainMatch && authorMatch;
+        });
 
-        displayResults(limited, totalMatches);
+        // Reset to page 1 on new search
+        state.currentPage = 1;
+        displayResults();
       }
 
       function scheduleSearch() {
@@ -592,6 +890,7 @@
         <div class="no-results">Preparing library dataset. This can take a few seconds…</div>`;
       els.summary.textContent = "";
       els.search.addEventListener("input", scheduleSearch);
+      els.authorFilter.addEventListener("input", scheduleSearch);
       loadShelves();
       loadBooks();
     </script>
