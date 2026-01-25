@@ -1371,7 +1371,354 @@ window.addEventListener('load', () => {
     if (pdfBtn) {
         pdfBtn.addEventListener('click', generateRoutinePdf);
     }
+    
+    // Hook up Share and Import buttons
+    setupShareImportHandlers();
 });
+
+// ========== SHARE / IMPORT ROUTINE FUNCTIONALITY ==========
+
+// Encode routine data to a shareable string
+function encodeRoutine(routineData) {
+    if (!routineData || routineData.length === 0) {
+        return null;
+    }
+    
+    // Create a compact representation of the routine
+    // Format: array of [code, section, faculty, start, end, days]
+    const compactData = routineData.map(course => [
+        course.code,
+        course.section,
+        course.faculty,
+        course.start,
+        course.end,
+        course.days.join('')  // Join days into single string like "SatSunMon"
+    ]);
+    
+    // Convert to JSON, then base64
+    const jsonStr = JSON.stringify(compactData);
+    const base64 = btoa(unescape(encodeURIComponent(jsonStr)));
+    
+    // Add a prefix to identify valid codes
+    return 'RDS2_' + base64;
+}
+
+// Decode a shared routine code back to routine data
+function decodeRoutine(code) {
+    try {
+        // Validate prefix
+        if (!code || !code.startsWith('RDS2_')) {
+            throw new Error('Invalid code format: missing prefix');
+        }
+        
+        // Remove prefix and decode base64
+        const base64 = code.substring(5);
+        const jsonStr = decodeURIComponent(escape(atob(base64)));
+        const compactData = JSON.parse(jsonStr);
+        
+        // Validate structure
+        if (!Array.isArray(compactData)) {
+            throw new Error('Invalid code format: not an array');
+        }
+        
+        // Convert back to full routine format
+        const routineData = compactData.map(item => {
+            if (!Array.isArray(item) || item.length < 6) {
+                throw new Error('Invalid course data in code');
+            }
+            
+            const [code, section, faculty, start, end, daysStr] = item;
+            
+            // Parse days string back to array
+            // Days are stored as concatenated like "SatSunMon"
+            const days = [];
+            for (let i = 0; i < daysStr.length; i += 3) {
+                days.push(daysStr.substring(i, i + 3));
+            }
+            
+            return {
+                code,
+                section,
+                faculty,
+                room: '', // Room info not included in share code to keep it shorter
+                start,
+                end,
+                startMin: timeToMinutes(start),
+                endMin: timeToMinutes(end),
+                days
+            };
+        });
+        
+        return { success: true, data: routineData };
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
+}
+
+// Store decoded data temporarily for confirmation
+let pendingImportData = null;
+
+// Setup share/import button handlers
+function setupShareImportHandlers() {
+    const shareBtn = document.getElementById('shareRoutineBtn');
+    const importBtn = document.getElementById('importRoutineBtn');
+    const shareModal = document.getElementById('shareRoutineModal');
+    const importModal = document.getElementById('importRoutineModal');
+    const importConfirmModal = document.getElementById('importConfirmModal');
+    
+    // Share button click
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            showShareModal();
+        });
+    }
+    
+    // Import button click
+    if (importBtn) {
+        importBtn.addEventListener('click', () => {
+            showImportModal();
+        });
+    }
+    
+    // Close share modal
+    const closeShareModal = document.getElementById('closeShareModal');
+    if (closeShareModal && shareModal) {
+        closeShareModal.addEventListener('click', () => {
+            shareModal.classList.add('hidden');
+        });
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) shareModal.classList.add('hidden');
+        });
+    }
+    
+    // Close import modal
+    const closeImportModal = document.getElementById('closeImportModal');
+    const cancelImportBtn = document.getElementById('cancelImportBtn');
+    if (closeImportModal && importModal) {
+        closeImportModal.addEventListener('click', () => {
+            importModal.classList.add('hidden');
+        });
+        importModal.addEventListener('click', (e) => {
+            if (e.target === importModal) importModal.classList.add('hidden');
+        });
+    }
+    if (cancelImportBtn) {
+        cancelImportBtn.addEventListener('click', () => {
+            importModal.classList.add('hidden');
+        });
+    }
+    
+    // Close import confirmation modal
+    const closeImportConfirmModal = document.getElementById('closeImportConfirmModal');
+    const cancelConfirmImportBtn = document.getElementById('cancelConfirmImportBtn');
+    if (closeImportConfirmModal && importConfirmModal) {
+        closeImportConfirmModal.addEventListener('click', () => {
+            importConfirmModal.classList.add('hidden');
+            pendingImportData = null;
+        });
+        importConfirmModal.addEventListener('click', (e) => {
+            if (e.target === importConfirmModal) {
+                importConfirmModal.classList.add('hidden');
+                pendingImportData = null;
+            }
+        });
+    }
+    if (cancelConfirmImportBtn) {
+        cancelConfirmImportBtn.addEventListener('click', () => {
+            importConfirmModal.classList.add('hidden');
+            pendingImportData = null;
+        });
+    }
+    
+    // Copy code button
+    const copyBtn = document.getElementById('copyShareCodeBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const codeOutput = document.getElementById('shareCodeOutput');
+            const statusEl = document.getElementById('shareCodeStatus');
+            if (codeOutput && codeOutput.value) {
+                navigator.clipboard.writeText(codeOutput.value).then(() => {
+                    if (statusEl) {
+                        statusEl.innerHTML = '<i class="fas fa-check" style="color: #10b981;"></i> Copied to clipboard!';
+                        setTimeout(() => { statusEl.innerHTML = ''; }, 2000);
+                    }
+                }).catch(() => {
+                    // Fallback: select the text
+                    codeOutput.select();
+                    document.execCommand('copy');
+                    if (statusEl) {
+                        statusEl.innerHTML = '<i class="fas fa-check" style="color: #10b981;"></i> Copied!';
+                        setTimeout(() => { statusEl.innerHTML = ''; }, 2000);
+                    }
+                });
+            }
+        });
+    }
+    
+    // Confirm import button (in import modal)
+    const confirmImportBtn = document.getElementById('confirmImportBtn');
+    if (confirmImportBtn) {
+        confirmImportBtn.addEventListener('click', () => {
+            handleImportAttempt();
+        });
+    }
+    
+    // Final confirm import button (in confirmation modal)
+    const finalConfirmBtn = document.getElementById('finalConfirmImportBtn');
+    if (finalConfirmBtn) {
+        finalConfirmBtn.addEventListener('click', () => {
+            executeImport();
+        });
+    }
+}
+
+// Show the share modal with generated code
+function showShareModal() {
+    const shareModal = document.getElementById('shareRoutineModal');
+    const codeOutput = document.getElementById('shareCodeOutput');
+    const statusEl = document.getElementById('shareCodeStatus');
+    
+    if (!shareModal || !codeOutput) return;
+    
+    // Generate code for current routine
+    const code = encodeRoutine(routineCourses);
+    
+    if (!code) {
+        codeOutput.value = '';
+        if (statusEl) {
+            statusEl.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #f59e0b;"></i> Your routine is empty. Add courses before sharing.';
+        }
+    } else {
+        codeOutput.value = code;
+        if (statusEl) {
+            statusEl.innerHTML = `<span style="color: var(--text-muted); font-size: 0.85em;">${routineCourses.length} course(s) encoded</span>`;
+        }
+    }
+    
+    shareModal.classList.remove('hidden');
+}
+
+// Show the import modal
+function showImportModal() {
+    const importModal = document.getElementById('importRoutineModal');
+    const codeInput = document.getElementById('importCodeInput');
+    const statusEl = document.getElementById('importCodeStatus');
+    
+    if (!importModal) return;
+    
+    // Clear previous input
+    if (codeInput) codeInput.value = '';
+    if (statusEl) statusEl.innerHTML = '';
+    
+    importModal.classList.remove('hidden');
+}
+
+// Handle import attempt - validate and show confirmation
+function handleImportAttempt() {
+    const importModal = document.getElementById('importRoutineModal');
+    const importConfirmModal = document.getElementById('importConfirmModal');
+    const codeInput = document.getElementById('importCodeInput');
+    const statusEl = document.getElementById('importCodeStatus');
+    const previewEl = document.getElementById('importPreview');
+    
+    if (!codeInput) return;
+    
+    const code = codeInput.value.trim();
+    
+    if (!code) {
+        if (statusEl) {
+            statusEl.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #e11d48;"></i> Please paste a routine code.';
+        }
+        return;
+    }
+    
+    // Try to decode
+    const result = decodeRoutine(code);
+    
+    if (!result.success) {
+        if (statusEl) {
+            statusEl.innerHTML = `<i class="fas fa-times-circle" style="color: #e11d48;"></i> Invalid code: ${result.error}`;
+        }
+        return;
+    }
+    
+    if (result.data.length === 0) {
+        if (statusEl) {
+            statusEl.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #f59e0b;"></i> This code contains an empty routine.';
+        }
+        return;
+    }
+    
+    // Valid code - store data and show confirmation
+    pendingImportData = result.data;
+    
+    // Build preview
+    if (previewEl) {
+        const previewHtml = result.data.map(course => 
+            `<div class="import-preview-item">
+                <strong>${course.code}</strong> - Sec ${course.section}
+                <br><span style="color: var(--text-muted); font-size: 0.85em;">${course.faculty || 'TBA'} | ${course.days.join(', ')}</span>
+            </div>`
+        ).join('');
+        previewEl.innerHTML = `<div class="import-preview-title">Courses to import (${result.data.length}):</div>${previewHtml}`;
+    }
+    
+    // Hide import modal, show confirmation modal
+    if (importModal) importModal.classList.add('hidden');
+    if (importConfirmModal) importConfirmModal.classList.remove('hidden');
+}
+
+// Execute the import after confirmation
+function executeImport() {
+    const importConfirmModal = document.getElementById('importConfirmModal');
+    
+    if (!pendingImportData) {
+        if (importConfirmModal) importConfirmModal.classList.add('hidden');
+        return;
+    }
+    
+    // Replace current routine with imported data
+    allRoutines[currentRoutineIndex] = pendingImportData;
+    routineCourses = allRoutines[currentRoutineIndex];
+    saveRoutine(currentRoutineIndex);
+    
+    // Clear pending data
+    pendingImportData = null;
+    
+    // Hide modal
+    if (importConfirmModal) importConfirmModal.classList.add('hidden');
+    
+    // Re-render everything
+    renderRoutineTable();
+    renderTable(filteredData.length ? filteredData : courseData);
+    
+    // Show success message (brief notification)
+    showImportSuccessNotification();
+}
+
+// Show a brief success notification
+function showImportSuccessNotification() {
+    // Create a temporary notification element
+    const notification = document.createElement('div');
+    notification.className = 'import-success-notification';
+    notification.innerHTML = '<i class="fas fa-check-circle"></i> Routine imported successfully!';
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Remove after 2.5 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 2500);
+}
+
+// ========== END SHARE / IMPORT FUNCTIONALITY ==========
 
 let currentSemester = DEFAULT_SEMESTER;
 

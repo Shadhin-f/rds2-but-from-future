@@ -336,6 +336,12 @@
                 <option value="3">🔵 Plan 4</option>
                 <option value="4">🟣 Plan 5</option>
               </select>
+              <button id="shareRoutineBtn" class="routine-toggle-btn" title="Share this routine">
+                <i class="fas fa-share-alt"></i> Share
+              </button>
+              <button id="importRoutineBtn" class="routine-toggle-btn" title="Import a routine">
+                <i class="fas fa-download"></i> Import
+              </button>
               <button id="toggleRoutineBtn" class="routine-toggle-btn">
                 Hide
               </button>
@@ -674,6 +680,77 @@
             style="display: flex; flex-direction: column; gap: 18px"
           >
             <!-- Only the Add to Routine button will be injected here -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Share Routine Modal -->
+      <div id="shareRoutineModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 420px">
+          <div class="modal-header">
+            <h2><i class="fas fa-share-alt"></i> Share Routine</h2>
+            <button class="close-modal" id="closeShareModal">&times;</button>
+          </div>
+          <div class="modal-body" id="shareRoutineModalBody" style="display: flex; flex-direction: column; gap: 14px">
+            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em;">
+              Share this code with others to let them import your routine:
+            </p>
+            <textarea id="shareCodeOutput" class="share-code-textarea" readonly rows="4" placeholder="Generating code..."></textarea>
+            <button id="copyShareCodeBtn" class="routine-toggle-btn" style="align-self: flex-start;">
+              <i class="fas fa-copy"></i> Copy Code
+            </button>
+            <div id="shareCodeStatus" class="share-code-status"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Import Routine Modal -->
+      <div id="importRoutineModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 420px">
+          <div class="modal-header">
+            <h2><i class="fas fa-download"></i> Import Routine</h2>
+            <button class="close-modal" id="closeImportModal">&times;</button>
+          </div>
+          <div class="modal-body" id="importRoutineModalBody" style="display: flex; flex-direction: column; gap: 14px">
+            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em;">
+              Paste a shared routine code below to import it:
+            </p>
+            <textarea id="importCodeInput" class="share-code-textarea" rows="4" placeholder="Paste routine code here..."></textarea>
+            <div id="importCodeStatus" class="share-code-status"></div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              <button id="cancelImportBtn" class="routine-toggle-btn" style="background: var(--border-color);">
+                Cancel
+              </button>
+              <button id="confirmImportBtn" class="routine-toggle-btn" style="background: #10b981;">
+                <i class="fas fa-check"></i> Import
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Import Confirmation Modal -->
+      <div id="importConfirmModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 380px">
+          <div class="modal-header">
+            <h2><i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i> Confirm Import</h2>
+            <button class="close-modal" id="closeImportConfirmModal">&times;</button>
+          </div>
+          <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px">
+            <p style="margin: 0; color: var(--text-color);">
+              This will <strong>replace</strong> your current routine with the imported one. 
+              <br><br>
+              <span style="color: #f59e0b;">⚠️ This action cannot be undone.</span>
+            </p>
+            <div id="importPreview" class="import-preview"></div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px;">
+              <button id="cancelConfirmImportBtn" class="routine-toggle-btn" style="background: var(--border-color);">
+                Cancel
+              </button>
+              <button id="finalConfirmImportBtn" class="routine-toggle-btn" style="background: #e11d48;">
+                <i class="fas fa-check"></i> Yes, Replace
+              </button>
+            </div>
           </div>
         </div>
       </div>
