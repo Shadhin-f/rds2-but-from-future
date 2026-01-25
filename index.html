@@ -754,6 +754,160 @@
           </div>
         </div>
       </div>
+      
+      <!-- Floating Help Button -->
+      <button id="helpBtn" class="floating-help-btn" title="Help & Tutorial">
+        <i class="fas fa-question"></i>
+      </button>
+      
+      <!-- Tutorial Modal -->
+      <div id="tutorialModal" class="modal hidden">
+        <div class="modal-content tutorial-modal-content">
+          <div class="modal-header">
+            <h2><i class="fas fa-graduation-cap"></i> How to Use RDS2 But From Future</h2>
+            <button class="close-modal" id="closeTutorialModal">&times;</button>
+          </div>
+          <div class="modal-body tutorial-body">
+            
+            <!-- Section 1: Overview -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-home"></i> Overview</h3>
+              <p>Welcome to <strong>RDS2 BUT FROM FUTURE</strong> - your ultimate NSU course planning companion! This tool helps you search courses, plan your routine, detect conflicts, and share your plans with friends.</p>
+            </div>
+            
+            <!-- Section 2: Search & Filter -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-search"></i> Search & Filter Courses</h3>
+              <div class="tutorial-content">
+                <p><strong>Main Search:</strong> Type course code (e.g., "CSE115") or faculty name to find courses.</p>
+                <p><strong>Time Filter:</strong> Filter by class days using codes:</p>
+                <ul class="tutorial-list">
+                  <li><code>ST</code> = Sunday + Tuesday</li>
+                  <li><code>MW</code> = Monday + Wednesday</li>
+                  <li><code>RA</code> = Thursday (R) + Saturday (A)</li>
+                </ul>
+                <p><strong>Faculty Filter:</strong> Search specifically by faculty name.</p>
+                <div class="tutorial-example">
+                  <strong>Example:</strong> Search "CSE115" + Time "ST" to find all CSE115 sections on Sun-Tue.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Section 3: Quick Planner -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-calendar-alt"></i> Quick Planner (5 Routines)</h3>
+              <div class="tutorial-content">
+                <p>Plan up to <strong>5 different routines</strong> simultaneously! Each routine has a unique color:</p>
+                <div class="tutorial-colors">
+                  <span class="color-dot" style="background: #e11d48;"></span> Plan 1 (Red)
+                  <span class="color-dot" style="background: #f59e0b;"></span> Plan 2 (Orange)
+                  <span class="color-dot" style="background: #10b981;"></span> Plan 3 (Green)
+                  <span class="color-dot" style="background: #3b82f6;"></span> Plan 4 (Blue)
+                  <span class="color-dot" style="background: #8b5cf6;"></span> Plan 5 (Purple)
+                </div>
+                <p><strong>Switch Routines:</strong> Use the dropdown menu to switch between your 5 plans.</p>
+                <p><strong>Color Indicators:</strong> Small colored dots appear next to course names showing which routines they're in.</p>
+              </div>
+            </div>
+            
+            <!-- Section 4: Adding/Removing Courses -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-plus-circle"></i> Adding & Removing Courses</h3>
+              <div class="tutorial-content">
+                <p><strong>To Add:</strong> Click the <code>Add</code> button on any course row. A popup will let you choose which routine(s) to add it to.</p>
+                <p><strong>To Remove:</strong> In the same popup, click <code>Remove</code> next to any routine that has the course.</p>
+                <p><strong>Quick Remove:</strong> Click the <code>✕</code> button directly on a course block in the routine table.</p>
+                <div class="tutorial-example">
+                  <strong>Tip:</strong> You can add the same course to multiple routines to compare different schedules!
+                </div>
+              </div>
+            </div>
+            
+            <!-- Section 5: Conflict Detection -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-exclamation-triangle"></i> Conflict Detection</h3>
+              <div class="tutorial-content">
+                <p>The system automatically detects two types of conflicts:</p>
+                <div class="tutorial-conflict">
+                  <span>🕛 <strong>Time Conflict:</strong></span> Course overlaps with another class in your current routine.
+                </div>
+                <div class="tutorial-conflict">
+                  <span>⚠️ <strong>Exam Clash:</strong></span> Course has final exam on the same day & slot as another course.
+                </div>
+                <p>Conflict warnings appear in the routine table when detected.</p>
+              </div>
+            </div>
+            
+            <!-- Section 6: Share & Import -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-share-alt"></i> Share & Import Routines</h3>
+              <div class="tutorial-content">
+                <p><strong>Share:</strong> Click the <code>Share</code> button to generate a unique code for your current routine. Copy and send it to friends!</p>
+                <p><strong>Import:</strong> Click <code>Import</code>, paste a shared code, and click Import. A preview will show what courses will be imported.</p>
+                <div class="tutorial-example">
+                  <strong>Note:</strong> Importing replaces the currently selected routine. You'll be asked to confirm before changes are made.
+                </div>
+              </div>
+            </div>
+            
+            <!-- Section 7: Download PDF -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-file-pdf"></i> Download as PDF</h3>
+              <div class="tutorial-content">
+                <p>Click the <code>Download</code> button to export your current routine as a professional PDF file.</p>
+                <p>The PDF includes:</p>
+                <ul class="tutorial-list">
+                  <li>Weekly schedule grid</li>
+                  <li>All course details (code, section, faculty)</li>
+                  <li>Timestamp and branding</li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Section 8: Semester Selection -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-calendar"></i> Semester Selection</h3>
+              <div class="tutorial-content">
+                <p>Use the semester dropdown above the search bar to switch between available semesters.</p>
+                <p>Course data and availability varies by semester.</p>
+              </div>
+            </div>
+            
+            <!-- Section 9: Course Details -->
+            <div class="tutorial-section">
+              <h3><i class="fas fa-info-circle"></i> Course Details</h3>
+              <div class="tutorial-content">
+                <p>Click the <code>View</code> button on any course to see detailed information including:</p>
+                <ul class="tutorial-list">
+                  <li>Course code and section</li>
+                  <li>Faculty name</li>
+                  <li>Class timing and days</li>
+                  <li>Available seats</li>
+                </ul>
+              </div>
+            </div>
+            
+            <!-- Section 10: Tips -->
+            <div class="tutorial-section tips-section">
+              <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
+              <div class="tutorial-content">
+                <ul class="tutorial-list tips-list">
+                  <li>Use multiple plans to compare different schedule options before advising.</li>
+                  <li>Share your routine code with friends to coordinate class schedules.</li>
+                  <li>Pay attention to exam clash warnings - they can save you during finals!</li>
+                  <li>Download your final routine as PDF to have it handy during registration.</li>
+                  <li>The routine data is saved locally, so it persists even if you close the browser.</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="tutorial-footer">
+              <p>Need more help? Join our <a href="https://t.me/nsu_advising_helper_bot_channel" target="_blank"><i class="fab fa-telegram"></i> Telegram Community</a></p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Floating Chat Popup -->

@@ -1374,7 +1374,52 @@ window.addEventListener('load', () => {
     
     // Hook up Share and Import buttons
     setupShareImportHandlers();
+    
+    // Hook up Tutorial/Help button
+    setupTutorialModal();
 });
+
+// ========== TUTORIAL MODAL FUNCTIONALITY ==========
+function setupTutorialModal() {
+    const helpBtn = document.getElementById('helpBtn');
+    const tutorialModal = document.getElementById('tutorialModal');
+    const closeTutorialBtn = document.getElementById('closeTutorialModal');
+    
+    if (helpBtn && tutorialModal) {
+        helpBtn.addEventListener('click', () => {
+            tutorialModal.classList.remove('hidden');
+            tutorialModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close button
+        if (closeTutorialBtn) {
+            closeTutorialBtn.addEventListener('click', () => {
+                tutorialModal.classList.add('hidden');
+                tutorialModal.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // Close on backdrop click
+        tutorialModal.addEventListener('click', (e) => {
+            if (e.target === tutorialModal) {
+                tutorialModal.classList.add('hidden');
+                tutorialModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !tutorialModal.classList.contains('hidden')) {
+                tutorialModal.classList.add('hidden');
+                tutorialModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+    }
+}
 
 // ========== SHARE / IMPORT ROUTINE FUNCTIONALITY ==========
 
