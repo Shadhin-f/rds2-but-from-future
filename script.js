@@ -405,15 +405,29 @@ function renderTable(data) {
 
     // Render table rows
     paginatedData.forEach((row, index) => {
-        const isInRoutineAlready = isInRoutine(row.Course, row.Section);
-        // Check for time conflict and exam clash (only if not already in routine)
-        const hasTimeConflict = !isInRoutineAlready && hasTimeConflictWithRoutine(row.Time);
-        const hasExamClash = !isInRoutineAlready && hasExamClashWithRoutine(row.Time);
+        // Get all routines this course is in
+        const routineIndices = getRoutineIndicesForCourse(row.Course, row.Section);
+        const isInAnyRoutine = routineIndices.length > 0;
+        
+        // Check for time conflict and exam clash (only if not already in current routine)
+        const isInCurrentRoutine = isInRoutine(row.Course, row.Section);
+        const hasTimeConflict = !isInCurrentRoutine && hasTimeConflictWithRoutine(row.Time);
+        const hasExamClash = !isInCurrentRoutine && hasExamClashWithRoutine(row.Time);
+        
+        // Build colored dots for routines this course belongs to
+        const routineDots = routineIndices.map(idx => 
+            `<span class="course-routine-indicator" style="background-color: ${ROUTINE_COLORS[idx]}" title="In Routine ${idx + 1}"></span>`
+        ).join('');
         
         // Build course display with indicators
-        let courseDisplay = escapeHtml(row.Course || '');
+        let courseDisplay = routineDots + escapeHtml(row.Course || '');
         if (hasTimeConflict) courseDisplay += ' 🕛';
         if (hasExamClash) courseDisplay += ' ⚠️';
+        
+        // Build add button with routine dots
+        const addBtnDots = routineIndices.map(idx => 
+            `<span class="course-routine-dot" style="background-color: ${ROUTINE_COLORS[idx]}"></span>`
+        ).join('');
         
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -435,14 +449,12 @@ function renderTable(data) {
                     data-prediction="${escapeHtml(row.Prediction || '')}"
                     data-records="${escapeHtml(row.Records || '')}"
                 >View</button>
-                <button class="view-details-btn add-to-wishlist-btn${isInRoutineAlready ? ' added' : ''}"
-                    title="${isInRoutineAlready ? 'Already in Routine' : 'Add to Routine'}"
+                <button class="view-details-btn add-to-wishlist-btn"
+                    title="${isInAnyRoutine ? 'In Routine ' + routineIndices.map(i => i + 1).join(', ') : 'Add to Routine'}"
                     data-course="${escapeHtml(row.Course)}" 
                     data-section="${escapeHtml(row.Section)}"
-                    ${isInRoutineAlready ? 'disabled' : ''}
                 >
-                    <i class="fas fa-${isInRoutineAlready ? 'check' : 'plus'}"></i> 
-                    ${isInRoutineAlready ? 'Added' : 'Add'}
+                    ${addBtnDots}<i class="fas fa-plus"></i> Add
                 </button>
             </td>
         `;
@@ -537,11 +549,103 @@ if (modal && closeModal) {
 const addToModal = document.getElementById('addToModal');
 const closeAddToModal = document.getElementById('closeAddToModal');
 
+// Store current row data for modal operations
+let currentModalRow = null;
+
 function showAddToModal(row) {
-    // Instead of showing modal, directly add to routine
-    addCourseToRoutine(row);
-    // Update the add button state in the table
-    updateAddButtonState(row.Course, row.Section);
+    // Show modal with routine selection options
+    const modalBody = document.getElementById('addToModalBody');
+    if (!modalBody || !addToModal) {
+        // Fallback: add to current routine directly
+        addCourseToRoutine(row);
+        updateAddButtonState(row.Course, row.Section);
+        return;
+    }
+    
+    // Store row for later use in event handlers
+    currentModalRow = row;
+    
+    renderRoutineModalButtons(modalBody, row);
+    addToModal.classList.remove('hidden');
+}
+
+// Render the routine selection buttons in the modal
+function renderRoutineModalButtons(modalBody, row) {
+    // Get which routines already have this course
+    const existingIndices = getRoutineIndicesForCourse(row.Course, row.Section);
+    
+    // Build the routine selection UI
+    let html = `<div class="routine-select-title">Manage routines for this course:</div>`;
+    html += `<div class="routine-select-list">`;
+    
+    for (let i = 0; i < TOTAL_ROUTINES; i++) {
+        const isAdded = existingIndices.includes(i);
+        const color = ROUTINE_COLORS[i];
+        
+        if (isAdded) {
+            // Show added state with remove button
+            html += `
+                <div class="routine-select-row">
+                    <span class="routine-select-label">
+                        <span class="routine-select-dot" style="background-color: ${color}"></span>
+                        Routine ${i + 1}
+                        <i class="fas fa-check" style="color: #10b981; margin-left: 4px;"></i>
+                    </span>
+                    <button class="routine-remove-modal-btn" data-routine-index="${i}" title="Remove from Routine ${i + 1}">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            `;
+        } else {
+            // Show add button
+            html += `
+                <div class="routine-select-row">
+                    <span class="routine-select-label">
+                        <span class="routine-select-dot" style="background-color: ${color}"></span>
+                        Routine ${i + 1}
+                    </span>
+                    <button class="routine-add-modal-btn" data-routine-index="${i}" title="Add to Routine ${i + 1}">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+            `;
+        }
+    }
+    
+    html += `</div>`;
+    html += `<div class="routine-select-info">
+        <strong>${row.Course}</strong> - Sec ${row.Section}<br>
+        <span style="color: var(--text-muted); font-size: 0.9em;">${row.Faculty || 'TBA'}</span>
+    </div>`;
+    
+    modalBody.innerHTML = html;
+    
+    // Attach click handlers for Add buttons
+    modalBody.querySelectorAll('.routine-add-modal-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const routineIdx = parseInt(btn.getAttribute('data-routine-index'));
+            if (addCourseToRoutineByIndex(row, routineIdx)) {
+                // Re-render the modal to show updated state
+                renderRoutineModalButtons(modalBody, row);
+            }
+        });
+    });
+    
+    // Attach click handlers for Remove buttons
+    modalBody.querySelectorAll('.routine-remove-modal-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const routineIdx = parseInt(btn.getAttribute('data-routine-index'));
+            // Find and remove the course from the specified routine
+            const courseIndex = allRoutines[routineIdx].findIndex(
+                c => c.code === row.Course && c.section === row.Section
+            );
+            if (courseIndex !== -1) {
+                removeCourseFromRoutineByIndex(courseIndex, routineIdx);
+                // Re-render the modal to show updated state
+                renderRoutineModalButtons(modalBody, row);
+            }
+        });
+    });
 }
 
 // Add this new function to update button states
@@ -551,11 +655,18 @@ function updateAddButtonState(course, section) {
             btn.getAttribute('data-course') === course &&
             btn.getAttribute('data-section') === section
         ) {
-            if (isInRoutine(course, section)) {
-                btn.classList.add('added');
-                btn.disabled = true;
-                btn.title = 'Already in Routine';
-                btn.innerHTML = '<i class="fas fa-check"></i> Added';
+            const routineIndices = getRoutineIndicesForCourse(course, section);
+            const hasAnyRoutine = routineIndices.length > 0;
+            
+            if (hasAnyRoutine) {
+                // Show colored dots for which routines contain this course
+                const dots = routineIndices.map(idx => 
+                    `<span class="course-routine-dot" style="background-color: ${ROUTINE_COLORS[idx]}"></span>`
+                ).join('');
+                btn.classList.remove('added'); // Don't disable the button
+                btn.disabled = false;
+                btn.title = `In Routine ${routineIndices.map(i => i + 1).join(', ')}`;
+                btn.innerHTML = `${dots} <i class="fas fa-plus"></i> Add`;
             } else {
                 btn.classList.remove('added');
                 btn.disabled = false;
@@ -684,7 +795,20 @@ function escapeHtml(str) {
 }
 
 // --- Flexible Routine Maker Logic ---
-const ROUTINE_KEY = 'routine_courses';
+// Multi-routine support: 5 independent routines
+const ROUTINE_KEY_PREFIX = 'routine_courses_';
+const CURRENT_ROUTINE_KEY = 'current_routine_index';
+const TOTAL_ROUTINES = 5;
+
+// Colors for each routine (used for dots and visual indicators)
+const ROUTINE_COLORS = [
+    '#e11d48', // Red/Rose
+    '#f59e0b', // Amber/Orange
+    '#10b981', // Emerald/Green
+    '#3b82f6', // Blue
+    '#8b5cf6'  // Purple
+];
+
 const routineDays = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
 const dayMap = {A:'Sat',S:'Sun',M:'Mon',T:'Tue',W:'Wed',R:'Thu',F:'Fri'};
 
@@ -729,20 +853,82 @@ EXAM_DATE_2_SLOTS.forEach(slot => {
     EXAM_SLOT_INFO.set(`${startMin}-${endMin}`, { dateGroup: 2, label: slot.label });
 });
 
-let routineCourses = [];
+// Multi-routine data structure
+let allRoutines = [[], [], [], [], []]; // 5 independent routines
+let currentRoutineIndex = 0;
+let routineCourses = []; // Current active routine (reference to allRoutines[currentRoutineIndex])
 
-// Load routine from localStorage
-function loadRoutine() {
+// Load all routines from localStorage
+function loadAllRoutines() {
+    for (let i = 0; i < TOTAL_ROUTINES; i++) {
+        try {
+            allRoutines[i] = JSON.parse(localStorage.getItem(ROUTINE_KEY_PREFIX + i)) || [];
+        } catch {
+            allRoutines[i] = [];
+        }
+    }
+    // Load current routine index
     try {
-        routineCourses = JSON.parse(localStorage.getItem(ROUTINE_KEY)) || [];
+        currentRoutineIndex = parseInt(localStorage.getItem(CURRENT_ROUTINE_KEY)) || 0;
+        if (currentRoutineIndex < 0 || currentRoutineIndex >= TOTAL_ROUTINES) {
+            currentRoutineIndex = 0;
+        }
     } catch {
-        routineCourses = [];
+        currentRoutineIndex = 0;
+    }
+    routineCourses = allRoutines[currentRoutineIndex];
+    updateRoutineDotColor();
+}
+
+// Save a specific routine to localStorage
+function saveRoutine(index = currentRoutineIndex) {
+    localStorage.setItem(ROUTINE_KEY_PREFIX + index, JSON.stringify(allRoutines[index]));
+}
+
+// Save current routine index
+function saveCurrentRoutineIndex() {
+    localStorage.setItem(CURRENT_ROUTINE_KEY, currentRoutineIndex.toString());
+}
+
+// Switch to a different routine
+function switchToRoutine(index) {
+    if (index < 0 || index >= TOTAL_ROUTINES) return;
+    currentRoutineIndex = index;
+    routineCourses = allRoutines[currentRoutineIndex];
+    saveCurrentRoutineIndex();
+    updateRoutineDotColor();
+    renderRoutineTable();
+    // Re-render main table to update indicators
+    renderTable(filteredData.length ? filteredData : courseData);
+}
+
+// Update the routine header dot color
+function updateRoutineDotColor() {
+    const dot = document.getElementById('currentRoutineDot');
+    if (dot) {
+        dot.style.backgroundColor = ROUTINE_COLORS[currentRoutineIndex];
     }
 }
 
-// Save routine to localStorage
-function saveRoutine() {
-    localStorage.setItem(ROUTINE_KEY, JSON.stringify(routineCourses));
+// Check if a course is in a specific routine
+function isInRoutineByIndex(course, section, routineIndex) {
+    return allRoutines[routineIndex].some(c => c.code === course && c.section === section);
+}
+
+// Get all routine indices that contain a course
+function getRoutineIndicesForCourse(course, section) {
+    const indices = [];
+    for (let i = 0; i < TOTAL_ROUTINES; i++) {
+        if (isInRoutineByIndex(course, section, i)) {
+            indices.push(i);
+        }
+    }
+    return indices;
+}
+
+// Legacy function for backward compatibility
+function loadRoutine() {
+    loadAllRoutines();
 }
 
 // Parse time string like "11:20 AM - 12:50 PM RA"
@@ -763,15 +949,15 @@ function timeToMinutes(t) {
     return h * 60 + m;
 }
 
-// Add course to routine (prevent duplicates)
-function addCourseToRoutine({Course, Section, Faculty, Time, Room}) {
+// Add course to a specific routine (prevent duplicates)
+function addCourseToRoutineByIndex({Course, Section, Faculty, Time, Room}, routineIndex) {
     const parsed = parseRoutineTime(Time);
-    if (!parsed) return;
+    if (!parsed) return false;
     
-    // Check for existing course
-    if (isInRoutine(Course, Section)) return;
+    // Check for existing course in that routine
+    if (isInRoutineByIndex(Course, Section, routineIndex)) return false;
     
-    routineCourses.push({
+    allRoutines[routineIndex].push({
         code: Course,
         section: Section,
         faculty: Faculty,
@@ -783,26 +969,46 @@ function addCourseToRoutine({Course, Section, Faculty, Time, Room}) {
         days: parsed.days
     });
     
-    saveRoutine();
-    renderRoutineTable();
+    saveRoutine(routineIndex);
+    
+    // If adding to current routine, re-render
+    if (routineIndex === currentRoutineIndex) {
+        renderRoutineTable();
+    }
+    
     // Update the add button state
     updateAddButtonState(Course, Section);
     // Re-render main table to update conflict indicators
     renderTable(filteredData.length ? filteredData : courseData);
+    return true;
 }
 
-// Remove course from routine by index
-function removeCourseFromRoutine(index) {
-    const removed = routineCourses[index];
-    routineCourses.splice(index, 1);
-    saveRoutine();
-    renderRoutineTable();
+// Legacy function - adds to current routine
+function addCourseToRoutine({Course, Section, Faculty, Time, Room}) {
+    return addCourseToRoutineByIndex({Course, Section, Faculty, Time, Room}, currentRoutineIndex);
+}
+
+// Remove course from a specific routine by index
+function removeCourseFromRoutineByIndex(courseIndex, routineIndex = currentRoutineIndex) {
+    const removed = allRoutines[routineIndex][courseIndex];
+    allRoutines[routineIndex].splice(courseIndex, 1);
+    saveRoutine(routineIndex);
+    
+    if (routineIndex === currentRoutineIndex) {
+        renderRoutineTable();
+    }
+    
     // Update the add button state for the removed course
     if (removed) {
         updateAddButtonState(removed.code, removed.section);
     }
     // Re-render main table to update conflict indicators
     renderTable(filteredData.length ? filteredData : courseData);
+}
+
+// Legacy function for removing from current routine
+function removeCourseFromRoutine(index) {
+    removeCourseFromRoutineByIndex(index, currentRoutineIndex);
 }
 
 // Render routine table with flexible slots and remove button
@@ -1022,6 +1228,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Routine selector change handler
+    const routineSelector = document.getElementById('routineSelector');
+    if (routineSelector) {
+        // Set initial value from saved index
+        routineSelector.value = currentRoutineIndex.toString();
+        
+        routineSelector.addEventListener('change', function() {
+            const newIndex = parseInt(routineSelector.value);
+            switchToRoutine(newIndex);
+        });
+    }
+    
     // Remove wishlist visibility setting
     // setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
     setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
@@ -1137,8 +1355,15 @@ window.addEventListener('load', () => {
     // Load wishlist
     loadWishlist();
     
-    // Load routine from storage
-    loadRoutine();
+    // Load all routines from storage
+    loadAllRoutines();
+    
+    // Set up routine selector with current value
+    const routineSelector = document.getElementById('routineSelector');
+    if (routineSelector) {
+        routineSelector.value = currentRoutineIndex.toString();
+    }
+    
     renderRoutineTable();
     
     // Hook up PDF download button

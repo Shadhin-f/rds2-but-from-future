@@ -2025,3 +2025,241 @@ records-list::-webkit-scrollbar-thumb {
     padding: 15px;
   }
 }
+
+/* Multi-Routine Selector Styles */
+.routine-selector {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.routine-selector:hover {
+  border-color: var(--primary-color);
+}
+
+.routine-selector:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.2);
+}
+
+.routine-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.routine-color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+/* Course routine indicator dots in table */
+.course-routine-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Small dots in add button */
+.course-routine-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 2px;
+  vertical-align: middle;
+}
+
+/* Routine Selection Modal Styles */
+.routine-select-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.routine-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* New row-based layout for routine selection */
+.routine-select-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.routine-select-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.routine-add-modal-btn,
+.routine-remove-modal-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.routine-add-modal-btn {
+  background: var(--primary-gradient);
+  color: #fff;
+}
+
+.routine-add-modal-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
+}
+
+.routine-remove-modal-btn {
+  background: rgba(225, 29, 72, 0.15);
+  color: #e11d48;
+  border: 1px solid #e11d48;
+}
+
+.routine-remove-modal-btn:hover {
+  background: #e11d48;
+  color: #fff;
+}
+
+.routine-select-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.routine-select-btn:hover:not(.added) {
+  background: var(--primary-gradient);
+  border-color: transparent;
+  color: #fff;
+}
+
+.routine-select-btn.added {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #10b981;
+  cursor: default;
+}
+
+.routine-select-btn i {
+  margin-left: auto;
+}
+
+.routine-select-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.routine-select-info {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+/* Light mode adjustments for routine selector */
+body.light-mode .routine-selector {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .routine-select-row {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .routine-select-label {
+  color: var(--text-color);
+}
+
+body.light-mode .routine-add-modal-btn {
+  background: var(--primary-gradient);
+  color: #fff;
+}
+
+body.light-mode .routine-remove-modal-btn {
+  background: rgba(225, 29, 72, 0.1);
+}
+
+body.light-mode .routine-select-btn {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .routine-select-btn:hover:not(.added) {
+  background: var(--primary-gradient);
+  color: #fff;
+}
+
+body.light-mode .routine-select-btn.added {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* Mobile responsive for routine selector */
+@media (max-width: 700px) {
+  .routine-header-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .routine-selector {
+    font-size: 0.85rem;
+    padding: 3px 8px;
+  }
+  
+  .routine-color-dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .course-routine-indicator {
+    width: 6px;
+    height: 6px;
+    margin-right: 3px;
+  }
+}
