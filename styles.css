@@ -596,8 +596,8 @@ td {
 }
 
 .modal-body strong {
-  color: #059669;
-  font-weight: 500;
+  color: var(--text-color);
+  font-weight: 600;
 }
 
 /* Responsive modal for mobile */
@@ -2521,9 +2521,11 @@ body.light-mode .import-preview-item {
   font-size: 0.85rem;
   color: #64748b;
 }
-
+.tutorial-section strong{
+  color: #059669 !important;
+}
 .tutorial-example strong {
-  color: #334155;
+  color: #16a34a !important;
 }
 
 .tutorial-conflict {
