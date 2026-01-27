@@ -480,11 +480,11 @@ td {
 .modal-content {
   /* background: rgba(46, 18, 90, 0.66); */
   background: rgba(23, 33, 56, 0.523);
-  border-radius: 18px;
-  width: 96%;
-  max-width: 420px;
-  min-height: 120px;
-  max-height: 90vh;
+  border-radius: 14px;
+  width: 92%;
+  max-width: 340px;
+  min-height: 100px;
+  max-height: 85vh;
   /* border: none; */
   border: 1px solid rgba(245, 245, 245, 0.99);
   box-shadow:
@@ -542,7 +542,7 @@ td {
 }
 
 .modal-header {
-  padding: 1.1rem 1.5rem 1rem 1.5rem;
+  padding: 0.7rem 1rem;
   border-bottom: 1px solid rgb(255, 255, 255);
   display: flex;
   justify-content: space-between;
@@ -552,7 +552,7 @@ td {
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.18rem;
+  font-size: 1.05rem;
   /* color: var(--primary-color); */
   color: var(--border-color);
   font-weight: 800;
@@ -579,19 +579,19 @@ td {
 }
 
 .modal-body {
-  padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+  padding: 0.8rem 1rem;
   overflow-y: auto;
   flex: 1;
-  max-height: calc(90vh - 60px);
+  max-height: calc(90vh - 50px);
   display: flex;
   flex-direction: column;
   color: #cbd5e1;
-  font-size: 1.01rem;
-  gap: 0.7em;
+  font-size: 0.92rem;
+  gap: 0.4em;
 }
 
 .modal-body p {
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   color: rgb(255, 255, 255);
 }
 
@@ -600,16 +600,201 @@ td {
   font-weight: 600;
 }
 
+/* Modal Add to Plan Section */
+.modal-add-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+/* Plan Buttons Row */
+.plan-btns-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.plan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #fff;
+}
+
+.plan-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
+
+.plan-btn.added {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.plan-btn.added:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.plan-btn .plan-btn-num {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.plan-btn .fa-plus {
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+
+.plan-btn .fa-times {
+  font-size: 0.65rem;
+  color: #ef4444;
+}
+
+.plan-btn-warn {
+  font-size: 0.7rem;
+  margin-left: 1px;
+}
+
+.modal-add-to-plan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-add-to-plan-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
+}
+
+.modal-add-to-plan-btn.small {
+  padding: 5px 8px;
+  font-size: 0.75rem;
+}
+
+.modal-in-plans {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Same Time Sections */
+.modal-same-time-sections {
+  margin: 8px 0;
+  padding: 8px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.modal-same-time-sections > strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.same-time-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.same-time-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+}
+
+.same-time-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.same-time-section {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.85rem;
+}
+
+.same-time-faculty {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.same-time-room {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.same-time-plans {
+  color: #10b981;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 /* Responsive modal for mobile */
 @media (max-width: 600px) {
   .modal-content {
-    max-width: 98vw;
+    max-width: 94vw;
+    width: 94%;
     padding: 0;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   .modal-header,
   .modal-body {
-    padding: 1rem 0.9rem;
+    padding: 0.6rem 0.7rem;
+  }
+  
+  .modal-add-section {
+    justify-content: flex-start;
+  }
+  
+  .plan-btns-row {
+    gap: 4px;
+    justify-content: flex-start;
+  }
+  
+  .plan-btn {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+  }
+  
+  .same-time-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .same-time-info {
+    width: 100%;
   }
 }
 
@@ -2637,5 +2822,50 @@ body.light-mode .import-preview-item {
   
   .tutorial-colors {
     justify-content: center;
+  }
+}
+
+/* ===== QUICK TIPS SECTION ===== */
+.quick-tips-section {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  opacity: 0.85;
+}
+
+.quick-tips-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.tips-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.tip-text {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.tip-text.fade-out {
+  opacity: 0;
+}
+
+@media (max-width: 600px) {
+  .quick-tips-section {
+    margin: 15px 10px;
+    padding: 10px 15px;
+  }
+  
+  .tip-text {
+    font-size: 0.85rem;
   }
 }

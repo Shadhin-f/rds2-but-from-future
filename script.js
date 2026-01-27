@@ -511,6 +511,66 @@ function showModal(data) {
         .filter(record => record.length > 0)
         .join('\n');
     
+    // Find other sections of the same course with the same time
+    const sameCourseOtherSections = courseData.filter(row => 
+        row.Course === data.Course && 
+        row.Time === data.Time && 
+        row.Section !== data.Section
+    );
+    
+    // Helper to build plan buttons for a course
+    function buildPlanButtons(course, section, faculty, time, room) {
+        const routineIndices = getRoutineIndicesForCourse(course, section);
+        let btns = '';
+        for (let i = 0; i < TOTAL_ROUTINES; i++) {
+            const isAdded = routineIndices.includes(i);
+            const color = ROUTINE_COLORS[i];
+            const hasTimeClash = !isAdded && hasTimeConflictWithRoutineByIndex(time, i);
+            const hasExamClash = !isAdded && hasExamClashWithRoutineByIndex(time, i);
+            
+            let warningIcon = '';
+            if (hasTimeClash) warningIcon = '<span class="plan-btn-warn" title="Time Conflict">🕛</span>';
+            else if (hasExamClash) warningIcon = '<span class="plan-btn-warn" title="Exam Clash">⚠️</span>';
+            
+            if (isAdded) {
+                btns += `<button class="plan-btn added" style="border-color:${color}" data-course="${escapeHtml(course)}" data-section="${escapeHtml(section)}" data-faculty="${escapeHtml(faculty || '')}" data-time="${escapeHtml(time || '')}" data-room="${escapeHtml(room || '')}" data-idx="${i}" title="Remove from Plan ${i+1}">
+                    <span class="plan-btn-num" style="color:${color}">${i+1}</span><i class="fas fa-times"></i>
+                </button>`;
+            } else {
+                btns += `<button class="plan-btn" style="border-color:${color}" data-course="${escapeHtml(course)}" data-section="${escapeHtml(section)}" data-faculty="${escapeHtml(faculty || '')}" data-time="${escapeHtml(time || '')}" data-room="${escapeHtml(room || '')}" data-idx="${i}" title="Add to Plan ${i+1}">
+                    <span class="plan-btn-num" style="color:${color}">${i+1}</span>${warningIcon}<i class="fas fa-plus"></i>
+                </button>`;
+            }
+        }
+        return `<div class="plan-btns-row">${btns}</div>`;
+    }
+    
+    // Build the plan buttons for main course
+    let addButtonHtml = `<div class="modal-add-section">${buildPlanButtons(data.Course, data.Section, data.Faculty, data.Time, data.Room)}</div>`;
+    
+    // Build same time sections HTML
+    let sameTimeSectionsHtml = '';
+    if (sameCourseOtherSections.length > 0) {
+        sameTimeSectionsHtml = `
+            <div class="modal-same-time-sections">
+                <strong>Other sections at same time:</strong>
+                <div class="same-time-list">
+                    ${sameCourseOtherSections.map(section => {
+                        return `
+                            <div class="same-time-item">
+                                <div class="same-time-info">
+                                    <span class="same-time-section">Sec ${escapeHtml(section.Section)}</span>
+                                    <span class="same-time-faculty">${escapeHtml(section.Faculty || 'TBA')}</span>
+                                </div>
+                                ${buildPlanButtons(section.Course, section.Section, section.Faculty, section.Time, section.Room)}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
     modalBody.innerHTML = `
         <p><strong>Course:</strong> ${escapeHtml(data.Course || '')}</p>
         <p><strong>Section:</strong> ${escapeHtml(data.Section || '')}</p>
@@ -518,12 +578,43 @@ function showModal(data) {
         <p><strong>Time:</strong> ${escapeHtml(data.Time || '')}</p>
         <p><strong>Seats:</strong> ${escapeHtml(data.Room || '')}</p>
         <p><strong>Semester:</strong> ${escapeHtml(data.Semester || '')}</p>
+        ${addButtonHtml}
+        ${sameTimeSectionsHtml}
         <p style="display: none;"><strong>Prediction:</strong> ${escapeHtml(data.Prediction || '')}</p>
         <div class="records-section" style="display: none;">
             <strong>Historical Records:</strong>
             <pre class="records-list">${escapeHtml(formattedRecords)}</pre>
         </div>
     `;
+    
+    // Attach click handlers for plan buttons
+    modalBody.querySelectorAll('.plan-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const rowData = {
+                Course: btn.getAttribute('data-course'),
+                Section: btn.getAttribute('data-section'),
+                Faculty: btn.getAttribute('data-faculty'),
+                Time: btn.getAttribute('data-time'),
+                Room: btn.getAttribute('data-room')
+            };
+            const idx = parseInt(btn.getAttribute('data-idx'));
+            const isAdded = btn.classList.contains('added');
+            
+            if (isAdded) {
+                // Remove from routine - stored data uses lowercase 'code' and 'section'
+                const courseIdx = allRoutines[idx].findIndex(c => c.code === rowData.Course && c.section === rowData.Section);
+                if (courseIdx !== -1) {
+                    removeCourseFromRoutineByIndex(courseIdx, idx);
+                }
+            } else {
+                // Add to routine
+                addCourseToRoutineByIndex(rowData, idx);
+            }
+            // Re-render modal to update button states
+            showModal(data);
+        });
+    });
+    
     if (modal) {
         modal.classList.remove('hidden');
     }
@@ -1518,6 +1609,42 @@ function setupTutorialModal() {
         });
     }
 }
+
+// ========== QUICK TIPS ROTATION ==========
+const quickTips = [
+    "Use multiple plans to compare different schedule options before advising.",
+    "Press Alt + 1 to Alt + 5 to quickly switch between your 5 routine plans.",
+    "Share your routine code with friends to coordinate class schedules.",
+    "Pay attention to exam clash warnings - they can save you during finals!",
+    "Download your final routine as PDF to have it handy during registration.",
+    "Your routine data is saved locally, so it persists even if you close the browser.",
+    "Use ST, MW, or RA in the time filter to find classes on specific days.",
+    "Click the ? button anytime for a full tutorial on how to use this tool."
+];
+
+let currentTipIndex = 0;
+
+function setupQuickTips() {
+    const tipText = document.getElementById('tipText');
+    if (!tipText) return;
+    
+    setInterval(() => {
+        // Fade out
+        tipText.classList.add('fade-out');
+        
+        setTimeout(() => {
+            // Change tip
+            currentTipIndex = (currentTipIndex + 1) % quickTips.length;
+            tipText.textContent = quickTips[currentTipIndex];
+            
+            // Fade in
+            tipText.classList.remove('fade-out');
+        }, 300);
+    }, 5000);
+}
+
+// Initialize tips on page load
+document.addEventListener('DOMContentLoaded', setupQuickTips);
 
 // ========== SHARE / IMPORT ROUTINE FUNCTIONALITY ==========
 
