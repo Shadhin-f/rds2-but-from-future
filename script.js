@@ -112,6 +112,7 @@ const DEFAULT_SEMESTER = '261_v15.csv';
 // ===================================================================
 
 let CSV_FILENAME = DEFAULT_SEMESTER;
+let currentSemester = DEFAULT_SEMESTER;
 const CACHE_KEY = `courseData_${CSV_FILENAME}`;
 let courseData = [];
 let filteredData = []; // Add this line to store filtered data globally
@@ -424,10 +425,20 @@ function renderTable(data) {
         if (hasTimeConflict) courseDisplay += ' 🕛';
         if (hasExamClash) courseDisplay += ' ⚠️';
         
-        // Build add button with routine dots
+        // Build add button with routine dots (only for current semester)
+        const isCurrentSemester = currentSemester === DEFAULT_SEMESTER;
         const addBtnDots = routineIndices.map(idx => 
             `<span class="course-routine-dot" style="background-color: ${ROUTINE_COLORS[idx]}"></span>`
         ).join('');
+        
+        const addButtonHtml = isCurrentSemester ? `
+                <button class="view-details-btn add-to-wishlist-btn"
+                    title="${isInAnyRoutine ? 'In Routine ' + routineIndices.map(i => i + 1).join(', ') : 'Add to Routine'}"
+                    data-course="${escapeHtml(row.Course)}" 
+                    data-section="${escapeHtml(row.Section)}"
+                >
+                    ${addBtnDots}<i class="fas fa-plus"></i> Add
+                </button>` : '';
         
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -449,13 +460,7 @@ function renderTable(data) {
                     data-prediction="${escapeHtml(row.Prediction || '')}"
                     data-records="${escapeHtml(row.Records || '')}"
                 >View</button>
-                <button class="view-details-btn add-to-wishlist-btn"
-                    title="${isInAnyRoutine ? 'In Routine ' + routineIndices.map(i => i + 1).join(', ') : 'Add to Routine'}"
-                    data-course="${escapeHtml(row.Course)}" 
-                    data-section="${escapeHtml(row.Section)}"
-                >
-                    ${addBtnDots}<i class="fas fa-plus"></i> Add
-                </button>
+                ${addButtonHtml}
             </td>
         `;
         tableBody.appendChild(tr);
@@ -545,12 +550,15 @@ function showModal(data) {
         return `<div class="plan-btns-row">${btns}</div>`;
     }
     
-    // Build the plan buttons for main course
-    let addButtonHtml = `<div class="modal-add-section">${buildPlanButtons(data.Course, data.Section, data.Faculty, data.Time, data.Room)}</div>`;
+    // Only show plan buttons for current semester
+    const isCurrentSemester = currentSemester === DEFAULT_SEMESTER;
     
-    // Build same time sections HTML
+    // Build the plan buttons for main course (only for current semester)
+    let addButtonHtml = isCurrentSemester ? `<div class="modal-add-section">${buildPlanButtons(data.Course, data.Section, data.Faculty, data.Time, data.Room)}</div>` : '';
+    
+    // Build same time sections HTML (only for current semester)
     let sameTimeSectionsHtml = '';
-    if (sameCourseOtherSections.length > 0) {
+    if (isCurrentSemester && sameCourseOtherSections.length > 0) {
         sameTimeSectionsHtml = `
             <div class="modal-same-time-sections">
                 <strong>Other sections at same time:</strong>
@@ -1612,6 +1620,7 @@ function setupTutorialModal() {
 
 // ========== QUICK TIPS ROTATION ==========
 const quickTips = [
+    // Quick Planner tips
     "Use multiple plans to compare different schedule options before advising.",
     "Press Alt + 1 to Alt + 5 to quickly switch between your 5 routine plans.",
     "Share your routine code with friends to coordinate class schedules.",
@@ -1619,7 +1628,40 @@ const quickTips = [
     "Download your final routine as PDF to have it handy during registration.",
     "Your routine data is saved locally, so it persists even if you close the browser.",
     "Use ST, MW, or RA in the time filter to find classes on specific days.",
-    "Click the ? button anytime for a full tutorial on how to use this tool."
+    "Click the ? button anytime for a full tutorial on how to use this tool.",
+    
+    // Study Materials tips
+    "📚 Check out Study Materials for notes, slides, and past papers shared by students!",
+    "📖 You can contribute study materials to help fellow NSUers succeed.",
+    
+    // Routine Maker tips
+    "🗓️ Use Routine Maker for a full-screen schedule builder with more features.",
+    "🎨 Routine Maker lets you customize colors and export high-quality images.",
+    
+    // CGPA Calculator tips
+    "📊 Use CGPA Calculator to track your academic progress and plan for honors.",
+    "🎯 CGPA Calculator shows how many credits you need to reach your target GPA.",
+    
+    // Retake Calculator tips
+    "🔄 Retake Calculator helps you decide if retaking a course is worth it.",
+    "💡 See exactly how much your CGPA will improve before retaking a course.",
+    
+    // Course Map tips
+    "🗺️ Course Map shows all prerequisite chains - plan your semesters ahead!",
+    "📍 Visualize your entire degree path with the interactive Course Map.",
+    
+    // Semester Planner tips
+    "📅 Semester Planner helps you plan courses for multiple semesters at once.",
+    "🎓 Use Semester Planner to ensure you complete all requirements on time.",
+    
+    // Library tools tips
+    "📕 Use NSU Library Book Locator to find exactly where books are shelved.",
+    "🔍 Library Shelf Finder helps you navigate the library like a pro.",
+    
+    // General tips
+    "⭐ Found this helpful? Share with your friends and leave a review!",
+    "💬 Join our Telegram community for updates and to connect with other NSUers.",
+    "🌙 Toggle dark/light mode using the button in the top-right corner."
 ];
 
 let currentTipIndex = 0;
@@ -1990,8 +2032,6 @@ function showImportSuccessNotification() {
 
 // ========== END SHARE / IMPORT FUNCTIONALITY ==========
 
-let currentSemester = DEFAULT_SEMESTER;
-
 // Add this function to handle semester changes
 async function changeSemester(semesterFile) {
     const warningCard = document.getElementById('semesterWarning');
@@ -2036,12 +2076,14 @@ function setupSemesterChange() {
     if (semesterSelect) {
         semesterSelect.addEventListener('change', async function() {
             CSV_FILENAME = this.value;
+            currentSemester = this.value;
             currentPage = 1;
             filteredData = [];
             await loadCSVData();
         });
         // Initial load
         CSV_FILENAME = semesterSelect.value;
+        currentSemester = semesterSelect.value;
         loadCSVData();
     }
 }
