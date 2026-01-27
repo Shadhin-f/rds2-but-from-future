@@ -575,12 +575,25 @@ function renderRoutineModalButtons(modalBody, row) {
     const existingIndices = getRoutineIndicesForCourse(row.Course, row.Section);
     
     // Build the routine selection UI
-    let html = `<div class="routine-select-title">Manage routines for this course:</div>`;
+    let html = `<div class="routine-select-title">Manage plans for this course:</div>`;
     html += `<div class="routine-select-list">`;
     
     for (let i = 0; i < TOTAL_ROUTINES; i++) {
         const isAdded = existingIndices.includes(i);
         const color = ROUTINE_COLORS[i];
+        
+        // Check for conflicts with this specific routine
+        const hasTimeClash = !isAdded && hasTimeConflictWithRoutineByIndex(row.Time, i);
+        const hasExamClash = !isAdded && hasExamClashWithRoutineByIndex(row.Time, i);
+        
+        // Build warning icons (just emojis beside plan name)
+        let warningIcons = '';
+        if (hasTimeClash) {
+            warningIcons += '<span class="modal-clash-icon time" title="Time Conflict">🕛</span>';
+        }
+        if (hasExamClash) {
+            warningIcons += '<span class="modal-clash-icon exam" title="Exam Clash">⚠️</span>';
+        }
         
         if (isAdded) {
             // Show added state with remove button
@@ -588,23 +601,24 @@ function renderRoutineModalButtons(modalBody, row) {
                 <div class="routine-select-row">
                     <span class="routine-select-label">
                         <span class="routine-select-dot" style="background-color: ${color}"></span>
-                        Routine ${i + 1}
+                        Plan ${i + 1}
                         <i class="fas fa-check" style="color: #10b981; margin-left: 4px;"></i>
                     </span>
-                    <button class="routine-remove-modal-btn" data-routine-index="${i}" title="Remove from Routine ${i + 1}">
+                    <button class="routine-remove-modal-btn" data-routine-index="${i}" title="Remove from Plan ${i + 1}">
                         <i class="fas fa-trash"></i> Remove
                     </button>
                 </div>
             `;
         } else {
-            // Show add button
+            // Show add button with warning icons if any
             html += `
-                <div class="routine-select-row">
+                <div class="routine-select-row${hasTimeClash || hasExamClash ? ' has-conflict' : ''}">
                     <span class="routine-select-label">
                         <span class="routine-select-dot" style="background-color: ${color}"></span>
-                        Routine ${i + 1}
+                        Plan ${i + 1}
+                        ${warningIcons}
                     </span>
-                    <button class="routine-add-modal-btn" data-routine-index="${i}" title="Add to Routine ${i + 1}">
+                    <button class="routine-add-modal-btn" data-routine-index="${i}" title="Add to Plan ${i + 1}">
                         <i class="fas fa-plus"></i> Add
                     </button>
                 </div>
@@ -704,6 +718,29 @@ function hasTimeConflictWithRoutine(timeStr) {
     return false;
 }
 
+// Check if a course's time overlaps with any course in a specific routine by index
+function hasTimeConflictWithRoutineByIndex(timeStr, routineIndex) {
+    const targetRoutine = allRoutines[routineIndex];
+    if (!targetRoutine || !targetRoutine.length) return false;
+    const parsed = parseRoutineTime(timeStr);
+    if (!parsed) return false;
+    
+    const courseStartMin = timeToMinutes(parsed.start);
+    const courseEndMin = timeToMinutes(parsed.end);
+    const courseDays = parsed.days;
+    
+    for (const routineCourse of targetRoutine) {
+        // Check if days overlap
+        const daysOverlap = courseDays.some(day => routineCourse.days.includes(day));
+        if (!daysOverlap) continue;
+        
+        // Check if times overlap
+        const timesOverlap = !(courseEndMin <= routineCourse.startMin || courseStartMin >= routineCourse.endMin);
+        if (timesOverlap) return true;
+    }
+    return false;
+}
+
 // Check if a course would have an exam clash with any course in the routine
 function hasExamClashWithRoutine(timeStr) {
     if (!routineCourses.length) return false;
@@ -725,6 +762,49 @@ function hasExamClashWithRoutine(timeStr) {
     
     // Check each routine course for potential exam clash
     for (const routineCourse of routineCourses) {
+        const routineSlotKey = `${routineCourse.startMin}-${routineCourse.endMin}`;
+        const routineSlotInfo = EXAM_SLOT_INFO.get(routineSlotKey);
+        if (!routineSlotInfo) continue;
+        
+        // Get day groups for routine course
+        const routineDayGroups = new Set();
+        routineCourse.days.forEach(day => {
+            const group = DAY_TO_EXAM_GROUP[day];
+            if (group) routineDayGroups.add(group);
+        });
+        
+        // Check if same day group AND same exam date (Date 1 or Date 2)
+        for (const dayGroup of courseDayGroups) {
+            if (routineDayGroups.has(dayGroup) && slotInfo.dateGroup === routineSlotInfo.dateGroup) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Check if a course would have an exam clash with any course in a specific routine by index
+function hasExamClashWithRoutineByIndex(timeStr, routineIndex) {
+    const targetRoutine = allRoutines[routineIndex];
+    if (!targetRoutine || !targetRoutine.length) return false;
+    const parsed = parseRoutineTime(timeStr);
+    if (!parsed) return false;
+    
+    const courseStartMin = timeToMinutes(parsed.start);
+    const courseEndMin = timeToMinutes(parsed.end);
+    const slotKey = `${courseStartMin}-${courseEndMin}`;
+    const slotInfo = EXAM_SLOT_INFO.get(slotKey);
+    if (!slotInfo) return false; // Not a recognized exam slot
+    
+    // Get the day group(s) for this course's days
+    const courseDayGroups = new Set();
+    parsed.days.forEach(day => {
+        const group = DAY_TO_EXAM_GROUP[day];
+        if (group) courseDayGroups.add(group);
+    });
+    
+    // Check each routine course for potential exam clash
+    for (const routineCourse of targetRoutine) {
         const routineSlotKey = `${routineCourse.startMin}-${routineCourse.endMin}`;
         const routineSlotInfo = EXAM_SLOT_INFO.get(routineSlotKey);
         if (!routineSlotInfo) continue;
@@ -1193,6 +1273,24 @@ function minutesToTime(mins) {
     else if (h > 12) h -= 12;
     return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} ${ampm}`;
 }
+
+// ========== KEYBOARD SHORTCUTS FOR ROUTINE SWITCHING ==========
+// Alt+1 to Alt+5 switches between routines
+document.addEventListener('keydown', function(e) {
+    // Check if Alt key is pressed and key is 1-5
+    if (e.altKey && e.key >= '1' && e.key <= '5') {
+        e.preventDefault(); // Prevent browser default behavior
+        const routineIndex = parseInt(e.key) - 1; // Convert to 0-based index
+        if (routineIndex < TOTAL_ROUTINES) {
+            switchToRoutine(routineIndex);
+            // Update the routine selector dropdown if it exists
+            const routineSelector = document.getElementById('routineSelector');
+            if (routineSelector) {
+                routineSelector.value = routineIndex;
+            }
+        }
+    }
+});
 
 // Update your DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {

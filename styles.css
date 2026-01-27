@@ -2119,6 +2119,18 @@ records-list::-webkit-scrollbar-thumb {
   font-weight: 500;
 }
 
+/* Modal clash icons (emoji style) */
+.modal-clash-icon {
+  font-size: 0.9rem;
+  margin-left: 2px;
+  cursor: help;
+}
+
+.routine-select-row.has-conflict {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.05);
+}
+
 .routine-add-modal-btn,
 .routine-remove-modal-btn {
   display: flex;
@@ -2238,6 +2250,11 @@ body.light-mode .routine-select-btn:hover:not(.added) {
 
 body.light-mode .routine-select-btn.added {
   background: rgba(16, 185, 129, 0.1);
+}
+
+body.light-mode .routine-select-row.has-conflict {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.08);
 }
 
 /* Mobile responsive for routine selector */
