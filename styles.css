@@ -386,6 +386,70 @@ td {
   text-align: center;
 }
 
+/* Clickable Faculty Name */
+.faculty-clickable {
+  cursor: pointer;
+  transition: opacity 0.2s ease, text-decoration 0.2s ease;
+  border-radius: 3px;
+}
+
+.faculty-clickable:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* Faculty Courses Table in Modal */
+.faculty-courses-section {
+  margin-top: 8px;
+}
+
+.faculty-courses-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.faculty-courses-table th {
+  background: var(--border-color);
+  color: var(--text-color);
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.faculty-courses-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-muted);
+  text-align: left;
+}
+
+.faculty-course-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.faculty-course-row:hover {
+  background-color: var(--tr-hover-color);
+}
+
+.faculty-course-row:hover td {
+  color: var(--text-color);
+}
+
+body.light-mode .faculty-courses-table th {
+  background: #f1f5f9;
+  color: var(--text-color);
+}
+
+body.light-mode .faculty-course-row:hover {
+  background-color: #f1f5f9;
+}
+
 .loading {
   text-align: center;
   padding: 20px;

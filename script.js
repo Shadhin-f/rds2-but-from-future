@@ -441,11 +441,15 @@ function renderTable(data) {
                 </button>` : '';
         
         const tr = document.createElement('tr');
+        const facultyName = row.Faculty || '';
+        const facultyClickable = facultyName && facultyName !== 'TBA' 
+            ? `<span class="faculty-clickable" data-faculty="${escapeHtml(facultyName)}">${escapeHtml(facultyName)}</span>` 
+            : escapeHtml(facultyName);
         tr.innerHTML = `
             <td>${start + index + 1}</td>
             <td>${courseDisplay}</td>
             <td>${escapeHtml(row.Section || '')}</td>
-            <td>${escapeHtml(row.Faculty || '')}</td>
+            <td>${facultyClickable}</td>
             <td>${escapeHtml(row.Time || '')}</td>
             <td>${escapeHtml(row.Room || '')}</td>
             <td style="display: none;">${escapeHtml(row.Prediction || '')}</td>
@@ -503,6 +507,17 @@ function renderTable(data) {
             });
         }
     });
+
+    // Faculty name click event
+    document.querySelectorAll('.faculty-clickable').forEach(span => {
+        span.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const facultyName = span.getAttribute('data-faculty');
+            if (facultyName) {
+                showFacultyModal(facultyName);
+            }
+        });
+    });
 }
 
 function showModal(data) {
@@ -521,6 +536,21 @@ function showModal(data) {
         row.Course === data.Course && 
         row.Time === data.Time && 
         row.Section !== data.Section
+    );
+    
+    // Find other sections of this course by the same faculty (different section, same faculty)
+    const sameFacultySameCourse = courseData.filter(row => 
+        row.Course === data.Course && 
+        row.Faculty === data.Faculty && 
+        row.Section !== data.Section &&
+        data.Faculty && data.Faculty !== 'TBA'
+    );
+    
+    // Find all other courses this faculty is teaching (different course, same faculty)
+    const otherCoursesByFaculty = courseData.filter(row => 
+        row.Faculty === data.Faculty && 
+        row.Course !== data.Course &&
+        data.Faculty && data.Faculty !== 'TBA'
     );
     
     // Helper to build plan buttons for a course
@@ -579,6 +609,52 @@ function showModal(data) {
         `;
     }
     
+    // Build other sections by same faculty HTML (only for current semester)
+    let sameFacultySectionsHtml = '';
+    if (isCurrentSemester && sameFacultySameCourse.length > 0) {
+        sameFacultySectionsHtml = `
+            <div class="modal-same-time-sections">
+                <strong>Other sections by ${escapeHtml(data.Faculty)}:</strong>
+                <div class="same-time-list">
+                    ${sameFacultySameCourse.map(section => {
+                        return `
+                            <div class="same-time-item">
+                                <div class="same-time-info">
+                                    <span class="same-time-section">Sec ${escapeHtml(section.Section)}</span>
+                                    <span class="same-time-room">${escapeHtml(section.Time || 'TBA')}</span>
+                                </div>
+                                ${buildPlanButtons(section.Course, section.Section, section.Faculty, section.Time, section.Room)}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Build other courses by this faculty HTML (only for current semester)
+    let otherCoursesHtml = '';
+    if (isCurrentSemester && otherCoursesByFaculty.length > 0) {
+        otherCoursesHtml = `
+            <div class="modal-same-time-sections">
+                <strong>Other courses by ${escapeHtml(data.Faculty)}:</strong>
+                <div class="same-time-list">
+                    ${otherCoursesByFaculty.map(course => {
+                        return `
+                            <div class="same-time-item">
+                                <div class="same-time-info">
+                                    <span class="same-time-section">${escapeHtml(course.Course)} - Sec ${escapeHtml(course.Section)}</span>
+                                    <span class="same-time-room">${escapeHtml(course.Time || 'TBA')}</span>
+                                </div>
+                                ${buildPlanButtons(course.Course, course.Section, course.Faculty, course.Time, course.Room)}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
     modalBody.innerHTML = `
         <p><strong>Course:</strong> ${escapeHtml(data.Course || '')}</p>
         <p><strong>Section:</strong> ${escapeHtml(data.Section || '')}</p>
@@ -588,6 +664,8 @@ function showModal(data) {
         <p><strong>Semester:</strong> ${escapeHtml(data.Semester || '')}</p>
         ${addButtonHtml}
         ${sameTimeSectionsHtml}
+        ${sameFacultySectionsHtml}
+        ${otherCoursesHtml}
         <p style="display: none;"><strong>Prediction:</strong> ${escapeHtml(data.Prediction || '')}</p>
         <div class="records-section" style="display: none;">
             <strong>Historical Records:</strong>
@@ -620,6 +698,77 @@ function showModal(data) {
             }
             // Re-render modal to update button states
             showModal(data);
+        });
+    });
+    
+    if (modal) {
+        modal.classList.remove('hidden');
+    }
+}
+
+// Show faculty modal with all courses taught by this faculty
+function showFacultyModal(facultyName) {
+    const modalBody = document.querySelector('.modal-body');
+    const modalHeader = document.querySelector('.modal-header h2');
+    if (!modalBody) return;
+
+    // Find all courses by this faculty
+    const facultyCourses = courseData.filter(row => row.Faculty === facultyName);
+    
+    // Update modal header
+    if (modalHeader) {
+        modalHeader.textContent = `Faculty: ${facultyName}`;
+    }
+    
+    // Build the courses table
+    let coursesTableHtml = '';
+    if (facultyCourses.length > 0) {
+        coursesTableHtml = `
+            <div class="faculty-courses-section">
+                <p style="margin-bottom: 12px; color: var(--text-muted);">
+                    Teaching <strong>${facultyCourses.length}</strong> section${facultyCourses.length > 1 ? 's' : ''} this semester
+                </p>
+                <table class="faculty-courses-table">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Section</th>
+                            <th>Time</th>
+                            <th>Seats</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${facultyCourses.map(course => `
+                            <tr class="faculty-course-row" data-course="${escapeHtml(course.Course)}" data-section="${escapeHtml(course.Section)}" data-faculty="${escapeHtml(course.Faculty || '')}" data-time="${escapeHtml(course.Time || '')}" data-room="${escapeHtml(course.Room || '')}" data-semester="${escapeHtml(course.Semester || '')}" data-prediction="${escapeHtml(course.Prediction || '')}" data-records="${escapeHtml(course.Records || '')}">
+                                <td>${escapeHtml(course.Course)}</td>
+                                <td>${escapeHtml(course.Section)}</td>
+                                <td>${escapeHtml(course.Time || 'TBA')}</td>
+                                <td>${escapeHtml(course.Room || '-')}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } else {
+        coursesTableHtml = '<p>No courses found for this faculty.</p>';
+    }
+    
+    modalBody.innerHTML = coursesTableHtml;
+    
+    // Add click handlers for course rows to show course details
+    modalBody.querySelectorAll('.faculty-course-row').forEach(row => {
+        row.addEventListener('click', function() {
+            showModal({
+                Course: row.getAttribute('data-course'),
+                Section: row.getAttribute('data-section'),
+                Faculty: row.getAttribute('data-faculty'),
+                Time: row.getAttribute('data-time'),
+                Room: row.getAttribute('data-room'),
+                Semester: row.getAttribute('data-semester'),
+                Prediction: row.getAttribute('data-prediction'),
+                Records: row.getAttribute('data-records')
+            });
         });
     });
     
