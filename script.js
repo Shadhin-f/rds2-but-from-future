@@ -2510,3 +2510,97 @@ async function generateRoutinePdf() {
         }
     }
 }
+
+// ========== UPCOMING CALENDAR EVENT ==========
+const CALENDAR_EVENTS = [
+    { date: '2025-12-31', content: 'Last day of grade submission Fall 2025' },
+    { date: '2026-01-11', content: 'On-campus course registration for newly admitted students: BEGINS' },
+    { date: '2026-01-12', content: 'Online course registration for regular and probation students: BEGINS' },
+    { date: '2026-01-17', content: 'Orientation program for newly admitted undergraduate students' },
+    { date: '2026-01-19', content: 'Online course registration: ENDS' },
+    { date: '2026-01-20', content: 'Last day of section cancellation and merging' },
+    { date: '2026-01-21', content: 'Classes begin (Spring 2026)' },
+    { date: '2026-01-29', content: 'Last day of online drop with 100% refund' },
+    { date: '2026-02-04', content: 'Holiday – Shab-e-Barat' },
+    { date: '2026-02-09', content: 'Last day of online drop with 50% refund' },
+    { date: '2026-02-16', content: 'Last day of payment without late fee' },
+    { date: '2026-02-17', content: 'Payment with late fee of Tk. 2,000/-: BEGINS' },
+    { date: '2026-02-21', content: 'Holiday – Martyrs Day & International Mother Language Day' },
+    { date: '2026-03-02', content: 'Last day of payment with late fee of Tk. 2,000/-' },
+    { date: '2026-03-03', content: 'Payment with late fee of Tk. 2,000/- + Tk. 100/- per day: BEGINS' },
+    { date: '2026-03-04', content: 'Last day of online drop with "W" grade' },
+    { date: '2026-03-08', content: 'Online Teaching Evaluation: BEGINS' },
+    { date: '2026-03-09', content: 'Last day of payment for financial aid recipients without late fee' },
+    { date: '2026-04-28', content: 'Last day of ST classes' },
+    { date: '2026-05-02', content: 'Final Exam: BEGINS' },
+    { date: '2026-05-08', content: 'Final Exam: ENDS' },
+    { date: '2026-05-12', content: 'Last day of grade submission Spring 2026' }
+];
+
+function formatDateForDisplay(dateStr) {
+    const date = new Date(dateStr + 'T00:00:00');
+    const options = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+function getDaysRemaining(dateStr) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const eventDate = new Date(dateStr + 'T00:00:00');
+    const diffTime = eventDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+}
+
+function displayUpcomingEvent() {
+    const section = document.getElementById('upcomingEventSection');
+    const textEl = document.getElementById('upcomingEventText');
+    const dateEl = document.getElementById('upcomingEventDate');
+    const countdownEl = document.getElementById('upcomingEventCountdown');
+    
+    if (!section || !textEl || !dateEl || !countdownEl) return;
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Find the next upcoming event
+    let upcomingEvent = null;
+    for (const event of CALENDAR_EVENTS) {
+        const eventDate = new Date(event.date + 'T00:00:00');
+        if (eventDate >= today) {
+            upcomingEvent = event;
+            break;
+        }
+    }
+    
+    if (!upcomingEvent) {
+        section.style.display = 'none';
+        return;
+    }
+    
+    const daysRemaining = getDaysRemaining(upcomingEvent.date);
+    
+    // Set the content
+    textEl.textContent = upcomingEvent.content;
+    dateEl.textContent = formatDateForDisplay(upcomingEvent.date);
+    
+    // Set countdown text and styling
+    if (daysRemaining === 0) {
+        countdownEl.textContent = 'Today!';
+        countdownEl.className = 'upcoming-event-countdown today';
+    } else if (daysRemaining === 1) {
+        countdownEl.textContent = 'Tomorrow';
+        countdownEl.className = 'upcoming-event-countdown soon';
+    } else if (daysRemaining <= 3) {
+        countdownEl.textContent = `${daysRemaining} days`;
+        countdownEl.className = 'upcoming-event-countdown soon';
+    } else {
+        countdownEl.textContent = `${daysRemaining} days`;
+        countdownEl.className = 'upcoming-event-countdown';
+    }
+    
+    section.style.display = 'block';
+}
+
+// Initialize upcoming event on page load
+document.addEventListener('DOMContentLoaded', displayUpcomingEvent);

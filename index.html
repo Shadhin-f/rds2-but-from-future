@@ -290,37 +290,27 @@
             >⚡ Join 1.8k+ NSUers community!</a
           >
         </div>
-        <!-- Announcement Bar -->
-        <div class="announcement-bar">
-          <a
-            href="https://rds3.northsouth.edu/index.php"
-            target="_blank"
-            class="view-extension-btn"
-            >🎓 RDS3</a
-          >
-          <a
-            href="https://www.northsouth.edu/nsu-announcements/"
-            target="_blank"
-            class="view-extension-btn"
-            >🛎️ NSU Announcements</a
-          >
-          <a
-            href="https://northsouth.edu/dept-notices/fao-noticebaord/"
-            target="_blank"
-            class="view-extension-btn"
-            >🔔 NSU Notices</a
-          >
+        
+        <!-- Upcoming Event Section -->
+        <div id="upcomingEventSection" class="upcoming-event-section" style="display: none;">
+          <a href="calendar.html" class="upcoming-event-link">
+            <div class="upcoming-event-content">
+              <span class="upcoming-event-icon">📅</span>
+              <div class="upcoming-event-info">
+                <span id="upcomingEventText" class="upcoming-event-text"></span>
+                <span id="upcomingEventDate" class="upcoming-event-date"></span>
+              </div>
+              <span id="upcomingEventCountdown" class="upcoming-event-countdown"></span>
+            </div>
+          </a>
         </div>
-        <div class="announcement-bar">
-          <a
-            href="https://forms.gle/LHJ9YfGUBTPLTbZo8"
-            target="_blank"
-            class="view-extension-btn"
-            >🛩️ Share Study material!</a
-          >
-          <a href="resources.html" target="_blank" class="view-extension-btn"
-            >🔎 Find Study material!</a
-          >
+        
+        <!-- Quick Tips Section -->
+        <div class="quick-tips-section">
+          <div class="quick-tips-content">
+            <span class="tips-icon">💡</span>
+            <span id="tipText" class="tip-text">Use multiple plans to compare different schedule options before advising.</span>
+          </div>
         </div>
         <div id="routineMakerContainer" class="routine-maker-container">
           <div class="routine-header">
@@ -375,13 +365,7 @@
           ></div>
         </div>
         
-        <!-- Quick Tips Section -->
-        <div class="quick-tips-section">
-          <div class="quick-tips-content">
-            <span class="tips-icon">💡</span>
-            <span id="tipText" class="tip-text">Use multiple plans to compare different schedule options before advising.</span>
-          </div>
-        </div>
+        
       </header>
 
       <main>
@@ -494,6 +478,38 @@
           >
             Total entries: <span id="entryCount">0</span>
           </div>
+        </div>
+        <!-- Announcement Bar -->
+        <div class="announcement-bar">
+          <a
+            href="https://rds3.northsouth.edu/index.php"
+            target="_blank"
+            class="view-extension-btn"
+            >🎓 RDS3</a
+          >
+          <a
+            href="https://www.northsouth.edu/nsu-announcements/"
+            target="_blank"
+            class="view-extension-btn"
+            >🛎️ NSU Announcements</a
+          >
+          <a
+            href="https://northsouth.edu/dept-notices/fao-noticebaord/"
+            target="_blank"
+            class="view-extension-btn"
+            >🔔 NSU Notices</a
+          >
+        </div>
+        <div class="announcement-bar">
+          <a
+            href="https://forms.gle/LHJ9YfGUBTPLTbZo8"
+            target="_blank"
+            class="view-extension-btn"
+            >🛩️ Share Study material!</a
+          >
+          <a href="resources.html" target="_blank" class="view-extension-btn"
+            >🔎 Find Study material!</a
+          >
         </div>
         <!-- Announcement Bar -->
 
@@ -763,6 +779,11 @@
         </div>
       </div>
       
+      <!-- Floating Notification Toggle Button -->
+      <button id="notificationToggleBtn" class="floating-notification-btn" title="Toggle Notifications">
+        <i class="fas fa-bell"></i>
+      </button>
+      
       <!-- Floating Help Button -->
       <button id="helpBtn" class="floating-help-btn" title="Help & Tutorial">
         <i class="fas fa-question"></i>
@@ -1015,6 +1036,7 @@
     <!-- <script src="chat.js"></script> -->
     <!-- <script src="comments.js"></script> -->
     <script src="buttons.js"></script>
+    <script src="notifications.js"></script>
     <script>
       // Theme Toggle Functionality
       (function () {
