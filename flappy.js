@@ -37,10 +37,27 @@ birdImage.onload = () => {
 const pipeImage = new Image();
 pipeImage.src = 'images/piller.png';
 let pipeImageLoaded = false;
+let pipePattern = null;
 pipeImage.onload = () => {
     pipeImageLoaded = true;
+    // create a repeat pattern for efficient drawing
+    try {
+        pipePattern = ctx.createPattern(pipeImage, 'repeat');
+    } catch (err) {
+        pipePattern = null;
+    }
     _debugLog('pipe texture loaded');
 };
+
+// Detect simple/mobile mode for performance
+let useSimpleBackground = window.innerWidth < 600;
+function handleResize() {
+    useSimpleBackground = window.innerWidth < 600;
+    // hide debug on small screens
+    debugDiv.style.display = useSimpleBackground ? 'none' : 'block';
+}
+window.addEventListener('resize', handleResize);
+handleResize();
 const bird = {
     x: 50,
     y: canvas.height / 2,
@@ -160,11 +177,11 @@ function update() {
 }
 
 function draw() {
-    // Draw background
+    // Draw background (always show image when available)
     if (backgroundLoaded) {
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     } else {
-        ctx.fillStyle = '#70c5ce';
+        ctx.fillStyle = '#0d191d';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -176,10 +193,14 @@ function draw() {
         ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
     }
 
-    // Draw pipes (use texture if available)
+    // Draw pipes (use pattern if available for performance)
     pipes.forEach(pipe => {
-        if (pipeImageLoaded) {
-            // draw texture stretched to pipe bounds
+        if (pipePattern) {
+            ctx.fillStyle = pipePattern;
+            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
+            ctx.fillRect(pipe.x, canvas.height - pipe.bottomHeight, pipeWidth, pipe.bottomHeight);
+        } else if (pipeImageLoaded && !useSimpleBackground) {
+            // fallback to single image draw (less ideal on slow devices)
             ctx.drawImage(pipeImage, pipe.x, 0, pipeWidth, pipe.topHeight);
             ctx.drawImage(pipeImage, pipe.x, canvas.height - pipe.bottomHeight, pipeWidth, pipe.bottomHeight);
         } else {
@@ -190,7 +211,7 @@ function draw() {
 
         // Draw name with stroke for visibility on textured pipes
         const label = `${pipe.type.name} ${pipe.type.score}`;
-        ctx.font = '12px Arial';
+        ctx.font = (useSimpleBackground ? '10px' : '12px') + ' Arial';
         ctx.textAlign = 'center';
         ctx.lineWidth = 3;
         ctx.strokeStyle = 'rgba(0,0,0,0.7)';
