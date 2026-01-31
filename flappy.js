@@ -41,6 +41,41 @@ pipeImage.onload = () => {
     pipeImageLoaded = true;
     _debugLog('pipe texture loaded');
 };
+// crash sound effect (played on game over)
+const crashSound = new Audio('images/faaa.mp3');
+crashSound.preload = 'auto';
+crashSound.volume = 0.8;
+// background music (looped during gameplay)
+const bgMusic = new Audio('images/bg.mp3');
+bgMusic.loop = true;
+bgMusic.preload = 'auto';
+bgMusic.volume = 0.45;
+
+// mute state persisted
+let isMuted = localStorage.getItem('flappyMuted') === 'true';
+if (crashSound) crashSound.muted = isMuted;
+if (bgMusic) bgMusic.muted = isMuted;
+
+function updateMuteButton() {
+    const b = document.getElementById('mute-btn');
+    if (!b) return;
+    b.textContent = isMuted ? '🔇' : '🔊';
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    localStorage.setItem('flappyMuted', isMuted);
+    if (crashSound) crashSound.muted = isMuted;
+    if (bgMusic) {
+        bgMusic.muted = isMuted;
+        if (isMuted) {
+            try { bgMusic.pause(); } catch (e) {}
+        } else if (gameRunning) {
+            try { const p = bgMusic.play(); if (p && typeof p.catch === 'function') p.catch(() => {}); } catch(e){}
+        }
+    }
+    updateMuteButton();
+}
 const bird = {
     x: 50,
     y: canvas.height / 2,
@@ -257,6 +292,17 @@ function jump() {
 }
 
 function gameOver() {
+    // play crash sound (safe against play() promise rejection)
+    try {
+        if (crashSound) {
+            crashSound.currentTime = 0;
+            const p = crashSound.play();
+            if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+    } catch (e) {
+        // ignore audio errors
+    }
+
     gameRunning = false;
     gameOverDiv.style.display = 'block';
     if (score > highScore) {
@@ -264,6 +310,13 @@ function gameOver() {
     }
     localStorage.setItem('flappyHighScore', highScore);
     updateHighScore();
+    // stop background music on crash
+    try {
+        if (bgMusic) {
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+        }
+    } catch (e) {}
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
@@ -289,6 +342,14 @@ function restart() {
     }
     // Only create one pipe at the start
     createPipe();
+    // start background music if allowed
+    try {
+        if (bgMusic && !isMuted) {
+            bgMusic.currentTime = 0;
+            const p = bgMusic.play();
+            if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+    } catch (e) {}
     requestAnimationFrame(gameLoop);
 }
 
@@ -325,6 +386,14 @@ function startGame() {
         animationFrameId = null;
     }
     createPipe();
+    // start background music if allowed
+    try {
+        if (bgMusic && !isMuted) {
+            bgMusic.currentTime = 0;
+            const p = bgMusic.play();
+            if (p && typeof p.catch === 'function') p.catch(() => {});
+        }
+    } catch (e) {}
     requestAnimationFrame(gameLoop);
 }
 
@@ -342,6 +411,10 @@ document.addEventListener('keydown', (e) => {
 });
 restartBtn.addEventListener('click', restart);
 startBtn.addEventListener('click', startGame);
+// hookup mute button and reflect initial state
+const muteBtnEl = document.getElementById('mute-btn');
+if (muteBtnEl) muteBtnEl.addEventListener('click', toggleMute);
+updateMuteButton();
 
 // Initialize
 updateHighScore();

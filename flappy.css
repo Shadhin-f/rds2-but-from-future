@@ -157,6 +157,31 @@ body {
   right: 12px;
 }
 
+/* Mute button */
+#mute-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 40;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+#mute-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
 /* Score pulse animation */
 @keyframes pulse {
   0% {
