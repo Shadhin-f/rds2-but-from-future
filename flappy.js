@@ -37,41 +37,27 @@ birdImage.onload = () => {
 const pipeImage = new Image();
 pipeImage.src = 'images/piller.png';
 let pipeImageLoaded = false;
-let pipePattern = null;
 pipeImage.onload = () => {
     pipeImageLoaded = true;
-    // create a repeat pattern for efficient drawing
-    try {
-        pipePattern = ctx.createPattern(pipeImage, 'repeat');
-    } catch (err) {
-        pipePattern = null;
-    }
     _debugLog('pipe texture loaded');
 };
-
-// Detect simple/mobile mode for performance
-let useSimpleBackground = window.innerWidth < 600;
-function handleResize() {
-    useSimpleBackground = window.innerWidth < 600;
-    // hide debug on small screens
-    debugDiv.style.display = useSimpleBackground ? 'none' : 'block';
-}
-window.addEventListener('resize', handleResize);
-handleResize();
 const bird = {
     x: 50,
     y: canvas.height / 2,
     width: 50,
     height: 50,
     velocity: 0,
-    gravity: 0.15,
-    jump: -7
+    // physics now in px/s and px/s^2
+    gravity: 2000, // px/s^2 (slightly stronger)
+    jump: -600// px/s instant velocity when jumping (stronger jump)
 };
 
 const pipes = [];
 const pipeWidth = 50;
 const pipeGap = 250;
-let pipeSpeed = 1;
+// pipeSpeed is now in px/s (was per-frame previous behavior)
+let pipeSpeed = 250; // start faster for snappier horizontal movement
+const pipeAccel = 2; // px/s^2 - stronger gradual speed increase
 let score = 0;
 let highScore = parseInt(localStorage.getItem('flappyHighScore')) || 0;
 let gameRunning = false;let pillarCount = 0;
@@ -119,27 +105,30 @@ function createPipe() {
     _debugLog(`createPipe #${pillarCount} type=${type.name} pipes=${pipes.length}`);
 }
 
-function update() {
+// update now takes delta time in seconds
+function update(dt) {
     if (!gameRunning) return;
 
-    // Bird physics
-    bird.velocity += bird.gravity;
-    bird.y += bird.velocity;
+    // Bird physics (kinematics: v += g*dt; y += v*dt)
+    bird.velocity += bird.gravity * dt;
+    bird.y += bird.velocity * dt;
 
     // Check ground and ceiling
     if (bird.y + bird.height > canvas.height || bird.y < 0) {
         gameOver();
+        return;
     }
 
     // Update pipes
     for (let i = pipes.length - 1; i >= 0; i--) {
         const pipe = pipes[i];
-        pipe.x -= pipeSpeed;
+        pipe.x -= pipeSpeed * dt;
 
         // Check collision
         if (bird.x < pipe.x + pipeWidth && bird.x + bird.width > pipe.x) {
             if (bird.y < pipe.topHeight || bird.y + bird.height > canvas.height - pipe.bottomHeight) {
                 gameOver();
+                return;
             }
         }
 
@@ -162,26 +151,24 @@ function update() {
         }
     }
 
-    // Add new pipes
-    if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 250) {
-        createPipe();
-    }
-
     // Safety: limit number of pipes to avoid runaway memory
     while (pipes.length > 7) {
         pipes.shift();
     }
 
-    // Increase speed
-    pipeSpeed += 0.0003;
+    // Increase speed gradually (per-second)
+    pipeSpeed += pipeAccel * dt;
+
+    // Spawn pipes based on time (see lastPipeSpawn/time handling in game loop)
+    // createPipe is now driven by time in the game loop
 }
 
 function draw() {
-    // Draw background (always show image when available)
+    // Draw background
     if (backgroundLoaded) {
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     } else {
-        ctx.fillStyle = '#0d191d';
+        ctx.fillStyle = '#70c5ce';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
@@ -193,14 +180,10 @@ function draw() {
         ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
     }
 
-    // Draw pipes (use pattern if available for performance)
+    // Draw pipes (use texture if available)
     pipes.forEach(pipe => {
-        if (pipePattern) {
-            ctx.fillStyle = pipePattern;
-            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.topHeight);
-            ctx.fillRect(pipe.x, canvas.height - pipe.bottomHeight, pipeWidth, pipe.bottomHeight);
-        } else if (pipeImageLoaded && !useSimpleBackground) {
-            // fallback to single image draw (less ideal on slow devices)
+        if (pipeImageLoaded) {
+            // draw texture stretched to pipe bounds
             ctx.drawImage(pipeImage, pipe.x, 0, pipeWidth, pipe.topHeight);
             ctx.drawImage(pipeImage, pipe.x, canvas.height - pipe.bottomHeight, pipeWidth, pipe.bottomHeight);
         } else {
@@ -211,7 +194,7 @@ function draw() {
 
         // Draw name with stroke for visibility on textured pipes
         const label = `${pipe.type.name} ${pipe.type.score}`;
-        ctx.font = (useSimpleBackground ? '10px' : '12px') + ' Arial';
+        ctx.font = '12px Arial';
         ctx.textAlign = 'center';
         ctx.lineWidth = 3;
         ctx.strokeStyle = 'rgba(0,0,0,0.7)';
@@ -224,9 +207,31 @@ function draw() {
 }
 
 let animationFrameId = null;
-function gameLoop() {
+let lastTimestamp = null;
+let lastPipeSpawn = 0; // seconds since last spawn
+// desired horizontal spacing between pipe origins in pixels
+const desiredPipeSpacing = 200; // px (tunable)
+
+function gameLoop(timestamp) {
     try {
-        update();
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        // delta time in seconds, clamp to avoid huge jumps
+        let dt = (timestamp - lastTimestamp) / 1000;
+        if (dt > 0.1) dt = 0.1;
+        lastTimestamp = timestamp;
+
+        // Update spawn timer and create pipe when interval exceeded.
+        // Use desired horizontal spacing divided by current speed so spacing
+        // remains consistent across devices and FPS rates.
+        lastPipeSpawn += dt;
+        const spawnInterval = Math.max(0.25, desiredPipeSpacing / Math.max(1, pipeSpeed));
+        if (lastPipeSpawn >= spawnInterval) {
+            lastPipeSpawn -= spawnInterval;
+            // create a single pipe at spawn moment
+            createPipe();
+        }
+
+        update(dt);
         draw();
         updateDebug();
     } catch (err) {
@@ -247,7 +252,7 @@ function gameLoop() {
 
 function jump() {
     if (gameRunning) {
-        bird.velocity = bird.jump;
+        bird.velocity = bird.jump; // now in px/s
     }
 }
 
@@ -271,7 +276,9 @@ function restart() {
     pipes.length = 0;
     score = 0;
     pillarCount = 0;
-    pipeSpeed = 1;
+    pipeSpeed = 90;
+    lastTimestamp = null;
+    lastPipeSpawn = 0;
     gameRunning = true;
     gameOverDiv.style.display = 'none';
     updateScore();
@@ -309,7 +316,9 @@ function startGame() {
     // Only create one pipe at the start
     pipes.length = 0;
     pillarCount = 0;
-    pipeSpeed = 1;
+    pipeSpeed = 60;
+    lastTimestamp = null;
+    lastPipeSpawn = 0;
     // Ensure previous animation frame is cleared
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);

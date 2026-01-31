@@ -110,33 +110,20 @@ body {
 #game-container {
   position: relative;
   text-align: center;
-  padding: 16px 12px 18px 12px;
+  padding: 26px 20px 20px 20px;
   border-radius: 12px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.03),
     rgba(0, 0, 0, 0.02)
   );
   box-shadow: 0 20px 40px rgba(10, 20, 40, 0.35);
-  max-width: 420px; /* keeps game from overflowing on phones */
-  width: 92vw;
-  box-sizing: border-box;
-}
-
-@media (min-width: 600px) {
-  #game-container {
-    width: 420px;
-  }
 }
 
 #game-canvas {
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   background: transparent; /* show page background */
-  width: 100%;
-  height: auto;
-  display: block;
-  max-width: 100%;
 }
 
 /* Score badges */
@@ -207,7 +194,7 @@ body {
   /* show sac-nac.jpg behind the start panel */
   background:
     linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36)),
-    url("images/bus.png");
+    url("images/sac-nac.jpg");
   background-size: cover, cover;
   background-position: center;
   background-repeat: no-repeat;
