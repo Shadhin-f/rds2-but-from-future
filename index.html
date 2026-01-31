@@ -289,10 +289,20 @@
             class="view-extension-btn"
             >⚡ Join 1.8k+ NSUers community!</a
           >
+          <a
+            href="flappy-bus.html"
+            class="view-extension-btn"
+            title="Play NSU FLAPPY BUS"
+            >🎮 Play NSU FLAPPY BUS game</a
+          >
         </div>
-        
+
         <!-- Upcoming Event Section -->
-        <div id="upcomingEventSection" class="upcoming-event-section" style="display: none;">
+        <div
+          id="upcomingEventSection"
+          class="upcoming-event-section"
+          style="display: none"
+        >
           <a href="calendar.html" class="upcoming-event-link">
             <div class="upcoming-event-content">
               <span class="upcoming-event-icon">📅</span>
@@ -300,16 +310,22 @@
                 <span id="upcomingEventText" class="upcoming-event-text"></span>
                 <span id="upcomingEventDate" class="upcoming-event-date"></span>
               </div>
-              <span id="upcomingEventCountdown" class="upcoming-event-countdown"></span>
+              <span
+                id="upcomingEventCountdown"
+                class="upcoming-event-countdown"
+              ></span>
             </div>
           </a>
         </div>
-        
+
         <!-- Quick Tips Section -->
         <div class="quick-tips-section">
           <div class="quick-tips-content">
             <span class="tips-icon">💡</span>
-            <span id="tipText" class="tip-text">Use multiple plans to compare different schedule options before advising.</span>
+            <span id="tipText" class="tip-text"
+              >Use multiple plans to compare different schedule options before
+              advising.</span
+            >
           </div>
         </div>
         <div id="routineMakerContainer" class="routine-maker-container">
@@ -326,10 +342,18 @@
                 <option value="3">🔵 Plan 4</option>
                 <option value="4">🟣 Plan 5</option>
               </select>
-              <button id="shareRoutineBtn" class="routine-toggle-btn" title="Share this routine">
+              <button
+                id="shareRoutineBtn"
+                class="routine-toggle-btn"
+                title="Share this routine"
+              >
                 <i class="fas fa-share-alt"></i> Share
               </button>
-              <button id="importRoutineBtn" class="routine-toggle-btn" title="Import a routine">
+              <button
+                id="importRoutineBtn"
+                class="routine-toggle-btn"
+                title="Import a routine"
+              >
                 <i class="fas fa-download"></i> Import
               </button>
               <button id="toggleRoutineBtn" class="routine-toggle-btn">
@@ -364,8 +388,6 @@
             style="margin-top: 10px; font-size: 0.95rem; color: #e2e8f0"
           ></div>
         </div>
-        
-        
       </header>
 
       <main>
@@ -707,7 +729,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Share Routine Modal -->
       <div id="shareRoutineModal" class="modal hidden">
         <div class="modal-content" style="max-width: 420px">
@@ -715,19 +737,33 @@
             <h2><i class="fas fa-share-alt"></i> Share Routine</h2>
             <button class="close-modal" id="closeShareModal">&times;</button>
           </div>
-          <div class="modal-body" id="shareRoutineModalBody" style="display: flex; flex-direction: column; gap: 14px">
-            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em;">
+          <div
+            class="modal-body"
+            id="shareRoutineModalBody"
+            style="display: flex; flex-direction: column; gap: 14px"
+          >
+            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em">
               Share this code with others to let them import your routine:
             </p>
-            <textarea id="shareCodeOutput" class="share-code-textarea" readonly rows="4" placeholder="Generating code..."></textarea>
-            <button id="copyShareCodeBtn" class="routine-toggle-btn" style="align-self: flex-start;">
+            <textarea
+              id="shareCodeOutput"
+              class="share-code-textarea"
+              readonly
+              rows="4"
+              placeholder="Generating code..."
+            ></textarea>
+            <button
+              id="copyShareCodeBtn"
+              class="routine-toggle-btn"
+              style="align-self: flex-start"
+            >
               <i class="fas fa-copy"></i> Copy Code
             </button>
             <div id="shareCodeStatus" class="share-code-status"></div>
           </div>
         </div>
       </div>
-      
+
       <!-- Import Routine Modal -->
       <div id="importRoutineModal" class="modal hidden">
         <div class="modal-content" style="max-width: 420px">
@@ -735,156 +771,272 @@
             <h2><i class="fas fa-download"></i> Import Routine</h2>
             <button class="close-modal" id="closeImportModal">&times;</button>
           </div>
-          <div class="modal-body" id="importRoutineModalBody" style="display: flex; flex-direction: column; gap: 14px">
-            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em;">
+          <div
+            class="modal-body"
+            id="importRoutineModalBody"
+            style="display: flex; flex-direction: column; gap: 14px"
+          >
+            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em">
               Paste a shared routine code below to import it:
             </p>
-            <textarea id="importCodeInput" class="share-code-textarea" rows="4" placeholder="Paste routine code here..."></textarea>
+            <textarea
+              id="importCodeInput"
+              class="share-code-textarea"
+              rows="4"
+              placeholder="Paste routine code here..."
+            ></textarea>
             <div id="importCodeStatus" class="share-code-status"></div>
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-              <button id="cancelImportBtn" class="routine-toggle-btn" style="background: var(--border-color);">
+            <div style="display: flex; gap: 10px; justify-content: flex-end">
+              <button
+                id="cancelImportBtn"
+                class="routine-toggle-btn"
+                style="background: var(--border-color)"
+              >
                 Cancel
               </button>
-              <button id="confirmImportBtn" class="routine-toggle-btn" style="background: #10b981;">
+              <button
+                id="confirmImportBtn"
+                class="routine-toggle-btn"
+                style="background: #10b981"
+              >
                 <i class="fas fa-check"></i> Import
               </button>
             </div>
           </div>
         </div>
       </div>
-      
+
       <!-- Import Confirmation Modal -->
       <div id="importConfirmModal" class="modal hidden">
         <div class="modal-content" style="max-width: 380px">
           <div class="modal-header">
-            <h2><i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i> Confirm Import</h2>
-            <button class="close-modal" id="closeImportConfirmModal">&times;</button>
+            <h2>
+              <i class="fas fa-exclamation-triangle" style="color: #f59e0b"></i>
+              Confirm Import
+            </h2>
+            <button class="close-modal" id="closeImportConfirmModal">
+              &times;
+            </button>
           </div>
-          <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px">
-            <p style="margin: 0; color: var(--text-color);">
-              This will <strong>replace</strong> your current routine with the imported one. 
-              <br><br>
-              <span style="color: #f59e0b;">⚠️ This action cannot be undone.</span>
+          <div
+            class="modal-body"
+            style="display: flex; flex-direction: column; gap: 14px"
+          >
+            <p style="margin: 0; color: var(--text-color)">
+              This will <strong>replace</strong> your current routine with the
+              imported one. <br /><br />
+              <span style="color: #f59e0b"
+                >⚠️ This action cannot be undone.</span
+              >
             </p>
             <div id="importPreview" class="import-preview"></div>
-            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px;">
-              <button id="cancelConfirmImportBtn" class="routine-toggle-btn" style="background: var(--border-color);">
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+                margin-top: 8px;
+              "
+            >
+              <button
+                id="cancelConfirmImportBtn"
+                class="routine-toggle-btn"
+                style="background: var(--border-color)"
+              >
                 Cancel
               </button>
-              <button id="finalConfirmImportBtn" class="routine-toggle-btn" style="background: #e11d48;">
+              <button
+                id="finalConfirmImportBtn"
+                class="routine-toggle-btn"
+                style="background: #e11d48"
+              >
                 <i class="fas fa-check"></i> Yes, Replace
               </button>
             </div>
           </div>
         </div>
       </div>
-      
+
       <!-- Floating Notification Toggle Button -->
-      <button id="notificationToggleBtn" class="floating-notification-btn" title="Toggle Notifications">
+      <button
+        id="notificationToggleBtn"
+        class="floating-notification-btn"
+        title="Toggle Notifications"
+      >
         <i class="fas fa-bell"></i>
       </button>
-      
+
       <!-- Floating Help Button -->
       <button id="helpBtn" class="floating-help-btn" title="Help & Tutorial">
         <i class="fas fa-question"></i>
       </button>
-      
+
       <!-- Tutorial Modal -->
       <div id="tutorialModal" class="modal hidden">
         <div class="modal-content tutorial-modal-content">
           <div class="modal-header">
-            <h2><i class="fas fa-graduation-cap"></i> How to Use RDS2 But From Future</h2>
+            <h2>
+              <i class="fas fa-graduation-cap"></i> How to Use RDS2 But From
+              Future
+            </h2>
             <button class="close-modal" id="closeTutorialModal">&times;</button>
           </div>
           <div class="modal-body tutorial-body">
-            
             <!-- Section 1: Overview -->
             <div class="tutorial-section">
               <h3><i class="fas fa-home"></i> Overview</h3>
-              <p>Welcome to <strong>RDS2 BUT FROM FUTURE</strong> - your ultimate NSU course planning companion! This tool helps you search courses, plan your routine, detect conflicts, and share your plans with friends.</p>
+              <p>
+                Welcome to <strong>RDS2 BUT FROM FUTURE</strong> - your ultimate
+                NSU course planning companion! This tool helps you search
+                courses, plan your routine, detect conflicts, and share your
+                plans with friends.
+              </p>
             </div>
-            
+
             <!-- Section 2: Search & Filter -->
             <div class="tutorial-section">
               <h3><i class="fas fa-search"></i> Search & Filter Courses</h3>
               <div class="tutorial-content">
-                <p><strong>Main Search:</strong> Type course code (e.g., "CSE115") or faculty name to find courses.</p>
-                <p><strong>Time Filter:</strong> Filter by class days using codes:</p>
+                <p>
+                  <strong>Main Search:</strong> Type course code (e.g.,
+                  "CSE115") or faculty name to find courses.
+                </p>
+                <p>
+                  <strong>Time Filter:</strong> Filter by class days using
+                  codes:
+                </p>
                 <ul class="tutorial-list">
                   <li><code>ST</code> = Sunday + Tuesday</li>
                   <li><code>MW</code> = Monday + Wednesday</li>
                   <li><code>RA</code> = Thursday (R) + Saturday (A)</li>
                 </ul>
-                <p><strong>Faculty Filter:</strong> Search specifically by faculty name.</p>
+                <p>
+                  <strong>Faculty Filter:</strong> Search specifically by
+                  faculty name.
+                </p>
                 <div class="tutorial-example">
-                  <strong>Example:</strong> Search "CSE115" + Time "ST" to find all CSE115 sections on Sun-Tue.
+                  <strong>Example:</strong> Search "CSE115" + Time "ST" to find
+                  all CSE115 sections on Sun-Tue.
                 </div>
               </div>
             </div>
-            
+
             <!-- Section 3: Quick Planner -->
             <div class="tutorial-section">
-              <h3><i class="fas fa-calendar-alt"></i> Quick Planner (5 Routines)</h3>
+              <h3>
+                <i class="fas fa-calendar-alt"></i> Quick Planner (5 Routines)
+              </h3>
               <div class="tutorial-content">
-                <p>Plan up to <strong>5 different routines</strong> simultaneously! Each routine has a unique color:</p>
+                <p>
+                  Plan up to
+                  <strong>5 different routines</strong> simultaneously! Each
+                  routine has a unique color:
+                </p>
                 <div class="tutorial-colors">
-                  <span class="color-dot" style="background: #e11d48;"></span> Plan 1 (Red)
-                  <span class="color-dot" style="background: #f59e0b;"></span> Plan 2 (Orange)
-                  <span class="color-dot" style="background: #10b981;"></span> Plan 3 (Green)
-                  <span class="color-dot" style="background: #3b82f6;"></span> Plan 4 (Blue)
-                  <span class="color-dot" style="background: #8b5cf6;"></span> Plan 5 (Purple)
+                  <span class="color-dot" style="background: #e11d48"></span>
+                  Plan 1 (Red)
+                  <span class="color-dot" style="background: #f59e0b"></span>
+                  Plan 2 (Orange)
+                  <span class="color-dot" style="background: #10b981"></span>
+                  Plan 3 (Green)
+                  <span class="color-dot" style="background: #3b82f6"></span>
+                  Plan 4 (Blue)
+                  <span class="color-dot" style="background: #8b5cf6"></span>
+                  Plan 5 (Purple)
                 </div>
-                <p><strong>Switch Routines:</strong> Use the dropdown menu to switch between your 5 plans.</p>
-                <p><strong>Keyboard Shortcuts:</strong> Press <code>Alt + 1</code> to <code>Alt + 5</code> to quickly switch between routines!</p>
-                <p><strong>Color Indicators:</strong> Small colored dots appear next to course names showing which routines they're in.</p>
+                <p>
+                  <strong>Switch Routines:</strong> Use the dropdown menu to
+                  switch between your 5 plans.
+                </p>
+                <p>
+                  <strong>Keyboard Shortcuts:</strong> Press
+                  <code>Alt + 1</code> to <code>Alt + 5</code> to quickly switch
+                  between routines!
+                </p>
+                <p>
+                  <strong>Color Indicators:</strong> Small colored dots appear
+                  next to course names showing which routines they're in.
+                </p>
               </div>
             </div>
-            
+
             <!-- Section 4: Adding/Removing Courses -->
             <div class="tutorial-section">
-              <h3><i class="fas fa-plus-circle"></i> Adding & Removing Courses</h3>
+              <h3>
+                <i class="fas fa-plus-circle"></i> Adding & Removing Courses
+              </h3>
               <div class="tutorial-content">
-                <p><strong>To Add:</strong> Click the <code>Add</code> button on any course row. A popup will let you choose which routine(s) to add it to.</p>
-                <p><strong>To Remove:</strong> In the same popup, click <code>Remove</code> next to any routine that has the course.</p>
-                <p><strong>Quick Remove:</strong> Click the <code>✕</code> button directly on a course block in the routine table.</p>
+                <p>
+                  <strong>To Add:</strong> Click the <code>Add</code> button on
+                  any course row. A popup will let you choose which routine(s)
+                  to add it to.
+                </p>
+                <p>
+                  <strong>To Remove:</strong> In the same popup, click
+                  <code>Remove</code> next to any routine that has the course.
+                </p>
+                <p>
+                  <strong>Quick Remove:</strong> Click the <code>✕</code> button
+                  directly on a course block in the routine table.
+                </p>
                 <div class="tutorial-example">
-                  <strong>Tip:</strong> You can add the same course to multiple routines to compare different schedules!
+                  <strong>Tip:</strong> You can add the same course to multiple
+                  routines to compare different schedules!
                 </div>
               </div>
             </div>
-            
+
             <!-- Section 5: Conflict Detection -->
             <div class="tutorial-section">
-              <h3><i class="fas fa-exclamation-triangle"></i> Conflict Detection</h3>
+              <h3>
+                <i class="fas fa-exclamation-triangle"></i> Conflict Detection
+              </h3>
               <div class="tutorial-content">
                 <p>The system automatically detects two types of conflicts:</p>
                 <div class="tutorial-conflict">
-                  <span>🕛 <strong>Time Conflict:</strong></span> Course overlaps with another class in your current routine.
+                  <span>🕛 <strong>Time Conflict:</strong></span> Course
+                  overlaps with another class in your current routine.
                 </div>
                 <div class="tutorial-conflict">
-                  <span>⚠️ <strong>Exam Clash:</strong></span> Course has final exam on the same day & slot as another course.
+                  <span>⚠️ <strong>Exam Clash:</strong></span> Course has final
+                  exam on the same day & slot as another course.
                 </div>
-                <p>Conflict warnings appear in the routine table when detected.</p>
+                <p>
+                  Conflict warnings appear in the routine table when detected.
+                </p>
               </div>
             </div>
-            
+
             <!-- Section 6: Share & Import -->
             <div class="tutorial-section">
               <h3><i class="fas fa-share-alt"></i> Share & Import Routines</h3>
               <div class="tutorial-content">
-                <p><strong>Share:</strong> Click the <code>Share</code> button to generate a unique code for your current routine. Copy and send it to friends!</p>
-                <p><strong>Import:</strong> Click <code>Import</code>, paste a shared code, and click Import. A preview will show what courses will be imported.</p>
+                <p>
+                  <strong>Share:</strong> Click the <code>Share</code> button to
+                  generate a unique code for your current routine. Copy and send
+                  it to friends!
+                </p>
+                <p>
+                  <strong>Import:</strong> Click <code>Import</code>, paste a
+                  shared code, and click Import. A preview will show what
+                  courses will be imported.
+                </p>
                 <div class="tutorial-example">
-                  <strong>Note:</strong> Importing replaces the currently selected routine. You'll be asked to confirm before changes are made.
+                  <strong>Note:</strong> Importing replaces the currently
+                  selected routine. You'll be asked to confirm before changes
+                  are made.
                 </div>
               </div>
             </div>
-            
+
             <!-- Section 7: Download PDF -->
             <div class="tutorial-section">
               <h3><i class="fas fa-file-pdf"></i> Download as PDF</h3>
               <div class="tutorial-content">
-                <p>Click the <code>Download</code> button to export your current routine as a professional PDF file.</p>
+                <p>
+                  Click the <code>Download</code> button to export your current
+                  routine as a professional PDF file.
+                </p>
                 <p>The PDF includes:</p>
                 <ul class="tutorial-list">
                   <li>Weekly schedule grid</li>
@@ -893,21 +1045,27 @@
                 </ul>
               </div>
             </div>
-            
+
             <!-- Section 8: Semester Selection -->
             <div class="tutorial-section">
               <h3><i class="fas fa-calendar"></i> Semester Selection</h3>
               <div class="tutorial-content">
-                <p>Use the semester dropdown above the search bar to switch between available semesters.</p>
+                <p>
+                  Use the semester dropdown above the search bar to switch
+                  between available semesters.
+                </p>
                 <p>Course data and availability varies by semester.</p>
               </div>
             </div>
-            
+
             <!-- Section 9: Course Details -->
             <div class="tutorial-section">
               <h3><i class="fas fa-info-circle"></i> Course Details</h3>
               <div class="tutorial-content">
-                <p>Click the <code>View</code> button on any course to see detailed information including:</p>
+                <p>
+                  Click the <code>View</code> button on any course to see
+                  detailed information including:
+                </p>
                 <ul class="tutorial-list">
                   <li>Course code and section</li>
                   <li>Faculty name</li>
@@ -916,25 +1074,46 @@
                 </ul>
               </div>
             </div>
-            
+
             <!-- Section 10: Tips -->
             <div class="tutorial-section tips-section">
               <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
               <div class="tutorial-content">
                 <ul class="tutorial-list tips-list">
-                  <li>Use multiple plans to compare different schedule options before advising.</li>
-                  <li>Share your routine code with friends to coordinate class schedules.</li>
-                  <li>Pay attention to exam clash warnings - they can save you during finals!</li>
-                  <li>Download your final routine as PDF to have it handy during registration.</li>
-                  <li>The routine data is saved locally, so it persists even if you close the browser.</li>
+                  <li>
+                    Use multiple plans to compare different schedule options
+                    before advising.
+                  </li>
+                  <li>
+                    Share your routine code with friends to coordinate class
+                    schedules.
+                  </li>
+                  <li>
+                    Pay attention to exam clash warnings - they can save you
+                    during finals!
+                  </li>
+                  <li>
+                    Download your final routine as PDF to have it handy during
+                    registration.
+                  </li>
+                  <li>
+                    The routine data is saved locally, so it persists even if
+                    you close the browser.
+                  </li>
                 </ul>
               </div>
             </div>
-            
+
             <div class="tutorial-footer">
-              <p>Need more help? Join our <a href="https://t.me/nsu_advising_helper_bot_channel" target="_blank"><i class="fab fa-telegram"></i> Telegram Community</a></p>
+              <p>
+                Need more help? Join our
+                <a
+                  href="https://t.me/nsu_advising_helper_bot_channel"
+                  target="_blank"
+                  ><i class="fab fa-telegram"></i> Telegram Community</a
+                >
+              </p>
             </div>
-            
           </div>
         </div>
       </div>

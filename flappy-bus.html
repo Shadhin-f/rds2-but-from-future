@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-DR0D2D6C35");
+    </script>
+    <title>NSU FLAPPY BUS</title>
+    <link rel="stylesheet" href="flappy.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <a id="game-title" href="index.html" title="Back to main page"
+        >NSU FLAPPY BUS</a
+      >
+      <canvas id="game-canvas" width="400" height="600"></canvas>
+      <div id="score-display">Score: 0</div>
+      <div id="high-score-display">High Score: 0</div>
+      <div id="start-screen">
+        <h1>NSU FLAPPY BUS</h1>
+        <button id="start-btn">Start Game</button>
+      </div>
+      <div id="game-over" style="display: none">
+        <h2>Game Over</h2>
+        <button id="restart-btn">Restart</button>
+      </div>
+      <div id="game-credit">
+        <a href="index.html" title="Back to main page">RDS2 But From Future</a>
+      </div>
+    </div>
+    <script src="flappy.js"></script>
+  </body>
+</html>

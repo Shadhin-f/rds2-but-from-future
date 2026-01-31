@@ -1,0 +1,285 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #0d191dff !important;
+  font-family: Arial, sans-serif;
+  /* tiled pillar texture with subtle dark overlay and highlight */
+  background-image:
+    linear-gradient(rgba(13, 25, 29, 0.4), rgba(13, 25, 29, 0.4)),
+    url("images/piller.png"),
+    radial-gradient(circle at top right, rgba(109, 40, 217, 0.06), transparent);
+  background-repeat: no-repeat, repeat, no-repeat;
+  background-size:
+    cover,
+    72px 72px,
+    cover;
+  background-position:
+    center,
+    left top,
+    top right;
+  background-attachment: fixed;
+}
+
+#game-container {
+  position: relative;
+  text-align: center;
+}
+
+#game-title {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 12;
+  letter-spacing: 0.4px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  max-width: calc(100% - 40px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#game-title:focus,
+#game-title:hover {
+  opacity: 0.95;
+  transform: translateX(-50%) scale(1.02);
+}
+
+#game-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 6px 12px;
+  border-radius: 18px;
+  z-index: 12;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.01)
+  );
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(4px);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#game-credit a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+#game-credit a::before {
+  content: "🚍";
+  margin-right: 6px;
+  transform: translateY(-1px);
+}
+
+#game-credit:hover {
+  transform: translateX(-50%) translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.34);
+  opacity: 1;
+}
+
+#game-credit a:hover {
+  text-decoration: underline;
+}
+
+#game-container {
+  position: relative;
+  text-align: center;
+  padding: 26px 20px 20px 20px;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(0, 0, 0, 0.02)
+  );
+  box-shadow: 0 20px 40px rgba(10, 20, 40, 0.35);
+}
+
+#game-canvas {
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: transparent; /* show page background */
+}
+
+/* Score badges */
+#score-display,
+#high-score-display {
+  position: absolute;
+  top: 46px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 6px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+#score-display {
+  left: 12px;
+}
+#high-score-display {
+  right: 12px;
+}
+
+/* Score pulse animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.score-pulse {
+  animation: pulse 300ms ease;
+}
+
+#game-canvas {
+  border: 2px solid #000;
+  background-color: #084e45;
+}
+
+#game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 20;
+}
+
+#start-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* show sac-nac.jpg behind the start panel */
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36)),
+    url("images/bus.png");
+  background-size: cover, cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 36px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  z-index: 30;
+}
+
+#start-screen h1 {
+  margin: 0 0 14px 0;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+#start-screen p {
+  margin: 0 0 12px 0;
+  color: #ddd;
+}
+
+#start-btn {
+  padding: 15px 30px;
+  font-size: 20px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#start-btn:hover {
+  background: linear-gradient(135deg, #45a049, #4caf50);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+#start-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#restart-btn {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#restart-btn:hover {
+  background: linear-gradient(135deg, #1976d2, #2196f3);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+#restart-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#debug-overlay {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.45));
+  color: #fff;
+  font-size: 14px;
+  border-radius: 12px;
+  z-index: 60;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.36);
+  font-weight: 700;
+}
