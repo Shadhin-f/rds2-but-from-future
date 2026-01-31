@@ -57,7 +57,7 @@ const pipeWidth = 50;
 const pipeGap = 250;
 // pipeSpeed is now in px/s (was per-frame previous behavior)
 let pipeSpeed = 250; // start faster for snappier horizontal movement
-const pipeAccel = 2; // px/s^2 - stronger gradual speed increase
+const pipeAccel = 3; // px/s^2 - stronger gradual speed increase
 let score = 0;
 let highScore = parseInt(localStorage.getItem('flappyHighScore')) || 0;
 let gameRunning = false;let pillarCount = 0;
@@ -300,7 +300,7 @@ function updateScore() {
 }
 
 function updateHighScore() {
-    highScoreDisplay.textContent = `High Score: ${highScore}`;
+    highScoreDisplay.textContent = `H Score: ${highScore}`;
     highScoreDisplay.classList.add('score-pulse');
     setTimeout(() => highScoreDisplay.classList.remove('score-pulse'), 350);
 }

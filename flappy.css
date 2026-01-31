@@ -26,6 +26,9 @@ body {
 #game-container {
   position: relative;
   text-align: center;
+  /* responsive max width to avoid overflow on small screens */
+  width: min(420px, 92vw);
+  box-sizing: border-box;
 }
 
 #game-title {
@@ -124,6 +127,10 @@ body {
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   background: transparent; /* show page background */
+  /* make canvas responsive: scale down to fit small screens without changing logical resolution */
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Score badges */
@@ -194,7 +201,7 @@ body {
   /* show sac-nac.jpg behind the start panel */
   background:
     linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36)),
-    url("images/sac-nac.jpg");
+    url("images/bus.png");
   background-size: cover, cover;
   background-position: center;
   background-repeat: no-repeat;
