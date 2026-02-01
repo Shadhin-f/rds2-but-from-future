@@ -27,7 +27,7 @@ backgroundImage.onload = () => {
     backgroundLoaded = true;
 };
 const birdImage = new Image();
-birdImage.src = 'images/bus.png';
+birdImage.src = 'images/register.png';
 let birdImageLoaded = false;
 birdImage.onload = () => {
     birdImageLoaded = true;
@@ -372,6 +372,11 @@ function _debugLog(msg) {
 } 
 
 function startGame() {
+    // Get selected skin before hiding start screen
+    const skinSelect = document.getElementById('birdSkinSelect');
+    if (skinSelect) {
+        birdImage.src = 'images/' + skinSelect.value;
+    }
     startScreen.style.display = 'none';
     gameRunning = true;
     // Only create one pipe at the start
@@ -380,13 +385,11 @@ function startGame() {
     pipeSpeed = 60;
     lastTimestamp = null;
     lastPipeSpawn = 0;
-    // Ensure previous animation frame is cleared
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
     createPipe();
-    // start background music if allowed
     try {
         if (bgMusic && !isMuted) {
             bgMusic.currentTime = 0;
