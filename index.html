@@ -245,6 +245,94 @@
           max-width: 100%;
         }
       }
+
+      /* Mode Toggle Styles */
+      .mode-toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        padding: 10px 16px;
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 12px;
+        border: 1px solid rgba(71, 85, 105, 0.3);
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .mode-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        opacity: 0.6;
+      }
+
+      .mode-label.active {
+        color: var(--text-color);
+        opacity: 1;
+      }
+
+      .mode-toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 26px;
+        cursor: pointer;
+      }
+
+      .mode-toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .mode-toggle-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(71, 85, 105, 0.6);
+        border-radius: 26px;
+        transition: all 0.3s ease;
+      }
+
+      .mode-toggle-slider::before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background: #e2e8f0;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .mode-toggle-switch input:checked + .mode-toggle-slider {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(99, 102, 241, 0.5));
+      }
+
+      .mode-toggle-switch input:checked + .mode-toggle-slider::before {
+        transform: translateX(24px);
+      }
+
+      /* Simple Mode - Hide elements */
+      body.simple-mode .routine-maker-container {
+        display: none !important;
+      }
+
+      body.simple-mode .details-column {
+        display: none !important;
+      }
+
+      body.simple-mode th:last-child,
+      body.simple-mode td:last-child {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
@@ -328,6 +416,17 @@
             >
           </div>
         </div>
+        
+        <!-- Mode Toggle -->
+        <div class="mode-toggle-container">
+          <span class="mode-label" id="simpleModeLabel">📋 Simple</span>
+          <label class="mode-toggle-switch">
+            <input type="checkbox" id="modeToggle" checked>
+            <span class="mode-toggle-slider"></span>
+          </label>
+          <span class="mode-label active" id="plannerModeLabel">📅 Planner</span>
+        </div>
+        
         <div id="routineMakerContainer" class="routine-maker-container">
           <div class="routine-header">
             <span class="routine-title-wrapper">
@@ -1309,6 +1408,55 @@
         
         // Initial hide until mouse moves
         spotlight.style.opacity = '0';
+      })();
+
+      // Simple/Planner Mode Toggle
+      (function() {
+        const MODE_KEY = 'rds2-view-mode';
+        const modeToggle = document.getElementById('modeToggle');
+        const simpleLabel = document.getElementById('simpleModeLabel');
+        const plannerLabel = document.getElementById('plannerModeLabel');
+        const body = document.body;
+        
+        if (!modeToggle) return;
+        
+        // Load saved mode preference
+        function loadMode() {
+          const savedMode = localStorage.getItem(MODE_KEY);
+          // Default is 'planner' (advanced mode)
+          if (savedMode === 'simple') {
+            modeToggle.checked = false;
+            body.classList.add('simple-mode');
+            simpleLabel.classList.add('active');
+            plannerLabel.classList.remove('active');
+          } else {
+            modeToggle.checked = true;
+            body.classList.remove('simple-mode');
+            simpleLabel.classList.remove('active');
+            plannerLabel.classList.add('active');
+          }
+        }
+        
+        // Toggle mode
+        function toggleMode() {
+          if (modeToggle.checked) {
+            // Planner mode (advanced)
+            body.classList.remove('simple-mode');
+            localStorage.setItem(MODE_KEY, 'planner');
+            simpleLabel.classList.remove('active');
+            plannerLabel.classList.add('active');
+          } else {
+            // Simple mode
+            body.classList.add('simple-mode');
+            localStorage.setItem(MODE_KEY, 'simple');
+            simpleLabel.classList.add('active');
+            plannerLabel.classList.remove('active');
+          }
+        }
+        
+        // Initialize
+        loadMode();
+        modeToggle.addEventListener('change', toggleMode);
       })();
     </script>
   </body>
