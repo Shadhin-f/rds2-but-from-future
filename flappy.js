@@ -429,6 +429,20 @@ canvas.addEventListener('touchstart', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') {
         e.preventDefault();
+
+        // Check if on start screen - start game
+        if (startScreen && startScreen.style.display !== 'none') {
+            startGame();
+            return;
+        }
+
+        // Check if on game over screen - restart game
+        if (gameOverDiv && gameOverDiv.style.display !== 'none') {
+            restart();
+            return;
+        }
+
+        // Otherwise, jump during gameplay
         jump();
     }
 });

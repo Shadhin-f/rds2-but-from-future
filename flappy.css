@@ -4,23 +4,100 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #0d191dff !important;
-  font-family: Arial, sans-serif;
-  /* tiled pillar texture with subtle dark overlay and highlight */
-  background-image:
-    linear-gradient(rgba(13, 25, 29, 0.4), rgba(13, 25, 29, 0.4)),
-    url("images/piller.png"),
-    radial-gradient(circle at top right, rgba(109, 40, 217, 0.06), transparent);
-  background-repeat: no-repeat, repeat, no-repeat;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  overflow: hidden;
+
+  /* Game-like animated gradient background */
+  background:
+    /* Subtle animated grid overlay */
+    linear-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+    /* Radial glow spots */
+    radial-gradient(ellipse at 20% 80%, rgba(76, 175, 80, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(33, 150, 243, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 193, 7, 0.08) 0%, transparent 60%),
+    /* Main gradient - dark arcade theme */
+    linear-gradient(135deg,
+      #0a0f12 0%,
+      #0d1a1f 20%,
+      #0f1f24 40%,
+      #0a1518 60%,
+      #080d10 80%,
+      #050808 100%);
+
   background-size:
-    cover,
-    72px 72px,
-    cover;
-  background-position:
-    center,
-    left top,
-    top right;
+    40px 40px,
+    40px 40px,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%;
+
   background-attachment: fixed;
+}
+
+/* Animated floating particles overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(2px 2px at 10% 20%, rgba(255, 215, 0, 0.4), transparent),
+    radial-gradient(2px 2px at 90% 30%, rgba(76, 175, 80, 0.3), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(33, 150, 243, 0.35), transparent),
+    radial-gradient(2px 2px at 70% 80%, rgba(255, 82, 82, 0.3), transparent),
+    radial-gradient(1px 1px at 50% 10%, rgba(255, 255, 255, 0.25), transparent),
+    radial-gradient(1px 1px at 85% 60%, rgba(156, 39, 176, 0.3), transparent),
+    radial-gradient(2px 2px at 15% 50%, rgba(255, 193, 7, 0.35), transparent),
+    radial-gradient(1px 1px at 60% 40%, rgba(0, 188, 212, 0.3), transparent);
+  animation: floatingStars 20s linear infinite;
+}
+
+@keyframes floatingStars {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-30px) rotate(5deg);
+    opacity: 0.8;
+  }
+}
+
+/* Pulsing glow effect overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+  animation: ambientPulse 8s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
 
 #game-container {
