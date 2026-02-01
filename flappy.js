@@ -101,6 +101,47 @@ let score = 0;
 let highScore = parseInt(localStorage.getItem('flappyHighScore')) || 0;
 let gameRunning = false; let pillarCount = 0;
 
+// ========== COIN SYSTEM ==========
+const coins = [];
+const coinSize = 30;
+let sessionCoins = 0;
+let totalCoins = parseInt(localStorage.getItem('flappyTotalCoins')) || 0;
+
+// Coin image
+const coinImage = new Image();
+coinImage.src = 'images/coin.png';
+let coinImageLoaded = false;
+coinImage.onload = () => { coinImageLoaded = true; };
+
+// Coin sound
+const coinSound = new Audio('images/coin.mp3');
+coinSound.preload = 'auto';
+coinSound.volume = 0.5;
+
+// ========== SKIN SHOP ==========
+const SKINS = [
+    { id: 'bus.png', name: 'Bus Bird', price: 0 },
+    { id: 'register.png', name: 'Register Bird', price: 50 },
+    { id: 'nsu.png', name: 'NSU Bird', price: 100 },
+    { id: 'bird.png', name: 'Classic Bird', price: 150 }
+];
+
+// Load unlocked skins from localStorage
+let unlockedSkins = JSON.parse(localStorage.getItem('flappyUnlockedSkins')) || ['bus.png'];
+let selectedSkin = localStorage.getItem('flappySelectedSkin') || 'bus.png';
+
+function saveUnlockedSkins() {
+    localStorage.setItem('flappyUnlockedSkins', JSON.stringify(unlockedSkins));
+}
+
+function saveTotalCoins() {
+    localStorage.setItem('flappyTotalCoins', totalCoins);
+}
+
+function saveSelectedSkin() {
+    localStorage.setItem('flappySelectedSkin', selectedSkin);
+}
+
 const pillarTypes = [
     { name: "Rampura", score: 1 },
     { name: "Badda", score: 2 },
@@ -141,6 +182,19 @@ function createPipe() {
         type: type
     };
     pipes.push(newPipe);
+
+    // Spawn coin (50% chance)
+    if (Math.random() < 0.5) {
+        const gapTop = topHeight;
+        const gapBottom = canvas.height - bottomHeight;
+        const coinY = gapTop + (gapBottom - gapTop) / 2 - coinSize / 2;
+        coins.push({
+            x: canvas.width + pipeWidth + 50, // Slightly after the pipe
+            y: coinY + (Math.random() - 0.5) * 60, // Random vertical offset
+            collected: false
+        });
+    }
+
     _debugLog(`createPipe #${pillarCount} type=${type.name} pipes=${pipes.length}`);
 }
 
@@ -198,6 +252,36 @@ function update(dt) {
     // Increase speed gradually (per-second)
     pipeSpeed += pipeAccel * dt;
 
+    // Update coins
+    for (let i = coins.length - 1; i >= 0; i--) {
+        const coin = coins[i];
+        coin.x -= pipeSpeed * dt;
+
+        // Check collision with bird
+        if (!coin.collected) {
+            const coinCenterX = coin.x + coinSize / 2;
+            const coinCenterY = coin.y + coinSize / 2;
+            const birdCenterX = bird.x + bird.width / 2;
+            const birdCenterY = bird.y + bird.height / 2;
+            const dist = Math.sqrt((coinCenterX - birdCenterX) ** 2 + (coinCenterY - birdCenterY) ** 2);
+
+            if (dist < (coinSize / 2 + bird.width / 3)) {
+                coin.collected = true;
+                sessionCoins++;
+                updateCoinDisplay();
+                if (!isMuted && coinSound) {
+                    coinSound.currentTime = 0;
+                    try { coinSound.play(); } catch (e) { }
+                }
+            }
+        }
+
+        // Remove off-screen coins
+        if (coin.x + coinSize < 0 || coin.collected) {
+            coins.splice(i, 1);
+        }
+    }
+
     // Spawn pipes based on time (see lastPipeSpawn/time handling in game loop)
     // createPipe is now driven by time in the game loop
 }
@@ -242,6 +326,29 @@ function draw() {
         const labelY = Math.max(12, pipe.topHeight - 6);
         ctx.strokeText(label, pipe.x + pipeWidth / 2, labelY);
         ctx.fillText(label, pipe.x + pipeWidth / 2, labelY);
+    });
+
+    // Draw coins
+    coins.forEach(coin => {
+        if (!coin.collected) {
+            if (coinImageLoaded) {
+                ctx.drawImage(coinImage, coin.x, coin.y, coinSize, coinSize);
+            } else {
+                // Fallback: draw golden circle
+                ctx.beginPath();
+                ctx.arc(coin.x + coinSize / 2, coin.y + coinSize / 2, coinSize / 2, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffd700';
+                ctx.fill();
+                ctx.strokeStyle = '#b8860b';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Draw coin symbol
+                ctx.fillStyle = '#b8860b';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('$', coin.x + coinSize / 2, coin.y + coinSize / 2 + 5);
+            }
+        }
     });
 }
 
@@ -315,6 +422,11 @@ function gameOver() {
         highScore = score;
     }
 
+    // Persist coins
+    totalCoins += sessionCoins;
+    saveTotalCoins();
+    updateCoinDisplay();
+
     // Update game over screen elements
     if (finalScoreDisplay) {
         finalScoreDisplay.textContent = score;
@@ -324,6 +436,12 @@ function gameOver() {
     }
     if (newRecordIndicator) {
         newRecordIndicator.style.display = isNewRecord ? 'block' : 'none';
+    }
+
+    // Display session coins in game over
+    const finalSessionCoins = document.getElementById('final-session-coins');
+    if (finalSessionCoins) {
+        finalSessionCoins.textContent = sessionCoins;
     }
 
     gameOverDiv.style.display = 'block';
@@ -347,7 +465,9 @@ function restart() {
     bird.y = canvas.height / 2;
     bird.velocity = 0;
     pipes.length = 0;
+    coins.length = 0; // Clear coins
     score = 0;
+    sessionCoins = 0; // Reset session coins
     pillarCount = 0;
     pipeSpeed = 90;
     lastTimestamp = null;
@@ -355,6 +475,7 @@ function restart() {
     gameRunning = true;
     gameOverDiv.style.display = 'none';
     updateScore();
+    updateCoinDisplay(); // Reset coin counter UI
     // Ensure previous animation frame is cleared
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
@@ -392,15 +513,13 @@ function _debugLog(msg) {
 }
 
 function startGame() {
-    // Get selected skin before hiding start screen
-    const skinSelect = document.getElementById('birdSkinSelect');
-    if (skinSelect) {
-        birdImage.src = 'images/' + skinSelect.value;
-    }
+    birdImage.src = 'images/' + selectedSkin;
     startScreen.style.display = 'none';
     gameRunning = true;
     // Only create one pipe at the start
     pipes.length = 0;
+    coins.length = 0; // Clear coins
+    sessionCoins = 0; // Reset session coins
     pillarCount = 0;
     pipeSpeed = 60;
     lastTimestamp = null;
@@ -409,6 +528,7 @@ function startGame() {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
+    updateCoinDisplay();
     createPipe();
     try {
         if (bgMusic && !isMuted) {
@@ -472,5 +592,88 @@ const muteBtnEl = document.getElementById('mute-btn');
 if (muteBtnEl) muteBtnEl.addEventListener('click', toggleMute);
 updateMuteButton();
 
+// ========== COIN & SHOP UI FUNCTIONS ==========
+function updateCoinDisplay() {
+    // Current game counter
+    const coinCounter = document.getElementById('coin-counter');
+    if (coinCounter) {
+        coinCounter.textContent = sessionCoins;
+    }
+
+    // Total coins displays (start screen and game over)
+    const totalCoinValues = document.querySelectorAll('.total-coin-value');
+    totalCoinValues.forEach(el => {
+        el.textContent = totalCoins;
+    });
+}
+
+function renderShop() {
+    const shopContainer = document.getElementById('shop-grid');
+    if (!shopContainer) return;
+
+    shopContainer.innerHTML = '';
+
+    SKINS.forEach(skin => {
+        const isUnlocked = unlockedSkins.includes(skin.id);
+        const isSelected = selectedSkin === skin.id;
+
+        const card = document.createElement('div');
+        card.className = `skin-card ${isSelected ? 'selected' : ''} ${!isUnlocked ? 'locked' : ''}`;
+
+        const priceTag = !isUnlocked ? `<div class="price-tag">🪙 ${skin.price}</div>` : '';
+        const statusText = isSelected ? 'SELECTED' : (isUnlocked ? 'UNLOCKED' : 'BUY');
+
+        card.innerHTML = `
+            <div class="skin-preview">
+                <img src="images/${skin.id}" alt="${skin.name}">
+            </div>
+            <div class="skin-name">${skin.name}</div>
+            ${priceTag}
+            <button class="shop-btn ${isSelected ? 'active' : ''}" 
+                onclick="event.stopPropagation(); handleShopAction('${skin.id}')">
+                ${statusText}
+            </button>
+        `;
+
+        card.onclick = () => handleShopAction(skin.id);
+        shopContainer.appendChild(card);
+    });
+}
+
+window.handleShopAction = function (skinId) {
+    const skin = SKINS.find(s => s.id === skinId);
+    if (!skin) return;
+
+    const isUnlocked = unlockedSkins.includes(skinId);
+
+    if (isUnlocked) {
+        selectedSkin = skinId;
+        saveSelectedSkin();
+        renderShop();
+    } else {
+        if (totalCoins >= skin.price) {
+            totalCoins -= skin.price;
+            unlockedSkins.push(skinId);
+            selectedSkin = skinId;
+            saveTotalCoins();
+            saveUnlockedSkins();
+            saveSelectedSkin();
+            updateCoinDisplay();
+            renderShop();
+            if (coinSound) coinSound.play();
+        } else {
+            // Insufficient coins animation
+            const totalDisplays = document.querySelectorAll('.total-coin-display');
+            totalDisplays.forEach(el => {
+                el.classList.add('shake');
+                setTimeout(() => el.classList.remove('shake'), 500);
+            });
+        }
+    }
+};
+
 // Initialize
 updateHighScore();
+updateCoinDisplay();
+renderShop();
+birdImage.src = 'images/' + selectedSkin;

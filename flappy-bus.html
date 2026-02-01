@@ -26,19 +26,22 @@
       <canvas id="game-canvas" width="400" height="600"></canvas>
       <div id="score-display">Score: 0</div>
       <div id="high-score-display">H Score: 0</div>
+      <div id="coin-counter-display">🪙 <span id="coin-counter">0</span></div>
       <button id="mute-btn" title="Mute/Unmute">🔊</button>
       <div id="start-screen">
         <div class="menu-decoration"></div>
         <div class="menu-glow"></div>
+        <div class="total-coin-display">🪙 <span class="total-coin-value">0</span></div>
         <h1 class="game-title-animated">🚍 NSU FLAPPY BUS</h1>
         <p class="tagline">Navigate through the pillars of Dhaka!</p>
-        <div class="skin-selector">
-          <label for="birdSkinSelect">Select Your Ride:</label>
-          <select id="birdSkinSelect">
-            <option value="register.png">🎫 Register Bird</option>
-            <option value="bus.png">🚌 Bus Bird</option>
-          </select>
+        
+        <div class="shop-container">
+          <h2 class="shop-title">Select or Unlock Your Ride:</h2>
+          <div id="shop-grid" class="shop-grid">
+            <!-- Skins will be rendered here by JS -->
+          </div>
         </div>
+
         <button id="start-btn">
           <span class="btn-icon">▶</span>
           <span class="btn-text">Play Now</span>
@@ -52,10 +55,14 @@
       <div id="game-over" style="display: none">
         <div class="menu-decoration"></div>
         <div class="menu-glow gameover-glow"></div>
+        <div class="total-coin-display">🪙 <span class="total-coin-value">0</span></div>
         <h2 class="gameover-title">💥 Game Over</h2>
         <div class="final-score-container">
           <div class="final-score-label">Your Score</div>
           <div id="final-score" class="final-score-value">0</div>
+        </div>
+        <div class="final-coins-container">
+          <span class="coin-icon">🪙</span> Collected: <span id="final-session-coins">0</span>
         </div>
         <div class="high-score-container">
           <span class="trophy">🏆</span>

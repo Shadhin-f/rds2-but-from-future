@@ -422,8 +422,8 @@ function renderTable(data) {
 
         // Build course display with indicators
         let courseDisplay = routineDots + escapeHtml(row.Course || '');
-        if (hasTimeConflict) courseDisplay += ' 🕛';
-        if (hasExamClash) courseDisplay += ' ⚠️';
+        if (hasTimeConflict) courseDisplay += '<span class="clash-indicator"> 🕛</span>';
+        if (hasExamClash) courseDisplay += '<span class="clash-indicator"> ⚠️</span>';
 
         // Build add button with routine dots (only for current semester)
         const isCurrentSemester = currentSemester === DEFAULT_SEMESTER;

@@ -333,6 +333,18 @@
       body.simple-mode td:last-child {
         display: none !important;
       }
+
+      /* Hide conflict legend and clash emojis in simple mode */
+      body.simple-mode .conflict-legend {
+        display: none !important;
+      }
+
+      body.simple-mode .plan-btn-warn,
+      body.simple-mode .modal-clash-icon,
+      body.simple-mode .clash-indicator,
+      body.simple-mode .course-routine-indicator {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
