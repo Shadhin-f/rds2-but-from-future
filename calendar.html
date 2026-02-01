@@ -511,22 +511,25 @@
         
         // Calculate progress bar height
         if (progressBar && items.length > 0) {
-          const timelineRect = timeline.getBoundingClientRect();
-          const legendHeight = 80; // Approximate legend height + margin
+          const legend = document.querySelector('.timeline-legend');
+          const firstItem = items[0];
+          
+          // Calculate where the first item starts
+          const firstItemTop = firstItem ? firstItem.offsetTop : 0;
           
           if (pastCount === 0) {
             progressBar.style.height = "0px";
           } else if (pastCount >= items.length) {
             // All events passed
-            progressBar.style.height = (timeline.scrollHeight - legendHeight) + "px";
+            const lastItem = items[items.length - 1];
+            const lastItemBottom = lastItem.offsetTop + lastItem.offsetHeight;
+            progressBar.style.height = (lastItemBottom - firstItemTop + 20) + "px";
           } else {
             // Some events passed - calculate based on past items
             const lastPastItem = items[pastCount - 1];
             if (lastPastItem) {
-              const itemRect = lastPastItem.getBoundingClientRect();
-              const timelineTop = timeline.getBoundingClientRect().top + window.scrollY;
-              const itemBottom = lastPastItem.offsetTop + lastPastItem.offsetHeight;
-              progressBar.style.height = (itemBottom - legendHeight + 10) + "px";
+              const lastPastBottom = lastPastItem.offsetTop + lastPastItem.offsetHeight;
+              progressBar.style.height = (lastPastBottom - firstItemTop + 20) + "px";
             }
           }
         }

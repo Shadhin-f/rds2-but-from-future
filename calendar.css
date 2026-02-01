@@ -13,7 +13,7 @@
 .timeline::before {
   content: '';
   position: absolute;
-  left: 30px;
+  left: 26px;
   top: 80px;
   bottom: 20px;
   width: 4px;
@@ -27,7 +27,7 @@
 /* Progress bar fill - shows completed events */
 .timeline-progress {
   position: absolute;
-  left: 30px;
+  left: 26px;
   top: 80px;
   width: 4px;
   background: linear-gradient(180deg,
@@ -99,7 +99,7 @@
   background: linear-gradient(135deg,
       rgba(30, 41, 59, 0.9),
       rgba(15, 23, 42, 0.95));
-  padding: 18px 20px 18px 70px;
+  padding: 18px 20px 18px 20px;
   border-radius: 12px;
   margin-bottom: 16px;
   margin-left: 50px;
@@ -115,7 +115,7 @@
 .timeline-item::before {
   content: '';
   position: absolute;
-  left: -42px;
+  left: -46px;
   top: 50%;
   transform: translateY(-50%);
   width: 16px;
@@ -132,9 +132,9 @@
 .timeline-item::after {
   content: '';
   position: absolute;
-  left: -26px;
+  left: -30px;
   top: 50%;
-  width: 26px;
+  width: 30px;
   height: 2px;
   background: linear-gradient(90deg,
       rgba(71, 85, 105, 0.8),
@@ -142,23 +142,9 @@
   z-index: 2;
 }
 
-/* Serial number badge */
+/* Serial number badge - HIDDEN */
 .serial-number {
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.85rem;
-  color: #64748b;
-  font-weight: 700;
-  min-width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(100, 116, 139, 0.15);
-  border-radius: 8px;
-  border: 1px solid rgba(100, 116, 139, 0.2);
+  display: none;
 }
 
 /* Date styling */

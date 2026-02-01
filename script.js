@@ -47,8 +47,8 @@ class Particle {
 
     draw() {
         ctx.fillStyle = `rgba(20, 138, 173, ${this.opacity})`; // Teal color
-        
-        switch(currentShape) {
+
+        switch (currentShape) {
             case 'circle':
                 this.drawCircle();
                 break;
@@ -60,13 +60,13 @@ class Particle {
                 break;
         }
     }
-    
+
     drawCircle() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
     }
-    
+
     drawTriangle() {
         const height = this.size * 2;
         const width = this.size * 1.8;
@@ -77,7 +77,7 @@ class Particle {
         ctx.closePath();
         ctx.fill();
     }
-    
+
     drawRectangle() {
         const width = this.size * 1.6;
         const height = this.size * 1.6;
@@ -172,7 +172,7 @@ function renderWishlist() {
 
     // Remove event
     document.querySelectorAll('.wishlist-remove-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const course = btn.getAttribute('data-course');
             const section = btn.getAttribute('data-section');
             wishlist = wishlist.filter(item => !(item.Course === course && item.Section === section));
@@ -249,17 +249,17 @@ function triggerPageVanish() {
     if (container) {
         container.style.transition = 'opacity 1s ease-in-out';
         container.style.opacity = '0';
-        
+
         // Make particles move much faster
         particles.forEach(particle => {
             particle.speedX *= 5;
             particle.speedY *= 5;
         });
-        
+
         // Restore opacity and particle speed after 10 seconds
         setTimeout(() => {
             container.style.opacity = '1';
-            
+
             // Restore original particle speeds
             particles.forEach(particle => {
                 particle.speedX /= 5;
@@ -279,28 +279,28 @@ function triggerPageShake() {
 }
 
 // Add the search initialization to DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize search functionality
     const searchInput = document.getElementById('searchInput');
     const timeSearchInput = document.getElementById('timeSearchInput');
     const facultySearchInput = document.getElementById('facultySearchInput');
-    
+
     function applyFilters() {
         currentPage = 1; // Reset to first page
         const searchTerm = (searchInput?.value || '').toLowerCase();
         const timeTerm = (timeSearchInput?.value || '').toLowerCase();
         const facultyTerm = (facultySearchInput?.value || '').toLowerCase();
-        
+
         // Easter egg: Check if search term is "tba"
         if (searchTerm === 'tba') {
             triggerPageBlink();
         }
-        
+
         // Easter egg: Check if search term is "vanish" or "snap"
         if (searchTerm === 'vanish' || searchTerm === 'snap') {
             triggerPageVanish();
         }
-        
+
         // Easter egg: Check if search term triggers page shake
         // Existing triggers: exact 'shake' or 'msk1'
         // New triggers: includes 'mana' or 'dbs search' (case-insensitive)
@@ -312,41 +312,41 @@ document.addEventListener('DOMContentLoaded', function() {
         ) {
             triggerPageShake();
         }
-        
+
         // Easter egg: Check if search term is "thank you" or "thanks"
         if (searchTerm === 'thank you' || searchTerm === 'thanks') {
             alert('You are welcome!! 😊');
         }
-        
+
         filteredData = courseData.filter(course => {
             // Main search filter (course, faculty, semester)
-            const matchesMain = !searchTerm || 
+            const matchesMain = !searchTerm ||
                 course.Course?.toLowerCase().includes(searchTerm) ||
                 course.Faculty?.toLowerCase().includes(searchTerm) ||
                 course.Semester?.toLowerCase().includes(searchTerm);
-            
+
             // Time filter
-            const matchesTime = !timeTerm || 
+            const matchesTime = !timeTerm ||
                 course.Time?.toLowerCase().includes(timeTerm);
-            
+
             // Faculty filter
-            const matchesFaculty = !facultyTerm || 
+            const matchesFaculty = !facultyTerm ||
                 course.Faculty?.toLowerCase().includes(facultyTerm);
-            
+
             return matchesMain && matchesTime && matchesFaculty;
         });
-        
+
         renderTable(filteredData.length > 0 || searchTerm || timeTerm || facultyTerm ? filteredData : courseData);
     }
-    
+
     if (searchInput) {
         searchInput.addEventListener('input', debounce(applyFilters, 300));
     }
-    
+
     if (timeSearchInput) {
         timeSearchInput.addEventListener('input', debounce(applyFilters, 300));
     }
-    
+
     if (facultySearchInput) {
         facultySearchInput.addEventListener('input', debounce(applyFilters, 300));
     }
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function debounce(func, wait) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, args), wait);
     };
@@ -374,7 +374,7 @@ function renderTable(data) {
 
     tableBody.innerHTML = '';
 
-    if(!data || data.length === 0) {
+    if (!data || data.length === 0) {
         if (noResults) noResults.classList.remove('hidden');
         if (loading) loading.style.display = 'none';
         if (pagination) pagination.style.display = 'none';
@@ -409,28 +409,28 @@ function renderTable(data) {
         // Get all routines this course is in
         const routineIndices = getRoutineIndicesForCourse(row.Course, row.Section);
         const isInAnyRoutine = routineIndices.length > 0;
-        
+
         // Check for time conflict and exam clash (only if not already in current routine)
         const isInCurrentRoutine = isInRoutine(row.Course, row.Section);
         const hasTimeConflict = !isInCurrentRoutine && hasTimeConflictWithRoutine(row.Time);
         const hasExamClash = !isInCurrentRoutine && hasExamClashWithRoutine(row.Time);
-        
+
         // Build colored dots for routines this course belongs to
-        const routineDots = routineIndices.map(idx => 
+        const routineDots = routineIndices.map(idx =>
             `<span class="course-routine-indicator" style="background-color: ${ROUTINE_COLORS[idx]}" title="In Routine ${idx + 1}"></span>`
         ).join('');
-        
+
         // Build course display with indicators
         let courseDisplay = routineDots + escapeHtml(row.Course || '');
         if (hasTimeConflict) courseDisplay += ' 🕛';
         if (hasExamClash) courseDisplay += ' ⚠️';
-        
+
         // Build add button with routine dots (only for current semester)
         const isCurrentSemester = currentSemester === DEFAULT_SEMESTER;
-        const addBtnDots = routineIndices.map(idx => 
+        const addBtnDots = routineIndices.map(idx =>
             `<span class="course-routine-dot" style="background-color: ${ROUTINE_COLORS[idx]}"></span>`
         ).join('');
-        
+
         const addButtonHtml = isCurrentSemester ? `
                 <button class="view-details-btn add-to-wishlist-btn"
                     title="${isInAnyRoutine ? 'In Routine ' + routineIndices.map(i => i + 1).join(', ') : 'Add to Routine'}"
@@ -439,11 +439,11 @@ function renderTable(data) {
                 >
                     ${addBtnDots}<i class="fas fa-plus"></i> Add
                 </button>` : '';
-        
+
         const tr = document.createElement('tr');
         const facultyName = row.Faculty || '';
-        const facultyClickable = facultyName && facultyName !== 'TBA' 
-            ? `<span class="faculty-clickable" data-faculty="${escapeHtml(facultyName)}">${escapeHtml(facultyName)}</span>` 
+        const facultyClickable = facultyName && facultyName !== 'TBA'
+            ? `<span class="faculty-clickable" data-faculty="${escapeHtml(facultyName)}">${escapeHtml(facultyName)}</span>`
             : escapeHtml(facultyName);
         tr.innerHTML = `
             <td>${start + index + 1}</td>
@@ -477,7 +477,7 @@ function renderTable(data) {
             !btn.classList.contains('add-to-wishlist-btn') &&
             !btn.classList.contains('wishlist-remove-btn')
         ) {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 showModal({
                     Course: btn.getAttribute('data-course'),
                     Section: btn.getAttribute('data-section'),
@@ -495,7 +495,7 @@ function renderTable(data) {
     // Add to Wishlist event
     document.querySelectorAll('.add-to-wishlist-btn').forEach(btn => {
         if (!btn.classList.contains('added')) {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function (e) {
                 e.stopPropagation(); // Prevent triggering parent events
                 const course = btn.getAttribute('data-course');
                 const section = btn.getAttribute('data-section');
@@ -510,7 +510,7 @@ function renderTable(data) {
 
     // Faculty name click event
     document.querySelectorAll('.faculty-clickable').forEach(span => {
-        span.addEventListener('click', function(e) {
+        span.addEventListener('click', function (e) {
             e.stopPropagation();
             const facultyName = span.getAttribute('data-faculty');
             if (facultyName) {
@@ -530,29 +530,29 @@ function showModal(data) {
         .map(record => record.trim())
         .filter(record => record.length > 0)
         .join('\n');
-    
+
     // Find other sections of the same course with the same time
-    const sameCourseOtherSections = courseData.filter(row => 
-        row.Course === data.Course && 
-        row.Time === data.Time && 
+    const sameCourseOtherSections = courseData.filter(row =>
+        row.Course === data.Course &&
+        row.Time === data.Time &&
         row.Section !== data.Section
     );
-    
+
     // Find other sections of this course by the same faculty (different section, same faculty)
-    const sameFacultySameCourse = courseData.filter(row => 
-        row.Course === data.Course && 
-        row.Faculty === data.Faculty && 
+    const sameFacultySameCourse = courseData.filter(row =>
+        row.Course === data.Course &&
+        row.Faculty === data.Faculty &&
         row.Section !== data.Section &&
         data.Faculty && data.Faculty !== 'TBA'
     );
-    
+
     // Find all other courses this faculty is teaching (different course, same faculty)
-    const otherCoursesByFaculty = courseData.filter(row => 
-        row.Faculty === data.Faculty && 
+    const otherCoursesByFaculty = courseData.filter(row =>
+        row.Faculty === data.Faculty &&
         row.Course !== data.Course &&
         data.Faculty && data.Faculty !== 'TBA'
     );
-    
+
     // Helper to build plan buttons for a course
     function buildPlanButtons(course, section, faculty, time, room) {
         const routineIndices = getRoutineIndicesForCourse(course, section);
@@ -562,30 +562,30 @@ function showModal(data) {
             const color = ROUTINE_COLORS[i];
             const hasTimeClash = !isAdded && hasTimeConflictWithRoutineByIndex(time, i);
             const hasExamClash = !isAdded && hasExamClashWithRoutineByIndex(time, i);
-            
+
             let warningIcon = '';
             if (hasTimeClash) warningIcon = '<span class="plan-btn-warn" title="Time Conflict">🕛</span>';
             else if (hasExamClash) warningIcon = '<span class="plan-btn-warn" title="Exam Clash">⚠️</span>';
-            
+
             if (isAdded) {
-                btns += `<button class="plan-btn added" style="border-color:${color}" data-course="${escapeHtml(course)}" data-section="${escapeHtml(section)}" data-faculty="${escapeHtml(faculty || '')}" data-time="${escapeHtml(time || '')}" data-room="${escapeHtml(room || '')}" data-idx="${i}" title="Remove from Plan ${i+1}">
-                    <span class="plan-btn-num" style="color:${color}">${i+1}</span><i class="fas fa-times"></i>
+                btns += `<button class="plan-btn added" style="border-color:${color}" data-course="${escapeHtml(course)}" data-section="${escapeHtml(section)}" data-faculty="${escapeHtml(faculty || '')}" data-time="${escapeHtml(time || '')}" data-room="${escapeHtml(room || '')}" data-idx="${i}" title="Remove from Plan ${i + 1}">
+                    <span class="plan-btn-num" style="color:${color}">${i + 1}</span><i class="fas fa-times"></i>
                 </button>`;
             } else {
-                btns += `<button class="plan-btn" style="border-color:${color}" data-course="${escapeHtml(course)}" data-section="${escapeHtml(section)}" data-faculty="${escapeHtml(faculty || '')}" data-time="${escapeHtml(time || '')}" data-room="${escapeHtml(room || '')}" data-idx="${i}" title="Add to Plan ${i+1}">
-                    <span class="plan-btn-num" style="color:${color}">${i+1}</span>${warningIcon}<i class="fas fa-plus"></i>
+                btns += `<button class="plan-btn" style="border-color:${color}" data-course="${escapeHtml(course)}" data-section="${escapeHtml(section)}" data-faculty="${escapeHtml(faculty || '')}" data-time="${escapeHtml(time || '')}" data-room="${escapeHtml(room || '')}" data-idx="${i}" title="Add to Plan ${i + 1}">
+                    <span class="plan-btn-num" style="color:${color}">${i + 1}</span>${warningIcon}<i class="fas fa-plus"></i>
                 </button>`;
             }
         }
         return `<div class="plan-btns-row">${btns}</div>`;
     }
-    
+
     // Only show plan buttons for current semester
     const isCurrentSemester = currentSemester === DEFAULT_SEMESTER;
-    
+
     // Build the plan buttons for main course (only for current semester)
     let addButtonHtml = isCurrentSemester ? `<div class="modal-add-section">${buildPlanButtons(data.Course, data.Section, data.Faculty, data.Time, data.Room)}</div>` : '';
-    
+
     // Build same time sections HTML (only for current semester)
     let sameTimeSectionsHtml = '';
     if (isCurrentSemester && sameCourseOtherSections.length > 0) {
@@ -594,7 +594,7 @@ function showModal(data) {
                 <strong>Other sections at same time:</strong>
                 <div class="same-time-list">
                     ${sameCourseOtherSections.map(section => {
-                        return `
+            return `
                             <div class="same-time-item">
                                 <div class="same-time-info">
                                     <span class="same-time-section">Sec ${escapeHtml(section.Section)}</span>
@@ -603,12 +603,12 @@ function showModal(data) {
                                 ${buildPlanButtons(section.Course, section.Section, section.Faculty, section.Time, section.Room)}
                             </div>
                         `;
-                    }).join('')}
+        }).join('')}
                 </div>
             </div>
         `;
     }
-    
+
     // Build other sections by same faculty HTML (only for current semester)
     let sameFacultySectionsHtml = '';
     if (isCurrentSemester && sameFacultySameCourse.length > 0) {
@@ -617,7 +617,7 @@ function showModal(data) {
                 <strong>Other sections by ${escapeHtml(data.Faculty)}:</strong>
                 <div class="same-time-list">
                     ${sameFacultySameCourse.map(section => {
-                        return `
+            return `
                             <div class="same-time-item">
                                 <div class="same-time-info">
                                     <span class="same-time-section">Sec ${escapeHtml(section.Section)}</span>
@@ -626,12 +626,12 @@ function showModal(data) {
                                 ${buildPlanButtons(section.Course, section.Section, section.Faculty, section.Time, section.Room)}
                             </div>
                         `;
-                    }).join('')}
+        }).join('')}
                 </div>
             </div>
         `;
     }
-    
+
     // Build other courses by this faculty HTML (only for current semester)
     let otherCoursesHtml = '';
     if (isCurrentSemester && otherCoursesByFaculty.length > 0) {
@@ -640,7 +640,7 @@ function showModal(data) {
                 <strong>Other courses by ${escapeHtml(data.Faculty)}:</strong>
                 <div class="same-time-list">
                     ${otherCoursesByFaculty.map(course => {
-                        return `
+            return `
                             <div class="same-time-item">
                                 <div class="same-time-info">
                                     <span class="same-time-section">${escapeHtml(course.Course)} - Sec ${escapeHtml(course.Section)}</span>
@@ -649,12 +649,12 @@ function showModal(data) {
                                 ${buildPlanButtons(course.Course, course.Section, course.Faculty, course.Time, course.Room)}
                             </div>
                         `;
-                    }).join('')}
+        }).join('')}
                 </div>
             </div>
         `;
     }
-    
+
     modalBody.innerHTML = `
         <p><strong>Course:</strong> ${escapeHtml(data.Course || '')}</p>
         <p><strong>Section:</strong> ${escapeHtml(data.Section || '')}</p>
@@ -672,10 +672,10 @@ function showModal(data) {
             <pre class="records-list">${escapeHtml(formattedRecords)}</pre>
         </div>
     `;
-    
+
     // Attach click handlers for plan buttons
     modalBody.querySelectorAll('.plan-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const rowData = {
                 Course: btn.getAttribute('data-course'),
                 Section: btn.getAttribute('data-section'),
@@ -685,7 +685,7 @@ function showModal(data) {
             };
             const idx = parseInt(btn.getAttribute('data-idx'));
             const isAdded = btn.classList.contains('added');
-            
+
             if (isAdded) {
                 // Remove from routine - stored data uses lowercase 'code' and 'section'
                 const courseIdx = allRoutines[idx].findIndex(c => c.code === rowData.Course && c.section === rowData.Section);
@@ -700,7 +700,7 @@ function showModal(data) {
             showModal(data);
         });
     });
-    
+
     if (modal) {
         modal.classList.remove('hidden');
     }
@@ -714,12 +714,12 @@ function showFacultyModal(facultyName) {
 
     // Find all courses by this faculty
     const facultyCourses = courseData.filter(row => row.Faculty === facultyName);
-    
+
     // Update modal header
     if (modalHeader) {
         modalHeader.textContent = `Faculty: ${facultyName}`;
     }
-    
+
     // Build the courses table
     let coursesTableHtml = '';
     if (facultyCourses.length > 0) {
@@ -753,12 +753,12 @@ function showFacultyModal(facultyName) {
     } else {
         coursesTableHtml = '<p>No courses found for this faculty.</p>';
     }
-    
+
     modalBody.innerHTML = coursesTableHtml;
-    
+
     // Add click handlers for course rows to show course details
     modalBody.querySelectorAll('.faculty-course-row').forEach(row => {
-        row.addEventListener('click', function() {
+        row.addEventListener('click', function () {
             showModal({
                 Course: row.getAttribute('data-course'),
                 Section: row.getAttribute('data-section'),
@@ -771,7 +771,7 @@ function showFacultyModal(facultyName) {
             });
         });
     });
-    
+
     if (modal) {
         modal.classList.remove('hidden');
     }
@@ -809,10 +809,10 @@ function showAddToModal(row) {
         updateAddButtonState(row.Course, row.Section);
         return;
     }
-    
+
     // Store row for later use in event handlers
     currentModalRow = row;
-    
+
     renderRoutineModalButtons(modalBody, row);
     addToModal.classList.remove('hidden');
 }
@@ -821,19 +821,19 @@ function showAddToModal(row) {
 function renderRoutineModalButtons(modalBody, row) {
     // Get which routines already have this course
     const existingIndices = getRoutineIndicesForCourse(row.Course, row.Section);
-    
+
     // Build the routine selection UI
     let html = `<div class="routine-select-title">Manage plans for this course:</div>`;
     html += `<div class="routine-select-list">`;
-    
+
     for (let i = 0; i < TOTAL_ROUTINES; i++) {
         const isAdded = existingIndices.includes(i);
         const color = ROUTINE_COLORS[i];
-        
+
         // Check for conflicts with this specific routine
         const hasTimeClash = !isAdded && hasTimeConflictWithRoutineByIndex(row.Time, i);
         const hasExamClash = !isAdded && hasExamClashWithRoutineByIndex(row.Time, i);
-        
+
         // Build warning icons (just emojis beside plan name)
         let warningIcons = '';
         if (hasTimeClash) {
@@ -842,7 +842,7 @@ function renderRoutineModalButtons(modalBody, row) {
         if (hasExamClash) {
             warningIcons += '<span class="modal-clash-icon exam" title="Exam Clash">⚠️</span>';
         }
-        
+
         if (isAdded) {
             // Show added state with remove button
             html += `
@@ -873,18 +873,18 @@ function renderRoutineModalButtons(modalBody, row) {
             `;
         }
     }
-    
+
     html += `</div>`;
     html += `<div class="routine-select-info">
         <strong>${row.Course}</strong> - Sec ${row.Section}<br>
         <span style="color: var(--text-muted); font-size: 0.9em;">${row.Faculty || 'TBA'}</span>
     </div>`;
-    
+
     modalBody.innerHTML = html;
-    
+
     // Attach click handlers for Add buttons
     modalBody.querySelectorAll('.routine-add-modal-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const routineIdx = parseInt(btn.getAttribute('data-routine-index'));
             if (addCourseToRoutineByIndex(row, routineIdx)) {
                 // Re-render the modal to show updated state
@@ -892,10 +892,10 @@ function renderRoutineModalButtons(modalBody, row) {
             }
         });
     });
-    
+
     // Attach click handlers for Remove buttons
     modalBody.querySelectorAll('.routine-remove-modal-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const routineIdx = parseInt(btn.getAttribute('data-routine-index'));
             // Find and remove the course from the specified routine
             const courseIndex = allRoutines[routineIdx].findIndex(
@@ -919,10 +919,10 @@ function updateAddButtonState(course, section) {
         ) {
             const routineIndices = getRoutineIndicesForCourse(course, section);
             const hasAnyRoutine = routineIndices.length > 0;
-            
+
             if (hasAnyRoutine) {
                 // Show colored dots for which routines contain this course
-                const dots = routineIndices.map(idx => 
+                const dots = routineIndices.map(idx =>
                     `<span class="course-routine-dot" style="background-color: ${ROUTINE_COLORS[idx]}"></span>`
                 ).join('');
                 btn.classList.remove('added'); // Don't disable the button
@@ -949,16 +949,16 @@ function hasTimeConflictWithRoutine(timeStr) {
     if (!routineCourses.length) return false;
     const parsed = parseRoutineTime(timeStr);
     if (!parsed) return false;
-    
+
     const courseStartMin = timeToMinutes(parsed.start);
     const courseEndMin = timeToMinutes(parsed.end);
     const courseDays = parsed.days;
-    
+
     for (const routineCourse of routineCourses) {
         // Check if days overlap
         const daysOverlap = courseDays.some(day => routineCourse.days.includes(day));
         if (!daysOverlap) continue;
-        
+
         // Check if times overlap
         const timesOverlap = !(courseEndMin <= routineCourse.startMin || courseStartMin >= routineCourse.endMin);
         if (timesOverlap) return true;
@@ -972,16 +972,16 @@ function hasTimeConflictWithRoutineByIndex(timeStr, routineIndex) {
     if (!targetRoutine || !targetRoutine.length) return false;
     const parsed = parseRoutineTime(timeStr);
     if (!parsed) return false;
-    
+
     const courseStartMin = timeToMinutes(parsed.start);
     const courseEndMin = timeToMinutes(parsed.end);
     const courseDays = parsed.days;
-    
+
     for (const routineCourse of targetRoutine) {
         // Check if days overlap
         const daysOverlap = courseDays.some(day => routineCourse.days.includes(day));
         if (!daysOverlap) continue;
-        
+
         // Check if times overlap
         const timesOverlap = !(courseEndMin <= routineCourse.startMin || courseStartMin >= routineCourse.endMin);
         if (timesOverlap) return true;
@@ -994,33 +994,33 @@ function hasExamClashWithRoutine(timeStr) {
     if (!routineCourses.length) return false;
     const parsed = parseRoutineTime(timeStr);
     if (!parsed) return false;
-    
+
     const courseStartMin = timeToMinutes(parsed.start);
     const courseEndMin = timeToMinutes(parsed.end);
     const slotKey = `${courseStartMin}-${courseEndMin}`;
     const slotInfo = EXAM_SLOT_INFO.get(slotKey);
     if (!slotInfo) return false; // Not a recognized exam slot
-    
+
     // Get the day group(s) for this course's days
     const courseDayGroups = new Set();
     parsed.days.forEach(day => {
         const group = DAY_TO_EXAM_GROUP[day];
         if (group) courseDayGroups.add(group);
     });
-    
+
     // Check each routine course for potential exam clash
     for (const routineCourse of routineCourses) {
         const routineSlotKey = `${routineCourse.startMin}-${routineCourse.endMin}`;
         const routineSlotInfo = EXAM_SLOT_INFO.get(routineSlotKey);
         if (!routineSlotInfo) continue;
-        
+
         // Get day groups for routine course
         const routineDayGroups = new Set();
         routineCourse.days.forEach(day => {
             const group = DAY_TO_EXAM_GROUP[day];
             if (group) routineDayGroups.add(group);
         });
-        
+
         // Check if same day group AND same exam date (Date 1 or Date 2)
         for (const dayGroup of courseDayGroups) {
             if (routineDayGroups.has(dayGroup) && slotInfo.dateGroup === routineSlotInfo.dateGroup) {
@@ -1037,33 +1037,33 @@ function hasExamClashWithRoutineByIndex(timeStr, routineIndex) {
     if (!targetRoutine || !targetRoutine.length) return false;
     const parsed = parseRoutineTime(timeStr);
     if (!parsed) return false;
-    
+
     const courseStartMin = timeToMinutes(parsed.start);
     const courseEndMin = timeToMinutes(parsed.end);
     const slotKey = `${courseStartMin}-${courseEndMin}`;
     const slotInfo = EXAM_SLOT_INFO.get(slotKey);
     if (!slotInfo) return false; // Not a recognized exam slot
-    
+
     // Get the day group(s) for this course's days
     const courseDayGroups = new Set();
     parsed.days.forEach(day => {
         const group = DAY_TO_EXAM_GROUP[day];
         if (group) courseDayGroups.add(group);
     });
-    
+
     // Check each routine course for potential exam clash
     for (const routineCourse of targetRoutine) {
         const routineSlotKey = `${routineCourse.startMin}-${routineCourse.endMin}`;
         const routineSlotInfo = EXAM_SLOT_INFO.get(routineSlotKey);
         if (!routineSlotInfo) continue;
-        
+
         // Get day groups for routine course
         const routineDayGroups = new Set();
         routineCourse.days.forEach(day => {
             const group = DAY_TO_EXAM_GROUP[day];
             if (group) routineDayGroups.add(group);
         });
-        
+
         // Check if same day group AND same exam date (Date 1 or Date 2)
         for (const dayGroup of courseDayGroups) {
             if (routineDayGroups.has(dayGroup) && slotInfo.dateGroup === routineSlotInfo.dateGroup) {
@@ -1137,8 +1137,8 @@ const ROUTINE_COLORS = [
     '#8b5cf6'  // Purple
 ];
 
-const routineDays = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
-const dayMap = {A:'Sat',S:'Sun',M:'Mon',T:'Tue',W:'Wed',R:'Thu',F:'Fri'};
+const routineDays = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+const dayMap = { A: 'Sat', S: 'Sun', M: 'Mon', T: 'Tue', W: 'Wed', R: 'Thu', F: 'Fri' };
 
 // Exam day groups: courses with same day group have exams on same dates
 // ST = Sun+Tue, MW = Mon+Wed, RA = Thu+Sat
@@ -1265,7 +1265,7 @@ function parseRoutineTime(timeStr) {
     if (!match) return null;
     const [, start, end, days] = match;
     const dayArr = days.split('').map(d => dayMap[d]).filter(Boolean);
-    return {start, end, days: dayArr};
+    return { start, end, days: dayArr };
 }
 
 // Convert time string to minutes since midnight
@@ -1278,13 +1278,13 @@ function timeToMinutes(t) {
 }
 
 // Add course to a specific routine (prevent duplicates)
-function addCourseToRoutineByIndex({Course, Section, Faculty, Time, Room}, routineIndex) {
+function addCourseToRoutineByIndex({ Course, Section, Faculty, Time, Room }, routineIndex) {
     const parsed = parseRoutineTime(Time);
     if (!parsed) return false;
-    
+
     // Check for existing course in that routine
     if (isInRoutineByIndex(Course, Section, routineIndex)) return false;
-    
+
     allRoutines[routineIndex].push({
         code: Course,
         section: Section,
@@ -1296,14 +1296,14 @@ function addCourseToRoutineByIndex({Course, Section, Faculty, Time, Room}, routi
         endMin: timeToMinutes(parsed.end),
         days: parsed.days
     });
-    
+
     saveRoutine(routineIndex);
-    
+
     // If adding to current routine, re-render
     if (routineIndex === currentRoutineIndex) {
         renderRoutineTable();
     }
-    
+
     // Update the add button state
     updateAddButtonState(Course, Section);
     // Re-render main table to update conflict indicators
@@ -1312,8 +1312,8 @@ function addCourseToRoutineByIndex({Course, Section, Faculty, Time, Room}, routi
 }
 
 // Legacy function - adds to current routine
-function addCourseToRoutine({Course, Section, Faculty, Time, Room}) {
-    return addCourseToRoutineByIndex({Course, Section, Faculty, Time, Room}, currentRoutineIndex);
+function addCourseToRoutine({ Course, Section, Faculty, Time, Room }) {
+    return addCourseToRoutineByIndex({ Course, Section, Faculty, Time, Room }, currentRoutineIndex);
 }
 
 // Remove course from a specific routine by index
@@ -1321,11 +1321,11 @@ function removeCourseFromRoutineByIndex(courseIndex, routineIndex = currentRouti
     const removed = allRoutines[routineIndex][courseIndex];
     allRoutines[routineIndex].splice(courseIndex, 1);
     saveRoutine(routineIndex);
-    
+
     if (routineIndex === currentRoutineIndex) {
         renderRoutineTable();
     }
-    
+
     // Update the add button state for the removed course
     if (removed) {
         updateAddButtonState(removed.code, removed.section);
@@ -1394,7 +1394,7 @@ function renderRoutineTable() {
             const cell = document.createElement('td');
             // Find all courses for this slot and day (overlaps)
             const coursesInCell = routineCourses
-                .map((c, idx) => ({...c, _idx: idx}))
+                .map((c, idx) => ({ ...c, _idx: idx }))
                 .filter(c =>
                     c.days.includes(day) &&
                     c.startMin <= slotStart &&
@@ -1430,7 +1430,7 @@ function renderRoutineTable() {
 
     // Attach remove event
     document.querySelectorAll('.routine-remove-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.stopPropagation();
             const idx = parseInt(btn.getAttribute('data-index'));
             removeCourseFromRoutine(idx);
@@ -1443,7 +1443,7 @@ function renderRoutineTable() {
 // Conflict occurs when: same day group (ST/MW/RA) AND same exam date (Date 1 or Date 2)
 function computeExamConflicts() {
     if (!routineCourses.length) return [];
-    
+
     // Group courses by: dayGroup + dateGroup (e.g., "ST|1" or "MW|2")
     const conflictsByKey = new Map();
 
@@ -1519,12 +1519,12 @@ function minutesToTime(mins) {
     const ampm = h >= 12 ? 'PM' : 'AM';
     if (h === 0) h = 12;
     else if (h > 12) h -= 12;
-    return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')} ${ampm}`;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
 }
 
 // ========== KEYBOARD SHORTCUTS FOR ROUTINE SWITCHING ==========
 // Alt+1 to Alt+5 switches between routines
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     // Check if Alt key is pressed and key is 1-5
     if (e.altKey && e.key >= '1' && e.key <= '5') {
         e.preventDefault(); // Prevent browser default behavior
@@ -1541,26 +1541,26 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Update your DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Keep only the routine toggle
     const routineBtn = document.getElementById('toggleRoutineBtn');
     if (routineBtn) {
-        routineBtn.addEventListener('click', function() {
+        routineBtn.addEventListener('click', function () {
             const visible = localStorage.getItem(ROUTINE_VIS_KEY) !== '0';
             setRoutineVisible(!visible);
         });
     }
-    
+
     // Remove wishlist visibility setting
     // setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
     setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
-    
+
     // Keep the rest of your initialization code
     // ...existing code...
 });
 
 // Update the DOMContentLoaded event listener to remove wishlist visibility toggle
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Remove the wishlist toggle button code
     // const wishlistBtn = document.getElementById('toggleWishlistBtn');
     // if (wishlistBtn) {...}
@@ -1568,28 +1568,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Keep only the routine toggle
     const routineBtn = document.getElementById('toggleRoutineBtn');
     if (routineBtn) {
-        routineBtn.addEventListener('click', function() {
+        routineBtn.addEventListener('click', function () {
             const visible = localStorage.getItem(ROUTINE_VIS_KEY) !== '0';
             setRoutineVisible(!visible);
         });
     }
-    
+
     // Routine selector change handler
     const routineSelector = document.getElementById('routineSelector');
     if (routineSelector) {
         // Set initial value from saved index
         routineSelector.value = currentRoutineIndex.toString();
-        
-        routineSelector.addEventListener('change', function() {
+
+        routineSelector.addEventListener('change', function () {
             const newIndex = parseInt(routineSelector.value);
             switchToRoutine(newIndex);
         });
     }
-    
+
     // Remove wishlist visibility setting
     // setWishlistVisible(localStorage.getItem(WISHLIST_VIS_KEY) !== '0');
     setRoutineVisible(localStorage.getItem(ROUTINE_VIS_KEY) !== '0');
-    
+
     // Keep the rest of your initialization code
     // ...existing code...
 });
@@ -1672,11 +1672,11 @@ function setRoutineVisible(visible) {
     localStorage.setItem(ROUTINE_VIS_KEY, visible ? '1' : '0');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Routine toggle (already correct)
     const routineBtn = document.getElementById('toggleRoutineBtn');
     if (routineBtn) {
-        routineBtn.addEventListener('click', function() {
+        routineBtn.addEventListener('click', function () {
             const visible = localStorage.getItem(ROUTINE_VIS_KEY) !== '0';
             setRoutineVisible(!visible);
         });
@@ -1687,7 +1687,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Hook into Add to Wishlist to also add to routine
 const _origAddToWishlist = addToWishlist;
-addToWishlist = function(row) {
+addToWishlist = function (row) {
     _origAddToWishlist(row);
     // addCourseToRoutine(row);
 }
@@ -1697,30 +1697,30 @@ window.addEventListener('load', () => {
     // Clear cache on refresh
     localStorage.removeItem(CACHE_KEY);
     filteredData = [];
-    
+
     // Load wishlist
     loadWishlist();
-    
+
     // Load all routines from storage
     loadAllRoutines();
-    
+
     // Set up routine selector with current value
     const routineSelector = document.getElementById('routineSelector');
     if (routineSelector) {
         routineSelector.value = currentRoutineIndex.toString();
     }
-    
+
     renderRoutineTable();
-    
+
     // Hook up PDF download button
     const pdfBtn = document.getElementById('downloadRoutinePdfBtn');
     if (pdfBtn) {
         pdfBtn.addEventListener('click', generateRoutinePdf);
     }
-    
+
     // Hook up Share and Import buttons
     setupShareImportHandlers();
-    
+
     // Hook up Tutorial/Help button
     setupTutorialModal();
 });
@@ -1730,14 +1730,14 @@ function setupTutorialModal() {
     const helpBtn = document.getElementById('helpBtn');
     const tutorialModal = document.getElementById('tutorialModal');
     const closeTutorialBtn = document.getElementById('closeTutorialModal');
-    
+
     if (helpBtn && tutorialModal) {
         helpBtn.addEventListener('click', () => {
             tutorialModal.classList.remove('hidden');
             tutorialModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         });
-        
+
         // Close button
         if (closeTutorialBtn) {
             closeTutorialBtn.addEventListener('click', () => {
@@ -1746,7 +1746,7 @@ function setupTutorialModal() {
                 document.body.style.overflow = '';
             });
         }
-        
+
         // Close on backdrop click
         tutorialModal.addEventListener('click', (e) => {
             if (e.target === tutorialModal) {
@@ -1755,7 +1755,7 @@ function setupTutorialModal() {
                 document.body.style.overflow = '';
             }
         });
-        
+
         // Close on Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && !tutorialModal.classList.contains('hidden')) {
@@ -1778,35 +1778,35 @@ const quickTips = [
     "Your routine data is saved locally, so it persists even if you close the browser.",
     "Use ST, MW, or RA in the time filter to find classes on specific days.",
     "Click the ? button anytime for a full tutorial on how to use this tool.",
-    
+
     // Study Materials tips
     "📚 Check out Study Materials for notes, slides, and past papers shared by students!",
     "📖 You can contribute study materials to help fellow NSUers succeed.",
-    
+
     // Routine Maker tips
     "🗓️ Use Routine Maker for a full-screen schedule builder with more features.",
     "🎨 Routine Maker lets you customize colors and export high-quality images.",
-    
+
     // CGPA Calculator tips
     "📊 Use CGPA Calculator to track your academic progress and plan for honors.",
     "🎯 CGPA Calculator shows how many credits you need to reach your target GPA.",
-    
+
     // Retake Calculator tips
     "🔄 Retake Calculator helps you decide if retaking a course is worth it.",
     "💡 See exactly how much your CGPA will improve before retaking a course.",
-    
+
     // Course Map tips
     "🗺️ Course Map shows all prerequisite chains - plan your semesters ahead!",
     "📍 Visualize your entire degree path with the interactive Course Map.",
-    
+
     // Semester Planner tips
     "📅 Semester Planner helps you plan courses for multiple semesters at once.",
     "🎓 Use Semester Planner to ensure you complete all requirements on time.",
-    
+
     // Library tools tips
     "📕 Use NSU Library Book Locator to find exactly where books are shelved.",
     "🔍 Library Shelf Finder helps you navigate the library like a pro.",
-    
+
     // General tips
     "⭐ Found this helpful? Share with your friends and leave a review!",
     "💬 Join our Telegram community for updates and to connect with other NSUers.",
@@ -1818,16 +1818,16 @@ let currentTipIndex = 0;
 function setupQuickTips() {
     const tipText = document.getElementById('tipText');
     if (!tipText) return;
-    
+
     setInterval(() => {
         // Fade out
         tipText.classList.add('fade-out');
-        
+
         setTimeout(() => {
             // Change tip
             currentTipIndex = (currentTipIndex + 1) % quickTips.length;
             tipText.textContent = quickTips[currentTipIndex];
-            
+
             // Fade in
             tipText.classList.remove('fade-out');
         }, 300);
@@ -1844,7 +1844,7 @@ function encodeRoutine(routineData) {
     if (!routineData || routineData.length === 0) {
         return null;
     }
-    
+
     // Create a compact representation of the routine
     // Format: array of [code, section, faculty, start, end, days]
     const compactData = routineData.map(course => [
@@ -1855,11 +1855,11 @@ function encodeRoutine(routineData) {
         course.end,
         course.days.join('')  // Join days into single string like "SatSunMon"
     ]);
-    
+
     // Convert to JSON, then base64
     const jsonStr = JSON.stringify(compactData);
     const base64 = btoa(unescape(encodeURIComponent(jsonStr)));
-    
+
     // Add a prefix to identify valid codes
     return 'RDS2_' + base64;
 }
@@ -1871,32 +1871,32 @@ function decodeRoutine(code) {
         if (!code || !code.startsWith('RDS2_')) {
             throw new Error('Invalid code format: missing prefix');
         }
-        
+
         // Remove prefix and decode base64
         const base64 = code.substring(5);
         const jsonStr = decodeURIComponent(escape(atob(base64)));
         const compactData = JSON.parse(jsonStr);
-        
+
         // Validate structure
         if (!Array.isArray(compactData)) {
             throw new Error('Invalid code format: not an array');
         }
-        
+
         // Convert back to full routine format
         const routineData = compactData.map(item => {
             if (!Array.isArray(item) || item.length < 6) {
                 throw new Error('Invalid course data in code');
             }
-            
+
             const [code, section, faculty, start, end, daysStr] = item;
-            
+
             // Parse days string back to array
             // Days are stored as concatenated like "SatSunMon"
             const days = [];
             for (let i = 0; i < daysStr.length; i += 3) {
                 days.push(daysStr.substring(i, i + 3));
             }
-            
+
             return {
                 code,
                 section,
@@ -1909,7 +1909,7 @@ function decodeRoutine(code) {
                 days
             };
         });
-        
+
         return { success: true, data: routineData };
     } catch (error) {
         return { success: false, error: error.message };
@@ -1926,21 +1926,21 @@ function setupShareImportHandlers() {
     const shareModal = document.getElementById('shareRoutineModal');
     const importModal = document.getElementById('importRoutineModal');
     const importConfirmModal = document.getElementById('importConfirmModal');
-    
+
     // Share button click
     if (shareBtn) {
         shareBtn.addEventListener('click', () => {
             showShareModal();
         });
     }
-    
+
     // Import button click
     if (importBtn) {
         importBtn.addEventListener('click', () => {
             showImportModal();
         });
     }
-    
+
     // Close share modal
     const closeShareModal = document.getElementById('closeShareModal');
     if (closeShareModal && shareModal) {
@@ -1951,7 +1951,7 @@ function setupShareImportHandlers() {
             if (e.target === shareModal) shareModal.classList.add('hidden');
         });
     }
-    
+
     // Close import modal
     const closeImportModal = document.getElementById('closeImportModal');
     const cancelImportBtn = document.getElementById('cancelImportBtn');
@@ -1968,7 +1968,7 @@ function setupShareImportHandlers() {
             importModal.classList.add('hidden');
         });
     }
-    
+
     // Close import confirmation modal
     const closeImportConfirmModal = document.getElementById('closeImportConfirmModal');
     const cancelConfirmImportBtn = document.getElementById('cancelConfirmImportBtn');
@@ -1990,7 +1990,7 @@ function setupShareImportHandlers() {
             pendingImportData = null;
         });
     }
-    
+
     // Copy code button
     const copyBtn = document.getElementById('copyShareCodeBtn');
     if (copyBtn) {
@@ -2015,7 +2015,7 @@ function setupShareImportHandlers() {
             }
         });
     }
-    
+
     // Confirm import button (in import modal)
     const confirmImportBtn = document.getElementById('confirmImportBtn');
     if (confirmImportBtn) {
@@ -2023,7 +2023,7 @@ function setupShareImportHandlers() {
             handleImportAttempt();
         });
     }
-    
+
     // Final confirm import button (in confirmation modal)
     const finalConfirmBtn = document.getElementById('finalConfirmImportBtn');
     if (finalConfirmBtn) {
@@ -2038,12 +2038,12 @@ function showShareModal() {
     const shareModal = document.getElementById('shareRoutineModal');
     const codeOutput = document.getElementById('shareCodeOutput');
     const statusEl = document.getElementById('shareCodeStatus');
-    
+
     if (!shareModal || !codeOutput) return;
-    
+
     // Generate code for current routine
     const code = encodeRoutine(routineCourses);
-    
+
     if (!code) {
         codeOutput.value = '';
         if (statusEl) {
@@ -2055,7 +2055,7 @@ function showShareModal() {
             statusEl.innerHTML = `<span style="color: var(--text-muted); font-size: 0.85em;">${routineCourses.length} course(s) encoded</span>`;
         }
     }
-    
+
     shareModal.classList.remove('hidden');
 }
 
@@ -2064,13 +2064,13 @@ function showImportModal() {
     const importModal = document.getElementById('importRoutineModal');
     const codeInput = document.getElementById('importCodeInput');
     const statusEl = document.getElementById('importCodeStatus');
-    
+
     if (!importModal) return;
-    
+
     // Clear previous input
     if (codeInput) codeInput.value = '';
     if (statusEl) statusEl.innerHTML = '';
-    
+
     importModal.classList.remove('hidden');
 }
 
@@ -2081,41 +2081,41 @@ function handleImportAttempt() {
     const codeInput = document.getElementById('importCodeInput');
     const statusEl = document.getElementById('importCodeStatus');
     const previewEl = document.getElementById('importPreview');
-    
+
     if (!codeInput) return;
-    
+
     const code = codeInput.value.trim();
-    
+
     if (!code) {
         if (statusEl) {
             statusEl.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #e11d48;"></i> Please paste a routine code.';
         }
         return;
     }
-    
+
     // Try to decode
     const result = decodeRoutine(code);
-    
+
     if (!result.success) {
         if (statusEl) {
             statusEl.innerHTML = `<i class="fas fa-times-circle" style="color: #e11d48;"></i> Invalid code: ${result.error}`;
         }
         return;
     }
-    
+
     if (result.data.length === 0) {
         if (statusEl) {
             statusEl.innerHTML = '<i class="fas fa-exclamation-circle" style="color: #f59e0b;"></i> This code contains an empty routine.';
         }
         return;
     }
-    
+
     // Valid code - store data and show confirmation
     pendingImportData = result.data;
-    
+
     // Build preview
     if (previewEl) {
-        const previewHtml = result.data.map(course => 
+        const previewHtml = result.data.map(course =>
             `<div class="import-preview-item">
                 <strong>${course.code}</strong> - Sec ${course.section}
                 <br><span style="color: var(--text-muted); font-size: 0.85em;">${course.faculty || 'TBA'} | ${course.days.join(', ')}</span>
@@ -2123,7 +2123,7 @@ function handleImportAttempt() {
         ).join('');
         previewEl.innerHTML = `<div class="import-preview-title">Courses to import (${result.data.length}):</div>${previewHtml}`;
     }
-    
+
     // Hide import modal, show confirmation modal
     if (importModal) importModal.classList.add('hidden');
     if (importConfirmModal) importConfirmModal.classList.remove('hidden');
@@ -2132,27 +2132,27 @@ function handleImportAttempt() {
 // Execute the import after confirmation
 function executeImport() {
     const importConfirmModal = document.getElementById('importConfirmModal');
-    
+
     if (!pendingImportData) {
         if (importConfirmModal) importConfirmModal.classList.add('hidden');
         return;
     }
-    
+
     // Replace current routine with imported data
     allRoutines[currentRoutineIndex] = pendingImportData;
     routineCourses = allRoutines[currentRoutineIndex];
     saveRoutine(currentRoutineIndex);
-    
+
     // Clear pending data
     pendingImportData = null;
-    
+
     // Hide modal
     if (importConfirmModal) importConfirmModal.classList.add('hidden');
-    
+
     // Re-render everything
     renderRoutineTable();
     renderTable(filteredData.length ? filteredData : courseData);
-    
+
     // Show success message (brief notification)
     showImportSuccessNotification();
 }
@@ -2164,12 +2164,12 @@ function showImportSuccessNotification() {
     notification.className = 'import-success-notification';
     notification.innerHTML = '<i class="fas fa-check-circle"></i> Routine imported successfully!';
     document.body.appendChild(notification);
-    
+
     // Animate in
     setTimeout(() => {
         notification.classList.add('show');
     }, 10);
-    
+
     // Remove after 2.5 seconds
     setTimeout(() => {
         notification.classList.remove('show');
@@ -2185,7 +2185,7 @@ function showImportSuccessNotification() {
 async function changeSemester(semesterFile) {
     const warningCard = document.getElementById('semesterWarning');
     const fileExists = await checkSemesterFileExists(semesterFile);
-    
+
     if (!fileExists) {
         // Show warning card
         warningCard.style.display = 'block';
@@ -2200,7 +2200,7 @@ async function changeSemester(semesterFile) {
     // Hide warning card and show table
     warningCard.style.display = 'none';
     document.querySelector('.table-container').style.display = 'block';
-    
+
     // Continue with normal semester change
     currentSemester = semesterFile;
     currentPage = 1;
@@ -2223,7 +2223,7 @@ async function checkSemesterFileExists(filename) {
 function setupSemesterChange() {
     const semesterSelect = document.getElementById('semesterSelect');
     if (semesterSelect) {
-        semesterSelect.addEventListener('change', async function() {
+        semesterSelect.addEventListener('change', async function () {
             CSV_FILENAME = this.value;
             currentSemester = this.value;
             currentPage = 1;
@@ -2238,7 +2238,7 @@ function setupSemesterChange() {
 }
 
 // Update your DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // ...existing code...
 
     // Add semester change handler
@@ -2544,11 +2544,23 @@ function formatDateForDisplay(dateStr) {
 }
 
 function getDaysRemaining(dateStr) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const eventDate = new Date(dateStr + 'T00:00:00');
-    const diffTime = eventDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    // Get today's date components (local time)
+    const now = new Date();
+    const todayYear = now.getFullYear();
+    const todayMonth = now.getMonth();
+    const todayDay = now.getDate();
+
+    // Create date objects for comparison (both at midnight local time)
+    const today = new Date(todayYear, todayMonth, todayDay);
+
+    // Parse event date
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const eventDate = new Date(year, month - 1, day);
+
+    // Calculate difference in days
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round((eventDate - today) / msPerDay);
+
     return diffDays;
 }
 
@@ -2557,12 +2569,12 @@ function displayUpcomingEvent() {
     const textEl = document.getElementById('upcomingEventText');
     const dateEl = document.getElementById('upcomingEventDate');
     const countdownEl = document.getElementById('upcomingEventCountdown');
-    
+
     if (!section || !textEl || !dateEl || !countdownEl) return;
-    
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     // Find the next upcoming event
     let upcomingEvent = null;
     for (const event of CALENDAR_EVENTS) {
@@ -2572,18 +2584,18 @@ function displayUpcomingEvent() {
             break;
         }
     }
-    
+
     if (!upcomingEvent) {
         section.style.display = 'none';
         return;
     }
-    
+
     const daysRemaining = getDaysRemaining(upcomingEvent.date);
-    
+
     // Set the content
     textEl.textContent = upcomingEvent.content;
     dateEl.textContent = formatDateForDisplay(upcomingEvent.date);
-    
+
     // Set countdown text and styling
     if (daysRemaining === 0) {
         countdownEl.textContent = 'Today!';
@@ -2598,7 +2610,7 @@ function displayUpcomingEvent() {
         countdownEl.textContent = `${daysRemaining} days`;
         countdownEl.className = 'upcoming-event-countdown';
     }
-    
+
     section.style.display = 'block';
 }
 
