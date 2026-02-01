@@ -6,6 +6,10 @@ const gameOverDiv = document.getElementById('game-over');
 const restartBtn = document.getElementById('restart-btn');
 const startScreen = document.getElementById('start-screen');
 const startBtn = document.getElementById('start-btn');
+const menuBtn = document.getElementById('menu-btn');
+const finalScoreDisplay = document.getElementById('final-score');
+const finalHighScoreDisplay = document.getElementById('final-high-score');
+const newRecordIndicator = document.getElementById('new-record');
 
 // Debug overlay element (visible during development)
 const debugDiv = document.createElement('div');
@@ -18,7 +22,7 @@ function updateDebug() {
     debugDiv.style.padding = '6px 10px';
     debugDiv.style.background = 'linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))';
     debugDiv.style.borderRadius = '12px';
-} 
+}
 
 const backgroundImage = new Image();
 backgroundImage.src = 'images/sac-nac.jpg';
@@ -69,9 +73,9 @@ function toggleMute() {
     if (bgMusic) {
         bgMusic.muted = isMuted;
         if (isMuted) {
-            try { bgMusic.pause(); } catch (e) {}
+            try { bgMusic.pause(); } catch (e) { }
         } else if (gameRunning) {
-            try { const p = bgMusic.play(); if (p && typeof p.catch === 'function') p.catch(() => {}); } catch(e){}
+            try { const p = bgMusic.play(); if (p && typeof p.catch === 'function') p.catch(() => { }); } catch (e) { }
         }
     }
     updateMuteButton();
@@ -95,28 +99,28 @@ let pipeSpeed = 250; // start faster for snappier horizontal movement
 const pipeAccel = 3; // px/s^2 - stronger gradual speed increase
 let score = 0;
 let highScore = parseInt(localStorage.getItem('flappyHighScore')) || 0;
-let gameRunning = false;let pillarCount = 0;
+let gameRunning = false; let pillarCount = 0;
 
 const pillarTypes = [
-    {name: "Rampura", score: 1},
-    {name: "Badda", score: 2},
-    {name: "Gulshan", score: 1},
-    {name: "Banani", score: 1},
-    {name: "Banasri", score: 2},
-    {name: "Mirpur 10", score: 3},
-    {name: "Mirpur 11", score: 3},
-    {name: "Agargao", score: 3},
-    {name: "Pallabi", score: 2},
-    {name: "Uttora", score: 3},
-    {name: "Airport", score: 1},
-    {name: "Gazipur", score: 4},
-    {name: "Narayanganj", score: 4},
-    {name: "Tongi", score: 4},
-    {name: "Puran Dhaka", score: 2},
-    {name: "Gulistan", score: 2},
-    {name: "Shahabag", score: 0},
-    {name: "New Market", score: 1},
-    {name: "NSU", score: 10}
+    { name: "Rampura", score: 1 },
+    { name: "Badda", score: 2 },
+    { name: "Gulshan", score: 1 },
+    { name: "Banani", score: 1 },
+    { name: "Banasri", score: 2 },
+    { name: "Mirpur 10", score: 3 },
+    { name: "Mirpur 11", score: 3 },
+    { name: "Agargao", score: 3 },
+    { name: "Pallabi", score: 2 },
+    { name: "Uttora", score: 3 },
+    { name: "Airport", score: 1 },
+    { name: "Gazipur", score: 4 },
+    { name: "Narayanganj", score: 4 },
+    { name: "Tongi", score: 4 },
+    { name: "Puran Dhaka", score: 2 },
+    { name: "Gulistan", score: 2 },
+    { name: "Shahabag", score: 0 },
+    { name: "New Market", score: 1 },
+    { name: "NSU", score: 10 }
 ];
 function createPipe() {
     pillarCount++;
@@ -297,26 +301,42 @@ function gameOver() {
         if (crashSound) {
             crashSound.currentTime = 0;
             const p = crashSound.play();
-            if (p && typeof p.catch === 'function') p.catch(() => {});
+            if (p && typeof p.catch === 'function') p.catch(() => { });
         }
     } catch (e) {
         // ignore audio errors
     }
 
     gameRunning = false;
-    gameOverDiv.style.display = 'block';
-    if (score > highScore) {
+
+    // Check for new high score before updating
+    const isNewRecord = score > highScore;
+    if (isNewRecord) {
         highScore = score;
     }
+
+    // Update game over screen elements
+    if (finalScoreDisplay) {
+        finalScoreDisplay.textContent = score;
+    }
+    if (finalHighScoreDisplay) {
+        finalHighScoreDisplay.textContent = `Best: ${highScore}`;
+    }
+    if (newRecordIndicator) {
+        newRecordIndicator.style.display = isNewRecord ? 'block' : 'none';
+    }
+
+    gameOverDiv.style.display = 'block';
     localStorage.setItem('flappyHighScore', highScore);
     updateHighScore();
+
     // stop background music on crash
     try {
         if (bgMusic) {
             bgMusic.pause();
             bgMusic.currentTime = 0;
         }
-    } catch (e) {}
+    } catch (e) { }
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
@@ -347,9 +367,9 @@ function restart() {
         if (bgMusic && !isMuted) {
             bgMusic.currentTime = 0;
             const p = bgMusic.play();
-            if (p && typeof p.catch === 'function') p.catch(() => {});
+            if (p && typeof p.catch === 'function') p.catch(() => { });
         }
-    } catch (e) {}
+    } catch (e) { }
     requestAnimationFrame(gameLoop);
 }
 
@@ -369,7 +389,7 @@ function updateHighScore() {
 // Simple runtime diagnostics disabled in production
 function _debugLog(msg) {
     // no-op
-} 
+}
 
 function startGame() {
     // Get selected skin before hiding start screen
@@ -394,9 +414,9 @@ function startGame() {
         if (bgMusic && !isMuted) {
             bgMusic.currentTime = 0;
             const p = bgMusic.play();
-            if (p && typeof p.catch === 'function') p.catch(() => {});
+            if (p && typeof p.catch === 'function') p.catch(() => { });
         }
-    } catch (e) {}
+    } catch (e) { }
     requestAnimationFrame(gameLoop);
 }
 
@@ -414,6 +434,25 @@ document.addEventListener('keydown', (e) => {
 });
 restartBtn.addEventListener('click', restart);
 startBtn.addEventListener('click', startGame);
+
+// Main menu button - returns to start screen
+if (menuBtn) {
+    menuBtn.addEventListener('click', function () {
+        gameOverDiv.style.display = 'none';
+        startScreen.style.display = 'block';
+        // Reset game state
+        bird.y = canvas.height / 2;
+        bird.velocity = 0;
+        pipes.length = 0;
+        score = 0;
+        pillarCount = 0;
+        pipeSpeed = 90;
+        lastTimestamp = null;
+        lastPipeSpawn = 0;
+        updateScore();
+    });
+}
+
 // hookup mute button and reflect initial state
 const muteBtnEl = document.getElementById('mute-btn');
 if (muteBtnEl) muteBtnEl.addEventListener('click', toggleMute);
