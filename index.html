@@ -1252,6 +1252,64 @@
         loadTheme();
         themeToggle.addEventListener("click", toggleTheme);
       })();
+
+      // Mouse-reactive spotlight background
+      (function() {
+        // Create spotlight element
+        const spotlight = document.createElement('div');
+        spotlight.className = 'mouse-spotlight';
+        document.body.appendChild(spotlight);
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let currentX = mouseX;
+        let currentY = mouseY;
+        let isMoving = false;
+        
+        // Smooth follow with easing
+        function animateSpotlight() {
+          const dx = mouseX - currentX;
+          const dy = mouseY - currentY;
+          
+          // Smooth easing factor (lower = smoother)
+          currentX += dx * 0.08;
+          currentY += dy * 0.08;
+          
+          spotlight.style.left = currentX + 'px';
+          spotlight.style.top = currentY + 'px';
+          
+          requestAnimationFrame(animateSpotlight);
+        }
+        
+        // Track mouse movement
+        let throttleTimeout = null;
+        document.addEventListener('mousemove', function(e) {
+          if (throttleTimeout) return;
+          
+          throttleTimeout = setTimeout(function() {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            spotlight.style.opacity = '1';
+            throttleTimeout = null;
+          }, 10);
+        });
+        
+        // Hide spotlight when mouse leaves window
+        document.addEventListener('mouseleave', function() {
+          spotlight.style.opacity = '0';
+        });
+        
+        // Show spotlight when mouse enters window
+        document.addEventListener('mouseenter', function() {
+          spotlight.style.opacity = '1';
+        });
+        
+        // Start animation
+        animateSpotlight();
+        
+        // Initial hide until mouse moves
+        spotlight.style.opacity = '0';
+      })();
     </script>
   </body>
 </html>

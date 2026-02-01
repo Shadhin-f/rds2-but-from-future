@@ -1,125 +1,454 @@
+/* =========================================
+   VERTICAL TIMELINE WITH PROGRESS BAR
+   ========================================= */
+
 .timeline {
   max-width: 800px;
   margin: 40px auto;
   padding: 0 20px;
-}
-
-.timeline-item {
   position: relative;
-  background: rgba(26, 28, 35, 0.95);
-  padding: 15px 20px 15px 50px; /* increased left padding for serial number */
-  border-radius: 8px;
-  margin-bottom: 15px;
-  border-left: 4px solid #334155;
-  transition: transform 0.2s;
 }
 
-.timeline-item.payment {
-  border-left-color: #22c55e;
-  background: rgba(34, 197, 94, 0.1);
-}
-
-.timeline-item.advising {
-  border-left-color: #8b5cf6;
-  background: rgba(139, 92, 246, 0.1);
-}
-
-.timeline-item.deadline {
-  border-left-color: #ef4444;
-  background: rgba(239, 68, 68, 0.1);
-}
-
-.timeline-item.past-event {
-  opacity: 0.55;
-  filter: grayscale(0.7);
-  text-decoration: line-through;
-  pointer-events: none;
-}
-
-.timeline-item:hover {
-  transform: translateX(5px);
-}
-
-.timeline-item.payment:hover {
-  background: rgba(34, 197, 94, 0.15);
-}
-
-.timeline-item.advising:hover {
-  background: rgba(139, 92, 246, 0.15);
-}
-
-.timeline-item.deadline:hover {
-  background: rgba(239, 68, 68, 0.15);
-}
-
-.serial-number {
+/* Progress bar container - the vertical line */
+.timeline::before {
+  content: '';
   position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.9rem;
-  color: #94a3b8;
-  font-weight: bold;
-  min-width: 25px;
-  text-align: center;
+  left: 30px;
+  top: 80px;
+  bottom: 20px;
+  width: 4px;
+  background: linear-gradient(180deg,
+      rgba(100, 116, 139, 0.3) 0%,
+      rgba(100, 116, 139, 0.15) 100%);
+  border-radius: 4px;
+  z-index: 0;
 }
 
-.date {
-  font-size: 0.9rem;
-  color: #94a3b8;
-  margin-bottom: 5px;
+/* Progress bar fill - shows completed events */
+.timeline-progress {
+  position: absolute;
+  left: 30px;
+  top: 80px;
+  width: 4px;
+  background: linear-gradient(180deg,
+      #22c55e 0%,
+      #3b82f6 50%,
+      #8b5cf6 100%);
+  border-radius: 4px;
+  z-index: 1;
+  transition: height 0.5s ease;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
 }
 
-.content {
-  color: #e2e8f0;
-  line-height: 1.5;
-}
-
-/* Legend for timeline items */
+/* Timeline Legend */
 .timeline-legend {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   justify-content: center;
-  margin: 20px 0;
+  margin: 0 0 30px 0;
+  padding: 16px 20px;
   flex-wrap: wrap;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  backdrop-filter: blur(8px);
 }
 
 .legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: #94a3b8;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.legend-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
 }
 
 .legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .legend-color.default {
-  background: #334155;
+  background: linear-gradient(135deg, #475569, #334155);
 }
 
 .legend-color.payment {
-  background: #22c55e;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
 }
 
 .legend-color.advising {
-  background: #8b5cf6;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
 }
 
 .legend-color.deadline {
-  background: #ef4444;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
-@media screen and (max-width: 600px) {
+/* Timeline Item - Enhanced card design */
+.timeline-item {
+  position: relative;
+  background: linear-gradient(135deg,
+      rgba(30, 41, 59, 0.9),
+      rgba(15, 23, 42, 0.95));
+  padding: 18px 20px 18px 70px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  margin-left: 50px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  z-index: 2;
+}
+
+/* Timeline node (the dot on the progress line) */
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -42px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #475569, #334155);
+  border: 3px solid #1e293b;
+  border-radius: 50%;
+  z-index: 3;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 4px rgba(30, 41, 59, 0.8);
+}
+
+/* Connector line from node to card */
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  width: 26px;
+  height: 2px;
+  background: linear-gradient(90deg,
+      rgba(71, 85, 105, 0.8),
+      rgba(71, 85, 105, 0.2));
+  z-index: 2;
+}
+
+/* Serial number badge */
+.serial-number {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 700;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(100, 116, 139, 0.15);
+  border-radius: 8px;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+/* Date styling */
+.date {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date::before {
+  content: '📅';
+  font-size: 0.9rem;
+}
+
+/* Content styling */
+.content {
+  color: #e2e8f0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* =========================================
+   EVENT TYPE VARIATIONS
+   ========================================= */
+
+/* Payment events - Green theme */
+.timeline-item.payment {
+  border-left: 4px solid #22c55e;
+  background: linear-gradient(135deg,
+      rgba(34, 197, 94, 0.12),
+      rgba(15, 23, 42, 0.95));
+}
+
+.timeline-item.payment::before {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.5), 0 0 0 4px rgba(30, 41, 59, 0.8);
+}
+
+.timeline-item.payment .serial-number {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+/* Advising events - Purple theme */
+.timeline-item.advising {
+  border-left: 4px solid #8b5cf6;
+  background: linear-gradient(135deg,
+      rgba(139, 92, 246, 0.12),
+      rgba(15, 23, 42, 0.95));
+}
+
+.timeline-item.advising::before {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.5), 0 0 0 4px rgba(30, 41, 59, 0.8);
+}
+
+.timeline-item.advising .serial-number {
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* Deadline events - Red theme */
+.timeline-item.deadline {
+  border-left: 4px solid #ef4444;
+  background: linear-gradient(135deg,
+      rgba(239, 68, 68, 0.12),
+      rgba(15, 23, 42, 0.95));
+}
+
+.timeline-item.deadline::before {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5), 0 0 0 4px rgba(30, 41, 59, 0.8);
+}
+
+.timeline-item.deadline .serial-number {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* Default events - Gray theme */
+.timeline-item:not(.payment):not(.advising):not(.deadline) {
+  border-left: 4px solid #475569;
+}
+
+/* =========================================
+   HOVER EFFECTS
+   ========================================= */
+
+.timeline-item:hover {
+  transform: translateX(8px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.timeline-item:hover::before {
+  transform: translateY(-50%) scale(1.2);
+}
+
+.timeline-item.payment:hover {
+  background: linear-gradient(135deg,
+      rgba(34, 197, 94, 0.18),
+      rgba(15, 23, 42, 0.95));
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.timeline-item.advising:hover {
+  background: linear-gradient(135deg,
+      rgba(139, 92, 246, 0.18),
+      rgba(15, 23, 42, 0.95));
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.timeline-item.deadline:hover {
+  background: linear-gradient(135deg,
+      rgba(239, 68, 68, 0.18),
+      rgba(15, 23, 42, 0.95));
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* =========================================
+   PAST EVENTS - Completed state
+   ========================================= */
+
+.timeline-item.past-event {
+  opacity: 0.5;
+  filter: grayscale(0.6);
+}
+
+.timeline-item.past-event::before {
+  background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4), 0 0 0 4px rgba(30, 41, 59, 0.8) !important;
+}
+
+.timeline-item.past-event .content {
+  text-decoration: line-through;
+  text-decoration-color: rgba(226, 232, 240, 0.4);
+}
+
+.timeline-item.past-event:hover {
+  opacity: 0.7;
+  transform: translateX(4px);
+}
+
+/* =========================================
+   CURRENT/UPCOMING EVENT HIGHLIGHT
+   ========================================= */
+
+.timeline-item.current-event {
+  border-color: #fbbf24 !important;
+  box-shadow:
+    0 0 20px rgba(251, 191, 36, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: currentPulse 2s ease-in-out infinite;
+}
+
+.timeline-item.current-event::before {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.6), 0 0 0 4px rgba(30, 41, 59, 0.8) !important;
+  animation: nodePulse 2s ease-in-out infinite;
+}
+
+@keyframes currentPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.2), 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.35), 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes nodePulse {
+
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+
+  50% {
+    transform: translateY(-50%) scale(1.15);
+  }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+  .timeline::before {
+    left: 20px;
+  }
+
+  .timeline-progress {
+    left: 20px;
+  }
+
+  .timeline-item {
+    margin-left: 40px;
+    padding: 14px 16px 14px 50px;
+  }
+
+  .timeline-item::before {
+    left: -32px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .timeline-item::after {
+    left: -20px;
+    width: 20px;
+  }
+
+  .serial-number {
+    left: 12px;
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .legend-item {
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
   .timeline {
     padding: 0 10px;
   }
 
+  .timeline::before {
+    left: 15px;
+  }
+
+  .timeline-progress {
+    left: 15px;
+  }
+
   .timeline-item {
-    padding: 12px 15px 12px 40px; /* adjusted left padding for serial number */
+    margin-left: 35px;
+    padding: 12px 14px 12px 44px;
+  }
+
+  .timeline-item::before {
+    left: -27px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .timeline-item::after {
+    left: -17px;
+    width: 17px;
+  }
+
+  .serial-number {
+    left: 10px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+
+  .date {
+    font-size: 0.8rem;
+  }
+
+  .content {
+    font-size: 0.85rem;
+  }
+
+  .timeline-legend {
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .legend-item {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+
+  .legend-color {
+    width: 10px;
+    height: 10px;
   }
 }
