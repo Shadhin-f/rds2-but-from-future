@@ -121,9 +121,12 @@ coinSound.volume = 0.5;
 // ========== SKIN SHOP ==========
 const SKINS = [
     { id: 'bus.png', name: 'Bus Bird', price: 0 },
-    { id: 'register.png', name: 'Register Bird', price: 50 },
-    { id: 'nsu.png', name: 'NSU Bird', price: 100 },
-    { id: 'bird.png', name: 'Classic Bird', price: 150 }
+    { id: 'bird.png', name: 'Classic Bird', price: 80 },
+    { id: 'nsu.png', name: 'NSU Bird', price: 120 },
+    { id: 'couple.png', name: 'Couple Bird', price: 180 },
+    { id: 'trump.png', name: 'Trump Bird', price: 260 },
+    { id: 'smoke.png', name: 'Smoke Bird', price: 450 },
+    { id: 'register.png', name: 'Register Bird', price: 800 }
 ];
 
 // Load unlocked skins from localStorage
@@ -161,6 +164,10 @@ const pillarTypes = [
     { name: "Gulistan", score: 2 },
     { name: "Shahabag", score: 0 },
     { name: "New Market", score: 1 },
+    { name: "Dhanmondi", score: 2 },
+    { name: "Khilgao", score: 2 },
+    { name: "Notun Bazar", score: 1 },
+    { name: "Farmgate", score: 1 },
     { name: "NSU", score: 10 }
 ];
 function createPipe() {
