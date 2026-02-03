@@ -97,30 +97,86 @@
       }
       .results {
         display: grid;
-        gap: 18px;
+        grid-template-columns: repeat(3, 1fr);
         margin-bottom: 1rem;
       }
       .result-card {
-        background: var(--surface-color);
-        border-radius: 14px;
-        padding: 18px 20px;
-        border: 1px solid var(--border-color);
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+        box-sizing: border-box;
+        background: linear-gradient(135deg, 
+          rgba(30, 41, 59, 0.85) 0%, 
+          rgba(51, 65, 85, 0.65) 50%,
+          rgba(30, 41, 59, 0.75) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 20px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        box-shadow: 
+          0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+          0 -2px 12px rgba(139, 92, 246, 0.08) inset;
         overflow: hidden;
+        position: relative;
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .result-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, 
+          rgba(168, 85, 247, 0.8), 
+          rgba(6, 182, 212, 0.8), 
+          rgba(236, 72, 153, 0.6));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .result-card:hover::before {
+        opacity: 1;
+      }
+      .result-card:hover {
+        background: linear-gradient(135deg, 
+          rgba(50, 61, 79, 0.9) 0%, 
+          rgba(71, 85, 105, 0.7) 50%,
+          rgba(50, 61, 79, 0.85) 100%);
+        border-color: rgba(139, 92, 246, 0.4);
+        box-shadow: 
+          0 0 20px rgba(139, 92, 246, 0.15),
+          0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        z-index: 2;
+      }
+      /* Medium screens: 2 columns */
+      @media (max-width: 900px) {
+        .results {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      /* Small screens: 1 column */
+      @media (max-width: 600px) {
+        .results {
+          grid-template-columns: 1fr;
+        }
       }
       .result-card + .result-card {
         margin-top: 0;
       }
       .result-card h3 {
-        margin: 0 0 0.35rem;
-        font-size: 1.2rem;
+        margin: 0 0 0.5rem;
+        font-size: 1.15rem;
+        font-weight: 600;
+        line-height: 1.4;
       }
       .result-card h3 a {
         color: var(--text-color);
         text-decoration: none;
+        transition: all 0.25s ease;
+        display: inline;
       }
       .result-card h3 a:hover {
-        color: var(--text-muted);
+        background: linear-gradient(90deg, #a78bfa, #06b6d4);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
       .book-meta {
         display: flex;
@@ -137,14 +193,22 @@
         margin-top: 0.5rem;
       }
       .call-chip {
-        /* background: rgba(139, 92, 246, 0.12); */
-        background: var(--tr-hover-color);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 12px;
-        padding: 10px 12px;
+        background: linear-gradient(135deg, 
+          rgba(139, 92, 246, 0.1) 0%, 
+          rgba(51, 65, 85, 0.4) 100%);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+        border-radius: 14px;
+        padding: 12px 14px;
         display: flex;
         flex-direction: column;
-        gap: 0.3rem;
+        gap: 0.4rem;
+        transition: all 0.25s ease;
+      }
+      .call-chip:hover {
+        background: linear-gradient(135deg, 
+          rgba(139, 92, 246, 0.15) 0%, 
+          rgba(6, 182, 212, 0.1) 100%);
+        border-color: rgba(139, 92, 246, 0.35);
       }
       .call-chip .subjects {
         margin-top: 0.2rem;
@@ -152,26 +216,31 @@
       }
       .call-chip strong {
         font-family: "Courier New", monospace;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
+        color: #a78bfa;
+        font-size: 0.95rem;
       }
       .call-chip-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem;
+        gap: 0.5rem;
       }
       .location-tag {
         display: inline-flex;
         align-items: center;
-        gap: 0.3rem;
-        /* background: rgba(255, 255, 255, 0.08); */
-        background: var(--border-color);
-        border: 1px solid var(--border-color);
+        gap: 0.35rem;
+        background: rgba(51, 65, 85, 0.6);
+        border: 1px solid rgba(71, 85, 105, 0.5);
         border-radius: 999px;
-        padding: 4px 10px;
-        font-size: 0.85rem;
+        padding: 5px 12px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: all 0.25s ease;
       }
-      .location-tag:hover{
-        background: var(--primary-gradient);
+      .location-tag:hover {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.4));
+        border-color: rgba(139, 92, 246, 0.5);
+        transform: translateY(-1px);
       }
       .subjects {
         color: var(--text-muted);
@@ -184,6 +253,13 @@
         margin-top: 0;
         margin-bottom: 1rem;
         line-height: 1.5;
+      }
+      .highlight {
+        background: #fde047;
+        color: #1e293b;
+        padding: 1px 4px;
+        border-radius: 4px;
+        font-weight: 600;
       }
       .results-summary {
         margin-top: 0.25rem;
@@ -588,6 +664,17 @@
         return tokens.join(" · ");
       }
 
+      function highlightText(text, searchTokens) {
+        if (!text || !searchTokens || searchTokens.length === 0) return text;
+        let result = text;
+        searchTokens.forEach(token => {
+          if (token.length < 2) return; // Skip very short tokens
+          const regex = new RegExp(`(${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          result = result.replace(regex, '<span class="highlight">$1</span>');
+        });
+        return result;
+      }
+
       function renderCallChip(callNumber) {
         const match = findShelfForCallNumber(callNumber);
         const shelfText = match
@@ -612,12 +699,26 @@
       }
 
       function renderBookCard(book) {
+        // Get current search tokens for highlighting
+        const query = els.search.value.trim();
+        const authorQuery = els.authorFilter.value.trim();
+        const searchTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+        const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
+        const allTokens = [...searchTokens, ...authorTokens];
+
         const callNumbers = extractCallNumbers(book.availability);
         const availability = formatAvailability(book.availability);
         const chips = callNumbers.length
           ? callNumbers.map((cn) => renderCallChip(cn)).join("")
           : '<div class="info-text">No call number detected in this record.</div>';
-        const authors = book.authors && book.authors !== "N/A" ? book.authors : "Unknown";
+        
+        const rawAuthors = book.authors && book.authors !== "N/A" ? book.authors : "Unknown";
+        const rawTitle = book.title || "Untitled";
+        
+        // Highlight matching keywords
+        const highlightedTitle = highlightText(rawTitle, searchTokens);
+        const highlightedAuthors = highlightText(rawAuthors, allTokens);
+        
         const material = book.material_info
           ? book.material_info.replace(/Material type:?/i, "").trim()
           : "";
@@ -635,14 +736,14 @@
               <h3>
                 ${
                   book.detail_url
-                    ? `<a href="${book.detail_url}" target="_blank" rel="noopener">${book.title || "Untitled"}</a>`
-                    : `${book.title || "Untitled"}`
+                    ? `<a href="${book.detail_url}" target="_blank" rel="noopener">${highlightedTitle}</a>`
+                    : `${highlightedTitle}`
                 }
               </h3>
               ${availabilityBtn}
             </div>
             <div class="book-meta">
-              <span><i class="fas fa-user-pen"></i> ${authors}</span>
+              <span><i class="fas fa-user-pen"></i> ${highlightedAuthors}</span>
               ${material ? `<span><i class="fas fa-book-open"></i> ${material}</span>` : ""}
               ${publication ? `<span><i class="fas fa-calendar-day"></i> ${publication}</span>` : ""}
               ${book.biblionumber ? `<span><i class="fas fa-hashtag"></i> ID ${book.biblionumber}</span>` : ""}
@@ -780,17 +881,6 @@
         const query = els.search.value.trim();
         const authorQuery = els.authorFilter.value.trim();
         
-        if (!query && !authorQuery) {
-          els.results.innerHTML = `
-            <div class="no-results">
-              Start typing a book title or author to see matching records.
-            </div>`;
-          els.summary.textContent = "";
-          els.pagination.innerHTML = "";
-          state.filteredBooks = [];
-          return;
-        }
-
         if (state.booksLoading || state.shelvesLoading) {
           els.results.innerHTML = `
             <div class="no-results">Still loading data. Please hold on...</div>`;
@@ -802,11 +892,11 @@
         const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
         const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
         
+        // If no search query, show all books
         if (!tokens.length && !authorTokens.length) {
-          els.results.innerHTML = "";
-          els.summary.textContent = "";
-          els.pagination.innerHTML = "";
-          state.filteredBooks = [];
+          state.filteredBooks = [...state.books];
+          state.currentPage = 1;
+          displayResults();
           return;
         }
 
