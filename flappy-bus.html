@@ -26,21 +26,54 @@
       <canvas id="game-canvas" width="400" height="600"></canvas>
       <div id="score-display">Score: 0</div>
       <div id="high-score-display">H Score: 0</div>
+      <div id="coin-counter-display">🪙 <span id="coin-counter">0</span></div>
       <button id="mute-btn" title="Mute/Unmute">🔊</button>
       <div id="start-screen">
-        <h1>NSU FLAPPY BUS</h1>
-        <div style="margin-bottom: 16px;">
-          <label for="birdSkinSelect" style="font-weight:600;">Select Bird Skin:</label>
-          <select id="birdSkinSelect" style="margin-left:8px; padding:4px 8px;">
-            <option value="register.png">Register Bird</option>
-            <option value="bus.png">Bus Bird</option>
-          </select>
+        <div class="menu-decoration"></div>
+        <div class="menu-glow"></div>
+        <div class="total-coin-display">🪙 <span class="total-coin-value">0</span></div>
+        <h1 class="game-title-animated">🚍 NSU FLAPPY BUS</h1>
+        <p class="tagline">Navigate through the pillars of Dhaka!</p>
+        
+        <div class="shop-container">
+          <h2 class="shop-title">Select or Unlock Your Ride:</h2>
+          <div id="shop-grid" class="shop-grid">
+            <!-- Skins will be rendered here by JS -->
+          </div>
         </div>
-        <button id="start-btn">Start Game</button>
+
+        <button id="start-btn">
+          <span class="btn-icon">▶</span>
+          <span class="btn-text">Play Now</span>
+        </button>
+        <div class="menu-instructions">
+          <span>🖱️ Click</span>
+          <span>📱 Tap</span>
+          <span>⌨️ Space</span>
+        </div>
       </div>
       <div id="game-over" style="display: none">
-        <h2>Game Over</h2>
-        <button id="restart-btn">Restart</button>
+        <div class="menu-decoration"></div>
+        <div class="menu-glow gameover-glow"></div>
+        <div class="total-coin-display">🪙 <span class="total-coin-value">0</span></div>
+        <h2 class="gameover-title">💥 Game Over</h2>
+        <div class="final-score-container">
+          <div class="final-score-label">Your Score</div>
+          <div id="final-score" class="final-score-value">0</div>
+        </div>
+        <div class="final-coins-container">
+          <span class="coin-icon">🪙</span> Collected: <span id="final-session-coins">0</span>
+        </div>
+        <div class="high-score-container">
+          <span class="trophy">🏆</span>
+          <span id="final-high-score">Best: 0</span>
+        </div>
+        <div id="new-record" class="new-record" style="display: none;">🌟 New Record! 🌟</div>
+        <button id="restart-btn">
+          <span class="btn-icon">🔄</span>
+          <span class="btn-text">Try Again</span>
+        </button>
+        <button id="menu-btn" class="secondary-btn">🏠 Main Menu</button>
       </div>
       <div id="game-credit">
         <a href="index.html" title="Back to main page">RDS2 But From Future</a>

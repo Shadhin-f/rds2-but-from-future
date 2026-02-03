@@ -245,6 +245,106 @@
           max-width: 100%;
         }
       }
+
+      /* Mode Toggle Styles */
+      .mode-toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        padding: 10px 16px;
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 12px;
+        border: 1px solid rgba(71, 85, 105, 0.3);
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .mode-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        opacity: 0.6;
+      }
+
+      .mode-label.active {
+        color: var(--text-color);
+        opacity: 1;
+      }
+
+      .mode-toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 26px;
+        cursor: pointer;
+      }
+
+      .mode-toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .mode-toggle-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(71, 85, 105, 0.6);
+        border-radius: 26px;
+        transition: all 0.3s ease;
+      }
+
+      .mode-toggle-slider::before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background: #e2e8f0;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .mode-toggle-switch input:checked + .mode-toggle-slider {
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(99, 102, 241, 0.5));
+      }
+
+      .mode-toggle-switch input:checked + .mode-toggle-slider::before {
+        transform: translateX(24px);
+      }
+
+      /* Simple Mode - Hide elements */
+      body.simple-mode .routine-maker-container {
+        display: none !important;
+      }
+
+      body.simple-mode .details-column {
+        display: none !important;
+      }
+
+      body.simple-mode th:last-child,
+      body.simple-mode td:last-child {
+        display: none !important;
+      }
+
+      /* Hide conflict legend and clash emojis in simple mode */
+      body.simple-mode .conflict-legend {
+        display: none !important;
+      }
+
+      body.simple-mode .plan-btn-warn,
+      body.simple-mode .modal-clash-icon,
+      body.simple-mode .clash-indicator,
+      body.simple-mode .course-routine-indicator {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
@@ -328,6 +428,17 @@
             >
           </div>
         </div>
+        
+        <!-- Mode Toggle -->
+        <div class="mode-toggle-container">
+          <span class="mode-label" id="simpleModeLabel">📋 Simple</span>
+          <label class="mode-toggle-switch">
+            <input type="checkbox" id="modeToggle" checked>
+            <span class="mode-toggle-slider"></span>
+          </label>
+          <span class="mode-label active" id="plannerModeLabel">📅 Planner</span>
+        </div>
+        
         <div id="routineMakerContainer" class="routine-maker-container">
           <div class="routine-header">
             <span class="routine-title-wrapper">
@@ -1251,6 +1362,113 @@
         // Initialize
         loadTheme();
         themeToggle.addEventListener("click", toggleTheme);
+      })();
+
+      // Mouse-reactive spotlight background
+      (function() {
+        // Create spotlight element
+        const spotlight = document.createElement('div');
+        spotlight.className = 'mouse-spotlight';
+        document.body.appendChild(spotlight);
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let currentX = mouseX;
+        let currentY = mouseY;
+        let isMoving = false;
+        
+        // Smooth follow with easing
+        function animateSpotlight() {
+          const dx = mouseX - currentX;
+          const dy = mouseY - currentY;
+          
+          // Smooth easing factor (lower = smoother)
+          currentX += dx * 0.08;
+          currentY += dy * 0.08;
+          
+          spotlight.style.left = currentX + 'px';
+          spotlight.style.top = currentY + 'px';
+          
+          requestAnimationFrame(animateSpotlight);
+        }
+        
+        // Track mouse movement
+        let throttleTimeout = null;
+        document.addEventListener('mousemove', function(e) {
+          if (throttleTimeout) return;
+          
+          throttleTimeout = setTimeout(function() {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            spotlight.style.opacity = '1';
+            throttleTimeout = null;
+          }, 10);
+        });
+        
+        // Hide spotlight when mouse leaves window
+        document.addEventListener('mouseleave', function() {
+          spotlight.style.opacity = '0';
+        });
+        
+        // Show spotlight when mouse enters window
+        document.addEventListener('mouseenter', function() {
+          spotlight.style.opacity = '1';
+        });
+        
+        // Start animation
+        animateSpotlight();
+        
+        // Initial hide until mouse moves
+        spotlight.style.opacity = '0';
+      })();
+
+      // Simple/Planner Mode Toggle
+      (function() {
+        const MODE_KEY = 'rds2-view-mode';
+        const modeToggle = document.getElementById('modeToggle');
+        const simpleLabel = document.getElementById('simpleModeLabel');
+        const plannerLabel = document.getElementById('plannerModeLabel');
+        const body = document.body;
+        
+        if (!modeToggle) return;
+        
+        // Load saved mode preference
+        function loadMode() {
+          const savedMode = localStorage.getItem(MODE_KEY);
+          // Default is 'planner' (advanced mode)
+          if (savedMode === 'simple') {
+            modeToggle.checked = false;
+            body.classList.add('simple-mode');
+            simpleLabel.classList.add('active');
+            plannerLabel.classList.remove('active');
+          } else {
+            modeToggle.checked = true;
+            body.classList.remove('simple-mode');
+            simpleLabel.classList.remove('active');
+            plannerLabel.classList.add('active');
+          }
+        }
+        
+        // Toggle mode
+        function toggleMode() {
+          if (modeToggle.checked) {
+            // Planner mode (advanced)
+            body.classList.remove('simple-mode');
+            localStorage.setItem(MODE_KEY, 'planner');
+            simpleLabel.classList.remove('active');
+            plannerLabel.classList.add('active');
+          } else {
+            // Simple mode
+            body.classList.add('simple-mode');
+            localStorage.setItem(MODE_KEY, 'simple');
+            simpleLabel.classList.add('active');
+            plannerLabel.classList.remove('active');
+          }
+        }
+        
+        // Initialize
+        loadMode();
+        modeToggle.addEventListener('change', toggleMode);
       })();
     </script>
   </body>
