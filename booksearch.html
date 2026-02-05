@@ -842,8 +842,9 @@
       </div>
     </div>
     <p class="info-text">
-      Tip: Copy the exact spelling from the NSU OPAC for best matches. We
-      show shelf directions for every call number we can map.
+      <i class="fas fa-circle-info" style="color: #a78bfa; margin-right: 4px;"></i>
+      <strong>Advanced Search:</strong> The primary search system now performs a unified query across title, author,
+      call number, edition, material type, and language simultaneously to ensure comprehensive and precise results.
     </p>
 
     <div id="resultsCounter" class="results-counter" style="display: none;">
@@ -1256,11 +1257,7 @@
 
       const queryLower = query.toLowerCase();
       const matches = state.books
-        .filter(book => {
-          const title = (book.title || '').toLowerCase();
-          const authors = (book.authors || '').toLowerCase();
-          return title.includes(queryLower) || authors.includes(queryLower);
-        })
+        .filter(book => book.searchText.includes(queryLower))
         .slice(0, 6);
 
       if (matches.length === 0) {
@@ -1375,7 +1372,7 @@
         .then((data) => {
           state.books = data.map((book) => ({
             ...book,
-            searchText: `${book.title || ""} ${book.authors || ""} ${book.call_number || ""}`
+            searchText: `${book.title || ""} ${book.authors || ""} ${book.call_number || ""} ${book.edition || ""} ${book.material_type || ""} ${book.language || ""}`
               .toLowerCase()
               .trim(),
           }));
