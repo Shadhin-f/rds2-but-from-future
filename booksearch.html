@@ -1362,7 +1362,7 @@
       state.booksError = null;
       updateStatus();
       showSkeletonLoading();
-      fetch("nsu_library_books_v2.json")
+      fetch("nsu_library_books_v3.json")
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
