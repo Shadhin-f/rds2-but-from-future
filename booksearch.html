@@ -1,915 +1,1062 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-      crossorigin="anonymous"
-    ></script>
-    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
 
-      gtag("config", "G-DR0D2D6C35");
-    </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NSU Library Book Finder</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <style>
-      .search-panel {
-        margin: 2rem 0 1.5rem;
-      }
-      .search-panel label {
-        display: block;
-        font-weight: 500;
-        margin-bottom: 0.6rem;
-        color: #e2e8f0;
-        font-size: 0.95rem;
-        letter-spacing: 0.02em;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-      }
-      .search-panel input[type="text"] {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 16px 20px;
-        background: rgba(30, 41, 59, 0.6);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        border-radius: 16px;
-        color: #f1f5f9;
-        font-size: 1.05rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 
-          0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-          0 2px 4px -1px rgba(0, 0, 0, 0.06),
-          inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-      .search-panel input[type="text"]::placeholder {
-        color: rgba(148, 163, 184, 0.6);
-      }
-      .search-panel input[type="text"]:hover {
-        background: rgba(30, 41, 59, 0.7);
-        border-color: rgba(148, 163, 184, 0.3);
-        transform: translateY(-1px);
-      }
-      .search-panel input[type="text"]:focus {
-        outline: none;
-        background: rgba(30, 41, 59, 0.85);
-        border-color: #8b5cf6;
-        box-shadow: 
-          0 0 0 4px rgba(139, 92, 246, 0.15),
-          0 10px 15px -3px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+    crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-DR0D2D6C35");
+  </script>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NSU Library Book Finder</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .search-panel {
+      margin: 2rem 0 1.5rem;
+    }
+
+    .search-panel label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-panel input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 16px 20px;
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 16px;
+      color: #f1f5f9;
+      font-size: 1.05rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .search-panel input[type="text"]::placeholder {
+      color: rgba(148, 163, 184, 0.6);
+    }
+
+    .search-panel input[type="text"]:hover {
+      background: rgba(30, 41, 59, 0.7);
+      border-color: rgba(148, 163, 184, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .search-panel input[type="text"]:focus {
+      outline: none;
+      background: rgba(30, 41, 59, 0.85);
+      border-color: #8b5cf6;
+      box-shadow:
+        0 0 0 4px rgba(139, 92, 246, 0.15),
+        0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
       .search-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: 1rem;
       }
-      @media (max-width: 640px) {
-        .search-row {
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-      }
-      .search-group {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-      }
-      .search-group label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .search-group label i {
-        font-size: 1rem;
-        color: #a78bfa; /* Slightly lighter purple for better contrast on dark bg */
-        filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
-      }
-      .search-panel .search-icon {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        font-size: 0.95rem;
-        color: var(--text-muted);
-        margin-top: 0.4rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.4;
-      }
-      #message {
-        min-height: 48px;
-        margin: 1rem 0;
-        display: flex;
-        align-items: center;
-      }
-      .results {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        margin-bottom: 1rem;
-      }
-      .result-card {
-        box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        padding: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        box-shadow: 
-          0 8px 32px rgba(0, 0, 0, 0.2),
-          0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-          0 1px 0 rgba(255, 255, 255, 0.15) inset;
-        overflow: hidden;
-        position: relative;
-        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .result-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, 
-          rgba(168, 85, 247, 0.8), 
-          rgba(6, 182, 212, 0.8), 
+    }
+
+    .search-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .search-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .search-group label i {
+      font-size: 1rem;
+      color: #a78bfa;
+      /* Slightly lighter purple for better contrast on dark bg */
+      filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+    }
+
+    .search-panel .search-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+
+    #message {
+      min-height: 48px;
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 1rem;
+    }
+
+    .result-card {
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+        0 1px 0 rgba(255, 255, 255, 0.15) inset;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg,
+          rgba(168, 85, 247, 0.8),
+          rgba(6, 182, 212, 0.8),
           rgba(236, 72, 153, 0.6));
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      .result-card:hover::before {
-        opacity: 1;
-      }
-      .result-card:hover {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.25);
-        box-shadow: 
-          0 12px 40px rgba(0, 0, 0, 0.25),
-          0 0 30px rgba(139, 92, 246, 0.15),
-          0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-        z-index: 2;
-      }
-      /* Medium screens: 2 columns */
-      @media (max-width: 900px) {
-        .results {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      /* Small screens: 1 column */
-      @media (max-width: 600px) {
-        .results {
-          grid-template-columns: 1fr;
-        }
-      }
-      .result-card + .result-card {
-        margin-top: 0;
-      }
-      .result-card h3 {
-        margin: 0 0 0.5rem;
-        font-size: 1.15rem;
-        font-weight: 600;
-        line-height: 1.4;
-      }
-      .result-card h3 a {
-        color: var(--text-color);
-        text-decoration: none;
-        transition: all 0.25s ease;
-        display: inline;
-      }
-      .result-card h3 a:hover {
-        background: linear-gradient(90deg, #a78bfa, #06b6d4);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .book-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        margin-bottom: 0.6rem;
-      }
-      .call-list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-        margin-top: 0.5rem;
-      }
-      .call-chip {
-        background: linear-gradient(135deg, 
-          rgba(139, 92, 246, 0.1) 0%, 
-          rgba(51, 65, 85, 0.4) 100%);
-        border: 1px solid rgba(139, 92, 246, 0.25);
-        border-radius: 14px;
-        padding: 12px 14px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-        transition: all 0.25s ease;
-      }
-      .call-chip:hover {
-        background: linear-gradient(135deg, 
-          rgba(139, 92, 246, 0.15) 0%, 
-          rgba(6, 182, 212, 0.1) 100%);
-        border-color: rgba(139, 92, 246, 0.35);
-      }
-      .call-chip .subjects {
-        margin-top: 0.2rem;
-        font-size: 0.85rem;
-      }
-      .call-chip strong {
-        font-family: "Courier New", monospace;
-        letter-spacing: 0.05em;
-        color: #a78bfa;
-        font-size: 0.95rem;
-      }
-      .call-chip-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      .location-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        background: rgba(51, 65, 85, 0.6);
-        border: 1px solid rgba(71, 85, 105, 0.5);
-        border-radius: 999px;
-        padding: 5px 12px;
-        font-size: 0.82rem;
-        font-weight: 500;
-        transition: all 0.25s ease;
-      }
-      .location-tag:hover {
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.4));
-        border-color: rgba(139, 92, 246, 0.5);
-        transform: translateY(-1px);
-      }
-      .subjects {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        line-height: 1.5;
-      }
-      .info-text {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        margin-top: 0;
-        margin-bottom: 1rem;
-        line-height: 1.5;
-      }
-      .highlight {
-        background: #fde047;
-        color: #1e293b;
-        padding: 1px 4px;
-        border-radius: 4px;
-        font-weight: 600;
-      }
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-      /* Staggered Card Animation */
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      .result-card {
-        animation: fadeInUp 0.5s ease forwards;
-        opacity: 0;
-      }
-      .result-card.visible {
-        opacity: 1;
-      }
+    .result-card:hover::before {
+      opacity: 1;
+    }
 
-      /* Skeleton Loading */
-      .skeleton-card {
-        box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        min-height: 200px;
-        position: relative;
-        overflow: hidden;
-      }
-      .skeleton-card::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, 
-          transparent, 
-          rgba(255, 255, 255, 0.08), 
-          transparent);
-        animation: shimmer 1.5s infinite;
-      }
-      @keyframes shimmer {
-        100% { left: 100%; }
-      }
-      .skeleton-line {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        margin-bottom: 12px;
-      }
-      .skeleton-line.title { height: 24px; width: 80%; }
-      .skeleton-line.author { height: 16px; width: 60%; }
-      .skeleton-line.meta { height: 14px; width: 40%; }
-      .skeleton-line.chip { height: 60px; width: 100%; border-radius: 12px; }
+    .result-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.25),
+        0 0 30px rgba(139, 92, 246, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+      z-index: 2;
+    }
 
-      /* Enhanced 3D Hover Effect */
-      .result-card {
-        transform-style: preserve-3d;
-        perspective: 1000px;
-      }
-      .result-card:hover {
-        transform: scale(1.02) rotateX(2deg) rotateY(-2deg);
-        box-shadow: 
-          0 20px 50px rgba(0, 0, 0, 0.3),
-          0 0 40px rgba(139, 92, 246, 0.2),
-          0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-      }
-
-      /* Page Transition */
+    /* Medium screens: 2 columns */
+    @media (max-width: 900px) {
       .results {
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        grid-template-columns: repeat(2, 1fr);
       }
-      .results.transitioning {
-        opacity: 0.5;
-        transform: scale(0.98);
+    }
+
+    /* Small screens: 1 column */
+    @media (max-width: 600px) {
+      .results {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .result-card+.result-card {
+      margin-top: 0;
+    }
+
+    .book-content {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .book-image-container {
+      flex-shrink: 0;
+      width: 48px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 4px;
+    }
+
+    .book-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+
+    .book-details {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    @media (max-width: 480px) {
+      .book-image-container {
+        width: 48px;
+        height: 64px;
+      }
+    }
+
+    .result-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .result-card h3 a {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      display: inline;
+    }
+
+    .result-card h3 a:hover {
+      background: linear-gradient(90deg, #a78bfa, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .book-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem 1rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meta-item i {
+      width: 14px;
+      color: #a78bfa;
+      font-size: 0.8rem;
+    }
+
+    .meta-label {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      margin-right: 0.2rem;
+    }
+
+    .call-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .call-chip {
+      background: linear-gradient(135deg,
+          rgba(139, 92, 246, 0.1) 0%,
+          rgba(51, 65, 85, 0.4) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+    }
+
+    .call-chip:hover {
+      background: linear-gradient(135deg,
+          rgba(139, 92, 246, 0.15) 0%,
+          rgba(6, 182, 212, 0.1) 100%);
+      border-color: rgba(139, 92, 246, 0.35);
+    }
+
+    .call-chip .subjects {
+      margin-top: 0.2rem;
+      font-size: 0.85rem;
+    }
+
+    .call-chip strong {
+      font-family: "Courier New", monospace;
+      letter-spacing: 0.05em;
+      color: #a78bfa;
+      font-size: 0.95rem;
+    }
+
+    .call-chip-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .location-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(51, 65, 85, 0.6);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+
+    .location-tag:hover {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.4));
+      border-color: rgba(139, 92, 246, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .subjects {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .info-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      background: #fde047;
+      color: #1e293b;
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Staggered Card Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
       }
 
-      /* Search Suggestions */
-      .search-group {
-        position: relative;
-      }
-      .suggestions-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(30, 41, 59, 0.95);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        border-radius: 10px;
-        max-height: 250px;
-        overflow-y: auto;
-        z-index: 100;
-        display: none;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      }
-      .suggestions-dropdown.show {
-        display: block;
-        animation: fadeInUp 0.2s ease;
-      }
-      .suggestion-item {
-        padding: 12px 16px;
-        cursor: pointer;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-      .suggestion-item:last-child {
-        border-bottom: none;
-      }
-      .suggestion-item:hover {
-        background: rgba(139, 92, 246, 0.2);
-      }
-      .suggestion-title {
-        color: var(--text-color);
-        font-weight: 500;
-        font-size: 0.95rem;
-      }
-      .suggestion-author {
-        color: var(--text-muted);
-        font-size: 0.85rem;
-      }
-
-      /* Results Counter Badge */
-      .results-counter {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.2));
-        padding: 10px 18px;
-        border-radius: 999px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #fff;
-        border: 1px solid rgba(139, 92, 246, 0.3);
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
-      }
-      .results-counter .count {
-        display: inline-block;
-        min-width: 40px;
-        text-align: center;
-        background: rgba(255, 255, 255, 0.15);
-        padding: 4px 10px;
-        border-radius: 20px;
-        transition: transform 0.3s ease;
-      }
-      .results-counter.updating .count {
-        animation: countPulse 0.3s ease;
-      }
-      @keyframes countPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-      }
-
-      /* Infinite Scroll */
-      .load-more-trigger {
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-muted);
-      }
-      .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(139, 92, 246, 0.2);
-        border-top-color: #8b5cf6;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-      @keyframes spin {
-        100% { transform: rotate(360deg); }
-      }
-      .scroll-status {
-        text-align: center;
-        padding: 20px;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-
-      .results-summary {
-        margin-top: 0.25rem;
-        margin-bottom: 1.5rem;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-      .no-results {
-        text-align: center;
-        color: var(--text-muted);
-        font-size: 1rem;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
-        border-radius: 10px;
-      }
-      .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        padding: 8px 12px;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-      }
-      .status-pill.loading {
-        background: rgba(99, 102, 241, 0.12);
-        border: 1px solid rgba(99, 102, 241, 0.35);
-        color: var(--primary-color);
-      }
-      .status-pill.error {
-        background: rgba(248, 113, 113, 0.15);
-        border: 1px solid rgba(248, 113, 113, 0.35);
-        color: #f87171;
-      }
-      .status-pill.success {
-        background: rgba(16, 185, 129, 0.15);
-        border: 1px solid rgba(16, 185, 129, 0.35);
-        color: #34d399;
-      }
-      .title-row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.35rem;
-      }
-      .title-row h3 {
-        margin: 0;
-      }
-      .check-availability-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 6px 14px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #fff;
-        background: var(--primary-gradient, linear-gradient(135deg, #6d28d9, #8b5cf6));
-        border: none;
-        border-radius: 999px;
-        cursor: pointer;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
-      }
-      .check-availability-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(109, 40, 217, 0.45);
-        filter: brightness(1.1);
-      }
-      .check-availability-btn:active {
+      to {
+        opacity: 1;
         transform: translateY(0);
       }
-      .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.75rem;
-        margin: 1.5rem 0;
-        flex-wrap: wrap;
-      }
-      .pagination-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.4rem;
-        padding: 10px 18px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--text-color);
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .pagination-btn:hover:not(:disabled) {
-        border-color: var(--primary-color);
-        background: rgba(109, 40, 217, 0.1);
-      }
-      .pagination-btn:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-      }
-      .pagination-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-      }
-      .page-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 36px;
-        height: 36px;
-        padding: 0 8px;
-        background: var(--primary-gradient, linear-gradient(135deg, #6d28d9, #8b5cf6));
-        color: #fff;
-        font-weight: 600;
-        border-radius: 8px;
-      }
-      .page-jump {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .page-jump input {
-        width: 60px;
-        padding: 8px 10px;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        color: var(--text-color);
-        font-size: 0.9rem;
-        text-align: center;
-      }
-      .page-jump input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-      }
-      .page-jump-btn {
-        padding: 8px 12px;
-        font-size: 0.85rem;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        color: var(--text-color);
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .page-jump-btn:hover {
-        border-color: var(--primary-color);
-      }
-      .per-page-select {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-      }
-      .per-page-select select {
-        padding: 6px 10px;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        color: var(--text-color);
-        font-size: 0.85rem;
-        cursor: pointer;
-      }
-      .per-page-select select:focus {
-        outline: none;
-        border-color: var(--primary-color);
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="particleCanvas"></canvas>
-    <div class="container">
-      <header>
-        <h1>Where is my book?</h1>
-        <nav class="nav-bar">
-          <a href="index.html">RDS2</a>
-          <a href="calendar.html">Academic Calendar</a>
-          <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="routine.html">Routine Maker</a>
-          <a href="planner.html">Semester Planner</a>
-          <a href="freshman.html">Freshman Guides</a>
-          <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="active">NSU Library Book Locator</a>
-          <a href="shelf_search.html">Shelf Finder</a>
-          <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html">Retake Calculator</a>
-          <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">About Dev</a>
-        </nav>
-      </header>
+    }
 
-      <div class="announcement-bar">
-        <span
-          >Easily Search and locate books from the NSU Library</span
-        >
-      </div>
+    .result-card {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }
 
-      <div class="search-panel">
-        <div class="search-row">
-          <div class="search-group">
-            <label for="bookQuery"><i class="fas fa-search"></i> Search by title or author</label>
-            <input
-              type="text"
-              id="bookQuery"
-              placeholder="e.g., Game Theory, Kieso, Marketing"
-              autocomplete="off"
-            />
-            <div id="suggestions" class="suggestions-dropdown"></div>
-          </div>
-          <div class="search-group">
-            <label for="authorFilter"><i class="fas fa-user-pen"></i> Filter by author</label>
-            <input
-              type="text"
-              id="authorFilter"
-              placeholder="e.g., Kotler, Weygandt, Mankiw"
-              autocomplete="off"
-            />
-          </div>
-        </div>
-      </div>
-      <p class="info-text">
-        Tip: Copy the exact spelling from the NSU OPAC for best matches. We
-        show shelf directions for every call number we can map.
-      </p>
+    .result-card.visible {
+      opacity: 1;
+    }
 
-      <div id="resultsCounter" class="results-counter" style="display: none;">
-        <i class="fas fa-book"></i>
-        <span>Found</span>
-        <span class="count" id="countValue">0</span>
-        <span>books</span>
-      </div>
+    /* Skeleton Loading */
+    .skeleton-card {
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
 
-      <div id="message"></div>
-      <div id="results" class="results"></div>
-      <div id="loadMoreTrigger" class="load-more-trigger" style="display: none;">
-        <div class="loading-spinner"></div>
-      </div>
-      <div id="scrollStatus" class="scroll-status"></div>
-      <div id="resultsSummary" class="results-summary"></div>
+    .skeleton-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 255, 255, 0.08),
+          transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      100% {
+        left: 100%;
+      }
+    }
+
+    .skeleton-line {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .skeleton-line.title {
+      height: 24px;
+      width: 80%;
+    }
+
+    .skeleton-line.author {
+      height: 16px;
+      width: 60%;
+    }
+
+    .skeleton-line.meta {
+      height: 14px;
+      width: 40%;
+    }
+
+    .skeleton-line.chip {
+      height: 60px;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    /* Enhanced 3D Hover Effect */
+    .result-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .result-card:hover {
+      transform: scale(1.02) rotateX(2deg) rotateY(-2deg);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(139, 92, 246, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    }
+
+    /* Page Transition */
+    .results {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .results.transitioning {
+      opacity: 0.5;
+      transform: scale(0.98);
+    }
+
+    /* Search Suggestions */
+    .search-group {
+      position: relative;
+    }
+
+    .suggestions-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 10px;
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .suggestions-dropdown.show {
+      display: block;
+      animation: fadeInUp 0.2s ease;
+    }
+
+    .suggestion-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-item:hover {
+      background: rgba(139, 92, 246, 0.2);
+    }
+
+    .suggestion-title {
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .suggestion-author {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Results Counter Badge */
+    .results-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.2));
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .results-counter .count {
+      display: inline-block;
+      min-width: 40px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 10px;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .results-counter.updating .count {
+      animation: countPulse 0.3s ease;
+    }
+
+    @keyframes countPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Infinite Scroll */
+    .load-more-trigger {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(139, 92, 246, 0.2);
+      border-top-color: #8b5cf6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .scroll-status {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .results-summary {
+      margin-top: 0.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .no-results {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1rem;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .status-pill.loading {
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: var(--primary-color);
+    }
+
+    .status-pill.error {
+      background: rgba(248, 113, 113, 0.15);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      color: #f87171;
+    }
+
+    .status-pill.success {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .title-row h3 {
+      margin: 0;
+    }
+
+    .check-availability-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary-gradient, linear-gradient(135deg, #6d28d9, #8b5cf6));
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(109, 40, 217, 0.3);
+    }
+
+    .check-availability-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(109, 40, 217, 0.45);
+      filter: brightness(1.1);
+    }
+
+    .check-availability-btn:active {
+      transform: translateY(0);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .pagination-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-color);
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      border-color: var(--primary-color);
+      background: rgba(109, 40, 217, 0.1);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .pagination-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .page-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      background: var(--primary-gradient, linear-gradient(135deg, #6d28d9, #8b5cf6));
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+
+    .page-jump {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .page-jump input {
+      width: 60px;
+      padding: 8px 10px;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-color);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .page-jump input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .page-jump-btn {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .page-jump-btn:hover {
+      border-color: var(--primary-color);
+    }
+
+    .per-page-select {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .per-page-select select {
+      padding: 6px 10px;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-color);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .per-page-select select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div class="container">
+    <header>
+      <h1>Where is my book?</h1>
+      <nav class="nav-bar">
+        <a href="index.html">RDS2</a>
+        <a href="calendar.html">Academic Calendar</a>
+        <a href="resources.html" class="trending-link">Study Materials</a>
+        <a href="routine.html">Routine Maker</a>
+        <a href="planner.html">Semester Planner</a>
+        <a href="freshman.html">Freshman Guides</a>
+        <a href="coursemap.html">Course map</a>
+        <a href="booksearch.html" class="active">NSU Library Book Locator</a>
+        <a href="shelf_search.html">Shelf Finder</a>
+        <a href="cgpa.html">CGPA Calculator</a>
+        <a href="retake.html">Retake Calculator</a>
+        <a href="gradeCalculator.html">Course Grade Calculator</a>
+        <a href="about.html">About Dev</a>
+      </nav>
+    </header>
+
+    <div class="announcement-bar">
+      <span>Easily Search and locate books from the NSU Library</span>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <script>
-      const DEBOUNCE_MS = 280;
-      const ITEMS_PER_LOAD = 30;
+    <div class="search-panel">
+      <div class="search-row">
+        <div class="search-group">
+          <label for="bookQuery"><i class="fas fa-search"></i> Search by title or author</label>
+          <input type="text" id="bookQuery" placeholder="e.g., Game Theory, Kieso, Marketing" autocomplete="off" />
+          <div id="suggestions" class="suggestions-dropdown"></div>
+        </div>
+        <div class="search-group">
+          <label for="authorFilter"><i class="fas fa-user-pen"></i> Filter by author</label>
+          <input type="text" id="authorFilter" placeholder="e.g., Kotler, Weygandt, Mankiw" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+    <p class="info-text">
+      Tip: Copy the exact spelling from the NSU OPAC for best matches. We
+      show shelf directions for every call number we can map.
+    </p>
 
-      const state = {
-        shelves: [],
-        books: [],
-        shelvesLoading: false,
-        booksLoading: false,
-        shelvesError: null,
-        booksError: null,
-        filteredBooks: [],
-        displayedCount: 0,
-        isLoadingMore: false,
-        hasMoreItems: true,
-      };
+    <div id="resultsCounter" class="results-counter" style="display: none;">
+      <i class="fas fa-book"></i>
+      <span>Found</span>
+      <span class="count" id="countValue">0</span>
+      <span>books</span>
+    </div>
 
-      const els = {
-        message: document.getElementById("message"),
-        results: document.getElementById("results"),
-        summary: document.getElementById("resultsSummary"),
-        search: document.getElementById("bookQuery"),
-        authorFilter: document.getElementById("authorFilter"),
-        suggestions: document.getElementById("suggestions"),
-        resultsCounter: document.getElementById("resultsCounter"),
-        countValue: document.getElementById("countValue"),
-        loadMoreTrigger: document.getElementById("loadMoreTrigger"),
-        scrollStatus: document.getElementById("scrollStatus"),
-      };
+    <div id="message"></div>
+    <div id="results" class="results"></div>
+    <div id="loadMoreTrigger" class="load-more-trigger" style="display: none;">
+      <div class="loading-spinner"></div>
+    </div>
+    <div id="scrollStatus" class="scroll-status"></div>
+    <div id="resultsSummary" class="results-summary"></div>
+  </div>
 
-      let debounceTimer = null;
-      let suggestionTimer = null;
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+  <script>
+    const DEBOUNCE_MS = 280;
+    const ITEMS_PER_LOAD = 30;
 
-      function updateStatus() {
-        if (state.shelvesError || state.booksError) {
-          const text = [state.shelvesError, state.booksError]
-            .filter(Boolean)
-            .join(" · ");
-          els.message.innerHTML = `
+    const state = {
+      shelves: [],
+      books: [],
+      shelvesLoading: false,
+      booksLoading: false,
+      shelvesError: null,
+      booksError: null,
+      filteredBooks: [],
+      displayedCount: 0,
+      isLoadingMore: false,
+      hasMoreItems: true,
+    };
+
+    const els = {
+      message: document.getElementById("message"),
+      results: document.getElementById("results"),
+      summary: document.getElementById("resultsSummary"),
+      search: document.getElementById("bookQuery"),
+      authorFilter: document.getElementById("authorFilter"),
+      suggestions: document.getElementById("suggestions"),
+      resultsCounter: document.getElementById("resultsCounter"),
+      countValue: document.getElementById("countValue"),
+      loadMoreTrigger: document.getElementById("loadMoreTrigger"),
+      scrollStatus: document.getElementById("scrollStatus"),
+    };
+
+    let debounceTimer = null;
+    let suggestionTimer = null;
+
+    function updateStatus() {
+      if (state.shelvesError || state.booksError) {
+        const text = [state.shelvesError, state.booksError]
+          .filter(Boolean)
+          .join(" · ");
+        els.message.innerHTML = `
             <div class="status-pill error">
               <i class="fas fa-triangle-exclamation"></i> ${text}
             </div>`;
-          return;
-        }
+        return;
+      }
 
-        if (state.shelvesLoading || state.booksLoading) {
-          const waitingFor = [];
-          if (state.booksLoading) waitingFor.push("books");
-          if (state.shelvesLoading) waitingFor.push("shelf map");
-          els.message.innerHTML = `
+      if (state.shelvesLoading || state.booksLoading) {
+        const waitingFor = [];
+        if (state.booksLoading) waitingFor.push("books");
+        if (state.shelvesLoading) waitingFor.push("shelf map");
+        els.message.innerHTML = `
             <div class="status-pill loading">
               <i class="fas fa-spinner fa-spin"></i>
               Loading ${waitingFor.join(" & ")} data...
             </div>`;
-          return;
-        }
+        return;
+      }
 
-        els.message.innerHTML = `
+      els.message.innerHTML = `
           <div class="status-pill success">
             <i class="fas fa-circle-check"></i>
             Loaded ${state.books.length.toLocaleString()} books · ${state.shelves.length} shelf rows
           </div>`;
-      }
+    }
 
-      function normalizeCallNumber(callNum) {
-        if (!callNum) return "";
-        return callNum
-          .toString()
-          .toUpperCase()
-          .replace(/\s+/g, "")
-          .replace(/[,:;.]+$/, "")
-          .trim();
-      }
+    function normalizeCallNumber(callNum) {
+      if (!callNum) return "";
+      return callNum
+        .toString()
+        .toUpperCase()
+        .replace(/\s+/g, "")
+        .replace(/[,:;.]+$/, "")
+        .trim();
+    }
 
-      function parseCallNumber(callNum) {
-        if (!callNum) return null;
-        const s = normalizeCallNumber(callNum);
-        const match = s.match(/^([A-Z]+)(\d+(?:\.\d+)?)?/);
-        if (!match) return null;
-        return {
-          letters: match[1],
-          number: match[2] !== undefined ? parseFloat(match[2]) : null,
-          original: s,
-        };
-      }
+    function parseCallNumber(callNum) {
+      if (!callNum) return null;
+      const s = normalizeCallNumber(callNum);
+      const match = s.match(/^([A-Z]+)(\d+(?:\.\d+)?)?/);
+      if (!match) return null;
+      return {
+        letters: match[1],
+        number: match[2] !== undefined ? parseFloat(match[2]) : null,
+        original: s,
+      };
+    }
 
-      function comparePrefixes(a, b) {
-        return a.localeCompare(b, "en", { sensitivity: "base" });
-      }
+    function comparePrefixes(a, b) {
+      return a.localeCompare(b, "en", { sensitivity: "base" });
+    }
 
-      function isInRange(searchCallNum, rangeStart, rangeEnd) {
-        const search = parseCallNumber(searchCallNum);
-        const start = parseCallNumber(rangeStart);
-        const end = parseCallNumber(rangeEnd);
-        if (!search || !start || !end) return false;
+    function isInRange(searchCallNum, rangeStart, rangeEnd) {
+      const search = parseCallNumber(searchCallNum);
+      const start = parseCallNumber(rangeStart);
+      const end = parseCallNumber(rangeEnd);
+      if (!search || !start || !end) return false;
 
-        const cmpStart = comparePrefixes(search.letters, start.letters);
-        const cmpEnd = comparePrefixes(search.letters, end.letters);
+      const cmpStart = comparePrefixes(search.letters, start.letters);
+      const cmpEnd = comparePrefixes(search.letters, end.letters);
 
-        if (cmpStart < 0 || cmpEnd > 0) return false;
+      if (cmpStart < 0 || cmpEnd > 0) return false;
 
-        if (search.number !== null) {
-          if (
-            cmpStart === 0 &&
-            start.number !== null &&
-            search.number < start.number
-          ) {
-            return false;
-          }
-          if (cmpEnd === 0 && end.number !== null && search.number > end.number) {
-            return false;
-          }
+      if (search.number !== null) {
+        if (
+          cmpStart === 0 &&
+          start.number !== null &&
+          search.number < start.number
+        ) {
+          return false;
         }
-
-        return true;
-      }
-
-      function prepareShelfRows(rawRows) {
-        state.shelves = rawRows
-          .map((row) => {
-            const shelfLocation = (row["Shelf Location"] || "").trim();
-            const rangeRaw = (row["Call Number Range"] || "").trim();
-            if (!shelfLocation || !rangeRaw) return null;
-            const isReference = rangeRaw.toUpperCase() === "REF";
-            const parts = !isReference ? rangeRaw.split(/\s*-\s*/) : [];
-            return {
-              shelfLocation,
-              rangeRaw,
-              startRaw: parts.length === 2 ? parts[0].trim() : null,
-              endRaw: parts.length === 2 ? parts[1].trim() : null,
-              isReference,
-              subjects: row["Subjects / Description"] || "",
-              floor: row["Floor"] || "",
-            };
-          })
-          .filter(Boolean);
-      }
-
-      function findShelfForCallNumber(callNumber) {
-        if (!callNumber) return null;
-        const normalized = normalizeCallNumber(callNumber.split(/\s+/)[0]);
-        if (!normalized) return null;
-
-        for (const row of state.shelves) {
-          if (row.isReference) continue;
-          if (!row.startRaw || !row.endRaw) continue;
-          if (isInRange(normalized, row.startRaw, row.endRaw)) {
-            return row;
-          }
+        if (cmpEnd === 0 && end.number !== null && search.number > end.number) {
+          return false;
         }
-        return null;
       }
 
-      function extractCallNumbers(availability) {
-        if (!availability) return [];
-        const pattern = /[A-Z]{1,4}\d{1,4}(?:\s*\.\s*[A-Z0-9]+)*/g;
-        const matches = availability.toUpperCase().match(pattern);
-        if (!matches) return [];
-        return [...new Set(matches.map((m) => normalizeCallNumber(m)))];
+      return true;
+    }
+
+    function prepareShelfRows(rawRows) {
+      state.shelves = rawRows
+        .map((row) => {
+          const shelfLocation = (row["Shelf Location"] || "").trim();
+          const rangeRaw = (row["Call Number Range"] || "").trim();
+          if (!shelfLocation || !rangeRaw) return null;
+          const isReference = rangeRaw.toUpperCase() === "REF";
+          const parts = !isReference ? rangeRaw.split(/\s*-\s*/) : [];
+          return {
+            shelfLocation,
+            rangeRaw,
+            startRaw: parts.length === 2 ? parts[0].trim() : null,
+            endRaw: parts.length === 2 ? parts[1].trim() : null,
+            isReference,
+            subjects: row["Subjects / Description"] || "",
+            floor: row["Floor"] || "",
+          };
+        })
+        .filter(Boolean);
+    }
+
+    function findShelfForCallNumber(callNumber) {
+      if (!callNumber) return null;
+      const normalized = normalizeCallNumber(callNumber.split(/\s+/)[0]);
+      if (!normalized) return null;
+
+      for (const row of state.shelves) {
+        if (row.isReference) continue;
+        if (!row.startRaw || !row.endRaw) continue;
+        if (isInRange(normalized, row.startRaw, row.endRaw)) {
+          return row;
+        }
       }
+      return null;
+    }
 
-      function formatAvailability(raw) {
-        if (!raw) return "";
-        const tokens = raw
-          .split("|")
-          .map((token) => token.trim())
-          .filter(Boolean);
-        return tokens.join(" · ");
-      }
+    function extractCallNumbers(availability) {
+      if (!availability) return [];
+      const pattern = /[A-Z]{1,4}\d{1,4}(?:\s*\.\s*[A-Z0-9]+)*/g;
+      const matches = availability.toUpperCase().match(pattern);
+      if (!matches) return [];
+      return [...new Set(matches.map((m) => normalizeCallNumber(m)))];
+    }
 
-      function highlightText(text, searchTokens) {
-        if (!text || !searchTokens || searchTokens.length === 0) return text;
-        let result = text;
-        searchTokens.forEach(token => {
-          if (token.length < 2) return; // Skip very short tokens
-          const regex = new RegExp(`(${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-          result = result.replace(regex, '<span class="highlight">$1</span>');
-        });
-        return result;
-      }
+    function formatAvailability(raw) {
+      if (!raw) return "";
+      const tokens = raw
+        .split("|")
+        .map((token) => token.trim())
+        .filter(Boolean);
+      return tokens.join(" · ");
+    }
 
-      function renderCallChip(callNumber) {
-        const match = findShelfForCallNumber(callNumber);
-        const shelfText = match
-          ? `<span class="location-tag"><i class="fas fa-layer-group"></i> Shelf ${match.shelfLocation}</span>`
-          : `<span class="location-tag"><i class="fas fa-circle-question"></i> Shelf not mapped yet</span>`;
-        const floorText = match && match.floor
-          ? `<span class="location-tag"><i class="fas fa-building"></i> ${match.floor} Floor</span>`
-          : "";
-        const subjectText = match && match.subjects
-          ? `<div class="subjects">${match.subjects}</div>`
-          : "";
+    function highlightText(text, searchTokens) {
+      if (!text || !searchTokens || searchTokens.length === 0) return text;
+      let result = text;
+      searchTokens.forEach(token => {
+        if (token.length < 2) return; // Skip very short tokens
+        const regex = new RegExp(`(${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        result = result.replace(regex, '<span class="highlight">$1</span>');
+      });
+      return result;
+    }
 
-        return `
+    function renderCallChip(callNumber) {
+      const match = findShelfForCallNumber(callNumber);
+      const shelfText = match
+        ? `<span class="location-tag"><i class="fas fa-layer-group"></i> Shelf ${match.shelfLocation}</span>`
+        : `<span class="location-tag"><i class="fas fa-circle-question"></i> Shelf not mapped yet</span>`;
+      const floorText = match && match.floor
+        ? `<span class="location-tag"><i class="fas fa-building"></i> ${match.floor} Floor</span>`
+        : "";
+      const subjectText = match && match.subjects
+        ? `<div class="subjects">${match.subjects}</div>`
+        : "";
+
+      return `
           <div class="call-chip">
             <strong>${callNumber}</strong>
             <div class="call-chip-meta">
@@ -918,348 +1065,368 @@
             </div>
             ${subjectText}
           </div>`;
-      }
+    }
 
-      function renderBookCard(book) {
-        // Get current search tokens for highlighting
-        const query = els.search.value.trim();
-        const authorQuery = els.authorFilter.value.trim();
-        const searchTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
-        const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
-        const allTokens = [...searchTokens, ...authorTokens];
+    function renderBookCard(book) {
+      // Get current search tokens for highlighting
+      const query = els.search.value.trim();
+      const authorQuery = els.authorFilter.value.trim();
+      const searchTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+      const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
+      const allTokens = [...searchTokens, ...authorTokens];
 
-        const callNumbers = extractCallNumbers(book.availability);
-        const availability = formatAvailability(book.availability);
-        const chips = callNumbers.length
-          ? callNumbers.map((cn) => renderCallChip(cn)).join("")
-          : '<div class="info-text">No call number detected in this record.</div>';
-        
-        const rawAuthors = book.authors && book.authors !== "N/A" ? book.authors : "Unknown";
-        const rawTitle = book.title || "Untitled";
-        
-        // Highlight matching keywords
-        const highlightedTitle = highlightText(rawTitle, searchTokens);
-        const highlightedAuthors = highlightText(rawAuthors, allTokens);
-        
-        const material = book.material_info
-          ? book.material_info.replace(/Material type:?/i, "").trim()
-          : "";
-        const publication = book.publication ? book.publication.trim() : "";
+      const rawAuthors = book.authors && book.authors !== "N/A" ? book.authors : "Unknown";
+      const rawTitle = book.title || "Untitled";
 
-        const availabilityBtn = book.detail_url
-          ? `<a href="${book.detail_url}" target="_blank" rel="noopener" class="check-availability-btn">
-               <i class="fas fa-external-link-alt"></i> Check Availability
+      // Highlight matching keywords
+      const highlightedTitle = highlightText(rawTitle, searchTokens);
+      const highlightedAuthors = highlightText(rawAuthors, allTokens);
+
+      const edition = book.edition && book.edition !== "N/A" ? book.edition : "";
+      const material = book.material_type && book.material_type !== "N/A" ? book.material_type : "";
+      const format = book.format && book.format !== "N/A" ? book.format : "";
+      const language = book.language && book.language !== "N/A" ? book.language : "";
+      const publication = book.publication && book.publication !== "N/A" ? book.publication : "";
+      const biblionumber = book.biblionumber || "";
+      const callNumber = book.call_number && book.call_number !== "N/A" ? book.call_number : "";
+
+      const availabilityBtn = book.detail_url
+        ? `<a href="${book.detail_url}" target="_blank" rel="noopener" class="check-availability-btn" style="margin-bottom: 1rem;">
+               <i class="fas fa-external-link-alt"></i> Check Status
              </a>`
-          : '';
+        : "";
 
-        return `
+      const imageUrl = book.image_url && book.image_url !== "N/A" ? book.image_url : null;
+      const fallbackIcon = "https://img.icons8.com/fluency/96/book.png";
+
+      return `
           <div class="result-card">
             <div class="title-row">
-              <h3>
-                ${
-                  book.detail_url
-                    ? `<a href="${book.detail_url}" target="_blank" rel="noopener">${highlightedTitle}</a>`
-                    : `${highlightedTitle}`
-                }
-              </h3>
-              ${availabilityBtn}
+              <div class="book-image-container">
+                <img 
+                  class="book-image delayed-image" 
+                  data-src="${imageUrl || fallbackIcon}" 
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 64'%3E%3Crect width='48' height='64' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E"
+                  loading="lazy" 
+                  alt="Book cover"
+                  onerror="this.src='${fallbackIcon}'; this.onerror=null;"
+                >
+              </div>
+              <hgroup style="flex: 1;">
+                <h3 style="margin: 0;">
+                  ${book.detail_url
+          ? `<a href="${book.detail_url}" target="_blank" rel="noopener">${highlightedTitle}</a>`
+          : `${highlightedTitle}`
+        }
+                </h3>
+              </hgroup>
             </div>
-            <div class="book-meta">
-              <span><i class="fas fa-user-pen"></i> ${highlightedAuthors}</span>
-              ${material ? `<span><i class="fas fa-book-open"></i> ${material}</span>` : ""}
-              ${publication ? `<span><i class="fas fa-calendar-day"></i> ${publication}</span>` : ""}
-              ${book.biblionumber ? `<span><i class="fas fa-hashtag"></i> ID ${book.biblionumber}</span>` : ""}
-            </div>
-            <div class="call-list">
-              ${chips}
-            </div>
-            ${availability ? `<p class="info-text"></p>` : ""}
-          </div>`;
-      }
 
-      function showSkeletonLoading() {
-        let skeletons = '';
-        for (let i = 0; i < 9; i++) {
-          skeletons += `
+            ${availabilityBtn}
+            
+            <div class="book-details">
+              <div class="book-meta">
+                <div class="meta-item" title="Author"><i class="fas fa-user-pen"></i> <span><span class="meta-label">Author:</span> ${highlightedAuthors}</span></div>
+                ${edition ? `<div class="meta-item" title="Edition"><i class="fas fa-layer-group"></i> <span><span class="meta-label">Edition:</span> ${edition}</span></div>` : ""}
+                ${material ? `<div class="meta-item" title="Material"><i class="fas fa-book-open"></i> <span><span class="meta-label">Type:</span> ${material}</span></div>` : ""}
+                ${format ? `<div class="meta-item" title="Format"><i class="fas fa-file-lines"></i> <span><span class="meta-label">Format:</span> ${format}</span></div>` : ""}
+                ${language ? `<div class="meta-item" title="Language"><i class="fas fa-language"></i> <span><span class="meta-label">Lang:</span> ${language}</span></div>` : ""}
+                ${biblionumber ? `<div class="meta-item" title="Biblionumber"><i class="fas fa-hashtag"></i> <span><span class="meta-label">ID:</span> ${biblionumber}</span></div>` : ""}
+              </div>
+              ${publication ? `<div class="info-text" style="margin-bottom: 0.5rem; font-size: 0.8rem;"><i class="fas fa-calendar-day" style="color:#a78bfa; margin-right: 4px;"></i> ${publication}</div>` : ""}
+              <div class="call-list">
+                ${callNumber ? renderCallChip(callNumber) : '<div class="info-text">No call number available.</div>'}
+              </div>
+            </div>
+          </div>`;
+    }
+
+    function loadImages() {
+      const images = document.querySelectorAll('.delayed-image[data-src]');
+      images.forEach(img => {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        img.style.opacity = '0';
+        img.onload = () => img.style.opacity = '1';
+      });
+    }
+
+    function showSkeletonLoading() {
+      let skeletons = '';
+      for (let i = 0; i < 9; i++) {
+        skeletons += `
             <div class="skeleton-card">
               <div class="skeleton-line title"></div>
               <div class="skeleton-line author"></div>
               <div class="skeleton-line meta"></div>
               <div class="skeleton-line chip"></div>
             </div>`;
-        }
-        els.results.innerHTML = skeletons;
       }
+      els.results.innerHTML = skeletons;
+    }
 
-      function updateResultsCounter(count, animate = true) {
-        els.countValue.textContent = count.toLocaleString();
-        els.resultsCounter.style.display = count > 0 ? 'inline-flex' : 'none';
-        if (animate) {
-          els.resultsCounter.classList.add('updating');
-          setTimeout(() => els.resultsCounter.classList.remove('updating'), 300);
-        }
+    function updateResultsCounter(count, animate = true) {
+      els.countValue.textContent = count.toLocaleString();
+      els.resultsCounter.style.display = count > 0 ? 'inline-flex' : 'none';
+      if (animate) {
+        els.resultsCounter.classList.add('updating');
+        setTimeout(() => els.resultsCounter.classList.remove('updating'), 300);
       }
+    }
 
-      function displayResults(isLoadMore = false) {
-        const totalMatches = state.filteredBooks.length;
-        
-        if (!totalMatches) {
-          els.results.innerHTML = `
+    function displayResults(isLoadMore = false) {
+      const totalMatches = state.filteredBooks.length;
+
+      if (!totalMatches) {
+        els.results.innerHTML = `
             <div class="no-results">
               No matches found. Try a different spelling or search term.
             </div>`;
-          els.summary.textContent = "";
-          els.loadMoreTrigger.style.display = 'none';
-          els.scrollStatus.textContent = '';
-          updateResultsCounter(0);
-          return;
-        }
-
-        // Update counter with animation
-        updateResultsCounter(totalMatches, !isLoadMore);
-
-        const endIndex = Math.min(state.displayedCount + ITEMS_PER_LOAD, totalMatches);
-        const booksToRender = state.filteredBooks.slice(state.displayedCount, endIndex);
-        
-        // Apply transition effect
-        if (!isLoadMore) {
-          els.results.classList.add('transitioning');
-          setTimeout(() => els.results.classList.remove('transitioning'), 50);
-        }
-
-        // Render cards with staggered animation
-        const cards = booksToRender.map((book, index) => {
-          const delay = isLoadMore ? index * 0.05 : index * 0.03;
-          return renderBookCard(book).replace(
-            'class="result-card"',
-            `class="result-card" style="animation-delay: ${delay}s"`
-          );
-        }).join("\n");
-
-        if (isLoadMore) {
-          els.results.insertAdjacentHTML('beforeend', cards);
-        } else {
-          els.results.innerHTML = cards;
-        }
-
-        state.displayedCount = endIndex;
-        state.hasMoreItems = endIndex < totalMatches;
-        state.isLoadingMore = false;
-        
-        // Update status
-        els.summary.textContent = `Showing ${endIndex.toLocaleString()} of ${totalMatches.toLocaleString()} books`;
-        els.loadMoreTrigger.style.display = state.hasMoreItems ? 'flex' : 'none';
-        els.scrollStatus.textContent = state.hasMoreItems ? '' : 'All books loaded';
+        els.summary.textContent = "";
+        els.loadMoreTrigger.style.display = 'none';
+        els.scrollStatus.textContent = '';
+        updateResultsCounter(0);
+        return;
       }
 
-      function loadMoreResults() {
-        if (state.isLoadingMore || !state.hasMoreItems) return;
-        state.isLoadingMore = true;
-        els.loadMoreTrigger.style.display = 'flex';
-        
-        // Small delay for visual feedback
-        setTimeout(() => displayResults(true), 200);
+      // Update counter with animation
+      updateResultsCounter(totalMatches, !isLoadMore);
+
+      const endIndex = Math.min(state.displayedCount + ITEMS_PER_LOAD, totalMatches);
+      const booksToRender = state.filteredBooks.slice(state.displayedCount, endIndex);
+
+      // Apply transition effect
+      if (!isLoadMore) {
+        els.results.classList.add('transitioning');
+        setTimeout(() => els.results.classList.remove('transitioning'), 50);
       }
 
-      // Intersection Observer for infinite scroll
-      const infiniteScrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && state.hasMoreItems && !state.isLoadingMore) {
-            loadMoreResults();
-          }
-        });
-      }, { rootMargin: '200px' });
+      // Render cards with staggered animation
+      const cards = booksToRender.map((book, index) => {
+        const delay = isLoadMore ? index * 0.05 : index * 0.03;
+        return renderBookCard(book).replace(
+          'class="result-card"',
+          `class="result-card" style="animation-delay: ${delay}s"`
+        );
+      }).join("\n");
 
-      // Search Suggestions
-      function showSuggestions(query) {
-        if (!query || query.length < 2 || state.booksLoading) {
-          els.suggestions.classList.remove('show');
-          return;
+      if (isLoadMore) {
+        els.results.insertAdjacentHTML('beforeend', cards);
+      } else {
+        els.results.innerHTML = cards;
+      }
+
+      state.displayedCount = endIndex;
+      state.hasMoreItems = endIndex < totalMatches;
+      state.isLoadingMore = false;
+
+      // Update status
+      els.summary.textContent = `Showing ${endIndex.toLocaleString()} of ${totalMatches.toLocaleString()} books`;
+      els.loadMoreTrigger.style.display = state.hasMoreItems ? 'flex' : 'none';
+      els.scrollStatus.textContent = state.hasMoreItems ? '' : 'All books loaded';
+
+      // Load images after data is rendered
+      loadImages();
+    }
+
+    function loadMoreResults() {
+      if (state.isLoadingMore || !state.hasMoreItems) return;
+      state.isLoadingMore = true;
+      els.loadMoreTrigger.style.display = 'flex';
+
+      // Small delay for visual feedback
+      setTimeout(() => displayResults(true), 200);
+    }
+
+    // Intersection Observer for infinite scroll
+    const infiniteScrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && state.hasMoreItems && !state.isLoadingMore) {
+          loadMoreResults();
         }
+      });
+    }, { rootMargin: '200px' });
 
-        const queryLower = query.toLowerCase();
-        const matches = state.books
-          .filter(book => {
-            const title = (book.title || '').toLowerCase();
-            const authors = (book.authors || '').toLowerCase();
-            return title.includes(queryLower) || authors.includes(queryLower);
-          })
-          .slice(0, 6);
+    // Search Suggestions
+    function showSuggestions(query) {
+      if (!query || query.length < 2 || state.booksLoading) {
+        els.suggestions.classList.remove('show');
+        return;
+      }
 
-        if (matches.length === 0) {
-          els.suggestions.classList.remove('show');
-          return;
-        }
+      const queryLower = query.toLowerCase();
+      const matches = state.books
+        .filter(book => {
+          const title = (book.title || '').toLowerCase();
+          const authors = (book.authors || '').toLowerCase();
+          return title.includes(queryLower) || authors.includes(queryLower);
+        })
+        .slice(0, 6);
 
-        els.suggestions.innerHTML = matches.map(book => `
+      if (matches.length === 0) {
+        els.suggestions.classList.remove('show');
+        return;
+      }
+
+      els.suggestions.innerHTML = matches.map(book => `
           <div class="suggestion-item" data-title="${(book.title || '').replace(/"/g, '&quot;')}">
             <span class="suggestion-title">${book.title || 'Untitled'}</span>
             <span class="suggestion-author">${book.authors || 'Unknown author'}</span>
           </div>
         `).join('');
 
-        els.suggestions.classList.add('show');
+      els.suggestions.classList.add('show');
 
-        // Add click handlers
-        els.suggestions.querySelectorAll('.suggestion-item').forEach(item => {
-          item.addEventListener('click', () => {
-            els.search.value = item.dataset.title;
-            els.suggestions.classList.remove('show');
-            performSearch();
-          });
+      // Add click handlers
+      els.suggestions.querySelectorAll('.suggestion-item').forEach(item => {
+        item.addEventListener('click', () => {
+          els.search.value = item.dataset.title;
+          els.suggestions.classList.remove('show');
+          performSearch();
         });
-      }
+      });
+    }
 
-      function hideSuggestions() {
-        setTimeout(() => els.suggestions.classList.remove('show'), 200);
-      }
+    function hideSuggestions() {
+      setTimeout(() => els.suggestions.classList.remove('show'), 200);
+    }
 
-      function scrollToResults() {
-        els.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    function scrollToResults() {
+      els.results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-      function performSearch() {
-        const query = els.search.value.trim();
-        const authorQuery = els.authorFilter.value.trim();
-        
-        if (state.booksLoading || state.shelvesLoading) {
-          showSkeletonLoading();
-          els.summary.textContent = "";
-          return;
-        }
+    function performSearch() {
+      const query = els.search.value.trim();
+      const authorQuery = els.authorFilter.value.trim();
 
-        const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
-        const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
-        
-        // If no search query, show all books
-        if (!tokens.length && !authorTokens.length) {
-          state.filteredBooks = [...state.books];
-        } else {
-          // Filter matching books
-          state.filteredBooks = state.books.filter((book) => {
-            const haystack = book.searchText;
-            const authorHaystack = (book.authors || "").toLowerCase();
-            const mainMatch = tokens.length === 0 || tokens.every((token) => haystack.includes(token));
-            const authorMatch = authorTokens.length === 0 || authorTokens.every((token) => authorHaystack.includes(token));
-            return mainMatch && authorMatch;
-          });
-        }
-
-        // Reset for new search
-        state.displayedCount = 0;
-        state.hasMoreItems = true;
-        displayResults();
-      }
-
-      function scheduleSearch() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(performSearch, DEBOUNCE_MS);
-      }
-
-      function scheduleSuggestions() {
-        clearTimeout(suggestionTimer);
-        suggestionTimer = setTimeout(() => showSuggestions(els.search.value.trim()), 150);
-      }
-
-      function loadShelves() {
-        state.shelvesLoading = true;
-        state.shelvesError = null;
-        updateStatus();
-        Papa.parse("Library_shelfs.csv", {
-          download: true,
-          header: true,
-          skipEmptyLines: true,
-          complete: function (results) {
-            prepareShelfRows(results.data);
-            state.shelvesLoading = false;
-            updateStatus();
-            performSearch();
-          },
-          error: function (error) {
-            state.shelvesLoading = false;
-            state.shelvesError = `Shelf data error: ${error.message}`;
-            updateStatus();
-          },
-        });
-      }
-
-      function loadBooks() {
-        state.booksLoading = true;
-        state.booksError = null;
-        updateStatus();
+      if (state.booksLoading || state.shelvesLoading) {
         showSkeletonLoading();
-        fetch("nsu_library_books_complete.json")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            state.books = data.map((book) => ({
-              ...book,
-              searchText: `${book.title || ""} ${book.authors || ""}`
-                .toLowerCase()
-                .trim(),
-            }));
-            state.booksLoading = false;
-            updateStatus();
-            performSearch();
-          })
-          .catch((error) => {
-            state.booksLoading = false;
-            state.booksError = `Book data error: ${error.message}`;
-            updateStatus();
-          });
+        els.summary.textContent = "";
+        return;
       }
 
-      // Bootstrap
+      const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+      const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
+
+      // If no search query, show all books
+      if (!tokens.length && !authorTokens.length) {
+        state.filteredBooks = [...state.books];
+      } else {
+        // Filter matching books
+        state.filteredBooks = state.books.filter((book) => {
+          const haystack = book.searchText;
+          const authorHaystack = (book.authors || "").toLowerCase();
+          const mainMatch = tokens.length === 0 || tokens.every((token) => haystack.includes(token));
+          const authorMatch = authorTokens.length === 0 || authorTokens.every((token) => authorHaystack.includes(token));
+          return mainMatch && authorMatch;
+        });
+      }
+
+      // Reset for new search
+      state.displayedCount = 0;
+      state.hasMoreItems = true;
+      displayResults();
+    }
+
+    function scheduleSearch() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(performSearch, DEBOUNCE_MS);
+    }
+
+    function scheduleSuggestions() {
+      clearTimeout(suggestionTimer);
+      suggestionTimer = setTimeout(() => showSuggestions(els.search.value.trim()), 150);
+    }
+
+    function loadShelves() {
+      state.shelvesLoading = true;
+      state.shelvesError = null;
+      updateStatus();
+      Papa.parse("Library_shelfs.csv", {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          prepareShelfRows(results.data);
+          state.shelvesLoading = false;
+          updateStatus();
+          performSearch();
+        },
+        error: function (error) {
+          state.shelvesLoading = false;
+          state.shelvesError = `Shelf data error: ${error.message}`;
+          updateStatus();
+        },
+      });
+    }
+
+    function loadBooks() {
+      state.booksLoading = true;
+      state.booksError = null;
+      updateStatus();
       showSkeletonLoading();
-      els.summary.textContent = "";
-      els.search.addEventListener("input", scheduleSearch);
-      els.search.addEventListener("input", scheduleSuggestions);
-      els.search.addEventListener("blur", hideSuggestions);
-      els.authorFilter.addEventListener("input", scheduleSearch);
-      
-      // Start infinite scroll observer
-      infiniteScrollObserver.observe(els.loadMoreTrigger);
-      
-      loadShelves();
-      loadBooks();
-    </script>
-    <footer class="footer">
-      <p>
-        © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
-        <br />
-      </p>
-      <div class="social-links">
-        <span>Follow me on</span>
-        <a
-          href="https://www.facebook.com/share/19DGPCk2wr/"
-          target="_blank"
-          title="Facebook"
-        >
-          <i class="fab fa-facebook"></i>
-        </a>
-        <a
-          href="https://www.instagram.com/_shadhin_f"
-          target="_blank"
-          title="Instagram"
-        >
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a
-          href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-          target="_blank"
-          title="LinkedIn"
-        >
-          <i class="fab fa-linkedin"></i>
-        </a>
-      </div>
+      fetch("nsu_library_books_v2.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          state.books = data.map((book) => ({
+            ...book,
+            searchText: `${book.title || ""} ${book.authors || ""} ${book.call_number || ""}`
+              .toLowerCase()
+              .trim(),
+          }));
+          state.booksLoading = false;
+          updateStatus();
+          performSearch();
+        })
+        .catch((error) => {
+          state.booksLoading = false;
+          state.booksError = `Book data error: ${error.message}`;
+          updateStatus();
+        });
+    }
+
+    // Bootstrap
+    showSkeletonLoading();
+    els.summary.textContent = "";
+    els.search.addEventListener("input", scheduleSearch);
+    els.search.addEventListener("input", scheduleSuggestions);
+    els.search.addEventListener("blur", hideSuggestions);
+    els.authorFilter.addEventListener("input", scheduleSearch);
+
+    // Start infinite scroll observer
+    infiniteScrollObserver.observe(els.loadMoreTrigger);
+
+    loadShelves();
+    loadBooks();
+  </script>
+  <footer class="footer">
+    <p>
+      © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
       <br />
-      Last updated: 02-01-2026
-    </footer>
-    <script src="script.js"></script>
-    <script src="buttons.js"></script>
-  </body>
+    </p>
+    <div class="social-links">
+      <span>Follow me on</span>
+      <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+        target="_blank" title="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+    <br />
+    Last updated: 02-01-2026
+  </footer>
+  <script src="script.js"></script>
+  <script src="buttons.js"></script>
+</body>
+
 </html>
