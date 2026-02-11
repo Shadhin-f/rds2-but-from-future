@@ -331,6 +331,72 @@ header {
   text-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
 }
 
+/* New Feature Link Style (Bus Routes) */
+.new-feature-link {
+  --glow-color: #06b6d4;
+  /* Cyan/Blue */
+  box-shadow: 0 0 12px 2px rgba(6, 182, 212, 0.4);
+  border-color: #06b6d4 !important;
+  color: #cffafe !important;
+  position: relative;
+  z-index: 2;
+  background: rgba(6, 182, 212, 0.1) !important;
+  animation: glow-pulse-cyan 3s infinite ease-in-out;
+}
+
+@keyframes glow-pulse-cyan {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px 1px rgba(6, 182, 212, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 18px 4px rgba(6, 182, 212, 0.6);
+    border-color: #22d3ee !important;
+  }
+}
+
+.new-feature-link:hover {
+  box-shadow: 0 0 20px 4px rgba(6, 182, 212, 0.7);
+  background: rgba(6, 182, 212, 0.25) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+/* Trending Link Style (Study Materials) - Red Pulse */
+.trending-link {
+  --glow-color: #e11d48;
+  /* Red/Pink */
+  box-shadow: 0 0 12px 2px rgba(225, 29, 72, 0.4);
+  border-color: #e11d48 !important;
+  color: #ffe4e6 !important;
+  position: relative;
+  z-index: 2;
+  background: rgba(225, 29, 72, 0.1) !important;
+  animation: glow-pulse-red 3s infinite ease-in-out;
+}
+
+@keyframes glow-pulse-red {
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px 1px rgba(225, 29, 72, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 18px 4px rgba(225, 29, 72, 0.6);
+    border-color: #f43f5e !important;
+  }
+}
+
+.trending-link:hover {
+  box-shadow: 0 0 20px 4px rgba(225, 29, 72, 0.7);
+  background: rgba(225, 29, 72, 0.25) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
 .nav-bar a:hover {
   color: #fff;
   background: transparent !important;
