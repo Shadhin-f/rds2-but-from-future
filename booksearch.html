@@ -75,15 +75,20 @@
     }
 
     .search-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    .search-row .search-group {
+      flex: 1;
     }
 
     @media (max-width: 640px) {
       .search-row {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
       }
     }
 
@@ -117,6 +122,48 @@
       margin-bottom: 0.75rem;
       line-height: 1.4;
     }
+
+    .opac-search-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 16px 20px;
+      box-sizing: border-box;
+      white-space: nowrap;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.7), rgba(6, 182, 212, 0.6));
+      color: #f1f5f9;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25), 0 2px 4px rgba(0, 0, 0, 0.1);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .opac-search-btn:hover {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(6, 182, 212, 0.8));
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35), 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .opac-search-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+    }
+
+    .opac-search-btn i {
+      font-size: 1rem;
+    }
+
+
 
     #message {
       min-height: 48px;
@@ -835,10 +882,9 @@
           <input type="text" id="bookQuery" placeholder="e.g., Game Theory, Kieso, Marketing" autocomplete="off" />
           <div id="suggestions" class="suggestions-dropdown"></div>
         </div>
-        <div class="search-group">
-          <label for="authorFilter"><i class="fas fa-user-pen"></i> Filter by author</label>
-          <input type="text" id="authorFilter" placeholder="e.g., Kotler, Weygandt, Mankiw" autocomplete="off" />
-        </div>
+        <button type="button" id="opacSearchBtn" class="opac-search-btn" title="Search NSU Library Catalogue (OPAC)">
+          <i class="fas fa-building-columns"></i> OPAC Search
+        </button>
       </div>
     </div>
     <p class="info-text">
@@ -886,7 +932,6 @@
       results: document.getElementById("results"),
       summary: document.getElementById("resultsSummary"),
       search: document.getElementById("bookQuery"),
-      authorFilter: document.getElementById("authorFilter"),
       suggestions: document.getElementById("suggestions"),
       resultsCounter: document.getElementById("resultsCounter"),
       countValue: document.getElementById("countValue"),
@@ -1071,17 +1116,14 @@
     function renderBookCard(book) {
       // Get current search tokens for highlighting
       const query = els.search.value.trim();
-      const authorQuery = els.authorFilter.value.trim();
       const searchTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
-      const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
-      const allTokens = [...searchTokens, ...authorTokens];
 
       const rawAuthors = book.authors && book.authors !== "N/A" ? book.authors : "Unknown";
       const rawTitle = book.title || "Untitled";
 
       // Highlight matching keywords
       const highlightedTitle = highlightText(rawTitle, searchTokens);
-      const highlightedAuthors = highlightText(rawAuthors, allTokens);
+      const highlightedAuthors = highlightText(rawAuthors, searchTokens);
 
       const edition = book.edition && book.edition !== "N/A" ? book.edition : "";
       const material = book.material_type && book.material_type !== "N/A" ? book.material_type : "";
@@ -1294,7 +1336,6 @@
 
     function performSearch() {
       const query = els.search.value.trim();
-      const authorQuery = els.authorFilter.value.trim();
 
       if (state.booksLoading || state.shelvesLoading) {
         showSkeletonLoading();
@@ -1303,19 +1344,15 @@
       }
 
       const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
-      const authorTokens = authorQuery.toLowerCase().split(/\s+/).filter(Boolean);
 
       // If no search query, show all books
-      if (!tokens.length && !authorTokens.length) {
+      if (!tokens.length) {
         state.filteredBooks = [...state.books];
       } else {
         // Filter matching books
         state.filteredBooks = state.books.filter((book) => {
           const haystack = book.searchText;
-          const authorHaystack = (book.authors || "").toLowerCase();
-          const mainMatch = tokens.length === 0 || tokens.every((token) => haystack.includes(token));
-          const authorMatch = authorTokens.length === 0 || authorTokens.every((token) => authorHaystack.includes(token));
-          return mainMatch && authorMatch;
+          return tokens.every((token) => haystack.includes(token));
         });
       }
 
@@ -1393,7 +1430,17 @@
     els.search.addEventListener("input", scheduleSearch);
     els.search.addEventListener("input", scheduleSuggestions);
     els.search.addEventListener("blur", hideSuggestions);
-    els.authorFilter.addEventListener("input", scheduleSearch);
+
+    // OPAC Library Catalogue search button
+    document.getElementById("opacSearchBtn").addEventListener("click", () => {
+      const query = els.search.value.trim();
+      if (!query) {
+        els.search.focus();
+        return;
+      }
+      const opacUrl = `https://opac.northsouth.edu/cgi-bin/koha/opac-search.pl?q=${encodeURIComponent(query)}`;
+      window.open(opacUrl, "_blank");
+    });
 
     // Start infinite scroll observer
     infiniteScrollObserver.observe(els.loadMoreTrigger);
