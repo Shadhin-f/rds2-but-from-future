@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -25,16 +25,11 @@
 
       /* Search Panel */
       .route-search-container {
-        background: rgba(30, 41, 59, 0.65);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-        border: 1px solid rgba(139, 92, 246, 0.18);
-        border-radius: 20px;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
         padding: 32px 36px 28px;
         margin-bottom: 36px;
-        box-shadow:
-          0 12px 40px rgba(0, 0, 0, 0.25),
-          0 0 0 1px rgba(255, 255, 255, 0.04) inset;
       }
 
       .search-title {
@@ -48,10 +43,10 @@
       }
 
       .search-title i {
-        color: #a78bfa;
+        color: var(--text-muted);
       }
 
-      /* Input row: From ── ⇄ ── To */
+      /* Input row: From â”€â”€ â‡„ â”€â”€ To */
       .route-inputs-row {
         display: flex;
         align-items: flex-end;
@@ -85,35 +80,33 @@
         width: 100%;
         box-sizing: border-box;
         padding: 13px 16px;
-        background: rgba(15, 23, 42, 0.55);
-        border: 1px solid rgba(71, 85, 105, 0.45);
+        background: var(--bg-color);
+        border: 1px solid var(--border-color);
         border-radius: 12px;
         color: var(--text-color);
         font-size: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.2s ease;
       }
 
       .input-group input::placeholder {
-        color: rgba(148, 163, 184, 0.55);
+        color: var(--text-muted);
       }
 
       .input-group input:hover {
-        border-color: rgba(139, 92, 246, 0.35);
-        background: rgba(15, 23, 42, 0.65);
+        border-color: var(--text-muted);
       }
 
       .input-group input:focus {
         outline: none;
-        border-color: #8b5cf6;
-        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
-        background: rgba(15, 23, 42, 0.8);
+        border-color: var(--text-color);
+        box-shadow: none;
       }
 
       /* Swap button, vertically centred next to the inputs */
       .swap-btn {
-        background: rgba(139, 92, 246, 0.08);
-        border: 1px solid rgba(139, 92, 246, 0.25);
-        color: #a78bfa;
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
         width: 42px;
         height: 42px;
         min-width: 42px;
@@ -122,19 +115,19 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        margin-bottom: 1px; /* align visually with input bottoms */
+        transition: all 0.2s ease;
+        margin-bottom: 1px;
         flex-shrink: 0;
       }
 
       .swap-btn:hover {
-        background: rgba(139, 92, 246, 0.22);
-        border-color: rgba(139, 92, 246, 0.5);
+        background: var(--border-color);
+        border-color: var(--text-muted);
         transform: rotate(180deg);
-        color: #fff;
+        color: var(--text-color);
       }
 
-      /* Find Route button – full width below inputs */
+      /* Find Route button â€“ full width below inputs */
       .search-btn {
         display: flex;
         align-items: center;
@@ -142,44 +135,33 @@
         gap: 8px;
         width: 100%;
         margin-top: 18px;
-        background: linear-gradient(135deg, #6d28d9, #8b5cf6);
-        color: white;
+        background: var(--text-color);
+        color: var(--bg-color);
         border: none;
         padding: 14px 28px;
-        border-radius: 14px;
+        border-radius: 12px;
         font-weight: 600;
         font-size: 1.05rem;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
+        transition: opacity 0.2s ease;
         letter-spacing: 0.02em;
       }
 
       .search-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.45);
-        filter: brightness(1.08);
+        opacity: 0.85;
       }
 
-      .search-btn:active {
-        transform: translateY(0);
-      }
-
-      /* Autocomplete Dropdown */
       .autocomplete-items {
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         z-index: 99;
-        background: rgba(30, 41, 59, 0.96);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(139, 92, 246, 0.25);
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
         border-radius: 0 0 12px 12px;
         max-height: 240px;
         overflow-y: auto;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
         margin-top: 4px;
         display: none;
       }
@@ -189,14 +171,14 @@
       }
 
       .autocomplete-items::-webkit-scrollbar-thumb {
-        background: rgba(139, 92, 246, 0.3);
+        background: var(--border-color);
         border-radius: 4px;
       }
 
       .autocomplete-item {
         padding: 10px 16px;
         cursor: pointer;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        border-bottom: 1px solid var(--border-color);
         color: var(--text-color);
         font-size: 0.95rem;
         transition: background 0.2s;
@@ -207,11 +189,11 @@
       }
 
       .autocomplete-item:hover {
-        background: rgba(139, 92, 246, 0.18);
+        background: rgba(255, 255, 255, 0.08);
       }
 
       .autocomplete-item strong {
-        color: #a78bfa;
+        color: var(--text-color);
       }
 
       /* ===== Results Section ===== */
@@ -225,19 +207,17 @@
       }
 
       .route-card {
-        background: rgba(30, 41, 59, 0.55);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 16px;
+        background: var(--surface-color);
+        border-radius: 12px;
         padding: 24px 28px;
         margin-bottom: 20px;
-        border: 1px solid rgba(71, 85, 105, 0.3);
+        border: 1px solid var(--border-color);
         animation: fadeInUp 0.45s ease forwards;
-        transition: border-color 0.3s ease;
+        transition: border-color 0.2s ease;
       }
 
       .route-card:hover {
-        border-color: rgba(139, 92, 246, 0.25);
+        border-color: var(--text-muted);
       }
 
       .route-header {
@@ -245,7 +225,7 @@
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid var(--border-color);
         padding-bottom: 14px;
         flex-wrap: wrap;
         gap: 10px;
@@ -260,17 +240,17 @@
       .bus-name {
         font-size: 1.2rem;
         font-weight: 700;
-        color: #a78bfa;
+        color: var(--text-color);
       }
 
       .service-type {
         font-size: 0.82rem;
-        background: rgba(139, 92, 246, 0.12);
-        color: #c4b5fd;
+        background: var(--border-color);
+        color: var(--text-color);
         padding: 3px 10px;
         border-radius: 20px;
         width: fit-content;
-        border: 1px solid rgba(139, 92, 246, 0.25);
+        border: 1px solid var(--border-color);
       }
 
       .route-meta {
@@ -314,7 +294,7 @@
         left: calc(50% + 14px);
         width: calc(100% - 20px);
         height: 2px;
-        background: linear-gradient(90deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.3));
+        background: var(--border-color);
         z-index: 0;
       }
 
@@ -326,14 +306,14 @@
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        background: #1e293b;
-        border: 3px solid #8b5cf6;
+        background: var(--bg-color);
+        border: 3px solid var(--text-muted);
         flex-shrink: 0;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         position: relative;
         z-index: 1;
         margin-bottom: 6px;
-        box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.9);
+        box-shadow: 0 0 0 3px var(--bg-color);
       }
 
       .timeline-stop:first-child .stop-marker {
@@ -355,7 +335,7 @@
         background: rgba(255, 255, 255, 0.04);
         padding: 4px 6px;
         border-radius: 6px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border-color);
         transition: all 0.2s ease;
         width: 100%;
         box-sizing: border-box;
@@ -363,12 +343,11 @@
 
       .stop-content:hover {
         background: rgba(255, 255, 255, 0.09);
-        transform: translateY(-1px);
       }
 
       .stop-name {
         font-weight: 500;
-        color: #e2e8f0;
+        color: var(--text-color);
         font-size: 0.8rem;
         display: block;
         white-space: nowrap;
@@ -496,15 +475,15 @@
       }
 
       .loading-state i {
-        color: #8b5cf6;
+        color: var(--text-muted);
       }
-      
+
       .no-routes {
         text-align: center;
         padding: 40px 30px;
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--surface-color);
         border-radius: 16px;
-        border: 1px solid rgba(71, 85, 105, 0.2);
+        border: 1px solid var(--border-color);
         color: var(--text-muted);
       }
 
@@ -531,6 +510,7 @@
     </style>
   </head>
   <body>
+  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     
     <div class="container">
       <header>
@@ -540,7 +520,7 @@
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="active">Bus Routes 🚌</a>
+          <a href="bus_routes.html" class="active">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -548,9 +528,9 @@
           <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="new-feature-link">Retake Calculator 🔥</a>
+          <a href="retake.html" class="new-feature-link">Retake Calculator</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">Dev</a>
+          <a href="about.html">About</a>
         </nav>
       </header>
 
@@ -636,13 +616,13 @@
               let routeData = line.substring(firstCommaIndex + 1).trim();
 
               // Extract Metadata (Time and Type)
-              // Looks for ⏰ and 🚌
+              // Looks for â° and
               let startTime = "N/A";
               let closingTime = "N/A";
               let serviceType = "Local";
               
               // Extract Times
-              const timeMatch = routeData.match(/⏰ Starting Time: (.*?) & Closing Time: (.*?)($|🚌)/);
+              const timeMatch = routeData.match(/â° Starting Time: (.*?) & Closing Time: (.*?)($|)/);
               if (timeMatch) {
                   startTime = timeMatch[1].trim();
                   closingTime = timeMatch[2].trim();
@@ -651,23 +631,23 @@
               }
               
               // Extract Service Type
-              const typeMatch = routeData.match(/🚌 Seating Service Type: (.*)/);
+              const typeMatch = routeData.match(/ Seating Service Type: (.*)/);
               if (typeMatch) {
                   serviceType = typeMatch[1].trim();
               }
 
               // Clean Route String: Remove metadata parts
-              // Usually metadata is at the end. We can split by ⏰ if it exists
-              let routeString = routeData.split('⏰')[0];
-              // Also remove 🚌 if ⏰ wasn't there but 🚌 was (rare but possible)
-              routeString = routeString.split('🚌')[0];
+              // Usually metadata is at the end. We can split by â° if it exists
+              let routeString = routeData.split('â°')[0];
+              // Also remove if â° wasn't there but was (rare but possible)
+              routeString = routeString.split('')[0];
               
               // Helper to clean stop names
-              const cleanStop = (s) => s.replace(/^[⇄\s]+|[⇄\s]+$/g, '').trim();
+              const cleanStop = (s) => s.replace(/^[â‡„\s]+|[â‡„\s]+$/g, '').trim();
 
-              // Split by ⇄
+              // Split by â‡„
               // The CSV uses specific arrow characters. 
-              let stops = routeString.split('⇄').map(s => cleanStop(s)).filter(s => s.length > 0);
+              let stops = routeString.split('â‡„').map(s => cleanStop(s)).filter(s => s.length > 0);
               
               if (stops.length > 0) {
                   allBuses.push({
@@ -974,6 +954,7 @@
       // Initialization
       loadBusData();
     </script>
+    <script src="theme.js"></script>
     <script src="typewriter.js"></script>
   </body>
 </html>

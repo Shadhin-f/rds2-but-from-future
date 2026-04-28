@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <script
@@ -36,6 +36,7 @@
     <style></style>
   </head>
   <body>
+  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -44,7 +45,7 @@
           <a href="index.html">RDS2</a>
           <a href="calendar.html" class="active">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
+          <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -56,9 +57,9 @@
           <a href="cgpa.html">CGPA Calculator</a>
           <a href="retake.html" class="new-feature-link">Retake Calculator</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">About Dev</a>
+          <a href="about.html">About</a>
         </nav>
-        <!-- <div id="pageActiveUsers" class="active-users-counter">🟢 0 active viewers</div> -->
+        <!-- <div id="pageActiveUsers" class="active-users-counter">ðŸŸ¢ 0 active viewers</div> -->
       </header>
       <div class="announcement-bar">
         <span> Tentative Calendar (Spring 2026) </span>
@@ -66,7 +67,7 @@
           href="https://www.northsouth.edu/academic/academic-calendar/"
           target="_blank"
           class="view-extension-btn"
-          >🎯 View source
+          >View source
         </a>
       </div>
 
@@ -569,6 +570,7 @@
         }
       });
     </script>
+    <script src="theme.js"></script>
     <script src="typewriter.js"></script>
   </body>
 </html>

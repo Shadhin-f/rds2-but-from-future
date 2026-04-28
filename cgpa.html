@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <script
@@ -56,7 +56,7 @@
       }
       .calc-card {
         background: var(--surface-color);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border-color);
         border-radius: 18px;
         padding: 1.75rem 1.5rem;
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
@@ -78,9 +78,9 @@
         max-width: 100%;
         box-sizing: border-box;
         background: var(--surface-color);
-        border: 1px solid rgba(148, 163, 184, 0.35);
+        border: 1px solid var(--border-color);
         border-radius: 10px;
-        color: #f8fafc;
+        color: var(--text-color);
         padding: 0.85rem 1rem;
         font-size: 1rem;
       }
@@ -98,7 +98,7 @@
       }
       table.cgpa-table th,
       table.cgpa-table td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid var(--border-color);
         vertical-align: middle;
       }
       table.cgpa-table th {
@@ -194,7 +194,7 @@
         border-radius: 12px;
         padding: 1.2rem 1.6rem;
         background: var(--surface-color);
-        border: 1px solid rgba(148, 163, 184, 0.2);
+        border: 1px solid var(--border-color);
       }
       .result-box.highlight {
         background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -207,7 +207,7 @@
         text-transform: uppercase;
         letter-spacing: 0.08em;
         margin-bottom: 0.6rem;
-        color: rgba(248, 250, 252, 0.8);
+        color: var(--text-muted);
       }
       .result-box h3 {
         margin: 0;
@@ -231,7 +231,8 @@
         border-radius: 999px;
         width: 40px;
         height: 40px;
-        background: rgba(248, 250, 252, 0.08);
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
         color: #f87171;
         cursor: pointer;
         display: inline-flex;
@@ -272,6 +273,7 @@
     </style>
   </head>
   <body>
+  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -280,7 +282,7 @@
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
+          <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -290,18 +292,18 @@
           <a href="cgpa.html" class="active">CGPA Calculator</a>
           <a href="retake.html" class="new-feature-link">Retake Calculator</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">About Dev</a>
+          <a href="about.html">About</a>
         </nav>
       </header>
 
       <main>
         <div class="announcement-bar">
-          <span>🎓 Join telegram group to stay updated</span>
+          <span>Join telegram group to stay updated</span>
           <a
             href="https://t.me/nsu_advising_helper_bot_channel"
             target="_blank"
             class="view-extension-btn"
-            >⚡ Join now</a
+            >Join now</a
           >
         </div>
         <section class="calculator-hero">
@@ -564,6 +566,7 @@
     </script>
     <script src="script.js"></script>
     <script src="buttons.js"></script>
+    <script src="theme.js"></script>
     <script src="typewriter.js"></script>
   </body>
 </html>

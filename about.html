@@ -1,449 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Dev - Tahshan Jamil Shadhin</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
-    <link rel="stylesheet" href="styles.css?v=1.1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <style>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Tahshan Jamil Shadhin</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+  <link rel="stylesheet" href="styles.css?v=1.1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    .portfolio-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px 40px;
+    }
+
+    /* Newspaper Style Header */
+    .profile-header {
+      text-align: center;
+      padding: 40px 0 30px;
+      border-bottom: 3px double var(--border-color);
+      margin-bottom: 30px;
+    }
+
+    .profile-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 2px solid var(--text-muted);
+      margin: 0 auto 24px;
+      overflow: hidden;
+      background: var(--surface-color);
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-photo i {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      color: var(--text-muted);
+    }
+
+    .profile-name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+      /* text-transform: uppercase; */
+      font-family: "Georgia", serif;
+    }
+
+    .profile-title {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .social-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      background: none !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      white-space: nowrap;
+    }
+
+    .social-links a:hover {
+      color: var(--primary-color);
+      background: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .social-links .divider {
+      color: var(--border-color);
+      user-select: none;
+    }
+
+    .social-links i {
+      font-size: 0.9rem;
+    }
+
+    /* Newspaper Column Layout */
+    .newspaper-layout {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .column-divider {
+      background: var(--border-color);
+    }
+
+    .column {
+      padding: 0;
+    }
+
+    /* Section Styling */
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Education Items */
+    .edu-item {
+      margin-bottom: 20px;
+    }
+
+    .edu-level {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .edu-name {
+      font-size: 1rem;
+      color: var(--text-color);
+      line-height: 1.5;
+      font-family: "Georgia", serif;
+    }
+
+    .edu-name em {
+      color: var(--text-muted);
+      font-style: normal;
+      font-size: 0.85rem;
+    }
+
+    /* Interest List */
+    .interest-list {
+      line-height: 2;
+    }
+
+    .interest-item {
+      color: var(--text-color);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: color 0.2s ease;
+    }
+
+    .interest-item:hover {
+      color: var(--primary-color);
+    }
+
+    .interest-item i {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .interest-item:hover i {
+      color: var(--primary-color);
+    }
+
+    /* Skills Section - Full Width */
+    .skills-section {
+      border-top: 1px solid var(--border-color);
+      padding-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: space-between;
+    }
+
+    .skill-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .skill-group-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .skill-items {
+      font-size: 0.95rem;
+      color: var(--text-color);
+      line-height: 1.8;
+    }
+
+    .skill-items span {
+      transition: color 0.2s ease;
+      cursor: default;
+    }
+
+    .skill-items span:hover {
+      color: var(--primary-color);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      border-top: 3px double var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
       .portfolio-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px 40px;
+        padding: 15px 20px;
       }
 
-      /* Newspaper Style Header */
-      .profile-header {
-        text-align: center;
-        padding: 40px 0 30px;
-        border-bottom: 3px double var(--border-color);
-        margin-bottom: 30px;
-      }
-
-      .profile-photo {
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        border: 2px solid var(--text-muted);
-        margin: 0 auto 24px;
-        overflow: hidden;
-        background: var(--surface-color);
-      }
-
-      .profile-photo img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .profile-photo i {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 56px;
-        color: var(--text-muted);
-      }
-
-      .profile-name {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--text-color);
-        margin-bottom: 8px;
-        letter-spacing: 2px;
-        /* text-transform: uppercase; */
-        font-family: "Georgia", serif;
-      }
-
-      .profile-title {
-        font-size: 1rem;
-        color: var(--text-muted);
-        font-style: italic;
-        letter-spacing: 1px;
-      }
-
-      .social-links {
-        display: flex;
-        justify-content:center;
-        align-items:center;
-        flex-wrap: wrap;
-        gap: 30px;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        line-height: 1.8;
-      }
-
-      .social-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: color 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 0;
-        background: none !important;
-        border: none !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        white-space: nowrap;
-      }
-
-      .social-links a:hover {
-        color: var(--primary-color);
-        background: none !important;
-        transform: none !important;
-        box-shadow: none !important;
-      }
-
-      .social-links .divider {
-        color: var(--border-color);
-        user-select: none;
-      }
-
-      .social-links i {
-        font-size: 0.9rem;
-      }
-
-      /* Newspaper Column Layout */
       .newspaper-layout {
-        display: grid;
-        grid-template-columns: 1fr 1px 1fr;
-        gap: 30px;
-        margin-bottom: 30px;
+        grid-template-columns: 1fr;
+        gap: 0;
       }
 
       .column-divider {
-        background: var(--border-color);
+        display: none;
       }
 
       .column {
-        padding: 0;
-      }
-
-      /* Section Styling */
-      .section-title {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 16px;
-        padding-bottom: 8px;
+        padding-bottom: 24px;
+        margin-bottom: 24px;
         border-bottom: 1px solid var(--border-color);
       }
 
-      /* Education Items */
-      .edu-item {
-        margin-bottom: 20px;
+      .column:last-of-type {
+        border-bottom: none;
       }
 
-      .edu-level {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 4px;
+      .profile-name {
+        font-size: 1.8rem;
       }
 
-      .edu-name {
-        font-size: 1rem;
-        color: var(--text-color);
-        line-height: 1.5;
-        font-family: "Georgia", serif;
+      .profile-photo {
+        width: 100px;
+        height: 100px;
       }
 
-      .edu-name em {
-        color: var(--text-muted);
-        font-style: normal;
-        font-size: 0.85rem;
-      }
-
-      /* Interest List */
-      .interest-list {
-        line-height: 2;
-      }
-
-      .interest-item {
-        color: var(--text-color);
-        font-size: 0.95rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: color 0.2s ease;
-      }
-
-      .interest-item:hover {
-        color: var(--primary-color);
-      }
-
-      .interest-item i {
-        color: var(--text-muted);
-        font-size: 0.8rem;
-        width: 20px;
-        text-align: center;
-      }
-
-      .interest-item:hover i {
-        color: var(--primary-color);
-      }
-
-      /* Skills Section - Full Width */
-      .skills-section {
-        border-top: 1px solid var(--border-color);
-        padding-top: 30px;
-        margin-bottom: 30px;
+      .profile-photo i {
+        font-size: 40px;
       }
 
       .skills-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 40px;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
       }
 
-      .skill-group {
-        flex: 1;
-        min-width: 200px;
-      }
-
-      .skill-group-title {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
+      .profile-name {
+        font-size: 1.5rem;
         letter-spacing: 1px;
-        margin-bottom: 10px;
       }
+    }
 
-      .skill-items {
-        font-size: 0.95rem;
-        color: var(--text-color);
-        line-height: 1.8;
+    .project-logo-container {
+      width: 140px;
+      height: 140px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .project-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    body.light-mode #rds-logo-light {
+      display: block;
+    }
+
+    body.light-mode #rds-logo-dark {
+      display: none;
+    }
+
+    body:not(.light-mode) #rds-logo-light {
+      display: none;
+    }
+
+    body:not(.light-mode) #rds-logo-dark {
+      display: block;
+    }
+
+    .passion-project {
+      font-size: 1.1rem;
+      color: var(--text-color);
+      font-style: italic;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    hr.bio-separator {
+      border: 0;
+      border-top: 1px solid var(--border-color);
+      margin: 0 auto 30px auto;
+      width: 50%;
+      opacity: 0.7;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color);
+      transition: opacity 0.2s ease;
+      box-shadow: none;
+      letter-spacing: 0.5px;
+    }
+
+    .theme-toggle:hover {
+      opacity: 0.8;
+    }
+
+    body.light-mode .theme-toggle {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
       }
+    }
+  </style>
+</head>
 
-      .skill-items span {
-        transition: color 0.2s ease;
-        cursor: default;
-      }
+<body>
+  <script>if (localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+  <canvas id="particleCanvas"></canvas>
+  <div class="container">
+    <header>
+      <h1>ABOUT</h1>
+      <nav class="nav-bar">
+        <a href="index.html">RDS2</a>
+        <a href="calendar.html">Academic Calendar</a>
+        <a href="resources.html">Study Materials</a>
+        <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
+        <a href="routine.html">Routine Maker</a>
+        <a href="planner.html">Semester Planner</a>
+        <a href="freshman.html">Freshman Guides</a>
+        <a href="coursemap.html">Course map</a>
+        <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+        <a href="shelf_search.html">Library Shelf Finder</a>
+        <a href="cgpa.html">CGPA Calculator</a>
+        <a href="retake.html" class="new-feature-link">Retake Calculator</a>
+        <a href="gradeCalculator.html">Course Grade Calculator</a>
+        <a href="about.html" class="active">About</a>
+      </nav>
+    </header>
 
-      .skill-items span:hover {
-        color: var(--primary-color);
-      }
+    <div class="portfolio-container">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="project-logo-container" style="margin: 0 auto 30px;">
+          <img src="RDS2 Logo Reload Big White.png" id="rds-logo-light" class="project-logo" alt="RDS2 Logo Light">
+          <img src="RDS2 Logo Reload Big Black.png" id="rds-logo-dark" class="project-logo" alt="RDS2 Logo Dark">
+        </div>
 
-      /* Footer */
-      footer {
-        text-align: center;
-        padding: 30px 0;
-        border-top: 3px double var(--border-color);
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        font-style: italic;
-      }
+        <div class="passion-project">
+          A passion project dedicated to making your academic life easier.
+        </div>
 
-      /* Responsive */
-      @media (max-width: 768px) {
-        .portfolio-container {
-          padding: 15px 20px;
-        }
+        <hr class="bio-separator">
 
-        .newspaper-layout {
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
+        <div class="profile-photo" style="margin: 0 auto 24px;">
+          <img src="pfp.jpg" alt="Profile Photo">
+        </div>
+        <div class="profile-name">Tahshan Jamil Shadhin</div>
+        <div class="profile-title">
+          UG Student · CSE · North South University (Fall 2022 - Present)
+        </div>
+        <div class="profile-title">
+          Student worker at NSU Central Library (Fall 2025 - Present)
+        </div>
+        <div class="social-links">
+          <a href="mailto:tj.shadhin001@gmail.com" title="Email">
+            <i class="fas fa-envelope"></i> Email
+          </a>
+          <span class="divider">·</span>
+          <a href="https://www.facebook.com/tahshanjamil.shadhin" target="_blank" title="Facebook">
+            <i class="fab fa-facebook"></i> Facebook
+          </a>
+          <span class="divider">·</span>
+          <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin/" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+        </div>
+      </div>
 
-        .column-divider {
-          display: none;
-        }
+      <!-- Two Column Newspaper Layout -->
+      <div class="newspaper-layout">
+        <!-- Left Column - Education -->
+        <div class="column">
+          <div class="section-title">Education</div>
 
-        .column {
-          padding-bottom: 24px;
-          margin-bottom: 24px;
-          border-bottom: 1px solid var(--border-color);
-        }
-
-        .column:last-of-type {
-          border-bottom: none;
-        }
-
-        .profile-name {
-          font-size: 1.8rem;
-        }
-
-        .profile-photo {
-          width: 100px;
-          height: 100px;
-        }
-
-        .profile-photo i {
-          font-size: 40px;
-        }
-
-        .skills-row {
-          flex-direction: column;
-          gap: 24px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        h1 {
-          font-size: 1.8rem;
-        }
-
-        .profile-name {
-          font-size: 1.5rem;
-          letter-spacing: 1px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="particleCanvas"></canvas>
-    <div class="container">
-      <header>
-        <h1>ABOUT DEV</h1>
-        <nav class="nav-bar">
-          <a href="index.html">RDS2</a>
-          <a href="calendar.html">Academic Calendar</a>
-          <a href="resources.html">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
-          <a href="routine.html">Routine Maker</a>
-          <a href="planner.html">Semester Planner</a>
-          <a href="freshman.html">Freshman Guides</a>
-          <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
-          <a href="shelf_search.html">Library Shelf Finder</a>
-          <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="new-feature-link">Retake Calculator</a>
-          <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html" class="active">About Dev</a>
-        </nav>
-      </header>
-
-      <div class="portfolio-container">
-        <!-- Profile Header -->
-        <div class="profile-header">
-          <div class="profile-photo">
-            <img src="images/shadhin.jpg" alt="Profile Photo">
+          <div class="edu-item">
+            <div class="edu-level">University (Currently Studying)</div>
+            <div class="edu-name">
+              North South University, Dhaka<br>
+              <em>B.Sc. in Computer Science & Engineering</em>
+            </div>
           </div>
-          <div class="profile-name">Tahshan Jamil Shadhin</div>
-          <div class="profile-title">
-            UG Student · CSE · North South University (Fall 2022 - Present)
+
+          <div class="edu-item">
+            <div class="edu-level">College</div>
+            <div class="edu-name">Gazipur Cantonment College, Shimultuli</div>
           </div>
-          <div class="profile-title">
-            Student worker at NSU Central Library (Fall 2025 - Present)
-          </div>
-          <div class="social-links">
-            <a href="mailto:tj.shadhin001@gmail.com" title="Email">
-              <i class="fas fa-envelope"></i> Email
-            </a>
-            <span class="divider">·</span>
-            <a href="https://www.facebook.com/tahshanjamil.shadhin" target="_blank" title="Facebook">
-              <i class="fab fa-facebook"></i> Facebook
-            </a>
-            <span class="divider">·</span>
-            <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin/" target="_blank" title="LinkedIn">
-              <i class="fab fa-linkedin"></i> LinkedIn
-            </a>
+
+          <div class="edu-item">
+            <div class="edu-level">School</div>
+            <div class="edu-name">Rani Bilashmoni Govt. Boys' High School, Gazipur</div>
           </div>
         </div>
 
-        <!-- Two Column Newspaper Layout -->
-        <div class="newspaper-layout">
-          <!-- Left Column - Education -->
-          <div class="column">
-            <div class="section-title">Education</div>
-            
-            <div class="edu-item">
-              <div class="edu-level">University (Currently Studying)</div>
-              <div class="edu-name">
-                North South University, Dhaka<br>
-                <em>B.Sc. in Computer Science & Engineering</em>
-              </div>
+        <div class="column-divider"></div>
+
+        <!-- Right Column - Interests -->
+        <div class="column">
+          <div class="section-title">Interests & Passion</div>
+
+          <div class="interest-list">
+            <div class="interest-item">
+              <i class="fas fa-code"></i>
+              Programming
             </div>
-
-            <div class="edu-item">
-              <div class="edu-level">College</div>
-              <div class="edu-name">Gazipur Cantonment College, Shimultuli</div>
+            <div class="interest-item">
+              <i class="fas fa-brain"></i>
+              Machine Learning & Artificial Intelligence
             </div>
-
-            <div class="edu-item">
-              <div class="edu-level">School</div>
-              <div class="edu-name">Rani Bilashmoni Govt. Boys' High School, Gazipur</div>
+            <div class="interest-item">
+              <i class="fas fa-camera"></i>
+              Photography
             </div>
-          </div>
-
-          <div class="column-divider"></div>
-
-          <!-- Right Column - Interests -->
-          <div class="column">
-            <div class="section-title">Interests & Passion</div>
-            
-            <div class="interest-list">
-              <div class="interest-item">
-                <i class="fas fa-code"></i>
-                Programming
-              </div>
-              <div class="interest-item">
-                <i class="fas fa-brain"></i>
-                Machine Learning & Artificial Intelligence
-              </div>
-              <div class="interest-item">
-                <i class="fas fa-camera"></i>
-                Photography
-              </div>
-              <div class="interest-item">
-                <i class="fas fa-video"></i>
-                Cinematography
-              </div>
-              <div class="interest-item">
-                <i class="fas fa-palette"></i>
-                Graphics Designing
-              </div>
+            <div class="interest-item">
+              <i class="fas fa-video"></i>
+              Cinematography
             </div>
-          </div>
-        </div>
-
-        <!-- Skills Section - Full Width -->
-        <div class="skills-section">
-          <div class="section-title">Technical Skills</div>
-          
-          <div class="skills-row">
-            <div class="skill-group">
-              <div class="skill-group-title">Languages</div>
-              <div class="skill-items">
-                <span>C/C++</span> · <span>Java</span> · <span>Python</span> · <span>PHP</span>
-              </div>
-            </div>
-
-            <div class="skill-group">
-              <div class="skill-group-title">Web & Database</div>
-              <div class="skill-items">
-                <span>React (Basic)</span> · <span>MySQL</span>
-              </div>
-            </div>
-
-            <div class="skill-group">
-              <div class="skill-group-title">Design Tools</div>
-              <div class="skill-items">
-                <span>Adobe Photoshop</span> · <span>Illustrator</span> · <span>Premiere Pro</span>
-              </div>
+            <div class="interest-item">
+              <i class="fas fa-palette"></i>
+              Graphics Designing
             </div>
           </div>
         </div>
       </div>
 
-      <footer>
-        <p>© 2026 Tahshan Jamil Shadhin</p>
-      </footer>
+      <!-- Skills Section - Full Width -->
+      <div class="skills-section">
+        <div class="section-title">Technical Skills</div>
+
+        <div class="skills-row">
+          <div class="skill-group">
+            <div class="skill-group-title">Languages</div>
+            <div class="skill-items">
+              <span>C/C++</span> · <span>Java</span> · <span>Python</span> · <span>PHP</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">Web & Database</div>
+            <div class="skill-items">
+              <span>React (Basic)</span> · <span>MySQL</span>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">Design Tools</div>
+            <div class="skill-items">
+              <span>Adobe Photoshop</span> · <span>Illustrator</span> · <span>Premiere Pro</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-    <script src="typewriter.js"></script>
-  </body>
+    <footer>
+      <p>© 2026 Tahshan Jamil Shadhin</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="theme.js"></script>
+  <script src="typewriter.js"></script>
+</body>
+
 </html>

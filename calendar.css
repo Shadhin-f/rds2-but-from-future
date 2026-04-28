@@ -48,10 +48,9 @@
   margin: 0 0 30px 0;
   padding: 16px 20px;
   flex-wrap: wrap;
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--surface-color);
   border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
 }
 
 .legend-item {
@@ -59,7 +58,7 @@
   align-items: center;
   gap: 8px;
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   padding: 4px 8px;
   border-radius: 6px;
   transition: all 0.2s ease;
@@ -67,7 +66,7 @@
 
 .legend-item:hover {
   background: rgba(255, 255, 255, 0.05);
-  color: #e2e8f0;
+  color: var(--text-color);
 }
 
 .legend-color {
@@ -93,21 +92,17 @@
   background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
-/* Timeline Item - Enhanced card design */
+/* Timeline Item */
 .timeline-item {
   position: relative;
-  background: linear-gradient(135deg,
-      rgba(30, 41, 59, 0.9),
-      rgba(15, 23, 42, 0.95));
+  background: var(--surface-color);
   padding: 18px 20px 18px 20px;
   border-radius: 12px;
   margin-bottom: 16px;
   margin-left: 50px;
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  box-shadow: none;
   z-index: 2;
 }
 
@@ -150,7 +145,7 @@
 /* Date styling */
 .date {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 6px;
   font-weight: 500;
   display: flex;
@@ -165,7 +160,7 @@
 
 /* Content styling */
 .content {
-  color: #e2e8f0;
+  color: var(--text-color);
   line-height: 1.6;
   font-size: 0.95rem;
 }
@@ -237,39 +232,16 @@
 }
 
 /* =========================================
-   HOVER EFFECTS
+   HOVER EFFECTS - Simplified
    ========================================= */
 
 .timeline-item:hover {
-  transform: translateX(8px);
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  opacity: 0.85;
+  box-shadow: none;
 }
 
 .timeline-item:hover::before {
-  transform: translateY(-50%) scale(1.2);
-}
-
-.timeline-item.payment:hover {
-  background: linear-gradient(135deg,
-      rgba(34, 197, 94, 0.18),
-      rgba(15, 23, 42, 0.95));
-  border-color: rgba(34, 197, 94, 0.4);
-}
-
-.timeline-item.advising:hover {
-  background: linear-gradient(135deg,
-      rgba(139, 92, 246, 0.18),
-      rgba(15, 23, 42, 0.95));
-  border-color: rgba(139, 92, 246, 0.4);
-}
-
-.timeline-item.deadline:hover {
-  background: linear-gradient(135deg,
-      rgba(239, 68, 68, 0.18),
-      rgba(15, 23, 42, 0.95));
-  border-color: rgba(239, 68, 68, 0.4);
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* =========================================

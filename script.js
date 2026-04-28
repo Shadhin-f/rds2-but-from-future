@@ -437,7 +437,7 @@ function renderTable(data) {
                     data-course="${escapeHtml(row.Course)}" 
                     data-section="${escapeHtml(row.Section)}"
                 >
-                    ${addBtnDots}<i class="fas fa-plus"></i> Add
+                    <i class="fas fa-plus"></i> Add
                 </button>` : '';
 
         const tr = document.createElement('tr');
@@ -928,7 +928,7 @@ function updateAddButtonState(course, section) {
                 btn.classList.remove('added'); // Don't disable the button
                 btn.disabled = false;
                 btn.title = `In Routine ${routineIndices.map(i => i + 1).join(', ')}`;
-                btn.innerHTML = `${dots} <i class="fas fa-plus"></i> Add`;
+                btn.innerHTML = `<i class="fas fa-plus"></i> Add`;
             } else {
                 btn.classList.remove('added');
                 btn.disabled = false;
@@ -2512,76 +2512,20 @@ async function generateRoutinePdf() {
 }
 
 // ========== UPCOMING CALENDAR EVENT ==========
-const CALENDAR_EVENTS = [
-    { date: '2025-12-31', content: 'Last day of grade submission Fall 2025' },
-    { date: '2026-01-11', content: 'On-Campus course registration for newly admitted students of Spring 2026: BEGINS' },
-    { date: '2026-01-12', content: 'Online course registration for regular and probation students of Spring 2026: BEGINS; Online course add / drop / section change: BEGINS' },
-    { date: '2026-01-17', content: 'Orientation program for newly admitted undergraduate students of Spring 2026' },
-    { date: '2026-01-19', content: 'Online course registration for regular and probation students of Spring 2026: ENDS; Online course add / drop / section change: ENDS' },
-    { date: '2026-01-20', content: 'Last day of section cancellation and merging' },
-    { date: '2026-01-21', content: 'Classes begin Spring 2026; Payment of tuition fee: BEGINS' },
-    { date: '2026-01-29', content: 'Last day of online drop of courses with 100% refund' },
-    { date: '2026-02-04', content: 'Holiday - Shab-E-Barat' },
-    { date: '2026-02-09', content: 'Last day of online drop of courses with 50% refund' },
-    { date: '2026-02-11', content: 'Holiday - National Election' },
-    { date: '2026-02-12', content: 'Holiday - National Election' },
-    { date: '2026-02-21', content: 'Holiday - Martyrs Day & International Mother Language Day' },
-    { date: '2026-02-23', content: 'Last day of payment of tuition without late fee' },
-    { date: '2026-02-24', content: 'Payment of tuition with late fee of Tk. 2,000/-: BEGINS' },
-    { date: '2026-03-09', content: 'Last day of payment of tuition with late fee of Tk. 2,000/-' },
-    { date: '2026-03-10', content: 'Payment of tuition fee with late fee of Tk. 2,000/- + Tk. 100/- per day: BEGINS' },
-    { date: '2026-03-11', content: 'Last day of online drop of courses with 0% refund with "W" grade' },
-    { date: '2026-03-15', content: 'Online Teaching Evaluation: BEGINS' },
-    { date: '2026-03-16', content: 'Last day of payment of tuition for financial aid recipients without late fee' },
-    { date: '2026-03-17', content: 'Holiday - Laylatul Qadr' },
-    { date: '2026-03-18', content: 'No Classes' },
-    { date: '2026-03-19', content: 'Holiday - Eid Ul Fitr (Subject to sighting of the moon)' },
-    { date: '2026-03-20', content: 'Holiday - Jumatul Bidah (Subject to sighting of the moon)' },
-    { date: '2026-03-21', content: 'Holiday - Eid Ul Fitr (Subject to sighting of the moon)' },
-    { date: '2026-03-22', content: 'Holiday - Eid Ul Fitr (Subject to sighting of the moon)' },
-    { date: '2026-03-23', content: 'Holiday - Eid Ul Fitr (Subject to sighting of the moon)' },
-    { date: '2026-03-24', content: 'No Classes' },
-    { date: '2026-03-25', content: 'No Classes' },
-    { date: '2026-03-26', content: 'Holiday - Independence Day' },
-    { date: '2026-04-14', content: 'Holiday - Bangla New Year' },
-    { date: '2026-04-28', content: 'Last day of ST classes' },
-    { date: '2026-04-29', content: 'Last day of MW classes' },
-    { date: '2026-04-30', content: 'Last day of RA classes; Online Teaching Evaluation: ENDS' },
-    { date: '2026-05-01', content: 'Holiday - May Day; Holiday - Buddha Purnima' },
-    { date: '2026-05-02', content: 'No Classes' },
-    { date: '2026-05-03', content: 'Final Exam: BEGINS' },
-    { date: '2026-05-09', content: 'Final Exam: ENDS' },
-    { date: '2026-05-13', content: 'Last day of grade submission Spring 2026' }
-];
-
-function formatDateForDisplay(dateStr) {
-    const date = new Date(dateStr + 'T00:00:00');
-    const options = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+// Helper to parse date strings like "May 5, 2025 (Monday)" or "June 5-10, 2025" from calendar.html
+function parseTimelineDate(dateStr) {
+    let match = dateStr.match(/^([A-Za-z]+) (\d+)(?:-(\d+))?, (\d{4})/);
+    if (match) {
+        let month = match[1];
+        let day = match[3] ? match[3] : match[2];
+        let year = match[4];
+        return new Date(`${month} ${day}, ${year}`);
+    }
+    let d = new Date(dateStr.replace(/\(.*\)/, "").trim());
+    return isNaN(d) ? null : d;
 }
 
-function getDaysRemaining(dateStr) {
-    // Get today's date components (local time)
-    const now = new Date();
-    const todayYear = now.getFullYear();
-    const todayMonth = now.getMonth();
-    const todayDay = now.getDate();
-
-    // Create date objects for comparison (both at midnight local time)
-    const today = new Date(todayYear, todayMonth, todayDay);
-
-    // Parse event date
-    const [year, month, day] = dateStr.split('-').map(Number);
-    const eventDate = new Date(year, month - 1, day);
-
-    // Calculate difference in days
-    const msPerDay = 24 * 60 * 60 * 1000;
-    const diffDays = Math.round((eventDate - today) / msPerDay);
-
-    return diffDays;
-}
-
-function displayUpcomingEvent() {
+async function displayUpcomingEvent() {
     const section = document.getElementById('upcomingEventSection');
     const textEl = document.getElementById('upcomingEventText');
     const dateEl = document.getElementById('upcomingEventDate');
@@ -2589,46 +2533,70 @@ function displayUpcomingEvent() {
 
     if (!section || !textEl || !dateEl || !countdownEl) return;
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    try {
+        const response = await fetch('calendar.html');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const htmlText = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        
+        const items = Array.from(doc.querySelectorAll('.timeline-item'));
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-    // Find the next upcoming event
-    let upcomingEvent = null;
-    for (const event of CALENDAR_EVENTS) {
-        const eventDate = new Date(event.date + 'T00:00:00');
-        if (eventDate >= today) {
-            upcomingEvent = event;
-            break;
+        let upcomingEvent = null;
+        let eventDateParsed = null;
+
+        for (const item of items) {
+            const dateDiv = item.querySelector('.date');
+            const contentDiv = item.querySelector('.content');
+            if (!dateDiv || !contentDiv) continue;
+
+            const dateStr = dateDiv.textContent.trim();
+            
+            // Replace <br> with a space for cleaner display
+            const contentHtml = contentDiv.innerHTML;
+            const content = contentHtml.replace(/<br\s*[\/]?>/gi, " - ").replace(/<[^>]*>?/gm, '').trim();
+
+            const eventDate = parseTimelineDate(dateStr);
+            if (eventDate && eventDate >= today) {
+                upcomingEvent = { dateStr, content };
+                eventDateParsed = eventDate;
+                break;
+            }
         }
-    }
 
-    if (!upcomingEvent) {
+        if (!upcomingEvent) {
+            section.style.display = 'none';
+            return;
+        }
+
+        const msPerDay = 24 * 60 * 60 * 1000;
+        const diffDays = Math.round((eventDateParsed - today) / msPerDay);
+
+        textEl.textContent = upcomingEvent.content;
+        dateEl.textContent = upcomingEvent.dateStr;
+
+        if (diffDays === 0) {
+            countdownEl.textContent = 'Today!';
+            countdownEl.className = 'upcoming-event-countdown today';
+        } else if (diffDays === 1) {
+            countdownEl.textContent = 'Tomorrow';
+            countdownEl.className = 'upcoming-event-countdown soon';
+        } else if (diffDays <= 3) {
+            countdownEl.textContent = `${diffDays} days`;
+            countdownEl.className = 'upcoming-event-countdown soon';
+        } else {
+            countdownEl.textContent = `${diffDays} days`;
+            countdownEl.className = 'upcoming-event-countdown';
+        }
+
+        section.style.display = 'block';
+    } catch (e) {
+        console.error('Failed to parse upcoming event from calendar.html:', e);
         section.style.display = 'none';
-        return;
     }
-
-    const daysRemaining = getDaysRemaining(upcomingEvent.date);
-
-    // Set the content
-    textEl.textContent = upcomingEvent.content;
-    dateEl.textContent = formatDateForDisplay(upcomingEvent.date);
-
-    // Set countdown text and styling
-    if (daysRemaining === 0) {
-        countdownEl.textContent = 'Today!';
-        countdownEl.className = 'upcoming-event-countdown today';
-    } else if (daysRemaining === 1) {
-        countdownEl.textContent = 'Tomorrow';
-        countdownEl.className = 'upcoming-event-countdown soon';
-    } else if (daysRemaining <= 3) {
-        countdownEl.textContent = `${daysRemaining} days`;
-        countdownEl.className = 'upcoming-event-countdown soon';
-    } else {
-        countdownEl.textContent = `${daysRemaining} days`;
-        countdownEl.className = 'upcoming-event-countdown';
-    }
-
-    section.style.display = 'block';
 }
 
 // Initialize upcoming event on page load

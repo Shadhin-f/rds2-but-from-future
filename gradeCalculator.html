@@ -1,538 +1,559 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-      crossorigin="anonymous"
-    ></script>
-    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-DR0D2D6C35");
-    </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NSU Course Grade Calculator</title>
-    <link rel="stylesheet" href="styles.css?v=1.1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <style>
-      
 
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+    crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-DR0D2D6C35");
+  </script>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NSU Course Grade Calculator</title>
+  <link rel="stylesheet" href="styles.css?v=1.1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding-bottom: 2.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    .calculator-hero {
+      text-align: center;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .calculator-hero h1 {
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .calculator-hero p {
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    .calc-card {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+      width: 100%;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    .calc-card h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .courses-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .courses-wrapper::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .courses-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 3px;
+    }
+
+    table.grade-table {
+      width: 100%;
+      min-width: 540px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    table.grade-table th,
+    table.grade-table td {
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+      padding: 0.55rem 0.4rem;
+    }
+
+    table.grade-table th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      font-size: 0.85rem;
+    }
+
+    table.grade-table th:nth-child(1) {
+      width: 20%;
+    }
+
+    table.grade-table th:nth-child(2) {
+      width: 24%;
+    }
+
+    table.grade-table th:nth-child(3) {
+      width: 14%;
+    }
+
+    table.grade-table th:nth-child(4) {
+      width: 14%;
+    }
+
+    table.grade-table th:nth-child(5) {
+      width: 14%;
+    }
+
+    table.grade-table th:nth-child(6) {
+      width: 14%;
+    }
+
+    table.grade-table input,
+    table.grade-table select {
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-color);
+      padding: 0.45rem 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    table.grade-table input:focus,
+    table.grade-table select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.25);
+    }
+
+    .actions-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 0.85rem 1.4rem;
+      background: transparent;
+      color: var(--text-color);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    .btn-outline:hover {
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+    }
+
+    .btn-primary {
+      background: #22c55e;
+      color: #0f172a;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.25);
+    }
+
+    .btn-remove {
+      border-color: rgba(248, 113, 113, 0.6);
+      color: #fda4af;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-remove:hover {
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    }
+
+    .course-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+
+    .results-panel {
+      display: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .result-box {
+      flex: 1 1 calc(20% - 0.6rem);
+      min-width: 140px;
+      max-width: 240px;
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      box-sizing: border-box;
+    }
+
+    .result-box.highlight {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #0f172a;
+      border: none;
+    }
+
+    .result-box span {
+      display: block;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+      color: var(--text-muted);
+    }
+
+    .result-box h3 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .result-box.highlight span,
+    .result-box.highlight h3 {
+      color: #042f1a;
+    }
+
+    .result-box.highlight h3 {
+      font-size: 2.3rem;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 0.6rem 0.4rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    .summary-table th {
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .grade-A {
+      color: #22c55e;
+    }
+
+    .grade-B {
+      color: #3b82f6;
+    }
+
+    .grade-C {
+      color: #eab308;
+    }
+
+    .grade-D {
+      color: #f97316;
+    }
+
+    .grade-F {
+      color: #ef4444;
+    }
+
+    @media (max-width: 720px) {
       main {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        padding-bottom: 2.5rem;
-        max-width: 960px;
-        margin: 0 auto;
-        width: 100%;
-        box-sizing: border-box;
-        overflow-x: hidden;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        gap: 1.5rem;
       }
-      .calculator-hero {
-        text-align: center;
-        margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
-      .calculator-hero h1 {
-        font-size: clamp(2rem, 4vw, 2.6rem);
-        margin-bottom: 0.5rem;
-      }
-      .calculator-hero p {
-        color: var(--text-muted);
-        max-width: 640px;
-        margin: 0 auto 2rem;
-        line-height: 1.5;
-      }
+
       .calc-card {
-        background: var(--surface-color);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        padding: 1.75rem 1.5rem;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
-        width: 100%;
-        box-sizing: border-box;
-        overflow-x: hidden;
+        padding: 0.75rem 0.5rem;
       }
-      .calc-card h2 {
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font-size: 1.2rem;
-      }
+
       .courses-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        margin: 0 -0.5rem;
+        padding: 0 0.5rem;
       }
-      .courses-wrapper::-webkit-scrollbar {
-        height: 6px;
-      }
-      .courses-wrapper::-webkit-scrollbar-thumb {
-        background: rgba(148, 163, 184, 0.3);
-        border-radius: 3px;
-      }
+
       table.grade-table {
-        width: 100%;
-        min-width: 540px;
-        border-collapse: collapse;
-        table-layout: fixed;
+        min-width: 100%;
+        font-size: 0.85rem;
       }
+
       table.grade-table th,
       table.grade-table td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        vertical-align: middle;
-        padding: 0.55rem 0.4rem;
+        padding: 0.4rem 0.25rem;
       }
-      table.grade-table th {
-        text-align: left;
-        font-weight: 600;
-        color: var(--text-muted);
-        white-space: nowrap;
-        font-size: 0.85rem;
-      }
-      table.grade-table th:nth-child(1) {
-        width: 20%;
-      }
-      table.grade-table th:nth-child(2) {
-        width: 24%;
-      }
-      table.grade-table th:nth-child(3) {
-        width: 14%;
-      }
-      table.grade-table th:nth-child(4) {
-        width: 14%;
-      }
-      table.grade-table th:nth-child(5) {
-        width: 14%;
-      }
-      table.grade-table th:nth-child(6) {
-        width: 14%;
-      }
+
       table.grade-table input,
       table.grade-table select {
+        padding: 0.35rem 0.4rem;
+        font-size: 0.85rem;
+      }
+
+      .actions-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .btn {
         width: 100%;
-        box-sizing: border-box;
-        background: var(--surface-color);
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        border-radius: 8px;
-        color: #f8fafc;
-        padding: 0.45rem 0.6rem;
+        padding: 0.7rem 1rem;
         font-size: 0.9rem;
       }
-      table.grade-table input:focus,
-      table.grade-table select:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.25);
-      }
-      .actions-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-top: 1.5rem;
-      }
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.35rem;
-        border-radius: 10px;
-        border: 1px solid transparent;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        padding: 0.85rem 1.4rem;
-        background: transparent;
-        color: #e5e7eb;
-      }
-      .btn:hover {
-        transform: translateY(-1px);
-      }
-      .btn-outline {
-        border-color: #22c55e;
-        color: #22c55e;
-      }
-      .btn-outline:hover {
-        box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
-      }
-      .btn-primary {
-        background: #22c55e;
-        color: #0f172a;
-      }
-      .btn-primary:hover {
-        box-shadow: 0 12px 32px rgba(34, 197, 94, 0.25);
-      }
-      .btn-remove {
-        border-color: rgba(248, 113, 113, 0.6);
-        color: #fda4af;
-        padding: 0.4rem 0.75rem;
+
+      .course-note {
         font-size: 0.8rem;
       }
-      .btn-remove:hover {
-        box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-      }
-      .course-note {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        margin-top: 0.75rem;
-      }
+
       .results-panel {
-        display: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 2rem;
-        width: 100%;
-        box-sizing: border-box;
+        flex-direction: column;
+        gap: 0.5rem;
       }
+
       .result-box {
-        flex: 1 1 calc(20% - 0.6rem);
-        min-width: 140px;
-        max-width: 240px;
-        border-radius: 12px;
-        padding: 1rem 1.1rem;
-        background: var(--surface-color);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        box-sizing: border-box;
-      }
-      .result-box.highlight {
-        background: linear-gradient(135deg, #22c55e, #16a34a);
-        color: #0f172a;
-        border: none;
-      }
-      .result-box span {
-        display: block;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 0.6rem;
-        color: rgba(248, 250, 252, 0.8);
-      }
-      .result-box h3 {
-        margin: 0;
-        font-size: 2rem;
-        font-weight: 700;
-      }
-      .result-box.highlight span,
-      .result-box.highlight h3 {
-        color: #042f1a;
-      }
-      .result-box.highlight h3 {
-        font-size: 2.3rem;
-      }
-      .summary-table {
+        flex: 0 0 auto;
+        min-width: auto;
+        max-width: 100%;
+        min-height: 100px;
         width: 100%;
-        border-collapse: collapse;
+        padding: 0.75rem 0.75rem;
+        text-align: center;
+        font-size: 2rem !important;
       }
+
+      .result-box h3 {
+        font-size: 2rem !important;
+        word-break: break-word;
+      }
+
+      .result-box span {
+        font-size: 0.75rem;
+      }
+
+      .summary-table {
+        font-size: 0.85rem;
+      }
+
       .summary-table th,
       .summary-table td {
-        padding: 0.6rem 0.4rem;
-        text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        font-size: 0.9rem;
+        padding: 0.5rem 0.3rem;
       }
-      .summary-table th {
-        font-weight: 600;
-        color: var(--text-muted);
-      }
-      .grade-A {
-        color: #22c55e;
-      }
-      .grade-B {
-        color: #3b82f6;
-      }
-      .grade-C {
-        color: #eab308;
-      }
-      .grade-D {
-        color: #f97316;
-      }
-      .grade-F {
-        color: #ef4444;
-      }
-      @media (max-width: 720px) {
-        main {
-          padding-left: 0.5rem;
-          padding-right: 0.5rem;
-          gap: 1.5rem;
-        }
-        .calc-card {
-          padding: 0.75rem 0.5rem;
-        }
-        .courses-wrapper {
-          margin: 0 -0.5rem;
-          padding: 0 0.5rem;
-        }
-        table.grade-table {
-          min-width: 100%;
-          font-size: 0.85rem;
-        }
-        table.grade-table th,
-        table.grade-table td {
-          padding: 0.4rem 0.25rem;
-        }
-        table.grade-table input,
-        table.grade-table select {
-          padding: 0.35rem 0.4rem;
-          font-size: 0.85rem;
-        }
-        .actions-row {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 0.75rem;
-        }
-        .btn {
-          width: 100%;
-          padding: 0.7rem 1rem;
-          font-size: 0.9rem;
-        }
-        .course-note {
-          font-size: 0.8rem;
-        }
-        .results-panel {
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        .result-box {
-          flex: 0 0 auto;
-          min-width: auto;
-          max-width: 100%;
-          min-height: 100px;
-          width: 100%;
-          padding: 0.75rem 0.75rem;
-          text-align: center;
-          font-size: 2rem !important;
-        }
-        .result-box h3 {
-          font-size: 2rem !important;
-          word-break: break-word;
-        }
-        .result-box span {
-          font-size: 0.75rem;
-        }
-        .summary-table {
-          font-size: 0.85rem;
-        }
-        .summary-table th,
-        .summary-table td {
-          padding: 0.5rem 0.3rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <canvas id="particleCanvas"></canvas>
-    <div class="container">
-      <header>
-        <h1>NSU Course Grade Calculator</h1>
-        <nav class="nav-bar">
-          <a href="index.html">RDS2</a>
-          <a href="calendar.html">Academic Calendar</a>
-          <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
-          <a href="routine.html">Routine Maker</a>
-          <a href="planner.html">Semester Planner</a>
-          <a href="freshman.html">Freshman Guides</a>
-          <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
-          <a href="shelf_search.html">Library Shelf Finder</a>
-          <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="new-feature-link">Retake Calculator</a>
-          <a href="gradeCalculator.html" class="active"
-            >Course Grade Calculator</a
-          >
-          <a href="about.html">About Dev</a>
-        </nav>
-      </header>
+    }
+  </style>
+</head>
 
-      <main>
-        <div class="announcement-bar">
-          <span>🎓 Join telegram group to stay updated</span>
-          <a
-            href="https://t.me/nsu_advising_helper_bot_channel"
-            target="_blank"
-            class="view-extension-btn"
-            >⚡ Join now</a
-          >
-        </div>
-        <section class="calculator-hero">
-          <p>
-            Enter best quize scores, midterm, final exam marks along with their
-            weight distribution to calculate your expected course grade. You can
-            add multiple rows for quizzes, assignments or any other components
-            that share the same weight.
-          </p>
-        </section>
+<body>
+  <script>if (localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+  <canvas id="particleCanvas"></canvas>
+  <div class="container">
+    <header>
+      <h1>NSU Course Grade Calculator</h1>
+      <nav class="nav-bar">
+        <a href="index.html">RDS2</a>
+        <a href="calendar.html">Academic Calendar</a>
+        <a href="resources.html" class="trending-link">Study Materials</a>
+        <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
+        <a href="routine.html">Routine Maker</a>
+        <a href="planner.html">Semester Planner</a>
+        <a href="freshman.html">Freshman Guides</a>
+        <a href="coursemap.html">Course map</a>
+        <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+        <a href="shelf_search.html">Library Shelf Finder</a>
+        <a href="cgpa.html">CGPA Calculator</a>
+        <a href="retake.html" class="new-feature-link">Retake Calculator</a>
+        <a href="gradeCalculator.html" class="active">Course Grade Calculator</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
 
-        <section class="calc-card">
-          <h2>Course Components</h2>
-          <div class="courses-wrapper">
-            <table class="grade-table">
-              <thead>
-                <tr>
-                  <th>Component</th>
-                  <th>Obtained</th>
-                  <th>Total</th>
-                  <th>Weight (%)</th>
-                  <th>Remove</th>
-                </tr>
-              </thead>
-              <tbody id="componentsBody"></tbody>
-            </table>
-          </div>
-          <div class="actions-row">
-            <button
-              type="button"
-              class="btn btn-outline"
-              onclick="addComponentRow()"
-            >
-              <i class="fas fa-plus"></i> ADD COMPONENT
-            </button>
-            <div style="flex: 1"></div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="calculateGrade()"
-            >
-              <i class="fas fa-calculator"></i> Calculate Grade
-            </button>
-          </div>
-          <p class="course-note">
-            Tip: Make sure total weight is close to 100%. You can add
-            attendance, presentation, project or bonus marks as separate rows.
-          </p>
-        </section>
-
-        <div class="results-panel" id="resultsPanel">
-          <div class="result-box">
-            <span>Raw Marks</span>
-            <h3 id="totalMarks">0.00</h3>
-          </div>
-          <div class="result-box highlight">
-            <span>Raw Grade</span>
-            <h3 id="rawGrade">-</h3>
-          </div>
-          <div class="result-box">
-            <span>Curved Marks (10√x)</span>
-            <h3 id="curvedMarks">0.00</h3>
-          </div>
-          <div class="result-box">
-            <span>Curved Grade (10√X)</span>
-            <h3 id="curvedGrade">-</h3>
-          </div>
-          <div class="result-box">
-            <span>One Grade Curve</span>
-            <h3 id="oneGradeCurve">-</h3>
-          </div>
-        </div>
-
-        <div class="calc-card" id="summarySection" style="display: none">
-          <h3>Mark Distribution Summary</h3>
-          <div class="courses-wrapper">
-            <table class="summary-table">
-              <thead>
-                <tr>
-                  <th>Component</th>
-                  <th>Marks Used</th>
-                  <th>Weight (%)</th>
-                  <th>Contribution</th>
-                </tr>
-              </thead>
-              <tbody id="summaryBody"></tbody>
-            </table>
-          </div>
-          <div class="actions-row" style="margin-top: 1.5rem">
-            <div style="flex: 1"></div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              onclick="downloadPDF()"
-            >
-              <i class="fas fa-download"></i> Download as PDF
-            </button>
-          </div>
-        </div>
-      </main>
-
-      <footer class="footer">
+    <main>
+      <div class="announcement-bar">
+        <span>Join telegram group to stay updated</span>
+        <a href="https://t.me/nsu_advising_helper_bot_channel" target="_blank" class="view-extension-btn">Join now</a>
+      </div>
+      <section class="calculator-hero">
         <p>
-          © 2026 RDS2 BUT FROM FUTURE • Created by Tahshan Jamil Shadhin
-          <br />
+          Enter best quize scores, midterm, final exam marks along with their
+          weight distribution to calculate your expected course grade. You can
+          add multiple rows for quizzes, assignments or any other components
+          that share the same weight.
         </p>
-        <div class="social-links">
-          <span>Follow me on</span>
-          <a
-            href="https://www.facebook.com/share/19DGPCk2wr/"
-            target="_blank"
-            title="Facebook"
-          >
-            <i class="fab fa-facebook"></i>
-          </a>
-          <a
-            href="https://www.instagram.com/_shadhin_f"
-            target="_blank"
-            title="Instagram"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-            target="_blank"
-            title="LinkedIn"
-          >
-            <i class="fab fa-linkedin"></i>
-          </a>
+      </section>
+
+      <section class="calc-card">
+        <h2>Course Components</h2>
+        <div class="courses-wrapper">
+          <table class="grade-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Obtained</th>
+                <th>Total</th>
+                <th>Weight (%)</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody id="componentsBody"></tbody>
+          </table>
         </div>
+        <div class="actions-row">
+          <button type="button" class="btn btn-outline" onclick="addComponentRow()">
+            <i class="fas fa-plus"></i> ADD COMPONENT
+          </button>
+          <div style="flex: 1"></div>
+          <button type="button" class="btn btn-primary" onclick="calculateGrade()">
+            <i class="fas fa-calculator"></i> Calculate Grade
+          </button>
+        </div>
+        <p class="course-note">
+          Tip: Make sure total weight is close to 100%. You can add
+          attendance, presentation, project or bonus marks as separate rows.
+        </p>
+      </section>
+
+      <div class="results-panel" id="resultsPanel">
+        <div class="result-box">
+          <span>Raw Marks</span>
+          <h3 id="totalMarks">0.00</h3>
+        </div>
+        <div class="result-box highlight">
+          <span>Raw Grade</span>
+          <h3 id="rawGrade">-</h3>
+        </div>
+        <div class="result-box">
+          <span>Curved Marks (10√x)</span>
+          <h3 id="curvedMarks">0.00</h3>
+        </div>
+        <div class="result-box">
+          <span>Curved Grade (10√)</span>
+          <h3 id="curvedGrade">-</h3>
+        </div>
+        <div class="result-box">
+          <span>One Grade Curve</span>
+          <h3 id="oneGradeCurve">-</h3>
+        </div>
+      </div>
+
+      <div class="calc-card" id="summarySection" style="display: none">
+        <h3>Mark Distribution Summary</h3>
+        <div class="courses-wrapper">
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Marks Used</th>
+                <th>Weight (%)</th>
+                <th>Contribution</th>
+              </tr>
+            </thead>
+            <tbody id="summaryBody"></tbody>
+          </table>
+        </div>
+        <div class="actions-row" style="margin-top: 1.5rem">
+          <div style="flex: 1"></div>
+          <button type="button" class="btn btn-primary" onclick="downloadPDF()">
+            <i class="fas fa-download"></i> Download as PDF
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>
+        © 2026 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
         <br />
-        Last updated: 06-01-2026
-      </footer>
-    </div>
+      </p>
+      <div class="social-links">
+        <span>Follow me on</span>
+        <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+          target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <br />
+      Last updated: 06-01-2026
+    </footer>
+  </div>
 
-    <script>
-      function syncWeightsByType() {
-        const rows = document.querySelectorAll("#componentsBody tr");
-        const typeMap = {};
+  <script>
+    function syncWeightsByType() {
+      const rows = document.querySelectorAll("#componentsBody tr");
+      const typeMap = {};
 
-        rows.forEach((row) => {
-          const typeSel = row.querySelector(".comp-type");
-          const weightInput = row.querySelector(".comp-weight");
-          if (!typeSel || !weightInput) return;
-          const type = (typeSel.value || "").trim() || "Other";
-          if (!typeMap[type]) typeMap[type] = [];
-          typeMap[type].push(weightInput);
-        });
+      rows.forEach((row) => {
+        const typeSel = row.querySelector(".comp-type");
+        const weightInput = row.querySelector(".comp-weight");
+        if (!typeSel || !weightInput) return;
+        const type = (typeSel.value || "").trim() || "Other";
+        if (!typeMap[type]) typeMap[type] = [];
+        typeMap[type].push(weightInput);
+      });
 
-        Object.values(typeMap).forEach((inputs) => {
-          if (!inputs.length) return;
-          const first = inputs[0];
-          first.disabled = false;
-          const baseValue = first.value;
-          for (let i = 1; i < inputs.length; i++) {
-            inputs[i].disabled = true;
-            if (baseValue !== "") inputs[i].value = baseValue;
-          }
-        });
-      }
+      Object.values(typeMap).forEach((inputs) => {
+        if (!inputs.length) return;
+        const first = inputs[0];
+        first.disabled = false;
+        const baseValue = first.value;
+        for (let i = 1; i < inputs.length; i++) {
+          inputs[i].disabled = true;
+          if (baseValue !== "") inputs[i].value = baseValue;
+        }
+      });
+    }
 
-      function addComponentRow() {
-        const tbody = document.getElementById("componentsBody");
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
+    function addComponentRow() {
+      const tbody = document.getElementById("componentsBody");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
           <td>
             <select class="comp-type">
               <option value="Quiz">Quiz</option>
@@ -561,358 +582,358 @@
             </button>
           </td>
         `;
-        tbody.appendChild(tr);
+      tbody.appendChild(tr);
 
-        const typeSelect = tr.querySelector(".comp-type");
-        const weightInput = tr.querySelector(".comp-weight");
-        if (typeSelect)
-          typeSelect.addEventListener("change", syncWeightsByType);
-        if (weightInput)
-          weightInput.addEventListener("input", syncWeightsByType);
+      const typeSelect = tr.querySelector(".comp-type");
+      const weightInput = tr.querySelector(".comp-weight");
+      if (typeSelect)
+        typeSelect.addEventListener("change", syncWeightsByType);
+      if (weightInput)
+        weightInput.addEventListener("input", syncWeightsByType);
 
-        syncWeightsByType();
-      }
+      syncWeightsByType();
+    }
 
-      const gradePointsByLetter = {
-        A: 4.0,
-        "A-": 3.7,
-        "B+": 3.3,
-        B: 3.0,
-        "B-": 2.7,
-        "C+": 2.3,
-        C: 2.0,
-        "C-": 1.7,
-        "D+": 1.3,
-        D: 1.0,
-        F: 0.0,
-      };
+    const gradePointsByLetter = {
+      A: 4.0,
+      "A-": 3.7,
+      "B+": 3.3,
+      B: 3.0,
+      "B-": 2.7,
+      "C+": 2.3,
+      C: 2.0,
+      "C-": 1.7,
+      "D+": 1.3,
+      D: 1.0,
+      F: 0.0,
+    };
 
-      function getLetterGrade(marks) {
-        if (marks >= 93)
-          return {
-            letter: "A",
-            point: gradePointsByLetter["A"],
-            desc: "Excellent",
-          };
-        if (marks >= 90)
-          return { letter: "A-", point: gradePointsByLetter["A-"], desc: "" };
-        if (marks >= 87)
-          return { letter: "B+", point: gradePointsByLetter["B+"], desc: "" };
-        if (marks >= 83)
-          return { letter: "B", point: gradePointsByLetter["B"], desc: "Good" };
-        if (marks >= 80)
-          return { letter: "B-", point: gradePointsByLetter["B-"], desc: "" };
-        if (marks >= 77)
-          return { letter: "C+", point: gradePointsByLetter["C+"], desc: "" };
-        if (marks >= 73)
-          return {
-            letter: "C",
-            point: gradePointsByLetter["C"],
-            desc: "Average",
-          };
-        if (marks >= 70)
-          return { letter: "C-", point: gradePointsByLetter["C-"], desc: "" };
-        if (marks >= 67)
-          return { letter: "D+", point: gradePointsByLetter["D+"], desc: "" };
-        if (marks >= 60)
-          return { letter: "D", point: gradePointsByLetter["D"], desc: "Poor" };
+    function getLetterGrade(marks) {
+      if (marks >= 93)
         return {
-          letter: "F",
-          point: gradePointsByLetter["F"],
-          desc: "Failure",
+          letter: "A",
+          point: gradePointsByLetter["A"],
+          desc: "Excellent",
         };
-      }
+      if (marks >= 90)
+        return { letter: "A-", point: gradePointsByLetter["A-"], desc: "" };
+      if (marks >= 87)
+        return { letter: "B+", point: gradePointsByLetter["B+"], desc: "" };
+      if (marks >= 83)
+        return { letter: "B", point: gradePointsByLetter["B"], desc: "Good" };
+      if (marks >= 80)
+        return { letter: "B-", point: gradePointsByLetter["B-"], desc: "" };
+      if (marks >= 77)
+        return { letter: "C+", point: gradePointsByLetter["C+"], desc: "" };
+      if (marks >= 73)
+        return {
+          letter: "C",
+          point: gradePointsByLetter["C"],
+          desc: "Average",
+        };
+      if (marks >= 70)
+        return { letter: "C-", point: gradePointsByLetter["C-"], desc: "" };
+      if (marks >= 67)
+        return { letter: "D+", point: gradePointsByLetter["D+"], desc: "" };
+      if (marks >= 60)
+        return { letter: "D", point: gradePointsByLetter["D"], desc: "Poor" };
+      return {
+        letter: "F",
+        point: gradePointsByLetter["F"],
+        desc: "Failure",
+      };
+    }
 
-      function getGradeClass(letter) {
-        if (letter.startsWith("A")) return "grade-A";
-        if (letter.startsWith("B")) return "grade-B";
-        if (letter.startsWith("C")) return "grade-C";
-        if (letter.startsWith("D")) return "grade-D";
-        return "grade-F";
-      }
+    function getGradeClass(letter) {
+      if (letter.startsWith("A")) return "grade-A";
+      if (letter.startsWith("B")) return "grade-B";
+      if (letter.startsWith("C")) return "grade-C";
+      if (letter.startsWith("D")) return "grade-D";
+      return "grade-F";
+    }
 
-      function getOneGradeCurveLetter(letter) {
-        const order = [
-          "F",
-          "D",
-          "D+",
-          "C-",
-          "C",
-          "C+",
-          "B-",
-          "B",
-          "B+",
-          "A-",
-          "A",
-        ];
-        const idx = order.indexOf(letter);
-        if (idx === -1) return letter;
-        return order[Math.min(idx + 1, order.length - 1)];
-      }
+    function getOneGradeCurveLetter(letter) {
+      const order = [
+        "F",
+        "D",
+        "D+",
+        "C-",
+        "C",
+        "C+",
+        "B-",
+        "B",
+        "B+",
+        "A-",
+        "A",
+      ];
+      const idx = order.indexOf(letter);
+      if (idx === -1) return letter;
+      return order[Math.min(idx + 1, order.length - 1)];
+    }
 
-      function calculateGrade() {
-        const rows = document.querySelectorAll("#componentsBody tr");
+    function calculateGrade() {
+      const rows = document.querySelectorAll("#componentsBody tr");
 
-        // Group rows by component type so multiple quizzes/mids share one weight
-        const groups = {};
+      // Group rows by component type so multiple quizzes/mids share one weight
+      const groups = {};
 
-        rows.forEach((row) => {
-          const type =
-            (row.querySelector(".comp-type").value || "").trim() || "Other";
-          const obtained =
-            parseFloat(row.querySelector(".comp-obtained").value) || 0;
-          const total = parseFloat(row.querySelector(".comp-total").value) || 0;
-          const weight =
-            parseFloat(row.querySelector(".comp-weight").value) || 0;
+      rows.forEach((row) => {
+        const type =
+          (row.querySelector(".comp-type").value || "").trim() || "Other";
+        const obtained =
+          parseFloat(row.querySelector(".comp-obtained").value) || 0;
+        const total = parseFloat(row.querySelector(".comp-total").value) || 0;
+        const weight =
+          parseFloat(row.querySelector(".comp-weight").value) || 0;
 
-          if (!groups[type]) {
-            groups[type] = {
-              marks: [],
-              percentages: [],
-              weight: 0,
-            };
-          }
-
-          if (total > 0) {
-            const percentage = (obtained / total) * 100;
-            groups[type].percentages.push(percentage);
-            groups[type].marks.push({ obtained, total });
-          }
-
-          if (weight > 0) {
-            // Use the maximum weight entered for this component type
-            groups[type].weight = Math.max(groups[type].weight, weight);
-          }
-        });
-
-        let totalScore = 0;
-        let totalWeight = 0;
-        const summaryData = [];
-
-        Object.keys(groups).forEach((type) => {
-          const group = groups[type];
-          if (group.percentages.length === 0 || group.weight <= 0) return;
-
-          const sumPct = group.percentages.reduce((a, b) => a + b, 0);
-          const avgPct = sumPct / group.percentages.length;
-          const contribution = (avgPct * group.weight) / 100;
-
-          totalScore += contribution;
-          totalWeight += group.weight;
-
-          const marksUsed = group.marks
-            .map((m) => `${m.obtained.toFixed(1)}/${m.total.toFixed(1)}`)
-            .join(", ");
-
-          summaryData.push({
-            component: `${type}`,
-            marksUsed: marksUsed || "-",
-            weight: group.weight.toFixed(1),
-            contribution: contribution.toFixed(2),
-          });
-        });
-
-        if (summaryData.length === 0) {
-          alert(
-            "Please add at least one component with total, obtained and weight."
-          );
-          return;
+        if (!groups[type]) {
+          groups[type] = {
+            marks: [],
+            percentages: [],
+            weight: 0,
+          };
         }
 
-        // Cap at 100
-        totalScore = Math.min(totalScore, 100);
+        if (total > 0) {
+          const percentage = (obtained / total) * 100;
+          groups[type].percentages.push(percentage);
+          groups[type].marks.push({ obtained, total });
+        }
 
-        // Curved score: 10√x (capped at 100)
-        const curvedScore = Math.min(10 * Math.sqrt(totalScore), 100);
+        if (weight > 0) {
+          // Use the maximum weight entered for this component type
+          groups[type].weight = Math.max(groups[type].weight, weight);
+        }
+      });
 
-        const rawGradeInfo = getLetterGrade(totalScore);
-        const curvedGradeInfo = getLetterGrade(curvedScore);
+      let totalScore = 0;
+      let totalWeight = 0;
+      const summaryData = [];
 
-        const rawClass = getGradeClass(rawGradeInfo.letter);
-        const curvedClass = getGradeClass(curvedGradeInfo.letter);
+      Object.keys(groups).forEach((type) => {
+        const group = groups[type];
+        if (group.percentages.length === 0 || group.weight <= 0) return;
 
-        // One-grade-up curve applied on top of the RAW grade
-        const oneCurveLetter = getOneGradeCurveLetter(rawGradeInfo.letter);
-        const oneCurvePoint =
-          gradePointsByLetter[oneCurveLetter] ?? rawGradeInfo.point;
-        const oneCurveClass = getGradeClass(oneCurveLetter);
+        const sumPct = group.percentages.reduce((a, b) => a + b, 0);
+        const avgPct = sumPct / group.percentages.length;
+        const contribution = (avgPct * group.weight) / 100;
 
-        document.getElementById("totalMarks").textContent =
-          totalScore.toFixed(2);
-        document.getElementById("curvedMarks").textContent =
-          curvedScore.toFixed(2);
+        totalScore += contribution;
+        totalWeight += group.weight;
 
-        const rawGradeEl = document.getElementById("rawGrade");
-        rawGradeEl.textContent = `${
-          rawGradeInfo.letter
+        const marksUsed = group.marks
+          .map((m) => `${m.obtained.toFixed(1)}/${m.total.toFixed(1)}`)
+          .join(", ");
+
+        summaryData.push({
+          component: `${type}`,
+          marksUsed: marksUsed || "-",
+          weight: group.weight.toFixed(1),
+          contribution: contribution.toFixed(2),
+        });
+      });
+
+      if (summaryData.length === 0) {
+        alert(
+          "Please add at least one component with total, obtained and weight."
+        );
+        return;
+      }
+
+      // Cap at 100
+      totalScore = Math.min(totalScore, 100);
+
+      // Curved score: 10rootx (capped at 100)
+      const curvedScore = Math.min(10 * Math.sqrt(totalScore), 100);
+
+      const rawGradeInfo = getLetterGrade(totalScore);
+      const curvedGradeInfo = getLetterGrade(curvedScore);
+
+      const rawClass = getGradeClass(rawGradeInfo.letter);
+      const curvedClass = getGradeClass(curvedGradeInfo.letter);
+
+      // One-grade-up curve applied on top of the RAW grade
+      const oneCurveLetter = getOneGradeCurveLetter(rawGradeInfo.letter);
+      const oneCurvePoint =
+        gradePointsByLetter[oneCurveLetter] ?? rawGradeInfo.point;
+      const oneCurveClass = getGradeClass(oneCurveLetter);
+
+      document.getElementById("totalMarks").textContent =
+        totalScore.toFixed(2);
+      document.getElementById("curvedMarks").textContent =
+        curvedScore.toFixed(2);
+
+      const rawGradeEl = document.getElementById("rawGrade");
+      rawGradeEl.textContent = `${rawGradeInfo.letter
         } (${rawGradeInfo.point.toFixed(1)})`;
-        rawGradeEl.className = rawClass;
+      rawGradeEl.className = rawClass;
 
-        const curvedGradeEl = document.getElementById("curvedGrade");
-        curvedGradeEl.textContent = `${
-          curvedGradeInfo.letter
+      const curvedGradeEl = document.getElementById("curvedGrade");
+      curvedGradeEl.textContent = `${curvedGradeInfo.letter
         } (${curvedGradeInfo.point.toFixed(1)})`;
-        curvedGradeEl.className = curvedClass;
+      curvedGradeEl.className = curvedClass;
 
-        const oneCurveEl = document.getElementById("oneGradeCurve");
-        oneCurveEl.textContent = `${oneCurveLetter} (${oneCurvePoint.toFixed(
-          1
-        )})`;
-        oneCurveEl.className = oneCurveClass;
+      const oneCurveEl = document.getElementById("oneGradeCurve");
+      oneCurveEl.textContent = `${oneCurveLetter} (${oneCurvePoint.toFixed(
+        1
+      )})`;
+      oneCurveEl.className = oneCurveClass;
 
-        const summaryBody = document.getElementById("summaryBody");
-        summaryBody.innerHTML = "";
-        summaryData.forEach((item) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
+      const summaryBody = document.getElementById("summaryBody");
+      summaryBody.innerHTML = "";
+      summaryData.forEach((item) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
             <td>${item.component}</td>
             <td>${item.marksUsed}</td>
             <td>${item.weight}%</td>
             <td>${item.contribution}</td>
           `;
-          summaryBody.appendChild(tr);
-        });
+        summaryBody.appendChild(tr);
+      });
 
-        const totalRow = document.createElement("tr");
-        totalRow.style.fontWeight = "600";
-        totalRow.style.borderTop = "2px solid rgba(255, 255, 255, 0.15)";
-        totalRow.innerHTML = `
+      const totalRow = document.createElement("tr");
+      totalRow.style.fontWeight = "600";
+      totalRow.style.borderTop = "2px solid var(--border-color)";
+      totalRow.innerHTML = `
           <td>Total</td>
           <td>-</td>
           <td>${totalWeight.toFixed(1)}%</td>
           <td>${totalScore.toFixed(2)}</td>
         `;
-        summaryBody.appendChild(totalRow);
+      summaryBody.appendChild(totalRow);
 
-        document.getElementById("resultsPanel").style.display = "flex";
-        document.getElementById("summarySection").style.display = "block";
-        document
-          .getElementById("resultsPanel")
-          .scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
+      document.getElementById("resultsPanel").style.display = "flex";
+      document.getElementById("summarySection").style.display = "block";
+      document
+        .getElementById("resultsPanel")
+        .scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
 
-      window.addEventListener("DOMContentLoaded", () => {
-        addComponentRow();
-        addComponentRow();
+    window.addEventListener("DOMContentLoaded", () => {
+      addComponentRow();
+      addComponentRow();
+    });
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Header with website credit
+      doc.setFontSize(10);
+      doc.setFont(undefined, "normal");
+      doc.setTextColor(100);
+      doc.text("Generated using RDS2 But From Future", 105, 12, {
+        align: "center",
+      });
+      doc.setTextColor(0, 0, 255);
+      doc.textWithLink(
+        "https://shadhin-f.github.io/rds2-but-from-future/",
+        105,
+        17,
+        {
+          align: "center",
+          url: "https://shadhin-f.github.io/rds2-but-from-future/",
+        }
+      );
+      doc.setTextColor(0);
+
+      // Title
+      doc.setFontSize(18);
+      doc.setFont(undefined, "bold");
+      doc.text("Course Grade Summary", 105, 28, { align: "center" });
+
+      doc.setFontSize(10);
+      doc.setFont(undefined, "normal");
+      doc.text("NSU Grade Calculator Report", 105, 36, { align: "center" });
+      doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 42, {
+        align: "center",
       });
 
-      function downloadPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+      // Grade Results Section
+      doc.setFontSize(14);
+      doc.setFont(undefined, "bold");
+      doc.text("Final Grades", 20, 58);
 
-        // Header with website credit
-        doc.setFontSize(10);
-        doc.setFont(undefined, "normal");
-        doc.setTextColor(100);
-        doc.text("Generated using RDS2 But From Future", 105, 12, {
-          align: "center",
-        });
-        doc.setTextColor(0, 0, 255);
-        doc.textWithLink(
-          "https://shadhin-f.github.io/rds2-but-from-future/",
-          105,
-          17,
-          {
-            align: "center",
-            url: "https://shadhin-f.github.io/rds2-but-from-future/",
+      doc.setFontSize(11);
+      doc.setFont(undefined, "normal");
+      const rawMarks = document.getElementById("totalMarks").textContent;
+      const rawGrade = document.getElementById("rawGrade").textContent;
+      const curvedMarks = document.getElementById("curvedMarks").textContent;
+      const curvedGrade = document.getElementById("curvedGrade").textContent;
+      const oneGradeCurve =
+        document.getElementById("oneGradeCurve").textContent;
+
+      let yPos = 68;
+      doc.text(`Raw Marks: ${rawMarks}`, 25, yPos);
+      yPos += 8;
+      doc.text(`Raw Grade: ${rawGrade}`, 25, yPos);
+      yPos += 8;
+      doc.text(`Curved Marks (10√X): ${curvedMarks}`, 25, yPos);
+      yPos += 8;
+      doc.text(`Curved Grade (10√X): ${curvedGrade}`, 25, yPos);
+      yPos += 8;
+      doc.text(`One Grade Curve: ${oneGradeCurve}`, 25, yPos);
+      yPos += 15;
+
+      // Mark Distribution Table
+      doc.setFontSize(14);
+      doc.setFont(undefined, "bold");
+      doc.text("Mark Distribution Summary", 20, yPos);
+      yPos += 10;
+
+      // Table headers
+      doc.setFontSize(10);
+      doc.setFont(undefined, "bold");
+      doc.text("Component", 20, yPos);
+      doc.text("Marks Used", 70, yPos);
+      doc.text("Weight (%)", 120, yPos);
+      doc.text("Contribution", 160, yPos);
+      yPos += 2;
+      doc.line(20, yPos, 190, yPos);
+      yPos += 6;
+
+      // Table rows
+      doc.setFont(undefined, "normal");
+      const summaryRows = document.querySelectorAll("#summaryBody tr");
+      summaryRows.forEach((row) => {
+        const cells = row.querySelectorAll("td");
+        if (cells.length >= 4) {
+          doc.text(cells[0].textContent.trim(), 20, yPos);
+          doc.text(cells[1].textContent.trim(), 70, yPos);
+          doc.text(cells[2].textContent.trim(), 120, yPos);
+          doc.text(cells[3].textContent.trim(), 160, yPos);
+          yPos += 7;
+
+          // Add new page if needed
+          if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
           }
-        );
-        doc.setTextColor(0);
-
-        // Title
-        doc.setFontSize(18);
-        doc.setFont(undefined, "bold");
-        doc.text("Course Grade Summary", 105, 28, { align: "center" });
-
-        doc.setFontSize(10);
-        doc.setFont(undefined, "normal");
-        doc.text("NSU Grade Calculator Report", 105, 36, { align: "center" });
-        doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 42, {
-          align: "center",
-        });
-
-        // Grade Results Section
-        doc.setFontSize(14);
-        doc.setFont(undefined, "bold");
-        doc.text("Final Grades", 20, 58);
-
-        doc.setFontSize(11);
-        doc.setFont(undefined, "normal");
-        const rawMarks = document.getElementById("totalMarks").textContent;
-        const rawGrade = document.getElementById("rawGrade").textContent;
-        const curvedMarks = document.getElementById("curvedMarks").textContent;
-        const curvedGrade = document.getElementById("curvedGrade").textContent;
-        const oneGradeCurve =
-          document.getElementById("oneGradeCurve").textContent;
-
-        let yPos = 68;
-        doc.text(`Raw Marks: ${rawMarks}`, 25, yPos);
-        yPos += 8;
-        doc.text(`Raw Grade: ${rawGrade}`, 25, yPos);
-        yPos += 8;
-        doc.text(`Curved Marks (10√X): ${curvedMarks}`, 25, yPos);
-        yPos += 8;
-        doc.text(`Curved Grade (10√X): ${curvedGrade}`, 25, yPos);
-        yPos += 8;
-        doc.text(`One Grade Curve: ${oneGradeCurve}`, 25, yPos);
-        yPos += 15;
-
-        // Mark Distribution Table
-        doc.setFontSize(14);
-        doc.setFont(undefined, "bold");
-        doc.text("Mark Distribution Summary", 20, yPos);
-        yPos += 10;
-
-        // Table headers
-        doc.setFontSize(10);
-        doc.setFont(undefined, "bold");
-        doc.text("Component", 20, yPos);
-        doc.text("Marks Used", 70, yPos);
-        doc.text("Weight (%)", 120, yPos);
-        doc.text("Contribution", 160, yPos);
-        yPos += 2;
-        doc.line(20, yPos, 190, yPos);
-        yPos += 6;
-
-        // Table rows
-        doc.setFont(undefined, "normal");
-        const summaryRows = document.querySelectorAll("#summaryBody tr");
-        summaryRows.forEach((row) => {
-          const cells = row.querySelectorAll("td");
-          if (cells.length >= 4) {
-            doc.text(cells[0].textContent.trim(), 20, yPos);
-            doc.text(cells[1].textContent.trim(), 70, yPos);
-            doc.text(cells[2].textContent.trim(), 120, yPos);
-            doc.text(cells[3].textContent.trim(), 160, yPos);
-            yPos += 7;
-
-            // Add new page if needed
-            if (yPos > 270) {
-              doc.addPage();
-              yPos = 20;
-            }
-          }
-        });
-
-        // Footer
-        const pageCount = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
-          doc.setPage(i);
-          doc.setFontSize(8);
-          doc.setTextColor(128);
-          doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: "center" });
-          doc.text("Generated by RDS2 Grade Calculator", 105, 285, {
-            align: "center",
-          });
         }
+      });
 
-        // Download
-        doc.save("NSU_Grade_Summary.pdf");
+      // Footer
+      const pageCount = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(128);
+        doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: "center" });
+        doc.text("Generated by RDS2 Grade Calculator", 105, 285, {
+          align: "center",
+        });
       }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
-    <script src="buttons.js"></script>
-    <script src="typewriter.js"></script>
-  </body>
+
+      // Download
+      doc.save("NSU_Grade_Summary.pdf");
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+  <script src="buttons.js"></script>
+  <script src="theme.js"></script>
+  <script src="typewriter.js"></script>
+</body>
+
 </html>

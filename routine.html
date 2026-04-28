@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <script
@@ -493,6 +493,7 @@
     </style>
   </head>
   <body>
+  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -501,7 +502,7 @@
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
+          <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html" class="active">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -509,20 +510,20 @@
           <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="new-feature-link">Retake Calculator 🔥</a>
+          <a href="retake.html" class="new-feature-link">Retake Calculator</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">Dev</a>
+          <a href="about.html">About</a>
         </nav>
       </header>
 
       <main>
         <div class="announcement-bar">
-          <span>🎓 Join telegram group to stay updated</span>
+          <span>Join telegram group to stay updated</span>
           <a
             href="https://t.me/nsu_advising_helper_bot_channel"
             target="_blank"
             class="view-extension-btn"
-            >⚡ Join now</a
+            >Join now</a
           >
         </div>
         <div class="announcement-bar">
@@ -901,7 +902,7 @@
                     ${c.room ? `<span class="room">${c.room}</span>` : ""}
                     <button class="remove-btn" data-idx="${
                       c._idx
-                    }" title="Remove">✕</button>
+                    }" title="Remove">âœ•</button>
                   </span>
                 `,
                 )
@@ -951,8 +952,8 @@
         });
 
         conflictEl.textContent = conflicts
-          ? `⚠️ ${conflicts} time conflict${conflicts > 1 ? "s" : ""}`
-          : "✓ No conflicts";
+          ? `⚠️ ${conflicts} time conflict${conflicts > 1 ? "s" : ""}`
+          : "âœ“ No conflicts";
         conflictEl.style.color = conflicts ? "#f87171" : "#4ade80";
       }
 
@@ -1231,6 +1232,7 @@
         initRoutinePage();
       }
     </script>
+    <script src="theme.js"></script>
     <script src="typewriter.js"></script>
   </body>
 </html>

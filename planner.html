@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <script
@@ -203,6 +203,7 @@
     </style>
   </head>
   <body>
+  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -211,7 +212,7 @@
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
+          <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html" class="active">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -221,7 +222,7 @@
           <a href="cgpa.html">CGPA Calculator</a>
           <a href="retake.html" class="new-feature-link">Retake Calculator</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">About Dev</a>
+          <a href="about.html">About</a>
         </nav>
       </header>
       <div class="credit-counter">
@@ -695,6 +696,7 @@
         updateCompletedSemesters();
       });
     </script>
+    <script src="theme.js"></script>
     <script src="typewriter.js"></script>
   </body>
 </html>

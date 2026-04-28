@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <script
@@ -56,7 +56,7 @@
       }
       .calc-card {
         background: var(--surface-color);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border-color);
         border-radius: 18px;
         padding: 1.75rem 1.5rem;
         box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
@@ -78,9 +78,9 @@
         max-width: 100%;
         box-sizing: border-box;
         background: var(--surface-color);
-        border: 1px solid rgba(148, 163, 184, 0.35);
+        border: 1px solid var(--border-color);
         border-radius: 10px;
-        color: #f8fafc;
+        color: var(--text-color);
         padding: 0.85rem 1rem;
         font-size: 1rem;
       }
@@ -98,7 +98,7 @@
       }
       table.cgpa-table th,
       table.cgpa-table td {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid var(--border-color);
         vertical-align: middle;
       }
       table.cgpa-table th {
@@ -139,7 +139,7 @@
         height: 6px;
       }
       .courses-wrapper::-webkit-scrollbar-thumb {
-        background: rgba(148, 163, 184, 0.3);
+        background: var(--border-color);
         border-radius: 3px;
       }
       .actions-row {
@@ -192,7 +192,7 @@
         border-radius: 12px;
         padding: 1.2rem 1.6rem;
         background: var(--surface-color);
-        border: 1px solid rgba(148, 163, 184, 0.2);
+        border: 1px solid var(--border-color);
       }
       .result-box.highlight {
         background: linear-gradient(135deg, #22c55e, #16a34a);
@@ -205,7 +205,7 @@
         text-transform: uppercase;
         letter-spacing: 0.08em;
         margin-bottom: 0.6rem;
-        color: rgba(248, 250, 252, 0.8);
+        color: var(--text-muted);
       }
       .result-box h3 {
         margin: 0;
@@ -229,7 +229,8 @@
         border-radius: 999px;
         width: 40px;
         height: 40px;
-        background: rgba(248, 250, 252, 0.08);
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
         color: #f87171;
         cursor: pointer;
         display: inline-flex;
@@ -275,8 +276,8 @@
       }
 
       .stat-card {
-        background: rgba(15, 23, 42, 0.85);
-        border: 1px solid rgba(148, 163, 184, 0.2);
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
         border-radius: 12px;
         padding: 1rem;
         text-align: center;
@@ -332,7 +333,7 @@
       .scenario-section {
         margin-top: 0.75rem;
         padding-top: 0.75rem;
-        border-top: 1px solid rgba(148, 163, 184, 0.15);
+        border-top: 1px solid var(--border-color);
         font-size: 0.8rem;
         text-align: left;
       }
@@ -340,7 +341,7 @@
       .scenario-item {
         margin-bottom: 0.5rem;
         padding: 0.4rem;
-        background: rgba(15, 23, 42, 0.5);
+        background: var(--bg-color);
         border-radius: 6px;
       }
 
@@ -367,6 +368,7 @@
     </style>
   </head>
   <body>
+  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -375,7 +377,7 @@
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes 🚌</a>
+          <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -385,18 +387,18 @@
           <a href="cgpa.html">CGPA Calculator</a>
           <a href="retake.html" class="active new-feature-link">Retake Calculator</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">About Dev</a>
+          <a href="about.html">About</a>
         </nav>
       </header>
 
       <main>
         <div class="announcement-bar">
-          <span>🎓 Join telegram group to stay updated</span>
+          <span>Join telegram group to stay updated</span>
           <a
             href="https://t.me/nsu_advising_helper_bot_channel"
             target="_blank"
             class="view-extension-btn"
-            >⚡ Join now</a
+            >Join now</a
           >
         </div>
         <section class="calculator-hero">
@@ -560,15 +562,15 @@
                 "
               >
                 <div class="scenario-item">
-                  <div class="scenario-title">B- → A Scenario</div>
+                  <div class="scenario-title">B- â†’ A Scenario</div>
                   <div class="scenario-details" id="targetScenarioBMinus"></div>
                 </div>
                 <div class="scenario-item">
-                  <div class="scenario-title">C → A Scenario</div>
+                  <div class="scenario-title">C â†’ A Scenario</div>
                   <div class="scenario-details" id="targetScenarioC"></div>
                 </div>
                 <div class="scenario-item">
-                  <div class="scenario-title">D → A Scenario</div>
+                  <div class="scenario-title">D â†’ A Scenario</div>
                   <div class="scenario-details" id="targetScenarioD"></div>
                 </div>
               </div>
@@ -696,15 +698,15 @@
                 "
               >
                 <div class="scenario-item">
-                  <div class="scenario-title">B- → A Scenario</div>
+                  <div class="scenario-title">B- â†’ A Scenario</div>
                   <div class="scenario-details" id="gradScenarioBMinus"></div>
                 </div>
                 <div class="scenario-item">
-                  <div class="scenario-title">C → A Scenario</div>
+                  <div class="scenario-title">C â†’ A Scenario</div>
                   <div class="scenario-details" id="gradScenarioC"></div>
                 </div>
                 <div class="scenario-item">
-                  <div class="scenario-title">D → A Scenario</div>
+                  <div class="scenario-title">D â†’ A Scenario</div>
                   <div class="scenario-details" id="gradScenarioD"></div>
                 </div>
               </div>
@@ -960,7 +962,7 @@
             card.innerHTML = `
               <span class="target-label">Target CGPA</span>
               <span class="target-cgpa">${target.toFixed(1)}</span>
-              <span class="retake-count">✓ Reached</span>
+              <span class="retake-count">âœ“ Reached</span>
             `;
           } else {
             // Calculate for three scenarios
@@ -999,24 +1001,24 @@
               <span class="target-cgpa">${target.toFixed(1)}</span>
               <div class="scenario-section">
                 <div class="scenario-item">
-                  <div class="scenario-title">B- → A Scenario</div>
+                  <div class="scenario-title">B- â†’ A Scenario</div>
                   <div class="scenario-details">
                     <strong>${retakesBMinus}</strong> retakes (${creditsBMinus} cr)<br>
-                    ৳${costBMinus6500.toLocaleString()} / ৳${costBMinus8000.toLocaleString()}
+                    à§³${costBMinus6500.toLocaleString()} / à§³${costBMinus8000.toLocaleString()}
                   </div>
                 </div>
                 <div class="scenario-item">
-                  <div class="scenario-title">C → A Scenario</div>
+                  <div class="scenario-title">C â†’ A Scenario</div>
                   <div class="scenario-details">
                     <strong>${retakesC}</strong> retakes (${creditsC} cr)<br>
-                    ৳${costC6500.toLocaleString()} / ৳${costC8000.toLocaleString()}
+                    à§³${costC6500.toLocaleString()} / à§³${costC8000.toLocaleString()}
                   </div>
                 </div>
                 <div class="scenario-item">
-                  <div class="scenario-title">D → A Scenario</div>
+                  <div class="scenario-title">D â†’ A Scenario</div>
                   <div class="scenario-details">
                     <strong>${retakesD}</strong> retakes (${creditsD} cr)<br>
-                    ৳${costD6500.toLocaleString()} / ৳${costD8000.toLocaleString()}
+                    à§³${costD6500.toLocaleString()} / à§³${costD8000.toLocaleString()}
                   </div>
                 </div>
               </div>
@@ -1062,7 +1064,7 @@
         }
 
         if (targetCurrentCgpa >= targetCgpa) {
-          targetResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(
+          targetResultText.innerHTML = `ðŸŽ‰ You have already reached your target CGPA of <strong>${targetCgpa.toFixed(
             2
           )}</strong>!`;
           targetResultDiv.style.background =
@@ -1105,7 +1107,7 @@
         const costD6500 = creditsD * 6500;
         const costD8000 = creditsD * 8000;
 
-        targetResultText.innerHTML = `📚 To reach a CGPA of <strong>${targetCgpa.toFixed(
+        targetResultText.innerHTML = `ðŸ“š To reach a CGPA of <strong>${targetCgpa.toFixed(
           2
         )}</strong>, you need:`;
         targetResultDiv.style.background = "rgba(109, 40, 217, 0.1)";
@@ -1113,15 +1115,15 @@
 
         document.getElementById("targetScenarioBMinus").innerHTML = `
           <strong>${retakesBMinus}</strong> retakes (${creditsBMinus} cr)<br>
-          ৳${costBMinus6500.toLocaleString()} / ৳${costBMinus8000.toLocaleString()}
+          à§³${costBMinus6500.toLocaleString()} / à§³${costBMinus8000.toLocaleString()}
         `;
         document.getElementById("targetScenarioC").innerHTML = `
           <strong>${retakesC}</strong> retakes (${creditsC} cr)<br>
-          ৳${costC6500.toLocaleString()} / ৳${costC8000.toLocaleString()}
+          à§³${costC6500.toLocaleString()} / à§³${costC8000.toLocaleString()}
         `;
         document.getElementById("targetScenarioD").innerHTML = `
           <strong>${retakesD}</strong> retakes (${creditsD} cr)<br>
-          ৳${costD6500.toLocaleString()} / ৳${costD8000.toLocaleString()}
+          à§³${costD6500.toLocaleString()} / à§³${costD8000.toLocaleString()}
         `;
 
         targetScenariosDiv.style.display = "block";
@@ -1184,7 +1186,7 @@
             const minAvgGrade =
               (currentQualityPoints - maxDropQP) / totalCredits;
 
-            gradResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(
+            gradResultText.innerHTML = `ðŸŽ‰ You have already reached your target CGPA of <strong>${targetCgpa.toFixed(
               2
             )}</strong>!<br>
               You can graduate by completing the remaining <strong>${remainingCredits}</strong> credits with any passing grades (even all D's will keep you at <strong>${targetCgpa.toFixed(
@@ -1238,25 +1240,25 @@
 
             if (aNeeded <= coursesNeeded && aNeeded > 0) {
               const remaining = coursesNeeded - aNeeded;
-              gradeBreakdown += `<div>• <strong>${aNeeded}</strong> A's${
+              gradeBreakdown += `<div>· <strong>${aNeeded}</strong> A's${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
             if (bPlusNeeded <= coursesNeeded && bPlusNeeded > 0) {
               const remaining = coursesNeeded - bPlusNeeded;
-              gradeBreakdown += `<div>• <strong>${bPlusNeeded}</strong> B+'s${
+              gradeBreakdown += `<div>· <strong>${bPlusNeeded}</strong> B+'s${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
             if (bNeeded <= coursesNeeded && bNeeded > 0) {
               const remaining = coursesNeeded - bNeeded;
-              gradeBreakdown += `<div>• <strong>${bNeeded}</strong> B's${
+              gradeBreakdown += `<div>· <strong>${bNeeded}</strong> B's${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
             if (bMinusNeeded <= coursesNeeded && bMinusNeeded > 0) {
               const remaining = coursesNeeded - bMinusNeeded;
-              gradeBreakdown += `<div>• <strong>${bMinusNeeded}</strong> B-'s${
+              gradeBreakdown += `<div>· <strong>${bMinusNeeded}</strong> B-'s${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
@@ -1264,7 +1266,7 @@
             gradeBreakdown += `</div></div>`;
           }
 
-          gradResultText.innerHTML = `✅ Current CGPA: <strong>${currentCgpa.toFixed(
+          gradResultText.innerHTML = `âœ… Current CGPA: <strong>${currentCgpa.toFixed(
             2
           )}</strong> (Target: <strong>${targetCgpa.toFixed(2)}</strong>)<br>
             To <strong>maintain</strong> your target CGPA, complete the remaining <strong>${remainingCredits}</strong> credits with an average of at least <strong>${avgGradeNeeded.toFixed(
@@ -1280,7 +1282,7 @@
 
         if (bestPossibleCGPA < targetCgpa) {
           // Cannot reach target even with all A's - need retakes
-          gradResultText.innerHTML = `⚠️ Cannot reach target CGPA of <strong>${targetCgpa.toFixed(
+          gradResultText.innerHTML = `⚠️ Cannot reach target CGPA of <strong>${targetCgpa.toFixed(
             2
           )}</strong> even with all A's in remaining courses.<br>
             Best possible: <strong>${bestPossibleCGPA.toFixed(2)}</strong><br>
@@ -1321,15 +1323,15 @@
 
           document.getElementById("gradScenarioBMinus").innerHTML = `
             <strong>${retakesBMinus}</strong> retakes (${creditsBMinus} cr)<br>
-            ৳${costBMinus6500.toLocaleString()} / ৳${costBMinus8000.toLocaleString()}
+            à§³${costBMinus6500.toLocaleString()} / à§³${costBMinus8000.toLocaleString()}
           `;
           document.getElementById("gradScenarioC").innerHTML = `
             <strong>${retakesC}</strong> retakes (${creditsC} cr)<br>
-            ৳${costC6500.toLocaleString()} / ৳${costC8000.toLocaleString()}
+            à§³${costC6500.toLocaleString()} / à§³${costC8000.toLocaleString()}
           `;
           document.getElementById("gradScenarioD").innerHTML = `
             <strong>${retakesD}</strong> retakes (${creditsD} cr)<br>
-            ৳${costD6500.toLocaleString()} / ৳${costD8000.toLocaleString()}
+            à§³${costD6500.toLocaleString()} / à§³${costD8000.toLocaleString()}
           `;
 
           gradScenariosDiv.style.display = "block";
@@ -1377,25 +1379,25 @@
 
             if (aNeeded <= coursesNeeded && aNeeded > 0) {
               const remaining = coursesNeeded - aNeeded;
-              gradeBreakdown += `<div>• <strong>${aNeeded}</strong> A's${
+              gradeBreakdown += `<div>· <strong>${aNeeded}</strong> A's${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
             if (bPlusNeeded <= coursesNeeded && bPlusNeeded > 0) {
               const remaining = coursesNeeded - bPlusNeeded;
-              gradeBreakdown += `<div>• <strong>${bPlusNeeded}</strong> B+'s${
+              gradeBreakdown += `<div>· <strong>${bPlusNeeded}</strong> B+'s${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
             if (bNeeded <= coursesNeeded && bNeeded > 0) {
               const remaining = coursesNeeded - bNeeded;
-              gradeBreakdown += `<div>• <strong>${bNeeded}</strong> B's${
+              gradeBreakdown += `<div>· <strong>${bNeeded}</strong> B's${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
             if (bMinusNeeded <= coursesNeeded && bMinusNeeded > 0) {
               const remaining = coursesNeeded - bMinusNeeded;
-              gradeBreakdown += `<div>• <strong>${bMinusNeeded}</strong> B-'s${
+              gradeBreakdown += `<div>· <strong>${bMinusNeeded}</strong> B-'s${
                 remaining > 0 ? ` + ${remaining} course(s) with any grade` : ""
               }</div>`;
             }
@@ -1403,7 +1405,7 @@
             gradeBreakdown += `</div></div>`;
           }
 
-          gradResultText.innerHTML = `✅ You can graduate with your target CGPA of <strong>${targetCgpa.toFixed(
+          gradResultText.innerHTML = `âœ… You can graduate with your target CGPA of <strong>${targetCgpa.toFixed(
             2
           )}</strong> without retakes!<br>
             Complete the remaining <strong>${remainingCredits}</strong> credits with an average of <strong>${avgGradeNeeded.toFixed(
@@ -1435,6 +1437,7 @@
     </script>
     <script src="script.js"></script>
     <script src="buttons.js"></script>
+    <script src="theme.js"></script>
     <script src="typewriter.js"></script>
   </body>
 </html>
