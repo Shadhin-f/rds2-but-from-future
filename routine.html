@@ -902,7 +902,7 @@
                     ${c.room ? `<span class="room">${c.room}</span>` : ""}
                     <button class="remove-btn" data-idx="${
                       c._idx
-                    }" title="Remove">âœ•</button>
+                    }" title="Remove">✕</button>
                   </span>
                 `,
                 )
@@ -953,7 +953,7 @@
 
         conflictEl.textContent = conflicts
           ? `⚠️ ${conflicts} time conflict${conflicts > 1 ? "s" : ""}`
-          : "âœ“ No conflicts";
+          : "✓ No conflicts";
         conflictEl.style.color = conflicts ? "#f87171" : "#4ade80";
       }
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dhaka Bus Routes</title>
+    <title>NSU Bus Route Finder</title>
     <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
     <link rel="stylesheet" href="styles.css" />
     <link
@@ -25,11 +25,16 @@
 
       /* Search Panel */
       .route-search-container {
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
+        background: rgba(30, 41, 59, 0.65);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid rgba(139, 92, 246, 0.18);
+        border-radius: 20px;
         padding: 32px 36px 28px;
         margin-bottom: 36px;
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.25),
+          0 0 0 1px rgba(255, 255, 255, 0.04) inset;
       }
 
       .search-title {
@@ -43,10 +48,10 @@
       }
 
       .search-title i {
-        color: var(--text-muted);
+        color: #a78bfa;
       }
 
-      /* Input row: From â”€â”€ â‡„ â”€â”€ To */
+      /* Input row: From ── ⇄ ── To */
       .route-inputs-row {
         display: flex;
         align-items: flex-end;
@@ -80,33 +85,35 @@
         width: 100%;
         box-sizing: border-box;
         padding: 13px 16px;
-        background: var(--bg-color);
-        border: 1px solid var(--border-color);
+        background: rgba(15, 23, 42, 0.55);
+        border: 1px solid rgba(71, 85, 105, 0.45);
         border-radius: 12px;
         color: var(--text-color);
         font-size: 1rem;
-        transition: all 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .input-group input::placeholder {
-        color: var(--text-muted);
+        color: rgba(148, 163, 184, 0.55);
       }
 
       .input-group input:hover {
-        border-color: var(--text-muted);
+        border-color: rgba(139, 92, 246, 0.35);
+        background: rgba(15, 23, 42, 0.65);
       }
 
       .input-group input:focus {
         outline: none;
-        border-color: var(--text-color);
-        box-shadow: none;
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+        background: rgba(15, 23, 42, 0.8);
       }
 
       /* Swap button, vertically centred next to the inputs */
       .swap-btn {
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        color: var(--text-muted);
+        background: rgba(139, 92, 246, 0.08);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+        color: #a78bfa;
         width: 42px;
         height: 42px;
         min-width: 42px;
@@ -115,19 +122,19 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.2s ease;
-        margin-bottom: 1px;
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 1px; /* align visually with input bottoms */
         flex-shrink: 0;
       }
 
       .swap-btn:hover {
-        background: var(--border-color);
-        border-color: var(--text-muted);
+        background: rgba(139, 92, 246, 0.22);
+        border-color: rgba(139, 92, 246, 0.5);
         transform: rotate(180deg);
-        color: var(--text-color);
+        color: #fff;
       }
 
-      /* Find Route button â€“ full width below inputs */
+      /* Find Route button – full width below inputs */
       .search-btn {
         display: flex;
         align-items: center;
@@ -135,33 +142,44 @@
         gap: 8px;
         width: 100%;
         margin-top: 18px;
-        background: var(--text-color);
-        color: var(--bg-color);
+        background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+        color: white;
         border: none;
         padding: 14px 28px;
-        border-radius: 12px;
+        border-radius: 14px;
         font-weight: 600;
         font-size: 1.05rem;
         cursor: pointer;
-        transition: opacity 0.2s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 14px rgba(109, 40, 217, 0.3);
         letter-spacing: 0.02em;
       }
 
       .search-btn:hover {
-        opacity: 0.85;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(109, 40, 217, 0.45);
+        filter: brightness(1.08);
       }
 
+      .search-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Autocomplete Dropdown */
       .autocomplete-items {
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         z-index: 99;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
+        background: rgba(30, 41, 59, 0.96);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(139, 92, 246, 0.25);
         border-radius: 0 0 12px 12px;
         max-height: 240px;
         overflow-y: auto;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
         margin-top: 4px;
         display: none;
       }
@@ -171,14 +189,14 @@
       }
 
       .autocomplete-items::-webkit-scrollbar-thumb {
-        background: var(--border-color);
+        background: rgba(139, 92, 246, 0.3);
         border-radius: 4px;
       }
 
       .autocomplete-item {
         padding: 10px 16px;
         cursor: pointer;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         color: var(--text-color);
         font-size: 0.95rem;
         transition: background 0.2s;
@@ -189,11 +207,11 @@
       }
 
       .autocomplete-item:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(139, 92, 246, 0.18);
       }
 
       .autocomplete-item strong {
-        color: var(--text-color);
+        color: #a78bfa;
       }
 
       /* ===== Results Section ===== */
@@ -207,17 +225,19 @@
       }
 
       .route-card {
-        background: var(--surface-color);
-        border-radius: 12px;
+        background: rgba(30, 41, 59, 0.55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 16px;
         padding: 24px 28px;
         margin-bottom: 20px;
-        border: 1px solid var(--border-color);
+        border: 1px solid rgba(71, 85, 105, 0.3);
         animation: fadeInUp 0.45s ease forwards;
-        transition: border-color 0.2s ease;
+        transition: border-color 0.3s ease;
       }
 
       .route-card:hover {
-        border-color: var(--text-muted);
+        border-color: rgba(139, 92, 246, 0.25);
       }
 
       .route-header {
@@ -225,7 +245,7 @@
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: 16px;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         padding-bottom: 14px;
         flex-wrap: wrap;
         gap: 10px;
@@ -240,17 +260,17 @@
       .bus-name {
         font-size: 1.2rem;
         font-weight: 700;
-        color: var(--text-color);
+        color: #a78bfa;
       }
 
       .service-type {
         font-size: 0.82rem;
-        background: var(--border-color);
-        color: var(--text-color);
+        background: rgba(139, 92, 246, 0.12);
+        color: #c4b5fd;
         padding: 3px 10px;
         border-radius: 20px;
         width: fit-content;
-        border: 1px solid var(--border-color);
+        border: 1px solid rgba(139, 92, 246, 0.25);
       }
 
       .route-meta {
@@ -294,7 +314,7 @@
         left: calc(50% + 14px);
         width: calc(100% - 20px);
         height: 2px;
-        background: var(--border-color);
+        background: linear-gradient(90deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.3));
         z-index: 0;
       }
 
@@ -306,14 +326,14 @@
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        background: var(--bg-color);
-        border: 3px solid var(--text-muted);
+        background: #1e293b;
+        border: 3px solid #8b5cf6;
         flex-shrink: 0;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
         position: relative;
         z-index: 1;
         margin-bottom: 6px;
-        box-shadow: 0 0 0 3px var(--bg-color);
+        box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.9);
       }
 
       .timeline-stop:first-child .stop-marker {
@@ -335,7 +355,7 @@
         background: rgba(255, 255, 255, 0.04);
         padding: 4px 6px;
         border-radius: 6px;
-        border: 1px solid var(--border-color);
+        border: 1px solid rgba(255, 255, 255, 0.06);
         transition: all 0.2s ease;
         width: 100%;
         box-sizing: border-box;
@@ -343,11 +363,12 @@
 
       .stop-content:hover {
         background: rgba(255, 255, 255, 0.09);
+        transform: translateY(-1px);
       }
 
       .stop-name {
         font-weight: 500;
-        color: var(--text-color);
+        color: #e2e8f0;
         font-size: 0.8rem;
         display: block;
         white-space: nowrap;
@@ -454,12 +475,8 @@
           padding: 16px 14px 14px;
         }
 
-
-        .stop-marker {
-          width: 14px; /* Smaller circle for mobile */
-          height: 14px;
-          border-width: 2px; /* Slightly thinner border */
-          box-shadow: 0 0 0 2px rgba(30, 41, 59, 0.9); /* Adjust shadow spread */
+        .timeline-stop {
+          width: 80px;
         }
 
         .stop-name {
@@ -475,15 +492,15 @@
       }
 
       .loading-state i {
-        color: var(--text-muted);
+        color: #8b5cf6;
       }
-
+      
       .no-routes {
         text-align: center;
         padding: 40px 30px;
-        background: var(--surface-color);
+        background: rgba(255, 255, 255, 0.03);
         border-radius: 16px;
-        border: 1px solid var(--border-color);
+        border: 1px solid rgba(71, 85, 105, 0.2);
         color: var(--text-muted);
       }
 
@@ -510,17 +527,16 @@
     </style>
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
     
     <div class="container">
       <header>
-        <h1>Dhaka Local Bus Routes</h1>
+        <h1>Local Bus Route Finder</h1>
         <p class="page-subtitle">Find the best bus routes between any two locations</p>
         <nav class="nav-bar">
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="active">Bus Routes</a>
+          <a href="bus_routes.html" class="active">Bus Routes 🚌</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
@@ -528,9 +544,9 @@
           <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="new-feature-link">Retake Calculator</a>
+          <a href="retake.html" class="new-feature-link">Retake Calculator 🔥</a>
           <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="about.html">About</a>
+          <a href="about.html">Dev</a>
         </nav>
       </header>
 
@@ -954,7 +970,5 @@
       // Initialization
       loadBusData();
     </script>
-    <script src="theme.js"></script>
-    <script src="typewriter.js"></script>
   </body>
 </html>
