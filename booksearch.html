@@ -763,7 +763,7 @@
 </head>
 
 <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+  <script>if (localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
   <canvas id="particleCanvas"></canvas>
   <div class="container">
     <header>
@@ -1314,7 +1314,7 @@
       state.booksError = null;
       updateStatus();
       showSkeletonLoading();
-      fetch("nsu_library_books_v3.json")
+      fetch("nsu_library_books_v4.json")
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
@@ -1386,7 +1386,7 @@
   </footer>
   <script src="script.js"></script>
   <script src="buttons.js"></script>
-    <script src="theme.js"></script>
+  <script src="theme.js"></script>
   <script src="typewriter.js"></script>
 </body>
 
