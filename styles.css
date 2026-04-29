@@ -278,6 +278,29 @@ header {
   box-shadow: none;
 }
 
+/* CleanPad Link Style - Blue Border */
+.cleanpad-link {
+  border-color: #3b82f6 !important;
+  color: #3b82f6 !important;
+}
+
+.cleanpad-link:hover {
+  border-color: #3b82f6 !important;
+  color: var(--bg-color) !important;
+  background: #3b82f6 !important;
+}
+
+body.light-mode .cleanpad-link {
+  border-color: #2563eb !important;
+  color: #2563eb !important;
+}
+
+body.light-mode .cleanpad-link:hover {
+  border-color: #2563eb !important;
+  color: white !important;
+  background: #2563eb !important;
+}
+
 .announcement-bar {
   display: flex;
   align-items: center;
