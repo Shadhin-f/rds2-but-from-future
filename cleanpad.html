@@ -581,6 +581,16 @@
       border-color: #ef4444;
     }
 
+    #snapToggleBtn[aria-pressed="true"] {
+      background: var(--text-color);
+      color: var(--bg-color);
+      border-color: var(--text-color);
+    }
+
+    #snapToggleBtn[aria-pressed="true"]:hover {
+      opacity: 0.8;
+    }
+
     .compact-field {
       display: inline-flex;
       align-items: center;
@@ -816,6 +826,9 @@
               <option value="none">None</option>
             </select>
           </label>
+          <button class="icon-action" id="snapToggleBtn" type="button" title="Toggle snap on/off" aria-pressed="true">
+            <i class="fas fa-magnet"></i>
+          </button>
           <label class="compact-field" title="Arrow snap angle">
             <i class="fas fa-angle-right"></i>
             <select id="snapAngleSelect">
@@ -879,6 +892,7 @@
       const strokeSize = document.getElementById('strokeSize');
       const eraserSize = document.getElementById('eraserSize');
       const arrowHeadStyle = document.getElementById('arrowHeadStyle');
+      const snapToggleBtn = document.getElementById('snapToggleBtn');
       const snapAngleSelect = document.getElementById('snapAngleSelect');
       const canvasStyleSelect = document.getElementById('canvasStyleSelect');
       const zoomLabel = document.getElementById('zoomLabel');
@@ -962,6 +976,7 @@
         eraserSize: Number(eraserSize.value),
         arrowHead: arrowHeadStyle.value,
         snapAngle: Number(snapAngleSelect.value),
+        snapEnabled: true,
         canvasStyle: canvasStyleSelect ? canvasStyleSelect.value : 'plain',
         zoom: 1,
         drawingStart: null,
@@ -1441,6 +1456,19 @@
         state.snapAngle = Number(snapAngleSelect.value);
         syncStatus();
       });
+
+      if (snapToggleBtn) {
+        snapToggleBtn.addEventListener('click', () => {
+          state.snapEnabled = !state.snapEnabled;
+          snapToggleBtn.setAttribute('aria-pressed', String(state.snapEnabled));
+          if (state.snapEnabled) {
+            state.snapAngle = Number(snapAngleSelect.value);
+          } else {
+            state.snapAngle = 0;
+          }
+          syncStatus();
+        });
+      }
 
       if (canvasStyleSelect) {
         canvasStyleSelect.addEventListener('change', () => {
