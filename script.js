@@ -2212,8 +2212,12 @@ async function changeSemester(semesterFile) {
 // Add this function to check if semester file exists
 async function checkSemesterFileExists(filename) {
     try {
-        const response = await fetch(filename, { method: 'HEAD' });
-        return response.ok;
+        const response = await fetch(filename, { method: 'GET' });
+        if (!response.ok) return false;
+        const text = await response.text();
+        // Check if the fetched content is actually CSV data (not HTML error page or CSS)
+        // CSV should start with text, not "<!DOCTYPE" or other HTML/CSS patterns
+        return !text.includes('<!DOCTYPE') && !text.includes('<html') && !text.includes('background:');
     } catch {
         return false;
     }
@@ -2225,15 +2229,14 @@ function setupSemesterChange() {
     if (semesterSelect) {
         semesterSelect.addEventListener('change', async function () {
             CSV_FILENAME = this.value;
-            currentSemester = this.value;
             currentPage = 1;
             filteredData = [];
-            await loadCSVData();
+            await changeSemester(this.value);
         });
         // Initial load
         CSV_FILENAME = semesterSelect.value;
         currentSemester = semesterSelect.value;
-        loadCSVData();
+        changeSemester(semesterSelect.value);
     }
 }
 

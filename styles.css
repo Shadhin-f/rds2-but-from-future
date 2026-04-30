@@ -3608,6 +3608,21 @@ body.light-mode .upcoming-event-link:hover {
   border-color: var(--text-muted);
 }
 
+body.light-mode .semester-warning {
+  background: linear-gradient(135deg,
+      rgba(99, 102, 241, 0.08),
+      rgba(79, 70, 229, 0.08));
+  border: 1px solid var(--border-color);
+}
+
+body.light-mode .semester-warning h3 {
+  color: var(--text-color);
+}
+
+body.light-mode .semester-warning p {
+  color: var(--text-muted);
+}
+
 body.light-mode .upcoming-event-countdown {
   background: var(--text-color);
   color: var(--bg-color);
