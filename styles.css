@@ -3588,6 +3588,11 @@ body.light-mode .semester-select {
   border-color: var(--border-color);
 }
 
+body.light-mode .semester-select option {
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
 body.light-mode .view-details-btn {
   background: var(--border-color);
   color: var(--text-color);
