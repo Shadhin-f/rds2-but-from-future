@@ -3472,6 +3472,14 @@ body.light-mode table td {
   border-color: var(--border-color);
 }
 
+body.light-mode table tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+body.light-mode table tr:nth-child(odd) {
+  background-color: #f8fafc;
+}
+
 body.light-mode table tr:hover {
   background: var(--tr-hover-color);
 }

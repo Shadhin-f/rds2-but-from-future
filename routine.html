@@ -28,8 +28,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <style>
-      
-
       .routine-page-layout {
         display: grid;
         grid-template-columns: 320px 1fr;
@@ -338,6 +336,12 @@
         border: none;
       }
 
+      body.light-mode .btn-action.primary {
+        background: var(--text-color);
+        color: var(--bg-color);
+        border: 1px solid var(--text-color);
+      }
+
       .btn-action:hover {
         opacity: 0.9;
       }
@@ -393,6 +397,12 @@
         max-width: 130px;
         position: relative;
         text-align: left;
+      }
+
+      body.light-mode .course-block {
+        background: var(--text-color);
+        color: var(--bg-color);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
       }
 
       .course-block .course-name {
@@ -493,7 +503,11 @@
     </style>
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -507,7 +521,9 @@
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
           <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+          <a href="booksearch.html" class="new-feature-link"
+            >NSU Library Book Locator</a
+          >
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
           <a href="retake.html" class="new-feature-link">Retake Calculator</a>
