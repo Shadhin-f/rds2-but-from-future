@@ -1,1766 +1,2302 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-<head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-    crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-DR0D2D6C35");
-  </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CleanPad</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
-  <link rel="stylesheet" href="styles.css?v=1.1" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <style>
-    body.diagram-page #themeToggle {
-      display: none !important;
-    }
-
-    body.diagram-page {
-      padding: 20px;
-      --canvas-bg: #000000;
-      --canvas-grid: rgba(255, 255, 255, 0.08);
-      --toolbar-bg: rgba(16, 16, 16, 0.82);
-      --toolbar-border: rgba(255, 255, 255, 0.14);
-      --canvas-ink: #ffffff;
-    }
-
-    body.light-mode.diagram-page {
-      --canvas-bg: #ffffff;
-      --canvas-grid: rgba(0, 0, 0, 0.06);
-      --toolbar-bg: rgba(255, 255, 255, 0.84);
-      --toolbar-border: rgba(0, 0, 0, 0.12);
-      --canvas-ink: #000000;
-    }
-
-    body.diagram-page .container {
-      max-width: 1440px;
-    }
-
-    .diagram-app {
-      display: grid;
-      gap: 12px;
-    }
-
-    .diagram-hero {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 18px;
-      text-align: left;
-      padding: 6px 2px 2px;
-    }
-
-    .diagram-kicker {
-      margin: 0 0 10px;
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-
-    .diagram-hero h1 {
-      margin: 0;
-      font-family: "Cal Sans", sans-serif;
-      font-size: clamp(2rem, 4vw, 3.3rem);
-      line-height: 0.96;
-      letter-spacing: 0.01em;
-    }
-
-    .diagram-hero p {
-      display: none;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .pill-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      border: 1px solid var(--border-color);
-      background: var(--surface-color);
-      color: var(--text-color);
-      padding: 10px 14px;
-      font: inherit;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-    }
-
-    .pill-button:hover {
-      transform: translateY(-1px);
-      background: rgba(255, 255, 255, 0.03);
-      border-color: var(--text-muted);
-    }
-
-    .pill-button:active {
-      transform: translateY(0);
-    }
-
-    .diagram-shell {
-      display: block;
-      position: relative;
-    }
-
-    .tool-rail,
-    .canvas-panel {
-      background: transparent;
-      border: 0;
-      border-radius: 0;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
-      backdrop-filter: blur(18px);
-    }
-
-    .tool-rail {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 10px;
-      position: sticky;
-      top: 18px;
-      z-index: 30;
-      width: 100%;
-      margin-bottom: 12px;
-      border: 1px solid var(--toolbar-border);
-      border-radius: 20px;
-      background: var(--toolbar-bg);
-      overflow-x: auto;
-      align-items: center;
-    }
-
-    .tool-btn {
-      width: 44px;
-      height: 44px;
-      aspect-ratio: auto;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text-muted);
-      display: grid;
-      place-items: center;
-      gap: 4px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      font: inherit;
-      padding: 0;
-      flex: 0 0 auto;
-    }
-
-    .tool-btn i {
-      font-size: 1rem;
-    }
-
-    .tool-btn span {
-      display: none;
-    }
-
-    .tool-btn:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-color);
-    }
-
-    .tool-btn.active {
-      background: var(--text-color);
-      color: var(--bg-color);
-      border-color: var(--text-color);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
-    }
-
-    .tool-divider {
-      height: 1px;
-      width: 100%;
-      background: var(--border-color);
-      margin: 2px 0;
-    }
-
-    .side-panel {
-      display: none;
-    }
-
-    .canvas-panel {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .toolbar-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      justify-content: space-between;
-      position: sticky;
-      top: 78px;
-      z-index: 22;
-      padding: 10px 12px;
-      border: 1px solid var(--toolbar-border);
-      border-radius: 18px;
-      background: var(--toolbar-bg);
-      backdrop-filter: blur(18px);
-    }
-
-    .toolbar-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .control-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 999px;
-      padding: 8px 12px;
-      color: var(--text-color);
-      font-size: 0.9rem;
-    }
-
-    .control-chip label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-
-    .control-chip input[type="range"] {
-      width: 110px;
-      accent-color: var(--text-color);
-    }
-
-    .control-chip input[type="color"] {
-      width: 28px;
-      height: 28px;
-      border: none;
-      padding: 0;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .control-chip select {
-      background: transparent;
-      color: var(--text-color);
-      border: none;
-      font: inherit;
-      outline: none;
-    }
-
-    .control-chip input[type="checkbox"] {
-      accent-color: var(--text-color);
-    }
-
-    .zoom-controls {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 999px;
-      padding: 6px;
-    }
-
-    .zoom-controls button {
-      border: none;
-      background: transparent;
-      color: var(--text-color);
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.15s ease;
-    }
-
-    .zoom-controls button:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .zoom-label {
-      min-width: 52px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      font-weight: 600;
-    }
-
-    .canvas-viewport {
-      position: relative;
-      min-height: min(72vh, 860px);
-      border-radius: 22px;
-      overflow: hidden;
-      background: var(--canvas-bg);
-      border: 1px solid var(--border-color);
-    }
-
-    .canvas-paper {
-      position: absolute;
-      inset: 0;
-      background: var(--canvas-bg);
-    }
-
-    .canvas-paper[data-canvas-style="plain"] {
-      background: var(--canvas-bg);
-    }
-
-    .canvas-paper[data-canvas-style="dotted"] {
-      background-color: var(--canvas-bg);
-      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
-      background-size: 18px 18px;
-    }
-
-    .canvas-paper[data-canvas-style="lined"] {
-      background-color: var(--canvas-bg);
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.16) 0,
-        rgba(255, 255, 255, 0.16) 1px,
-        transparent 1px,
-        transparent 26px
-      );
-    }
-
-    body.light-mode .canvas-paper[data-canvas-style="dotted"] {
-      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.14) 1px, transparent 1px);
-    }
-
-    body.light-mode .canvas-paper[data-canvas-style="lined"] {
-      background-image: repeating-linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.14) 0,
-        rgba(0, 0, 0, 0.14) 1px,
-        transparent 1px,
-        transparent 26px
-      );
-    }
-
-    .canvas-paper canvas {
-      display: block;
-    }
-
-    .panel-card {
-      border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .panel-card h2 {
-      margin: 0 0 10px;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-    }
-
-    .panel-card p,
-    .panel-card li {
-      margin: 0;
-      color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.94rem;
-    }
-
-    .tip-list {
-      margin: 0;
-      padding-left: 18px;
-      display: grid;
-      gap: 8px;
-    }
-
-    .status-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .status-pill {
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 0.86rem;
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    body.light-mode.diagram-page .canvas-viewport,
-    body.light-mode.diagram-page .tool-rail,
-    body.light-mode.diagram-page .side-panel,
-    body.light-mode.diagram-page .canvas-panel {
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
-    }
-
-    body.light-mode.diagram-page .canvas-viewport {
-      background: var(--canvas-bg);
-    }
-
-    body.light-mode.diagram-page .canvas-paper {
-      background-color: var(--canvas-bg);
-    }
-
-    @media (max-width: 1180px) {
-      .diagram-shell {
-        display: block;
+      gtag("config", "G-DR0D2D6C35");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CleanPad</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+    <link rel="stylesheet" href="styles.css?v=1.1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      body.diagram-page #themeToggle {
+        display: none !important;
       }
 
-      .side-panel {
-        display: none;
-      }
-    }
-
-    @media (max-width: 860px) {
       body.diagram-page {
-        padding: 14px;
+        padding: 20px;
+        --canvas-bg: #000000;
+        --canvas-grid: rgba(255, 255, 255, 0.08);
+        --toolbar-bg: rgba(16, 16, 16, 0.82);
+        --toolbar-border: rgba(255, 255, 255, 0.14);
+        --canvas-ink: #ffffff;
+      }
+
+      body.light-mode.diagram-page {
+        --canvas-bg: #ffffff;
+        --canvas-grid: rgba(0, 0, 0, 0.06);
+        --toolbar-bg: rgba(255, 255, 255, 0.84);
+        --toolbar-border: rgba(0, 0, 0, 0.12);
+        --canvas-ink: #000000;
+      }
+
+      body.diagram-page .container {
+        max-width: 1440px;
+      }
+
+      .diagram-app {
+        display: grid;
+        gap: 12px;
       }
 
       .diagram-hero {
-        flex-direction: column;
-        align-items: flex-start;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 18px;
+        text-align: left;
+        padding: 6px 2px 2px;
+      }
+
+      .diagram-kicker {
+        margin: 0 0 10px;
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 700;
+      }
+
+      .diagram-hero h1 {
+        margin: 0;
+        font-family: "Cal Sans", sans-serif;
+        font-size: clamp(2rem, 4vw, 3.3rem);
+        line-height: 0.96;
+        letter-spacing: 0.01em;
+      }
+
+      .diagram-hero p {
+        display: none;
       }
 
       .hero-actions {
-        justify-content: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .pill-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border-color);
+        background: var(--surface-color);
+        color: var(--text-color);
+        padding: 10px 14px;
+        font: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          background 0.15s ease,
+          border-color 0.15s ease;
+      }
+
+      .pill-button:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.03);
+        border-color: var(--text-muted);
+      }
+
+      .pill-button:active {
+        transform: translateY(0);
       }
 
       .diagram-shell {
         display: block;
+        position: relative;
+      }
+
+      .tool-rail,
+      .canvas-panel {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(18px);
       }
 
       .tool-rail {
-        position: sticky;
-        top: 12px;
-        flex-direction: row;
-        overflow-x: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         padding: 10px;
+        position: sticky;
+        top: 18px;
+        z-index: 30;
+        width: 100%;
+        margin-bottom: 12px;
+        border: 1px solid var(--toolbar-border);
+        border-radius: 20px;
+        background: var(--toolbar-bg);
+        overflow-x: auto;
+        align-items: center;
       }
 
       .tool-btn {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
+        aspect-ratio: auto;
+        border-radius: 14px;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text-muted);
+        display: grid;
+        place-items: center;
+        gap: 4px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        font: inherit;
         padding: 0;
+        flex: 0 0 auto;
+      }
+
+      .tool-btn i {
+        font-size: 1rem;
+      }
+
+      .tool-btn span {
+        display: none;
+      }
+
+      .tool-btn:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-color);
+      }
+
+      .tool-btn.active {
+        background: var(--text-color);
+        color: var(--bg-color);
+        border-color: var(--text-color);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      }
+
+      .tool-divider {
+        height: 1px;
+        width: 100%;
+        background: var(--border-color);
+        margin: 2px 0;
       }
 
       .side-panel {
         display: none;
       }
 
-      .canvas-viewport {
-        min-height: 60vh;
+      .canvas-panel {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 0;
       }
-    }
 
-    body.diagram-page {
-      overflow: hidden;
-      padding: 12px;
-    }
+      .toolbar-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+        position: sticky;
+        top: 78px;
+        z-index: 22;
+        padding: 10px 12px;
+        border: 1px solid var(--toolbar-border);
+        border-radius: 18px;
+        background: var(--toolbar-bg);
+        backdrop-filter: blur(18px);
+      }
 
-    body.diagram-page .container {
-      max-width: none;
-      width: 100%;
-      height: calc(100vh - 24px);
-    }
+      .toolbar-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
 
-    body.diagram-page .diagram-app {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+      .control-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 999px;
+        padding: 8px 12px;
+        color: var(--text-color);
+        font-size: 0.9rem;
+      }
 
-    .cleanpad-bar {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 6px 8px;
-      border: 1px solid var(--toolbar-border);
-      border-radius: 14px;
-      background: var(--toolbar-bg);
-      backdrop-filter: blur(18px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
+      .control-chip label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
 
-    .brand-wrap {
-      display: flex;
-      align-items: center;
-      padding: 0 4px;
-      margin-right: 2px;
-      flex: 0 0 auto;
-    }
+      .control-chip input[type="range"] {
+        width: 110px;
+        accent-color: var(--text-color);
+      }
 
-    .brand-title {
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      font-weight: 800;
-      color: var(--text-color);
-      line-height: 1;
-      white-space: nowrap;
-    }
+      .control-chip input[type="color"] {
+        width: 28px;
+        height: 28px;
+        border: none;
+        padding: 0;
+        background: transparent;
+        cursor: pointer;
+      }
 
-    .bar-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
+      .control-chip select {
+        background: transparent;
+        color: var(--text-color);
+        border: none;
+        font: inherit;
+        outline: none;
+      }
 
-    .tool-group {
-      flex: 0 1 auto;
-    }
+      .control-chip input[type="checkbox"] {
+        accent-color: var(--text-color);
+      }
 
-    .config-group {
-      margin-left: auto;
-      justify-content: flex-end;
-    }
+      .zoom-controls {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 999px;
+        padding: 6px;
+      }
 
-    .tool-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: transparent;
-    }
+      .zoom-controls button {
+        border: none;
+        background: transparent;
+        color: var(--text-color);
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
 
-    .tool-btn i {
-      font-size: 0.92rem;
-    }
+      .zoom-controls button:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
 
-    .icon-action {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-color);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      padding: 0;
-      transition: all 0.15s ease;
-      flex: 0 0 auto;
-    }
+      .zoom-label {
+        min-width: 52px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
 
-    .icon-action:hover {
-      background: var(--text-color);
-      color: var(--bg-color);
-    }
+      .canvas-viewport {
+        position: relative;
+        min-height: min(72vh, 860px);
+        border-radius: 22px;
+        overflow: hidden;
+        background: var(--canvas-bg);
+        border: 1px solid var(--border-color);
+      }
 
-    .icon-action:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
+      .canvas-paper {
+        position: absolute;
+        inset: 0;
+        background: var(--canvas-bg);
+      }
 
-    .icon-action.danger:hover {
-      background: #ef4444;
-      color: #ffffff;
-      border-color: #ef4444;
-    }
+      .canvas-paper[data-canvas-style="plain"] {
+        background: var(--canvas-bg);
+      }
 
-    #snapToggleBtn[aria-pressed="true"] {
-      background: var(--text-color);
-      color: var(--bg-color);
-      border-color: var(--text-color);
-    }
+      .canvas-paper[data-canvas-style="dotted"] {
+        background-color: var(--canvas-bg);
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px
+        );
+        background-size: 18px 18px;
+      }
 
-    #snapToggleBtn[aria-pressed="true"]:hover {
-      opacity: 0.8;
-    }
+      .canvas-paper[data-canvas-style="lined"] {
+        background-color: var(--canvas-bg);
+        background-image: repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.16) 0,
+          rgba(255, 255, 255, 0.16) 1px,
+          transparent 1px,
+          transparent 26px
+        );
+      }
 
-    .compact-field {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      padding: 4px 8px;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
+      body.light-mode .canvas-paper[data-canvas-style="dotted"] {
+        background-image: radial-gradient(
+          circle,
+          rgba(0, 0, 0, 0.14) 1px,
+          transparent 1px
+        );
+      }
 
-    .compact-field i {
-      color: var(--text-color);
-      font-size: 0.8rem;
-    }
+      body.light-mode .canvas-paper[data-canvas-style="lined"] {
+        background-image: repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.14) 0,
+          rgba(0, 0, 0, 0.14) 1px,
+          transparent 1px,
+          transparent 26px
+        );
+      }
 
-    .compact-field input[type="number"] {
-      width: 52px;
-      border: none;
-      background: transparent;
-      color: var(--text-color);
-      font: inherit;
-      font-size: 0.8rem;
-      outline: none;
-      appearance: textfield;
-      -moz-appearance: textfield;
-    }
+      .canvas-paper canvas {
+        display: block;
+      }
 
-    .compact-field input[type="number"]::-webkit-outer-spin-button,
-    .compact-field input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+      .panel-card {
+        border: 1px solid var(--border-color);
+        border-radius: 18px;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.02);
+      }
 
-    .compact-field select {
-      border: none;
-      background: transparent;
-      color: var(--text-color);
-      font: inherit;
-      font-size: 0.8rem;
-      outline: none;
-      padding-right: 2px;
-      color-scheme: dark light;
-    }
+      .panel-card h2 {
+        margin: 0 0 10px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-muted);
+      }
 
-    .compact-field select option {
-      background: #1a1a1a;
-      color: #ffffff;
-    }
+      .panel-card p,
+      .panel-card li {
+        margin: 0;
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.94rem;
+      }
 
-    body.light-mode .compact-field select {
-      color-scheme: light dark;
-    }
+      .tip-list {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 8px;
+      }
 
-    body.light-mode .compact-field select option {
-      background: white;
-      color: #000000;
-    }
+      .status-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
-    .compact-field input[type="color"] {
-      width: 24px;
-      height: 24px;
-      border: none;
-      background: transparent;
-      padding: 0;
-      cursor: pointer;
-    }
+      .status-pill {
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 0.86rem;
+        background: rgba(255, 255, 255, 0.03);
+      }
 
-    .zoom-label {
-      min-width: 44px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-align: center;
-    }
+      body.light-mode.diagram-page .canvas-viewport,
+      body.light-mode.diagram-page .tool-rail,
+      body.light-mode.diagram-page .side-panel,
+      body.light-mode.diagram-page .canvas-panel {
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+      }
 
-    .canvas-shell {
-      flex: 1;
-      min-height: 0;
-    }
+      body.light-mode.diagram-page .canvas-viewport {
+        background: var(--canvas-bg);
+      }
 
-    .canvas-viewport {
-      height: 100%;
-      min-height: 0;
-      border-radius: 18px;
-    }
+      body.light-mode.diagram-page .canvas-paper {
+        background-color: var(--canvas-bg);
+      }
 
+      @media (max-width: 1180px) {
+        .diagram-shell {
+          display: block;
+        }
 
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      height: 32px;
-      padding: 0 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text-color);
-      text-decoration: none;
-      flex: 0 0 auto;
-      transition: all 0.15s ease;
-    }
+        .side-panel {
+          display: none;
+        }
+      }
 
-    .back-btn:hover {
-      background: var(--text-color);
-      color: var(--bg-color);
-    }
+      @media (max-width: 860px) {
+        body.diagram-page {
+          padding: 14px;
+        }
 
-    .back-btn i {
-      font-size: 0.9rem;
-      line-height: 1;
-    }
+        .diagram-hero {
+          flex-direction: column;
+          align-items: flex-start;
+        }
 
-    .rds2-mark {
-      display: inline-block;
-      height: 14px;
-      width: auto;
-    }
+        .hero-actions {
+          justify-content: flex-start;
+        }
 
-    body.light-mode .rds2-mark.light {
-      display: none;
-    }
+        .diagram-shell {
+          display: block;
+        }
 
-    body.light-mode .rds2-mark.dark {
-      display: inline-block;
-    }
+        .tool-rail {
+          position: sticky;
+          top: 12px;
+          flex-direction: row;
+          overflow-x: auto;
+          padding: 10px;
+        }
 
-    body:not(.light-mode) .rds2-mark.dark {
-      display: none;
-    }
+        .tool-btn {
+          width: 40px;
+          height: 40px;
+          padding: 0;
+        }
 
-    body:not(.light-mode) .rds2-mark.light {
-      display: inline-block;
-    }
+        .side-panel {
+          display: none;
+        }
 
-    @media (max-width: 860px) {
+        .canvas-viewport {
+          min-height: 60vh;
+        }
+      }
+
+      body.diagram-page {
+        overflow: hidden;
+        padding: 12px;
+      }
+
+      body.diagram-page .container {
+        max-width: none;
+        width: 100%;
+        height: calc(100vh - 24px);
+      }
+
+      body.diagram-page .diagram-app {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
       .cleanpad-bar {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 6px 8px;
+        border: 1px solid var(--toolbar-border);
+        border-radius: 14px;
+        background: var(--toolbar-bg);
+        backdrop-filter: blur(18px);
+        position: sticky;
         top: 0;
+        z-index: 50;
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        padding: 0 4px;
+        margin-right: 2px;
+        flex: 0 0 auto;
       }
 
       .brand-title {
-        font-size: 0.66rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: var(--text-color);
+        line-height: 1;
+        white-space: nowrap;
       }
 
-      .tool-btn,
+      .bar-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .tool-group {
+        flex: 0 1 auto;
+      }
+
+      .config-group {
+        margin-left: auto;
+        justify-content: flex-end;
+      }
+
+      .tool-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        background: transparent;
+      }
+
+      .tool-btn i {
+        font-size: 0.92rem;
+      }
+
       .icon-action {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-color);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.15s ease;
+        flex: 0 0 auto;
+      }
+
+      .icon-action:hover {
+        background: var(--text-color);
+        color: var(--bg-color);
+      }
+
+      .icon-action:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .icon-action.danger:hover {
+        background: #ef4444;
+        color: #ffffff;
+        border-color: #ef4444;
+      }
+
+      #snapToggleBtn[aria-pressed="true"] {
+        background: var(--text-color);
+        color: var(--bg-color);
+        border-color: var(--text-color);
+      }
+
+      #snapToggleBtn[aria-pressed="true"]:hover {
+        opacity: 0.8;
       }
 
       .compact-field {
-        padding: 3px 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        padding: 4px 8px;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+
+      .compact-field i {
+        color: var(--text-color);
+        font-size: 0.8rem;
       }
 
       .compact-field input[type="number"] {
-        width: 46px;
+        width: 52px;
+        border: none;
+        background: transparent;
+        color: var(--text-color);
+        font: inherit;
+        font-size: 0.8rem;
+        outline: none;
+        appearance: textfield;
+        -moz-appearance: textfield;
       }
-    }
-  </style>
-</head>
 
-<body class="diagram-page">
-  <script>
-    if (localStorage.getItem('rds2-theme-preference') === 'light') {
-      document.body.classList.add('light-mode');
-    }
-  </script>
-  <div class="container">
-    <header class="diagram-app">
-      <div class="cleanpad-bar">
-        <a class="back-btn" href="index.html" title="Back to RDS2">
-          <i class="fas fa-arrow-left"></i>
-          <img class="rds2-mark light" src="RDS2 Logo Reload Big white.png" alt="RDS2" />
-          <img class="rds2-mark dark" src="RDS2 Logo Reload Big Black.png" alt="RDS2" />
-        </a>
-        <div class="brand-wrap">
-          <span class="brand-title">CleanPad</span>
-        </div>
+      .compact-field input[type="number"]::-webkit-outer-spin-button,
+      .compact-field input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-        <div class="bar-group tool-group" aria-label="Drawing tools">
-          <button class="tool-btn active" data-tool="select" title="Select / move objects (S)" aria-pressed="true">
-            <i class="fas fa-arrow-pointer"></i>
-          </button>
-          <button class="tool-btn" data-tool="hand" title="Hand / pan canvas (G)" aria-pressed="false">
-            <i class="fas fa-hand-pointer"></i>
-          </button>
-          <button class="tool-btn" data-tool="pencil" title="Pencil (P)" aria-pressed="false">
-            <i class="fas fa-pen"></i>
-          </button>
-          <button class="tool-btn" data-tool="eraser" title="Eraser (E)" aria-pressed="false">
-            <i class="fas fa-eraser"></i>
-          </button>
-          <button class="tool-btn" data-tool="line" title="Straight line (L)" aria-pressed="false">
-            <i class="fas fa-minus"></i>
-          </button>
-          <button class="tool-btn" data-tool="rect" title="Rectangle (R)" aria-pressed="false">
-            <i class="far fa-square"></i>
-          </button>
-          <button class="tool-btn" data-tool="ellipse" title="Circle (C)" aria-pressed="false">
-            <i class="far fa-circle"></i>
-          </button>
-          <button class="tool-btn" data-tool="triangle" title="Triangle (T)" aria-pressed="false">
-            <i class="fas fa-caret-up"></i>
-          </button>
-          <button class="tool-btn" data-tool="diamond" title="Diamond (D)" aria-pressed="false">
-            <i class="fas fa-gem"></i>
-          </button>
-          <button class="tool-btn" data-tool="arrow" title="Arrow (A)" aria-pressed="false">
-            <i class="fas fa-arrow-right"></i>
-          </button>
-        </div>
+      .compact-field select {
+        border: none;
+        background: transparent;
+        color: var(--text-color);
+        font: inherit;
+        font-size: 0.8rem;
+        outline: none;
+        padding-right: 2px;
+        color-scheme: dark light;
+      }
 
-        <div class="bar-group config-group">
-          <label class="compact-field" title="Stroke color (W/B)">
-            <i class="fas fa-palette"></i>
-            <input type="color" id="colorPicker" value="#111111" />
-          </label>
-          <label class="compact-field" title="Stroke size">
-            <i class="fas fa-pen-nib"></i>
-            <input type="number" id="strokeSize" min="1" max="24" step="1" value="4" />
-          </label>
-          <label class="compact-field" title="Eraser size">
-            <i class="fas fa-eraser"></i>
-            <input type="number" id="eraserSize" min="8" max="72" step="1" value="22" />
-          </label>
-          <label class="compact-field" title="Arrow style">
-            <i class="fas fa-share"></i>
-            <select id="arrowHeadStyle">
-              <option value="end">End</option>
-              <option value="start">Start</option>
-              <option value="both">Both</option>
-              <option value="none">None</option>
-            </select>
-          </label>
-          <button class="icon-action" id="snapToggleBtn" type="button" title="Toggle snap on/off" aria-pressed="true">
-            <i class="fas fa-magnet"></i>
-          </button>
-          <label class="compact-field" title="Arrow snap angle">
-            <i class="fas fa-angle-right"></i>
-            <select id="snapAngleSelect">
-              <option value="15">15°</option>
-              <option value="30">30°</option>
-              <option value="45" selected>45°</option>
-              <option value="60">60°</option>
-              <option value="90">90°</option>
-            </select>
-          </label>
-          <label class="compact-field" title="Canvas background">
-            <i class="fas fa-table-cells"></i>
-            <select id="canvasStyleSelect">
-              <option value="plain" selected>Black</option>
-              <option value="dotted">Dotted</option>
-              <option value="lined">Lined</option>
-            </select>
-          </label>
-          <button class="icon-action" id="undoBtn" type="button" title="Undo (Ctrl+Z)">
-            <i class="fas fa-rotate-left"></i>
-          </button>
-          <button class="icon-action" id="redoBtn" type="button" title="Redo (Ctrl+Shift+Z)">
-            <i class="fas fa-rotate-right"></i>
-          </button>
-          <button class="icon-action" id="zoomOutBtn" type="button" title="Zoom out (Ctrl+-)">
-            <i class="fas fa-minus"></i>
-          </button>
-          <span id="zoomLabel" class="zoom-label">100%</span>
-          <button class="icon-action" id="zoomInBtn" type="button" title="Zoom in (Ctrl++)">
-            <i class="fas fa-plus"></i>
-          </button>
-          <button class="icon-action" id="resetViewBtn" type="button" title="Reset view (Ctrl+0)">
-            <i class="fas fa-expand"></i>
-          </button>
-          <button class="icon-action danger" id="clearBoardBtn" type="button" title="Clear canvas">
-            <i class="fas fa-trash"></i>
-          </button>
-          <button class="icon-action" id="diagramThemeToggle" type="button" title="Toggle theme" aria-label="Toggle theme">
-          </button>
-        </div>
-      </div>
+      .compact-field select option {
+        background: #1a1a1a;
+        color: #ffffff;
+      }
 
-      <div class="canvas-shell">
-        <div class="canvas-viewport">
-          <div class="canvas-paper" id="canvasPaper">
-            <canvas id="diagramCanvas" aria-label="Diagram drawing board"></canvas>
+      body.light-mode .compact-field select {
+        color-scheme: light dark;
+      }
+
+      body.light-mode .compact-field select option {
+        background: white;
+        color: #000000;
+      }
+
+      .compact-field input[type="color"] {
+        width: 24px;
+        height: 24px;
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .zoom-label {
+        min-width: 44px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .canvas-shell {
+        flex: 1;
+        min-height: 0;
+      }
+
+      .canvas-viewport {
+        height: 100%;
+        min-height: 0;
+        border-radius: 18px;
+      }
+
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-color);
+        text-decoration: none;
+        flex: 0 0 auto;
+        transition: all 0.15s ease;
+      }
+
+      .back-btn:hover {
+        background: var(--text-color);
+        color: var(--bg-color);
+      }
+
+      .back-btn i {
+        font-size: 0.9rem;
+        line-height: 1;
+      }
+
+      .rds2-mark {
+        display: inline-block;
+        height: 14px;
+        width: auto;
+      }
+
+      body.light-mode .rds2-mark.light {
+        display: none;
+      }
+
+      body.light-mode .rds2-mark.dark {
+        display: inline-block;
+      }
+
+      body:not(.light-mode) .rds2-mark.dark {
+        display: none;
+      }
+
+      body:not(.light-mode) .rds2-mark.light {
+        display: inline-block;
+      }
+
+      @media (max-width: 860px) {
+        .cleanpad-bar {
+          top: 0;
+        }
+
+        .brand-title {
+          font-size: 0.66rem;
+        }
+
+        .tool-btn,
+        .icon-action {
+          width: 30px;
+          height: 30px;
+        }
+
+        .compact-field {
+          padding: 3px 6px;
+        }
+
+        .compact-field input[type="number"] {
+          width: 46px;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="diagram-page">
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
+    <div class="container">
+      <header class="diagram-app">
+        <div class="cleanpad-bar">
+          <a class="back-btn" href="index.html" title="Back to RDS2">
+            <i class="fas fa-arrow-left"></i>
+            <img
+              class="rds2-mark light"
+              src="RDS2 Logo Reload Big white.png"
+              alt="RDS2"
+            />
+            <img
+              class="rds2-mark dark"
+              src="RDS2 Logo Reload Big Black.png"
+              alt="RDS2"
+            />
+          </a>
+          <div class="brand-wrap">
+            <span class="brand-title">CleanPad</span>
+          </div>
+
+          <div class="bar-group tool-group" aria-label="Drawing tools">
+            <button
+              class="tool-btn active"
+              data-tool="select"
+              title="Select / move objects (S)"
+              aria-pressed="true"
+            >
+              <i class="fas fa-arrow-pointer"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="hand"
+              title="Hand / pan canvas (G)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-hand-pointer"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="text"
+              title="Text (X)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-font"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="pencil"
+              title="Pencil (P)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-pen"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="eraser"
+              title="Eraser (E)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-eraser"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="line"
+              title="Straight line (L)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="rect"
+              title="Rectangle (R)"
+              aria-pressed="false"
+            >
+              <i class="far fa-square"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="ellipse"
+              title="Circle (C)"
+              aria-pressed="false"
+            >
+              <i class="far fa-circle"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="triangle"
+              title="Triangle (T)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-caret-up"></i>
+            </button>
+            <button
+              class="tool-btn"
+              data-tool="diamond"
+              title="Diamond (D)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-gem"></i>
+            </button>
+          </div>
+
+          <div class="bar-group config-group">
+            <label class="compact-field" title="Stroke color (W/B)">
+              <i class="fas fa-palette"></i>
+              <input type="color" id="colorPicker" value="#111111" />
+            </label>
+            <label class="compact-field" title="Font size">
+              <i class="fas fa-text-height"></i>
+              <input
+                type="number"
+                id="fontSize"
+                min="10"
+                max="96"
+                step="1"
+                value="32"
+              />
+            </label>
+            <label class="compact-field" title="Font family">
+              <i class="fas fa-font"></i>
+              <select id="fontFamily">
+                <option value="Arial" selected>Arial</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+              </select>
+            </label>
+            <label class="compact-field" title="Stroke size">
+              <i class="fas fa-pen-nib"></i>
+              <input
+                type="number"
+                id="strokeSize"
+                min="1"
+                max="24"
+                step="1"
+                value="4"
+              />
+            </label>
+            <label class="compact-field" title="Stroke style">
+              <i class="fas fa-grip-lines"></i>
+              <select id="strokeStyle">
+                <option value="solid" selected>Solid</option>
+                <option value="dashed">Dashed</option>
+                <option value="dotted">Dotted</option>
+              </select>
+            </label>
+            <label class="compact-field" title="Eraser size">
+              <i class="fas fa-eraser"></i>
+              <input
+                type="number"
+                id="eraserSize"
+                min="8"
+                max="72"
+                step="1"
+                value="22"
+              />
+            </label>
+            <label class="compact-field" title="Arrow style">
+              <i class="fas fa-share"></i>
+              <select id="arrowHeadStyle">
+                <option value="end">End</option>
+                <option value="start">Start</option>
+                <option value="both">Both</option>
+                <option value="none">None</option>
+              </select>
+            </label>
+            <button
+              class="tool-btn"
+              data-tool="arrow"
+              title="Arrow (A)"
+              aria-pressed="false"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <button
+              class="icon-action"
+              id="snapToggleBtn"
+              type="button"
+              title="Toggle snap on/off"
+              aria-pressed="true"
+            >
+              <i class="fas fa-magnet"></i>
+            </button>
+            <label class="compact-field" title="Arrow snap angle">
+              <i class="fas fa-angle-right"></i>
+              <select id="snapAngleSelect">
+                <option value="15">15°</option>
+                <option value="30">30°</option>
+                <option value="45" selected>45°</option>
+                <option value="60">60°</option>
+                <option value="90">90°</option>
+              </select>
+            </label>
+            <label class="compact-field" title="Canvas background">
+              <i class="fas fa-table-cells"></i>
+              <select id="canvasStyleSelect">
+                <option value="plain">Black</option>
+                <option value="dotted" selected>Dotted</option>
+                <option value="lined">Lined</option>
+              </select>
+            </label>
+            <button
+              class="icon-action"
+              id="undoBtn"
+              type="button"
+              title="Undo (Ctrl+Z)"
+            >
+              <i class="fas fa-rotate-left"></i>
+            </button>
+            <button
+              class="icon-action"
+              id="redoBtn"
+              type="button"
+              title="Redo (Ctrl+Shift+Z)"
+            >
+              <i class="fas fa-rotate-right"></i>
+            </button>
+            <button
+              class="icon-action"
+              id="zoomOutBtn"
+              type="button"
+              title="Zoom out (Ctrl+-)"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+            <span id="zoomLabel" class="zoom-label">100%</span>
+            <button
+              class="icon-action"
+              id="zoomInBtn"
+              type="button"
+              title="Zoom in (Ctrl++)"
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+            <button
+              class="icon-action"
+              id="resetViewBtn"
+              type="button"
+              title="Reset view (Ctrl+0)"
+            >
+              <i class="fas fa-expand"></i>
+            </button>
+            <button
+              class="icon-action danger"
+              id="clearBoardBtn"
+              type="button"
+              title="Clear canvas"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+            <button
+              class="icon-action"
+              id="diagramThemeToggle"
+              type="button"
+              title="Toggle theme"
+              aria-label="Toggle theme"
+            ></button>
           </div>
         </div>
-      </div>
-    </header>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
-  <script src="theme.js"></script>
-  <script>
-    (function () {
-      const canvasEl = document.getElementById('diagramCanvas');
-      const canvasPaper = document.getElementById('canvasPaper');
-      const toolButtons = Array.from(document.querySelectorAll('.tool-btn'));
-      const colorPicker = document.getElementById('colorPicker');
-      const strokeSize = document.getElementById('strokeSize');
-      const eraserSize = document.getElementById('eraserSize');
-      const arrowHeadStyle = document.getElementById('arrowHeadStyle');
-      const snapToggleBtn = document.getElementById('snapToggleBtn');
-      const snapAngleSelect = document.getElementById('snapAngleSelect');
-      const canvasStyleSelect = document.getElementById('canvasStyleSelect');
-      const zoomLabel = document.getElementById('zoomLabel');
-      const undoBtn = document.getElementById('undoBtn');
-      const redoBtn = document.getElementById('redoBtn');
-      const zoomInBtn = document.getElementById('zoomInBtn');
-      const zoomOutBtn = document.getElementById('zoomOutBtn');
-      const clearBoardBtn = document.getElementById('clearBoardBtn');
-      const resetViewBtn = document.getElementById('resetViewBtn');
-      const diagramThemeToggle = document.getElementById('diagramThemeToggle');
+        <div class="canvas-shell">
+          <div class="canvas-viewport">
+            <div class="canvas-paper" id="canvasPaper">
+              <canvas
+                id="diagramCanvas"
+                aria-label="Diagram drawing board"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
 
-      if (!window.fabric || !fabric.Canvas) {
-        return;
-      }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <script src="theme.js"></script>
+    <script>
+      (function () {
+        const canvasEl = document.getElementById("diagramCanvas");
+        const canvasPaper = document.getElementById("canvasPaper");
+        const toolButtons = Array.from(document.querySelectorAll(".tool-btn"));
+        const colorPicker = document.getElementById("colorPicker");
+        const fontSizeInput = document.getElementById("fontSize");
+        const fontFamilySelect = document.getElementById("fontFamily");
+        const strokeSize = document.getElementById("strokeSize");
+        const strokeStyleSelect = document.getElementById("strokeStyle");
+        const eraserSize = document.getElementById("eraserSize");
+        const arrowHeadStyle = document.getElementById("arrowHeadStyle");
+        const snapToggleBtn = document.getElementById("snapToggleBtn");
+        const snapAngleSelect = document.getElementById("snapAngleSelect");
+        const canvasStyleSelect = document.getElementById("canvasStyleSelect");
+        const zoomLabel = document.getElementById("zoomLabel");
+        const undoBtn = document.getElementById("undoBtn");
+        const redoBtn = document.getElementById("redoBtn");
+        const zoomInBtn = document.getElementById("zoomInBtn");
+        const zoomOutBtn = document.getElementById("zoomOutBtn");
+        const clearBoardBtn = document.getElementById("clearBoardBtn");
+        const resetViewBtn = document.getElementById("resetViewBtn");
+        const diagramThemeToggle =
+          document.getElementById("diagramThemeToggle");
 
-      const THEME_KEY = 'rds2-theme-preference';
-
-      function updateDiagramThemeToggle() {
-        if (!diagramThemeToggle) return;
-        const isLight = document.body.classList.contains('light-mode');
-        // Show the action icon (what you'll switch to).
-        diagramThemeToggle.innerHTML = isLight
-          ? '<i class="fas fa-moon"></i>'
-          : '<i class="fas fa-sun"></i>';
-        diagramThemeToggle.title = isLight ? 'Switch to dark' : 'Switch to light';
-        diagramThemeToggle.setAttribute('aria-label', diagramThemeToggle.title);
-      }
-
-      function toggleDiagramTheme() {
-        const injected = document.getElementById('themeToggle');
-        if (injected) {
-          injected.click();
+        if (!window.fabric || !fabric.Canvas) {
           return;
         }
 
-        // Fallback if theme.js hasn't injected yet.
-        if (document.body.classList.contains('light-mode')) {
-          document.body.classList.remove('light-mode');
-          localStorage.setItem(THEME_KEY, 'dark');
-        } else {
-          document.body.classList.add('light-mode');
-          localStorage.setItem(THEME_KEY, 'light');
-        }
-      }
+        const THEME_KEY = "rds2-theme-preference";
+        const STORAGE_KEY = "cleanpad-canvas-v1";
 
-      function isLightTheme() {
-        return document.body.classList.contains('light-mode');
-      }
-
-      function isPureWhite(value) {
-        const normalized = String(value || '').trim().toLowerCase();
-        return normalized === '#fff' || normalized === '#ffffff' || normalized === 'rgb(255, 255, 255)' || normalized === 'rgb(255,255,255)';
-      }
-
-      function isPureBlack(value) {
-        const normalized = String(value || '').trim().toLowerCase();
-        return normalized === '#000' || normalized === '#000000' || normalized === 'rgb(0, 0, 0)' || normalized === 'rgb(0,0,0)';
-      }
-
-      function getThemeInkColor() {
-        return isLightTheme() ? '#000000' : '#ffffff';
-      }
-
-      function getThemeCanvasColor() {
-        return isLightTheme() ? '#ffffff' : '#000000';
-      }
-
-      const canvas = new fabric.Canvas(canvasEl, {
-        preserveObjectStacking: true,
-        selection: true,
-        stopContextMenu: true,
-        fireRightClick: false,
-        backgroundColor: 'rgba(0,0,0,0)',
-        enableRetinaScaling: true,
-      });
-
-      const state = {
-        tool: 'select',
-        color: getThemeInkColor(),
-        size: Number(strokeSize.value),
-        eraserSize: Number(eraserSize.value),
-        arrowHead: arrowHeadStyle.value,
-        snapAngle: Number(snapAngleSelect.value),
-        snapEnabled: true,
-        canvasStyle: canvasStyleSelect ? canvasStyleSelect.value : 'plain',
-        zoom: 1,
-        drawingStart: null,
-        previewObject: null,
-        followThemeInk: true,
-        panStart: null,
-      };
-
-      colorPicker.value = state.color;
-
-      window.__diagramCanvas = canvas;
-      window.__diagramState = state;
-
-      class DiagramEraserBrush extends fabric.PencilBrush {
-        createPath(pathData) {
-          const path = super.createPath(pathData);
-          path.globalCompositeOperation = 'destination-out';
-          path.selectable = false;
-          path.evented = false;
-          path.hoverCursor = 'crosshair';
-          return path;
-        }
-      }
-
-      function getScenePoint(evt) {
-        if (typeof canvas.getScenePoint === 'function') {
-          return canvas.getScenePoint(evt);
-        }
-        return canvas.getPointer(evt);
-      }
-
-      const history = [];
-      let historyIndex = -1;
-      let historyTimer = null;
-      let isRestoringHistory = false;
-      const HISTORY_LIMIT = 40;
-
-      function updateInkColor(color) {
-        state.color = color;
-        colorPicker.value = color;
-        if (canvas.freeDrawingBrush) {
-          canvas.freeDrawingBrush.color = color;
-        }
-      }
-
-      function updateHistoryButtons() {
-        if (undoBtn) {
-          undoBtn.disabled = historyIndex <= 0;
-        }
-        if (redoBtn) {
-          redoBtn.disabled = historyIndex < 0 || historyIndex >= history.length - 1;
-        }
-      }
-
-      function storeHistorySnapshot() {
-        if (isRestoringHistory) {
-          return;
+        function updateDiagramThemeToggle() {
+          if (!diagramThemeToggle) return;
+          const isLight = document.body.classList.contains("light-mode");
+          // Show the action icon (what you'll switch to).
+          diagramThemeToggle.innerHTML = isLight
+            ? '<i class="fas fa-moon"></i>'
+            : '<i class="fas fa-sun"></i>';
+          diagramThemeToggle.title = isLight
+            ? "Switch to dark"
+            : "Switch to light";
+          diagramThemeToggle.setAttribute(
+            "aria-label",
+            diagramThemeToggle.title,
+          );
         }
 
-        const snapshot = canvas.toJSON();
-
-        if (historyIndex < history.length - 1) {
-          history.splice(historyIndex + 1);
-        }
-
-        history.push(snapshot);
-        if (history.length > HISTORY_LIMIT) {
-          history.shift();
-        }
-
-        historyIndex = history.length - 1;
-        updateHistoryButtons();
-      }
-
-      function scheduleHistorySnapshot() {
-        if (isRestoringHistory) {
-          return;
-        }
-
-        if (historyTimer) {
-          clearTimeout(historyTimer);
-        }
-
-        historyTimer = setTimeout(() => {
-          historyTimer = null;
-          storeHistorySnapshot();
-        }, 0);
-      }
-
-      function restoreHistorySnapshot(index) {
-        if (index < 0 || index >= history.length) {
-          return;
-        }
-
-        isRestoringHistory = true;
-        canvas.loadFromJSON(history[index], () => {
-          syncCanvasTheme();
-          removePreviewObject();
-          canvas.discardActiveObject();
-          canvas.requestRenderAll();
-          isRestoringHistory = false;
-          historyIndex = index;
-          updateHistoryButtons();
-        });
-      }
-
-      function undoHistory() {
-        if (historyIndex > 0) {
-          restoreHistorySnapshot(historyIndex - 1);
-        }
-      }
-
-      function redoHistory() {
-        if (historyIndex < history.length - 1) {
-          restoreHistorySnapshot(historyIndex + 1);
-        }
-      }
-
-      function syncCanvasTheme() {
-        canvas.setBackgroundColor('rgba(0,0,0,0)', canvas.requestRenderAll.bind(canvas));
-
-        const inkColor = getThemeInkColor();
-        if (state.followThemeInk || isPureWhite(state.color) || isPureBlack(state.color)) {
-          state.followThemeInk = true;
-          updateInkColor(inkColor);
-        }
-      }
-
-      function applyCanvasStyle() {
-        if (!canvasPaper) return;
-        canvasPaper.dataset.canvasStyle = state.canvasStyle || 'plain';
-      }
-
-      function syncStatus() {
-        zoomLabel.textContent = `${Math.round(state.zoom * 100)}%`;
-        updateHistoryButtons();
-      }
-
-      function setActiveTool(tool) {
-        state.panStart = null;
-        state.tool = tool;
-        toolButtons.forEach((button) => {
-          const active = button.dataset.tool === tool;
-          button.classList.toggle('active', active);
-          button.setAttribute('aria-pressed', String(active));
-        });
-
-        canvas.discardActiveObject();
-        if (tool === 'hand') {
-          canvas.selection = false;
-          canvas.skipTargetFind = true;
-          canvas.defaultCursor = 'grab';
-          canvas.hoverCursor = 'grab';
-          canvas.isDrawingMode = false;
-          canvas.freeDrawingBrush = null;
-        } else {
-          canvas.selection = tool === 'select';
-          canvas.skipTargetFind = tool !== 'select';
-          canvas.defaultCursor = tool === 'select' ? 'default' : 'crosshair';
-          canvas.hoverCursor = tool === 'select' ? 'move' : 'crosshair';
-        }
-
-        if (tool === 'pencil') {
-          const brush = new fabric.PencilBrush(canvas);
-          brush.color = state.color;
-          brush.width = state.size;
-          brush.decimate = 0.4;
-          canvas.freeDrawingBrush = brush;
-          canvas.isDrawingMode = true;
-        } else if (tool === 'eraser') {
-          const brush = new DiagramEraserBrush(canvas);
-          brush.color = state.color;
-          brush.width = state.eraserSize;
-          brush.decimate = 0.4;
-          canvas.freeDrawingBrush = brush;
-          canvas.isDrawingMode = true;
-        } else {
-          canvas.isDrawingMode = false;
-          canvas.freeDrawingBrush = null;
-        }
-
-        canvas.upperCanvasEl.style.cursor = canvas.defaultCursor;
-        syncStatus();
-        canvas.requestRenderAll();
-      }
-
-      function applyBrushSettings() {
-        updateInkColor(colorPicker.value);
-        state.size = Number(strokeSize.value);
-        state.eraserSize = Number(eraserSize.value);
-
-        if (state.tool === 'pencil' && canvas.freeDrawingBrush) {
-          canvas.freeDrawingBrush.color = state.color;
-          canvas.freeDrawingBrush.width = state.size;
-        }
-        if (state.tool === 'eraser' && canvas.freeDrawingBrush) {
-          canvas.freeDrawingBrush.width = state.eraserSize;
-        }
-      }
-
-      function resizeCanvas() {
-        const width = canvasPaper.clientWidth;
-        const height = canvasPaper.clientHeight;
-        canvas.setDimensions({ width, height });
-        canvas.calcOffset();
-        canvas.requestRenderAll();
-      }
-
-      function clampZoom(value) {
-        return Math.min(3.5, Math.max(0.4, value));
-      }
-
-      function setZoom(nextZoom) {
-        const zoom = clampZoom(nextZoom);
-        const center = new fabric.Point(canvas.getWidth() / 2, canvas.getHeight() / 2);
-        canvas.zoomToPoint(center, zoom);
-        state.zoom = zoom;
-        syncStatus();
-        canvas.requestRenderAll();
-      }
-
-      function resetView() {
-        canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-        state.zoom = 1;
-        syncStatus();
-        canvas.requestRenderAll();
-      }
-
-      function snapEndpoint(start, end) {
-        if (!state.snapAngle) return end;
-        const dx = end.x - start.x;
-        const dy = end.y - start.y;
-        const distance = Math.hypot(dx, dy);
-        if (distance < 2) return end;
-        const step = (state.snapAngle * Math.PI) / 180;
-        const angle = Math.atan2(dy, dx);
-        const snapped = Math.round(angle / step) * step;
-        return {
-          x: start.x + Math.cos(snapped) * distance,
-          y: start.y + Math.sin(snapped) * distance,
-        };
-      }
-
-      function buildConnectorObject(tool, start, end) {
-        const snappedEnd = tool === 'arrow' ? snapEndpoint(start, end) : end;
-        const left = Math.min(start.x, snappedEnd.x);
-        const top = Math.min(start.y, snappedEnd.y);
-        const localStart = {
-          x: start.x - left,
-          y: start.y - top,
-        };
-        const localEnd = {
-          x: snappedEnd.x - left,
-          y: snappedEnd.y - top,
-        };
-        const dx = snappedEnd.x - start.x;
-        const dy = snappedEnd.y - start.y;
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-        const headSize = Math.max(10, state.size * 2.8);
-
-        const line = new fabric.Line([
-          localStart.x,
-          localStart.y,
-          localEnd.x,
-          localEnd.y,
-        ], {
-          stroke: state.color,
-          strokeWidth: state.size,
-          strokeUniform: true,
-          fill: state.color,
-          objectCaching: false,
-          selectable: false,
-          evented: false,
-        });
-
-        const parts = [line];
-
-        if (tool === 'arrow') {
-          if (state.arrowHead === 'end' || state.arrowHead === 'both') {
-            parts.push(new fabric.Triangle({
-              left: localEnd.x,
-              top: localEnd.y,
-              width: headSize,
-              height: headSize,
-              originX: 'center',
-              originY: 'center',
-              angle: angle + 90,
-              fill: state.color,
-              stroke: state.color,
-              strokeWidth: 1,
-              objectCaching: false,
-              selectable: false,
-              evented: false,
-            }));
+        function toggleDiagramTheme() {
+          const injected = document.getElementById("themeToggle");
+          if (injected) {
+            injected.click();
+            return;
           }
 
-          if (state.arrowHead === 'start' || state.arrowHead === 'both') {
-            parts.push(new fabric.Triangle({
-              left: localStart.x,
-              top: localStart.y,
-              width: headSize,
-              height: headSize,
-              originX: 'center',
-              originY: 'center',
-              angle: angle + 270,
-              fill: state.color,
-              stroke: state.color,
-              strokeWidth: 1,
-              objectCaching: false,
-              selectable: false,
-              evented: false,
-            }));
+          // Fallback if theme.js hasn't injected yet.
+          if (document.body.classList.contains("light-mode")) {
+            document.body.classList.remove("light-mode");
+            localStorage.setItem(THEME_KEY, "dark");
+          } else {
+            document.body.classList.add("light-mode");
+            localStorage.setItem(THEME_KEY, "light");
           }
         }
 
-        return new fabric.Group(parts, {
-          left,
-          top,
-          originX: 'left',
-          originY: 'top',
-          objectCaching: false,
-          selectable: true,
-          evented: true,
-          hasControls: true,
-          subTargetCheck: false,
-        });
-      }
-
-      function createPreviewObject(tool, start, end) {
-        const left = Math.min(start.x, end.x);
-        const top = Math.min(start.y, end.y);
-        const width = Math.abs(end.x - start.x);
-        const height = Math.abs(end.y - start.y);
-
-        const shapeBase = {
-          left,
-          top,
-          width,
-          height,
-          fill: 'rgba(255,255,255,0)',
-          stroke: state.color,
-          strokeWidth: state.size,
-          strokeUniform: true,
-          objectCaching: false,
-        };
-
-        if (tool === 'line' || tool === 'arrow') {
-          return buildConnectorObject(tool, start, end);
+        function isLightTheme() {
+          return document.body.classList.contains("light-mode");
         }
 
-        if (tool === 'rect') {
-          return new fabric.Rect({
-            ...shapeBase,
-            rx: 0,
-            ry: 0,
-            selectable: true,
-            hasControls: true,
+        function isPureWhite(value) {
+          const normalized = String(value || "")
+            .trim()
+            .toLowerCase();
+          return (
+            normalized === "#fff" ||
+            normalized === "#ffffff" ||
+            normalized === "rgb(255, 255, 255)" ||
+            normalized === "rgb(255,255,255)"
+          );
+        }
+
+        function isPureBlack(value) {
+          const normalized = String(value || "")
+            .trim()
+            .toLowerCase();
+          return (
+            normalized === "#000" ||
+            normalized === "#000000" ||
+            normalized === "rgb(0, 0, 0)" ||
+            normalized === "rgb(0,0,0)"
+          );
+        }
+
+        function getThemeInkColor() {
+          return isLightTheme() ? "#000000" : "#ffffff";
+        }
+
+        function getThemeCanvasColor() {
+          return isLightTheme() ? "#ffffff" : "#000000";
+        }
+
+        const canvas = new fabric.Canvas(canvasEl, {
+          preserveObjectStacking: true,
+          selection: true,
+          stopContextMenu: true,
+          fireRightClick: false,
+          backgroundColor: "rgba(0,0,0,0)",
+          enableRetinaScaling: true,
+        });
+
+        const state = {
+          tool: "select",
+          color: getThemeInkColor(),
+          size: Number(strokeSize.value),
+          strokeStyle: strokeStyleSelect.value,
+          textSize: Number(fontSizeInput.value),
+          textFont: fontFamilySelect.value,
+          eraserSize: Number(eraserSize.value),
+          arrowHead: arrowHeadStyle.value,
+          snapAngle: Number(snapAngleSelect.value),
+          snapEnabled: true,
+          canvasStyle: canvasStyleSelect ? canvasStyleSelect.value : "plain",
+          zoom: 1,
+          drawingStart: null,
+          previewObject: null,
+          followThemeInk: true,
+          panStart: null,
+        };
+
+        colorPicker.value = state.color;
+
+        window.__diagramCanvas = canvas;
+        window.__diagramState = state;
+
+        class DiagramEraserBrush extends fabric.PencilBrush {
+          createPath(pathData) {
+            const path = super.createPath(pathData);
+            path.globalCompositeOperation = "destination-out";
+            path.selectable = false;
+            path.evented = false;
+            path.hoverCursor = "crosshair";
+            return path;
+          }
+        }
+
+        function getScenePoint(evt) {
+          if (typeof canvas.getScenePoint === "function") {
+            return canvas.getScenePoint(evt);
+          }
+          return canvas.getPointer(evt);
+        }
+
+        const history = [];
+        let historyIndex = -1;
+        let historyTimer = null;
+        let isRestoringHistory = false;
+        const HISTORY_LIMIT = 40;
+
+        function updateInkColor(color) {
+          state.color = color;
+          colorPicker.value = color;
+          if (canvas.freeDrawingBrush) {
+            canvas.freeDrawingBrush.color = color;
+          }
+        }
+
+        function getStrokeDashArray(style, size) {
+          if (style === "dashed") {
+            return [Math.max(6, size * 3), Math.max(4, size * 2)];
+          }
+          if (style === "dotted") {
+            return [1, Math.max(4, size * 2)];
+          }
+          return null;
+        }
+
+        function applyStrokeToObject(object) {
+          if (!object) return;
+          if (object.type === "i-text") {
+            object.set({ fill: state.color });
+            return;
+          }
+          if (object.type === "group") {
+            object.getObjects().forEach((child) => applyStrokeToObject(child));
+            return;
+          }
+          if (object.type === "triangle") {
+            object.set({
+              fill: state.color,
+              stroke: state.color,
+              strokeDashArray: null,
+            });
+            return;
+          }
+          if (object.stroke === undefined) return;
+          object.set({
+            stroke: state.color,
+            strokeWidth: state.size,
+            strokeDashArray: getStrokeDashArray(state.strokeStyle, state.size),
           });
         }
 
-        if (tool === 'ellipse') {
-          return new fabric.Ellipse({
-            left: start.x + width / 2,
-            top: start.y + height / 2,
-            rx: width / 2,
-            ry: height / 2,
-            fill: 'rgba(255,255,255,0)',
+        function applyStrokeToSelection() {
+          if (state.tool !== "select") return;
+          const activeObjects = canvas.getActiveObjects();
+          if (!activeObjects.length) return;
+          activeObjects.forEach((object) => applyStrokeToObject(object));
+          canvas.requestRenderAll();
+          scheduleHistorySnapshot();
+        }
+
+        function syncStrokeControlsFromObject(object) {
+          if (!object) return;
+
+          if (object.type === "group") {
+            const candidate = object
+              .getObjects()
+              .find(
+                (child) =>
+                  child.stroke !== undefined && child.type !== "triangle",
+              );
+            if (candidate) {
+              syncStrokeControlsFromObject(candidate);
+            }
+            return;
+          }
+
+          if (object.stroke !== undefined) {
+            if (object.stroke) {
+              colorPicker.value = object.stroke;
+              state.color = object.stroke;
+            }
+            if (typeof object.strokeWidth === "number") {
+              strokeSize.value = Math.round(object.strokeWidth || state.size);
+              state.size = Number(strokeSize.value);
+            }
+            const dash = object.strokeDashArray;
+            if (!dash || dash.length === 0) {
+              strokeStyleSelect.value = "solid";
+              state.strokeStyle = "solid";
+            } else if (dash[0] <= 1) {
+              strokeStyleSelect.value = "dotted";
+              state.strokeStyle = "dotted";
+            } else {
+              strokeStyleSelect.value = "dashed";
+              state.strokeStyle = "dashed";
+            }
+          }
+        }
+
+        function syncTextControlsFromObject(object) {
+          if (!object || object.type !== "i-text") return;
+          if (fontSizeInput) {
+            fontSizeInput.value = Math.round(object.fontSize || state.textSize);
+          }
+          if (fontFamilySelect) {
+            fontFamilySelect.value = object.fontFamily || state.textFont;
+          }
+        }
+
+        function updateHistoryButtons() {
+          if (undoBtn) {
+            undoBtn.disabled = historyIndex <= 0;
+          }
+          if (redoBtn) {
+            redoBtn.disabled =
+              historyIndex < 0 || historyIndex >= history.length - 1;
+          }
+        }
+
+        function saveCanvasToStorage(snapshot) {
+          try {
+            const payload = snapshot || canvas.toJSON();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+          } catch (error) {
+            console.warn("CleanPad: Unable to save canvas", error);
+          }
+        }
+
+        function loadCanvasFromStorage() {
+          try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (!stored) return false;
+            const snapshot = JSON.parse(stored);
+            isRestoringHistory = true;
+            canvas.loadFromJSON(snapshot, () => {
+              syncCanvasTheme();
+              applyCanvasStyle();
+              canvas.discardActiveObject();
+              canvas.requestRenderAll();
+              isRestoringHistory = false;
+              history.length = 0;
+              history.push(snapshot);
+              historyIndex = 0;
+              updateHistoryButtons();
+            });
+            return true;
+          } catch (error) {
+            console.warn("CleanPad: Unable to restore canvas", error);
+            return false;
+          }
+        }
+
+        function storeHistorySnapshot() {
+          if (isRestoringHistory) {
+            return;
+          }
+
+          const snapshot = canvas.toJSON();
+
+          if (historyIndex < history.length - 1) {
+            history.splice(historyIndex + 1);
+          }
+
+          history.push(snapshot);
+          if (history.length > HISTORY_LIMIT) {
+            history.shift();
+          }
+
+          historyIndex = history.length - 1;
+          updateHistoryButtons();
+          saveCanvasToStorage(snapshot);
+        }
+
+        function scheduleHistorySnapshot() {
+          if (isRestoringHistory) {
+            return;
+          }
+
+          if (historyTimer) {
+            clearTimeout(historyTimer);
+          }
+
+          historyTimer = setTimeout(() => {
+            historyTimer = null;
+            storeHistorySnapshot();
+          }, 0);
+        }
+
+        function restoreHistorySnapshot(index) {
+          if (index < 0 || index >= history.length) {
+            return;
+          }
+
+          isRestoringHistory = true;
+          canvas.loadFromJSON(history[index], () => {
+            syncCanvasTheme();
+            removePreviewObject();
+            canvas.discardActiveObject();
+            canvas.requestRenderAll();
+            isRestoringHistory = false;
+            historyIndex = index;
+            updateHistoryButtons();
+          });
+        }
+
+        function undoHistory() {
+          if (historyIndex > 0) {
+            restoreHistorySnapshot(historyIndex - 1);
+          }
+        }
+
+        function redoHistory() {
+          if (historyIndex < history.length - 1) {
+            restoreHistorySnapshot(historyIndex + 1);
+          }
+        }
+
+        function syncCanvasTheme() {
+          canvas.setBackgroundColor(
+            "rgba(0,0,0,0)",
+            canvas.requestRenderAll.bind(canvas),
+          );
+
+          const inkColor = getThemeInkColor();
+          if (
+            state.followThemeInk ||
+            isPureWhite(state.color) ||
+            isPureBlack(state.color)
+          ) {
+            state.followThemeInk = true;
+            updateInkColor(inkColor);
+          }
+        }
+
+        function applyCanvasStyle() {
+          if (!canvasPaper) return;
+          canvasPaper.dataset.canvasStyle = state.canvasStyle || "plain";
+        }
+
+        function syncStatus() {
+          zoomLabel.textContent = `${Math.round(state.zoom * 100)}%`;
+          updateHistoryButtons();
+        }
+
+        function setActiveTool(tool) {
+          state.panStart = null;
+          state.tool = tool;
+          toolButtons.forEach((button) => {
+            const active = button.dataset.tool === tool;
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-pressed", String(active));
+          });
+
+          canvas.discardActiveObject();
+          if (tool === "select") {
+            canvas.selection = true;
+            canvas.skipTargetFind = false;
+            canvas.perPixelTargetFind = true;
+            canvas.targetFindTolerance = 6;
+            canvas.defaultCursor = "default";
+            canvas.hoverCursor = "move";
+            canvas.isDrawingMode = false;
+            canvas.freeDrawingBrush = null;
+          } else if (tool === "hand") {
+            canvas.selection = false;
+            canvas.skipTargetFind = true;
+            canvas.perPixelTargetFind = false;
+            canvas.defaultCursor = "grab";
+            canvas.hoverCursor = "grab";
+            canvas.isDrawingMode = false;
+            canvas.freeDrawingBrush = null;
+          } else if (tool === "pencil" || tool === "eraser") {
+            canvas.selection = false;
+            canvas.skipTargetFind = true;
+            canvas.perPixelTargetFind = false;
+            canvas.defaultCursor = "crosshair";
+            canvas.hoverCursor = "crosshair";
+          } else {
+            canvas.selection = false;
+            canvas.skipTargetFind = true;
+            canvas.perPixelTargetFind = false;
+            if (tool === "text") {
+              canvas.defaultCursor = "text";
+              canvas.hoverCursor = "text";
+            } else {
+              canvas.defaultCursor = "crosshair";
+              canvas.hoverCursor = "crosshair";
+            }
+          }
+
+          if (tool === "pencil") {
+            const brush = new fabric.PencilBrush(canvas);
+            brush.color = state.color;
+            brush.width = state.size;
+            brush.decimate = 0.4;
+            canvas.freeDrawingBrush = brush;
+            canvas.isDrawingMode = true;
+          } else if (tool === "eraser") {
+            const brush = new DiagramEraserBrush(canvas);
+            brush.color = state.color;
+            brush.width = state.eraserSize;
+            brush.decimate = 0.4;
+            canvas.freeDrawingBrush = brush;
+            canvas.isDrawingMode = true;
+          } else {
+            canvas.isDrawingMode = false;
+            canvas.freeDrawingBrush = null;
+          }
+
+          canvas.upperCanvasEl.style.cursor = canvas.defaultCursor;
+          syncStatus();
+          canvas.requestRenderAll();
+        }
+
+        function applyBrushSettings() {
+          updateInkColor(colorPicker.value);
+          state.size = Number(strokeSize.value);
+          state.eraserSize = Number(eraserSize.value);
+
+          if (state.tool === "pencil" && canvas.freeDrawingBrush) {
+            canvas.freeDrawingBrush.color = state.color;
+            canvas.freeDrawingBrush.width = state.size;
+          }
+          if (state.tool === "eraser" && canvas.freeDrawingBrush) {
+            canvas.freeDrawingBrush.width = state.eraserSize;
+          }
+
+          applyStrokeToSelection();
+        }
+
+        function applyStrokeStyleSettings() {
+          state.strokeStyle = strokeStyleSelect.value;
+          applyStrokeToSelection();
+        }
+
+        function applyTextSettings() {
+          state.textSize = Number(fontSizeInput.value);
+          state.textFont = fontFamilySelect.value;
+
+          const active = canvas.getActiveObject();
+          if (active && active.type === "i-text") {
+            active.set({
+              fontSize: state.textSize,
+              fontFamily: state.textFont,
+              fill: state.color,
+            });
+            canvas.requestRenderAll();
+            scheduleHistorySnapshot();
+          }
+        }
+
+        function resizeCanvas() {
+          const width = canvasPaper.clientWidth;
+          const height = canvasPaper.clientHeight;
+          canvas.setDimensions({ width, height });
+          canvas.calcOffset();
+          canvas.requestRenderAll();
+        }
+
+        function clampZoom(value) {
+          return Math.min(3.5, Math.max(0.4, value));
+        }
+
+        function setZoom(nextZoom) {
+          const zoom = clampZoom(nextZoom);
+          const center = new fabric.Point(
+            canvas.getWidth() / 2,
+            canvas.getHeight() / 2,
+          );
+          canvas.zoomToPoint(center, zoom);
+          state.zoom = zoom;
+          syncStatus();
+          canvas.requestRenderAll();
+        }
+
+        function resetView() {
+          canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+          state.zoom = 1;
+          syncStatus();
+          canvas.requestRenderAll();
+        }
+
+        function snapEndpoint(start, end) {
+          if (!state.snapAngle) return end;
+          const dx = end.x - start.x;
+          const dy = end.y - start.y;
+          const distance = Math.hypot(dx, dy);
+          if (distance < 2) return end;
+          const step = (state.snapAngle * Math.PI) / 180;
+          const angle = Math.atan2(dy, dx);
+          const snapped = Math.round(angle / step) * step;
+          return {
+            x: start.x + Math.cos(snapped) * distance,
+            y: start.y + Math.sin(snapped) * distance,
+          };
+        }
+
+        function buildConnectorObject(tool, start, end) {
+          const snappedEnd = tool === "arrow" ? snapEndpoint(start, end) : end;
+          const left = Math.min(start.x, snappedEnd.x);
+          const top = Math.min(start.y, snappedEnd.y);
+          const localStart = {
+            x: start.x - left,
+            y: start.y - top,
+          };
+          const localEnd = {
+            x: snappedEnd.x - left,
+            y: snappedEnd.y - top,
+          };
+          const dx = snappedEnd.x - start.x;
+          const dy = snappedEnd.y - start.y;
+          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+          const headSize = Math.max(10, state.size * 2.8);
+
+          const line = new fabric.Line(
+            [localStart.x, localStart.y, localEnd.x, localEnd.y],
+            {
+              stroke: state.color,
+              strokeWidth: state.size,
+              strokeUniform: true,
+              fill: state.color,
+              objectCaching: false,
+              selectable: false,
+              evented: false,
+            },
+          );
+
+          const parts = [line];
+
+          if (tool === "arrow") {
+            if (state.arrowHead === "end" || state.arrowHead === "both") {
+              parts.push(
+                new fabric.Triangle({
+                  left: localEnd.x,
+                  top: localEnd.y,
+                  width: headSize,
+                  height: headSize,
+                  originX: "center",
+                  originY: "center",
+                  angle: angle + 90,
+                  fill: state.color,
+                  stroke: state.color,
+                  strokeWidth: 1,
+                  objectCaching: false,
+                  selectable: false,
+                  evented: false,
+                }),
+              );
+            }
+
+            if (state.arrowHead === "start" || state.arrowHead === "both") {
+              parts.push(
+                new fabric.Triangle({
+                  left: localStart.x,
+                  top: localStart.y,
+                  width: headSize,
+                  height: headSize,
+                  originX: "center",
+                  originY: "center",
+                  angle: angle + 270,
+                  fill: state.color,
+                  stroke: state.color,
+                  strokeWidth: 1,
+                  objectCaching: false,
+                  selectable: false,
+                  evented: false,
+                }),
+              );
+            }
+          }
+
+          return new fabric.Group(parts, {
+            left,
+            top,
+            originX: "left",
+            originY: "top",
+            objectCaching: false,
+            selectable: true,
+            evented: true,
+            hasControls: true,
+            subTargetCheck: false,
+          });
+        }
+
+        function createPreviewObject(tool, start, end) {
+          const left = Math.min(start.x, end.x);
+          const top = Math.min(start.y, end.y);
+          const width = Math.abs(end.x - start.x);
+          const height = Math.abs(end.y - start.y);
+
+          const shapeBase = {
+            left,
+            top,
+            width,
+            height,
+            fill: "rgba(255,255,255,0)",
             stroke: state.color,
             strokeWidth: state.size,
             strokeUniform: true,
-            originX: 'center',
-            originY: 'center',
             objectCaching: false,
-            selectable: true,
-            hasControls: true,
-          });
+          };
+
+          if (tool === "line" || tool === "arrow") {
+            return buildConnectorObject(tool, start, end);
+          }
+
+          if (tool === "rect") {
+            return new fabric.Rect({
+              ...shapeBase,
+              rx: 0,
+              ry: 0,
+              selectable: true,
+              hasControls: true,
+            });
+          }
+
+          if (tool === "ellipse") {
+            return new fabric.Ellipse({
+              left: start.x + width / 2,
+              top: start.y + height / 2,
+              rx: width / 2,
+              ry: height / 2,
+              fill: "rgba(255,255,255,0)",
+              stroke: state.color,
+              strokeWidth: state.size,
+              strokeUniform: true,
+              originX: "center",
+              originY: "center",
+              objectCaching: false,
+              selectable: true,
+              hasControls: true,
+            });
+          }
+
+          if (tool === "triangle") {
+            return new fabric.Polygon(
+              [
+                { x: left + width / 2, y: top },
+                { x: left + width, y: top + height },
+                { x: left, y: top + height },
+              ],
+              {
+                ...shapeBase,
+                selectable: true,
+                hasControls: true,
+              },
+            );
+          }
+
+          if (tool === "diamond") {
+            return new fabric.Polygon(
+              [
+                { x: left + width / 2, y: top },
+                { x: left + width, y: top + height / 2 },
+                { x: left + width / 2, y: top + height },
+                { x: left, y: top + height / 2 },
+              ],
+              {
+                ...shapeBase,
+                selectable: true,
+                hasControls: true,
+              },
+            );
+          }
+
+          return null;
         }
 
-        if (tool === 'triangle') {
-          return new fabric.Polygon([
-            { x: left + width / 2, y: top },
-            { x: left + width, y: top + height },
-            { x: left, y: top + height },
-          ], {
-            ...shapeBase,
-            selectable: true,
-            hasControls: true,
-          });
+        function removePreviewObject() {
+          if (state.previewObject) {
+            canvas.remove(state.previewObject);
+            state.previewObject = null;
+          }
         }
 
-        if (tool === 'diamond') {
-          return new fabric.Polygon([
-            { x: left + width / 2, y: top },
-            { x: left + width, y: top + height / 2 },
-            { x: left + width / 2, y: top + height },
-            { x: left, y: top + height / 2 },
-          ], {
-            ...shapeBase,
-            selectable: true,
-            hasControls: true,
-          });
+        function updatePreviewObject(start, end) {
+          removePreviewObject();
+          state.previewObject = createPreviewObject(state.tool, start, end);
+          if (state.previewObject) {
+            state.previewObject.__temporary = true;
+            state.previewObject.evented = false;
+            state.previewObject.selectable = false;
+            canvas.add(state.previewObject);
+            canvas.requestRenderAll();
+          }
         }
 
-        return null;
-      }
+        function finalizePreviewObject(start, end) {
+          const object = createPreviewObject(state.tool, start, end);
+          if (!object) return;
 
-      function removePreviewObject() {
-        if (state.previewObject) {
-          canvas.remove(state.previewObject);
-          state.previewObject = null;
-        }
-      }
+          const dragDistance = Math.hypot(end.x - start.x, end.y - start.y);
+          if (dragDistance < 4) return;
 
-      function updatePreviewObject(start, end) {
-        removePreviewObject();
-        state.previewObject = createPreviewObject(state.tool, start, end);
-        if (state.previewObject) {
-          state.previewObject.__temporary = true;
-          state.previewObject.evented = false;
-          state.previewObject.selectable = false;
-          canvas.add(state.previewObject);
+          object.evented = true;
+          object.selectable = true;
+          object.hasControls = true;
+          canvas.add(object);
+          canvas.setActiveObject(object);
           canvas.requestRenderAll();
         }
-      }
 
-      function finalizePreviewObject(start, end) {
-        const object = createPreviewObject(state.tool, start, end);
-        if (!object) return;
-
-        const dragDistance = Math.hypot(end.x - start.x, end.y - start.y);
-        if (dragDistance < 4) return;
-
-        object.evented = true;
-        object.selectable = true;
-        object.hasControls = true;
-        canvas.add(object);
-        canvas.setActiveObject(object);
-        canvas.requestRenderAll();
-      }
-
-      function clearBoard() {
-        if (canvas.getObjects().length > 0 && !window.confirm('Clear the entire canvas?')) {
-          return;
-        }
-
-        const active = canvas.getActiveObjects();
-        if (active.length) {
-          active.forEach((object) => canvas.remove(object));
-          canvas.discardActiveObject();
-        }
-        canvas.getObjects().forEach((object) => {
-          if (object !== state.previewObject) {
-            canvas.remove(object);
+        function clearBoard() {
+          if (
+            canvas.getObjects().length > 0 &&
+            !window.confirm("Clear the entire canvas?")
+          ) {
+            return;
           }
-        });
-        removePreviewObject();
-        canvas.requestRenderAll();
-      }
 
-      toolButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          setActiveTool(button.dataset.tool);
-        });
-      });
-
-      colorPicker.addEventListener('input', () => {
-        state.followThemeInk = false;
-        applyBrushSettings();
-      });
-      strokeSize.addEventListener('input', applyBrushSettings);
-      eraserSize.addEventListener('input', applyBrushSettings);
-      arrowHeadStyle.addEventListener('change', () => {
-        state.arrowHead = arrowHeadStyle.value;
-        syncStatus();
-      });
-      snapAngleSelect.addEventListener('change', () => {
-        state.snapAngle = Number(snapAngleSelect.value);
-        syncStatus();
-      });
-
-      if (snapToggleBtn) {
-        snapToggleBtn.addEventListener('click', () => {
-          state.snapEnabled = !state.snapEnabled;
-          snapToggleBtn.setAttribute('aria-pressed', String(state.snapEnabled));
-          if (state.snapEnabled) {
-            state.snapAngle = Number(snapAngleSelect.value);
-          } else {
-            state.snapAngle = 0;
-          }
-          syncStatus();
-        });
-      }
-
-      if (canvasStyleSelect) {
-        canvasStyleSelect.addEventListener('change', () => {
-          state.canvasStyle = canvasStyleSelect.value;
-          applyCanvasStyle();
-        });
-      }
-
-      undoBtn.addEventListener('click', undoHistory);
-      redoBtn.addEventListener('click', redoHistory);
-
-      zoomInBtn.addEventListener('click', () => setZoom(state.zoom * 1.15));
-      zoomOutBtn.addEventListener('click', () => setZoom(state.zoom / 1.15));
-      resetViewBtn.addEventListener('click', resetView);
-      clearBoardBtn.addEventListener('click', clearBoard);
-
-      function startPan(event) {
-        state.drawingStart = null;
-        removePreviewObject();
-        canvas.discardActiveObject();
-        state.panStart = { x: event.clientX, y: event.clientY };
-        canvas.defaultCursor = 'grabbing';
-        canvas.hoverCursor = 'grabbing';
-        canvas.upperCanvasEl.style.cursor = 'grabbing';
-      }
-
-      function updatePan(event) {
-        if (!state.panStart) {
-          return;
-        }
-
-        const viewportTransform = canvas.viewportTransform;
-        viewportTransform[4] += event.clientX - state.panStart.x;
-        viewportTransform[5] += event.clientY - state.panStart.y;
-        state.panStart = { x: event.clientX, y: event.clientY };
-        canvas.requestRenderAll();
-      }
-
-      function endPan() {
-        if (!state.panStart) {
-          return;
-        }
-
-        state.panStart = null;
-        canvas.defaultCursor = state.tool === 'hand' ? 'grab' : state.tool === 'select' ? 'default' : 'crosshair';
-        canvas.hoverCursor = state.tool === 'hand' ? 'grab' : state.tool === 'select' ? 'move' : 'crosshair';
-        canvas.upperCanvasEl.style.cursor = canvas.defaultCursor;
-        syncStatus();
-      }
-
-      function zoomAtPointer(event) {
-        const delta = event.deltaY;
-        const zoom = clampZoom(canvas.getZoom() * Math.pow(0.999, delta));
-        const pointer = canvas.getPointer(event);
-        canvas.zoomToPoint(new fabric.Point(pointer.x, pointer.y), zoom);
-        state.zoom = zoom;
-        syncStatus();
-        canvas.requestRenderAll();
-      }
-
-      canvas.upperCanvasEl.addEventListener('mousedown', (event) => {
-        if (event.button === 1 || state.tool === 'hand') {
-          event.preventDefault();
-          event.stopPropagation();
-          startPan(event);
-        }
-      }, true);
-
-      window.addEventListener('mousemove', (event) => {
-        if (!state.panStart) {
-          return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-        updatePan(event);
-      }, true);
-
-      window.addEventListener('mouseup', (event) => {
-        if (!state.panStart) {
-          return;
-        }
-
-        event.preventDefault();
-        endPan();
-      }, true);
-
-      canvas.upperCanvasEl.addEventListener('wheel', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        zoomAtPointer(event);
-      }, { passive: false, capture: true });
-
-      canvas.on('mouse:down', (opt) => {
-        if (state.tool === 'select' || state.tool === 'hand' || state.tool === 'pencil' || state.tool === 'eraser') {
-          return;
-        }
-
-        const pointer = getScenePoint(opt.e);
-        state.drawingStart = pointer;
-        canvas.discardActiveObject();
-        updatePreviewObject(pointer, pointer);
-      });
-
-      canvas.on('mouse:move', (opt) => {
-        if (state.panStart) {
-          return;
-        }
-
-        if (!state.drawingStart) return;
-        if (state.tool === 'select' || state.tool === 'hand' || state.tool === 'pencil' || state.tool === 'eraser') return;
-
-        const pointer = getScenePoint(opt.e);
-        updatePreviewObject(state.drawingStart, pointer);
-      });
-
-      canvas.on('mouse:up', (opt) => {
-        if (state.panStart) {
-          endPan();
-          return;
-        }
-
-        if (!state.drawingStart) return;
-        if (state.tool === 'select' || state.tool === 'hand' || state.tool === 'pencil' || state.tool === 'eraser') {
-          state.drawingStart = null;
-          removePreviewObject();
-          return;
-        }
-
-        const pointer = getScenePoint(opt.e);
-        removePreviewObject();
-        finalizePreviewObject(state.drawingStart, pointer);
-        state.drawingStart = null;
-      });
-
-      canvas.on('object:added', (event) => {
-        if (isRestoringHistory || !event.target || event.target.__temporary) {
-          return;
-        }
-        scheduleHistorySnapshot();
-      });
-
-      canvas.on('object:modified', () => {
-        if (!isRestoringHistory) {
-          scheduleHistorySnapshot();
-        }
-      });
-
-      canvas.on('object:removed', (event) => {
-        if (isRestoringHistory || !event.target || event.target.__temporary) {
-          return;
-        }
-        scheduleHistorySnapshot();
-      });
-
-      document.addEventListener('keydown', (event) => {
-        const target = event.target;
-        const isTypingField = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
-        if (isTypingField) return;
-
-        const key = String(event.key || '').toLowerCase();
-
-        if ((event.ctrlKey || event.metaKey) && key === 'z') {
-          if (event.shiftKey) {
-            redoHistory();
-          } else {
-            undoHistory();
-          }
-          event.preventDefault();
-          return;
-        }
-
-        if (event.key === 'Delete' || event.key === 'Backspace') {
           const active = canvas.getActiveObjects();
           if (active.length) {
             active.forEach((object) => canvas.remove(object));
             canvas.discardActiveObject();
+          }
+          canvas.getObjects().forEach((object) => {
+            if (object !== state.previewObject) {
+              canvas.remove(object);
+            }
+          });
+          removePreviewObject();
+          canvas.requestRenderAll();
+        }
+
+        toolButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            setActiveTool(button.dataset.tool);
+          });
+        });
+
+        colorPicker.addEventListener("input", () => {
+          state.followThemeInk = false;
+          applyBrushSettings();
+        });
+        fontSizeInput.addEventListener("input", applyTextSettings);
+        fontFamilySelect.addEventListener("change", applyTextSettings);
+        strokeSize.addEventListener("input", applyBrushSettings);
+        strokeStyleSelect.addEventListener("change", applyStrokeStyleSettings);
+        eraserSize.addEventListener("input", applyBrushSettings);
+        arrowHeadStyle.addEventListener("change", () => {
+          state.arrowHead = arrowHeadStyle.value;
+          syncStatus();
+        });
+        snapAngleSelect.addEventListener("change", () => {
+          state.snapAngle = Number(snapAngleSelect.value);
+          syncStatus();
+        });
+
+        if (snapToggleBtn) {
+          snapToggleBtn.addEventListener("click", () => {
+            state.snapEnabled = !state.snapEnabled;
+            snapToggleBtn.setAttribute(
+              "aria-pressed",
+              String(state.snapEnabled),
+            );
+            if (state.snapEnabled) {
+              state.snapAngle = Number(snapAngleSelect.value);
+            } else {
+              state.snapAngle = 0;
+            }
+            syncStatus();
+          });
+        }
+
+        if (canvasStyleSelect) {
+          canvasStyleSelect.addEventListener("change", () => {
+            state.canvasStyle = canvasStyleSelect.value;
+            applyCanvasStyle();
+          });
+        }
+
+        undoBtn.addEventListener("click", undoHistory);
+        redoBtn.addEventListener("click", redoHistory);
+
+        zoomInBtn.addEventListener("click", () => setZoom(state.zoom * 1.15));
+        zoomOutBtn.addEventListener("click", () => setZoom(state.zoom / 1.15));
+        resetViewBtn.addEventListener("click", resetView);
+        clearBoardBtn.addEventListener("click", clearBoard);
+
+        function startPan(event) {
+          state.drawingStart = null;
+          removePreviewObject();
+          canvas.discardActiveObject();
+          state.panStart = { x: event.clientX, y: event.clientY };
+          canvas.defaultCursor = "grabbing";
+          canvas.hoverCursor = "grabbing";
+          canvas.upperCanvasEl.style.cursor = "grabbing";
+        }
+
+        function updatePan(event) {
+          if (!state.panStart) {
+            return;
+          }
+
+          const viewportTransform = canvas.viewportTransform;
+          viewportTransform[4] += event.clientX - state.panStart.x;
+          viewportTransform[5] += event.clientY - state.panStart.y;
+          state.panStart = { x: event.clientX, y: event.clientY };
+          canvas.requestRenderAll();
+        }
+
+        function endPan() {
+          if (!state.panStart) {
+            return;
+          }
+
+          state.panStart = null;
+          canvas.defaultCursor =
+            state.tool === "hand"
+              ? "grab"
+              : state.tool === "select"
+                ? "default"
+                : "crosshair";
+          canvas.hoverCursor =
+            state.tool === "hand"
+              ? "grab"
+              : state.tool === "select"
+                ? "move"
+                : "crosshair";
+          canvas.upperCanvasEl.style.cursor = canvas.defaultCursor;
+          syncStatus();
+        }
+
+        function zoomAtPointer(event) {
+          const delta = event.deltaY;
+          const zoom = clampZoom(canvas.getZoom() * Math.pow(0.999, delta));
+          const pointer = canvas.getPointer(event);
+          canvas.zoomToPoint(new fabric.Point(pointer.x, pointer.y), zoom);
+          state.zoom = zoom;
+          syncStatus();
+          canvas.requestRenderAll();
+        }
+
+        canvas.upperCanvasEl.addEventListener(
+          "mousedown",
+          (event) => {
+            if (event.button === 1 || state.tool === "hand") {
+              event.preventDefault();
+              event.stopPropagation();
+              startPan(event);
+            }
+          },
+          true,
+        );
+
+        window.addEventListener(
+          "mousemove",
+          (event) => {
+            if (!state.panStart) {
+              return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            updatePan(event);
+          },
+          true,
+        );
+
+        window.addEventListener(
+          "mouseup",
+          (event) => {
+            if (!state.panStart) {
+              return;
+            }
+
+            event.preventDefault();
+            endPan();
+          },
+          true,
+        );
+
+        canvas.upperCanvasEl.addEventListener(
+          "wheel",
+          (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            zoomAtPointer(event);
+          },
+          { passive: false, capture: true },
+        );
+
+        canvas.on("mouse:down", (opt) => {
+          const target = opt.target;
+          if (target && target.type === "i-text") {
+            if (state.tool === "select" || state.tool === "text") {
+              target.enterEditing();
+              target.selectAll();
+              syncTextControlsFromObject(target);
+              return;
+            }
+          }
+
+          const shapeTools = [
+            "line",
+            "rect",
+            "ellipse",
+            "triangle",
+            "diamond",
+            "arrow",
+          ];
+          if (target && shapeTools.includes(state.tool)) {
+            syncTextControlsFromObject(target);
+            return;
+          }
+
+          if (state.tool === "text") {
+            const pointer = getScenePoint(opt.e);
+            const text = new fabric.IText("Text", {
+              left: pointer.x,
+              top: pointer.y,
+              fill: state.color,
+              fontSize: state.textSize,
+              fontFamily: state.textFont,
+              objectCaching: false,
+            });
+            canvas.add(text);
+            canvas.setActiveObject(text);
+            text.enterEditing();
+            text.selectAll();
+            scheduleHistorySnapshot();
+            return;
+          }
+
+          if (
+            state.tool === "select" ||
+            state.tool === "hand" ||
+            state.tool === "pencil" ||
+            state.tool === "eraser"
+          ) {
+            return;
+          }
+
+          const pointer = getScenePoint(opt.e);
+          state.drawingStart = pointer;
+          canvas.discardActiveObject();
+          updatePreviewObject(pointer, pointer);
+        });
+
+        canvas.on("mouse:move", (opt) => {
+          if (state.panStart) {
+            return;
+          }
+
+          if (!state.drawingStart) return;
+          if (
+            state.tool === "select" ||
+            state.tool === "hand" ||
+            state.tool === "pencil" ||
+            state.tool === "eraser"
+          )
+            return;
+
+          const pointer = getScenePoint(opt.e);
+          updatePreviewObject(state.drawingStart, pointer);
+        });
+
+        canvas.on("mouse:up", (opt) => {
+          if (state.panStart) {
+            endPan();
+            return;
+          }
+
+          if (!state.drawingStart) return;
+          if (
+            state.tool === "select" ||
+            state.tool === "hand" ||
+            state.tool === "pencil" ||
+            state.tool === "eraser"
+          ) {
+            state.drawingStart = null;
+            removePreviewObject();
+            return;
+          }
+
+          const pointer = getScenePoint(opt.e);
+          removePreviewObject();
+          finalizePreviewObject(state.drawingStart, pointer);
+          state.drawingStart = null;
+        });
+
+        canvas.on("object:added", (event) => {
+          if (isRestoringHistory || !event.target || event.target.__temporary) {
+            return;
+          }
+          scheduleHistorySnapshot();
+        });
+
+        canvas.on("path:created", (event) => {
+          if (!event.path) return;
+          if (state.tool === "pencil" || state.tool === "eraser") {
+            event.path.set({
+              selectable: true,
+              evented: true,
+              hasControls: false,
+              hasBorders: true,
+              lockMovementX: true,
+              lockMovementY: true,
+              lockScalingX: true,
+              lockScalingY: true,
+              lockRotation: true,
+            });
             canvas.requestRenderAll();
-            event.preventDefault();
           }
-        }
+        });
 
-        if ((event.ctrlKey || event.metaKey) && (event.key === '+' || event.key === '=')) {
-          setZoom(state.zoom * 1.15);
-          event.preventDefault();
-        }
+        canvas.on("object:modified", () => {
+          if (!isRestoringHistory) {
+            scheduleHistorySnapshot();
+          }
+        });
 
-        if ((event.ctrlKey || event.metaKey) && event.key === '-') {
-          setZoom(state.zoom / 1.15);
-          event.preventDefault();
-        }
+        canvas.on("text:changed", () => {
+          if (!isRestoringHistory) {
+            scheduleHistorySnapshot();
+          }
+        });
 
-        if ((event.ctrlKey || event.metaKey) && event.key === '0') {
-          resetView();
-          event.preventDefault();
-        }
+        canvas.on("selection:created", (event) => {
+          const selected = event.selected && event.selected[0];
+          syncTextControlsFromObject(selected);
+          syncStrokeControlsFromObject(selected);
+        });
 
-        if (!event.ctrlKey && !event.metaKey && !event.altKey) {
-          if (key === 's') {
-            setActiveTool('select');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'p') {
-            setActiveTool('pencil');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'g') {
-            setActiveTool('hand');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'e') {
-            setActiveTool('eraser');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'a') {
-            setActiveTool('arrow');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'l') {
-            setActiveTool('line');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'r') {
-            setActiveTool('rect');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'c') {
-            setActiveTool('ellipse');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'd') {
-            setActiveTool('diamond');
-            event.preventDefault();
-            return;
-          }
-          if (key === 't') {
-            setActiveTool('triangle');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'w') {
-            state.followThemeInk = false;
-            setActiveTool('pencil');
-            updateInkColor('#ffffff');
-            event.preventDefault();
-            return;
-          }
-          if (key === 'b') {
-            state.followThemeInk = false;
-            setActiveTool('pencil');
-            updateInkColor('#000000');
-            event.preventDefault();
-            return;
-          }
-        }
-      });
+        canvas.on("selection:updated", (event) => {
+          const selected = event.selected && event.selected[0];
+          syncTextControlsFromObject(selected);
+          syncStrokeControlsFromObject(selected);
+        });
 
-      const themeObserver = new MutationObserver(() => {
-        syncCanvasTheme();
-        updateDiagramThemeToggle();
-      });
-      themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        canvas.on("object:removed", (event) => {
+          if (isRestoringHistory || !event.target || event.target.__temporary) {
+            return;
+          }
+          scheduleHistorySnapshot();
+        });
 
-      const resizeObserver = new ResizeObserver(() => resizeCanvas());
-      resizeObserver.observe(canvasPaper);
-      window.addEventListener('resize', resizeCanvas);
+        document.addEventListener("keydown", (event) => {
+          const target = event.target;
+          const isTypingField =
+            target &&
+            (target.tagName === "INPUT" ||
+              target.tagName === "TEXTAREA" ||
+              target.isContentEditable);
+          if (isTypingField) return;
 
-      syncCanvasTheme();
-      applyCanvasStyle();
-      updateDiagramThemeToggle();
-      applyBrushSettings();
-      resizeCanvas();
-      setActiveTool('select');
-      storeHistorySnapshot();
-      syncStatus();
+          const key = String(event.key || "").toLowerCase();
 
-      if (diagramThemeToggle) {
-        diagramThemeToggle.addEventListener('click', () => {
-          toggleDiagramTheme();
+          if ((event.ctrlKey || event.metaKey) && key === "z") {
+            if (event.shiftKey) {
+              redoHistory();
+            } else {
+              undoHistory();
+            }
+            event.preventDefault();
+            return;
+          }
+
+          if (event.key === "Delete" || event.key === "Backspace") {
+            const active = canvas.getActiveObjects();
+            if (active.length) {
+              active.forEach((object) => canvas.remove(object));
+              canvas.discardActiveObject();
+              canvas.requestRenderAll();
+              event.preventDefault();
+            }
+          }
+
+          if (
+            (event.ctrlKey || event.metaKey) &&
+            (event.key === "+" || event.key === "=")
+          ) {
+            setZoom(state.zoom * 1.15);
+            event.preventDefault();
+          }
+
+          if ((event.ctrlKey || event.metaKey) && event.key === "-") {
+            setZoom(state.zoom / 1.15);
+            event.preventDefault();
+          }
+
+          if ((event.ctrlKey || event.metaKey) && event.key === "0") {
+            resetView();
+            event.preventDefault();
+          }
+
+          if (!event.ctrlKey && !event.metaKey && !event.altKey) {
+            if (key === "s") {
+              setActiveTool("select");
+              event.preventDefault();
+              return;
+            }
+            if (key === "x") {
+              setActiveTool("text");
+              event.preventDefault();
+              return;
+            }
+            if (key === "p") {
+              setActiveTool("pencil");
+              event.preventDefault();
+              return;
+            }
+            if (key === "g") {
+              setActiveTool("hand");
+              event.preventDefault();
+              return;
+            }
+            if (key === "e") {
+              setActiveTool("eraser");
+              event.preventDefault();
+              return;
+            }
+            if (key === "a") {
+              setActiveTool("arrow");
+              event.preventDefault();
+              return;
+            }
+            if (key === "l") {
+              setActiveTool("line");
+              event.preventDefault();
+              return;
+            }
+            if (key === "r") {
+              setActiveTool("rect");
+              event.preventDefault();
+              return;
+            }
+            if (key === "c") {
+              setActiveTool("ellipse");
+              event.preventDefault();
+              return;
+            }
+            if (key === "d") {
+              setActiveTool("diamond");
+              event.preventDefault();
+              return;
+            }
+            if (key === "t") {
+              setActiveTool("triangle");
+              event.preventDefault();
+              return;
+            }
+            if (key === "w") {
+              state.followThemeInk = false;
+              setActiveTool("pencil");
+              updateInkColor("#ffffff");
+              event.preventDefault();
+              return;
+            }
+            if (key === "b") {
+              state.followThemeInk = false;
+              setActiveTool("pencil");
+              updateInkColor("#000000");
+              event.preventDefault();
+              return;
+            }
+          }
+        });
+
+        const themeObserver = new MutationObserver(() => {
+          syncCanvasTheme();
           updateDiagramThemeToggle();
         });
-      }
-    })();
-  </script>
-</body>
+        themeObserver.observe(document.body, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
 
+        const resizeObserver = new ResizeObserver(() => resizeCanvas());
+        resizeObserver.observe(canvasPaper);
+        window.addEventListener("resize", resizeCanvas);
+
+        syncCanvasTheme();
+        applyCanvasStyle();
+        updateDiagramThemeToggle();
+        applyBrushSettings();
+        resizeCanvas();
+        setActiveTool("select");
+        const restored = loadCanvasFromStorage();
+        if (!restored) {
+          storeHistorySnapshot();
+        }
+        syncStatus();
+
+        if (diagramThemeToggle) {
+          diagramThemeToggle.addEventListener("click", () => {
+            toggleDiagramTheme();
+            updateDiagramThemeToggle();
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>
