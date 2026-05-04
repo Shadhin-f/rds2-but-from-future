@@ -1,4 +1,4 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -771,6 +771,7 @@
       <nav class="nav-bar">
         <a href="index.html">RDS2</a>
         <a href="calendar.html">Academic Calendar</a>
+        <a href="finalexam.html">Final Exam Schedule</a>
         <a href="resources.html" class="trending-link">Study Materials</a>
         <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
         <a href="routine.html">Routine Maker</a>
@@ -862,7 +863,7 @@
       if (state.shelvesError || state.booksError) {
         const text = [state.shelvesError, state.booksError]
           .filter(Boolean)
-          .join(" Â· ");
+          .join(" · ");
         els.message.innerHTML = `
             <div class="status-pill error">
               <i class="fas fa-triangle-exclamation"></i> ${text}
@@ -885,7 +886,7 @@
       els.message.innerHTML = `
           <div class="status-pill success">
             <i class="fas fa-circle-check"></i>
-            Loaded ${state.books.length.toLocaleString()} books Â· ${state.shelves.length} shelf rows
+            Loaded ${state.books.length.toLocaleString()} books · ${state.shelves.length} shelf rows
           </div>`;
     }
 
@@ -992,7 +993,7 @@
         .split("|")
         .map((token) => token.trim())
         .filter(Boolean);
-      return tokens.join(" Â· ");
+      return tokens.join(" · ");
     }
 
     function highlightText(text, searchTokens) {
@@ -1366,7 +1367,7 @@
   </script>
   <footer class="footer">
     <p>
-      Â© 2025 RDS2 BUT FROM FUTURE Â· Created by Tahshan Jamil Shadhin
+      © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
       <br />
     </p>
     <div class="social-links">

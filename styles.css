@@ -228,7 +228,11 @@ header {
   font-weight: 500;
   letter-spacing: 0.01em;
   position: relative;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
+}
+
+.nav-bar a[href="finalexam.html"] {
+  border-color: #e11d48;
 }
 
 .nav-bar a::before,
@@ -350,7 +354,7 @@ body.light-mode .cleanpad-link:hover {
 
   .nav-bar a {
     padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
   }
 }
 
@@ -417,7 +421,7 @@ h1 {
   font-family: "Cal Sans", sans-serif;
   font-weight: 800;
   font-style: normal;
-  font-size: 2.8rem;
+  font-size: 2.52rem;
   letter-spacing: -1px;
   margin-bottom: 2rem;
   padding: 10px 20px;
@@ -3449,6 +3453,16 @@ body.light-mode .nav-bar a:hover {
   color: var(--text-color);
   background: rgba(0, 0, 0, 0.05);
   border-color: var(--text-muted);
+}
+
+body.light-mode .nav-bar a[href="finalexam.html"],
+.nav-bar a[href="finalexam.html"] {
+  border-color: #e11d48 !important;
+}
+
+body.light-mode .nav-bar a[href="finalexam.html"].active,
+.nav-bar a[href="finalexam.html"].active {
+  border-color: #e11d48 !important;
 }
 
 body.light-mode .table-container,

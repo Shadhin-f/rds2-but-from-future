@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <script
@@ -515,6 +515,7 @@
         <nav class="nav-bar">
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
+        <a href="finalexam.html">Final Exam Schedule</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
           <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html" class="active">Routine Maker</a>
@@ -919,7 +920,7 @@
                     ${c.room ? `<span class="room">${c.room}</span>` : ""}
                     <button class="remove-btn" data-idx="${
                       c._idx
-                    }" title="Remove">✕</button>
+                    }" title="Remove">?</button>
                   </span>
                 `,
                 )
@@ -969,8 +970,8 @@
         });
 
         conflictEl.textContent = conflicts
-          ? `⚠️ ${conflicts} time conflict${conflicts > 1 ? "s" : ""}`
-          : "✓ No conflicts";
+          ? `??� ${conflicts} time conflict${conflicts > 1 ? "s" : ""}`
+          : "? No conflicts";
         conflictEl.style.color = conflicts ? "#f87171" : "#4ade80";
       }
 
@@ -1253,3 +1254,4 @@
     <script src="typewriter.js"></script>
   </body>
 </html>
+
