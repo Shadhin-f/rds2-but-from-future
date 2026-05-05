@@ -319,11 +319,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         filteredData = courseData.filter(course => {
-            // Main search filter (course, faculty, semester)
-            const matchesMain = !searchTerm ||
-                course.Course?.toLowerCase().includes(searchTerm) ||
-                course.Faculty?.toLowerCase().includes(searchTerm) ||
-                course.Semester?.toLowerCase().includes(searchTerm);
+            const searchWords = searchTerm.split(/\s+/).filter(w => w.length > 0);
+
+            // Main search filter (uniform search across all fields)
+            const matchesMain = searchWords.length === 0 || searchWords.every(word => 
+                course.Course?.toLowerCase().includes(word) ||
+                course.Faculty?.toLowerCase().includes(word) ||
+                course.Semester?.toLowerCase().includes(word) ||
+                course.Time?.toLowerCase().includes(word) ||
+                course.Room?.toLowerCase().includes(word)
+            );
 
             // Time filter
             const matchesTime = !timeTerm ||

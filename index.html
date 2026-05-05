@@ -1,774 +1,682 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-      crossorigin="anonymous"
-    ></script>
-    <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
 
-      gtag("config", "G-DR0D2D6C35");
-    </script>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nsu Faculty Predictor</title>
-    <link rel="stylesheet" href="styles.css?v=1.1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="chat.css" />
-    <style>
-      /* Light Mode Variables - B&W White Theme */
-      body.light-mode {
-        --primary-color: #222222;
-        --primary-gradient: linear-gradient(135deg, #333333, #555555);
-        --bg-color: #ffffff;
-        --surface-color: #f5f5f5;
-        --text-color: #111111;
-        --text-muted: #666666;
-        --border-color: #cccccc;
-        --tr-hover-color: #eeeeee;
-        --surface-transparent: rgba(245, 245, 245, 0.9);
-        background-color: #ffffff !important;
-        color: var(--text-color);
-      }
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+    crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-5572277246422121" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-      body.light-mode .nav-bar a {
-        background: transparent;
-        border-color: var(--border-color);
-        color: var(--text-muted);
-      }
+    gtag("config", "G-DR0D2D6C35");
+  </script>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nsu Faculty Predictor</title>
+  <link rel="stylesheet" href="styles.css?v=1.1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="chat.css" />
+  <style>
+    /* Light Mode Variables - B&W White Theme */
+    body.light-mode {
+      --primary-color: #222222;
+      --primary-gradient: linear-gradient(135deg, #333333, #555555);
+      --bg-color: #ffffff;
+      --surface-color: #f5f5f5;
+      --text-color: #111111;
+      --text-muted: #666666;
+      --border-color: #cccccc;
+      --tr-hover-color: #eeeeee;
+      --surface-transparent: rgba(245, 245, 245, 0.9);
+      background-color: #ffffff !important;
+      color: var(--text-color);
+    }
 
-      body.light-mode .nav-bar a.active {
-        border: 2px solid var(--text-color);
-        color: var(--text-color);
-        font-weight: 700;
-      }
+    body.light-mode .nav-bar a {
+      background: transparent;
+      border-color: var(--border-color);
+      color: var(--text-muted);
+    }
 
-      body.light-mode .nav-bar a:hover {
-        color: var(--text-color);
-        background: rgba(0, 0, 0, 0.05);
-        border-color: var(--text-muted);
-      }
+    body.light-mode .nav-bar a.active {
+      border: 2px solid var(--text-color);
+      color: var(--text-color);
+      font-weight: 700;
+    }
 
-      body.light-mode .search-container input {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .nav-bar a:hover {
+      color: var(--text-color);
+      background: rgba(0, 0, 0, 0.05);
+      border-color: var(--text-muted);
+    }
 
-      body.light-mode .table-container {
-        background: var(--surface-transparent);
-        border-color: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .search-container input {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode .search-icon {
-        color: var(--text-muted);
-      }
+    body.light-mode .table-container {
+      background: var(--surface-transparent);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode table th {
-        background: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .search-icon {
+      color: var(--text-muted);
+    }
 
-      body.light-mode table td {
-        color: var(--text-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode table th {
+      background: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode table tr:hover {
-        background: var(--tr-hover-color);
-      }
+    body.light-mode table td {
+      color: var(--text-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode h1 {
-        color: var(--text-color);
-      }
+    body.light-mode table tr:hover {
+      background: var(--tr-hover-color);
+    }
 
-      body.light-mode .routine-maker-container {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode h1 {
+      color: var(--text-color);
+    }
 
-      body.light-mode .routine-header {
-        background: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .routine-maker-container {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode .routine-table th,
-      body.light-mode .routine-table td {
-        border-color: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .routine-header {
+      background: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode #routineClashes {
-        color: var(--text-color) !important;
-      }
+    body.light-mode .routine-table th,
+    body.light-mode .routine-table td {
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode .modal-content {
-        background: var(--surface-color);
-        color: var(--text-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode #routineClashes {
+      color: var(--text-color) !important;
+    }
 
-      body.light-mode .modal-header {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode .modal-content {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode .modal-header h2 {
-        color: var(--text-color);
-      }
+    body.light-mode .modal-header {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode .close-modal {
-        color: var(--text-color);
-      }
+    body.light-mode .modal-header h2 {
+      color: var(--text-color);
+    }
 
-      body.light-mode .modal-body {
-        color: var(--text-color);
-      }
+    body.light-mode .close-modal {
+      color: var(--text-color);
+    }
 
-      body.light-mode .modal-body p {
-        color: var(--text-color);
-      }
+    body.light-mode .modal-body {
+      color: var(--text-color);
+    }
 
-      body.light-mode .modal-body strong {
-        color: var(--text-muted);
-      }
+    body.light-mode .modal-body p {
+      color: var(--text-color);
+    }
 
-      body.light-mode .pagination button {
-        background: var(--surface-color);
-        color: var(--text-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode .modal-body strong {
+      color: var(--text-muted);
+    }
 
-      body.light-mode .semester-select {
-        background: var(--surface-color);
-        color: var(--text-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode .pagination button {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode .footer {
-        color: var(--text-muted);
-      }
+    body.light-mode .semester-select {
+      background: var(--surface-color);
+      color: var(--text-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode .announcement-bar {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .footer {
+      color: var(--text-muted);
+    }
 
-      body.light-mode .announcement-bar .view-extension-btn {
-        background: var(--text-color);
-        color: var(--bg-color);
-      }
+    body.light-mode .announcement-bar {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode .float-btn {
-        background: var(--text-color);
-        color: var(--bg-color);
-      }
+    body.light-mode .announcement-bar .view-extension-btn {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
 
-      body.light-mode .floating-help-btn {
-        background: var(--text-color);
-        color: var(--bg-color);
-      }
+    body.light-mode .float-btn {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
 
-      body.light-mode .routine-toggle-btn {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .floating-help-btn {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
 
-      body.light-mode .routine-course-block {
-        background: var(--text-color);
-        color: var(--bg-color);
-      }
+    body.light-mode .routine-toggle-btn {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode .quick-tips-section {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-      }
+    body.light-mode .routine-course-block {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
 
-      body.light-mode .social-links a {
-        background: transparent;
-        border-color: var(--border-color);
-        color: var(--text-muted);
-      }
+    body.light-mode .quick-tips-section {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+    }
 
-      body.light-mode .social-links a:hover {
-        background: var(--border-color);
-        color: var(--text-color);
-      }
+    body.light-mode .social-links a {
+      background: transparent;
+      border-color: var(--border-color);
+      color: var(--text-muted);
+    }
 
-      body.light-mode .new-feature-link,
-      body.light-mode .trending-link {
-        border-color: var(--text-muted) !important;
-        color: var(--text-color) !important;
-        background: transparent !important;
-      }
+    body.light-mode .social-links a:hover {
+      background: var(--border-color);
+      color: var(--text-color);
+    }
 
-      body.light-mode .new-feature-link:hover,
-      body.light-mode .trending-link:hover {
-        background: var(--text-color) !important;
-        color: var(--bg-color) !important;
-      }
+    body.light-mode .new-feature-link,
+    body.light-mode .trending-link {
+      border-color: var(--text-muted) !important;
+      color: var(--text-color) !important;
+      background: transparent !important;
+    }
 
-      /* Theme Toggle Button - Professional Text Style */
+    body.light-mode .new-feature-link:hover,
+    body.light-mode .trending-link:hover {
+      background: var(--text-color) !important;
+      color: var(--bg-color) !important;
+    }
+
+    /* Theme Toggle Button - Professional Text Style */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: "Inter", sans-serif;
+      color: var(--text-color);
+      transition: opacity 0.2s ease;
+      box-shadow: none;
+      letter-spacing: 0.5px;
+    }
+
+    .theme-toggle:hover {
+      opacity: 0.8;
+      transform: none;
+      box-shadow: none;
+    }
+
+    body.light-mode .theme-toggle {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
       .theme-toggle {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        background: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 8px 16px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        font-weight: 600;
-        font-family: "Inter", sans-serif;
-        color: var(--text-color);
-        transition: opacity 0.2s ease;
-        box-shadow: none;
-        letter-spacing: 0.5px;
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
       }
+    }
 
-      .theme-toggle:hover {
-        opacity: 0.8;
-        transform: none;
-        box-shadow: none;
-      }
+    /* Search row layout */
+    .search-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-color);
+      padding: 15px 0;
+      box-shadow: -20px 0 0 var(--bg-color), 20px 0 0 var(--bg-color);
+      border-bottom: 1px solid var(--border-color); /* Add a subtle separator when sticky */
+    }
 
-      body.light-mode .theme-toggle {
-        background: var(--surface-color);
-        border-color: var(--border-color);
-        color: var(--text-color);
-      }
+    .search-row .search-container {
+      margin: 0;
+    }
 
-      @media (max-width: 768px) {
-        .theme-toggle {
-          top: 10px;
-          right: 10px;
-          padding: 6px 12px;
-          font-size: 0.8rem;
-        }
-      }
+    .search-row .search-main {
+      flex: 2;
+      min-width: 200px;
+    }
 
-      /* Search row layout */
+    .search-row .search-small {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .search-row .search-small input {
+      /* font-size: 0.9rem; */
+      padding: 10px 16px;
+    }
+
+    @media (max-width: 768px) {
       .search-row {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
+        flex-direction: column;
       }
 
-      .search-row .search-container {
-        margin: 0;
-      }
-
-      .search-row .search-main {
-        flex: 2;
-        min-width: 200px;
-      }
-
+      .search-row .search-main,
       .search-row .search-small {
-        flex: 1;
-        min-width: 150px;
+        width: 100%;
+        max-width: 100%;
       }
+    }
 
-      .search-row .search-small input {
-        /* font-size: 0.9rem; */
-        padding: 10px 16px;
-      }
+    /* Mode Toggle Styles */
+    .mode-toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding: 10px 16px;
+      background: transparent;
+      border-radius: 12px;
+      border: 1px solid rgba(71, 85, 105, 0.3);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-      @media (max-width: 768px) {
-        .search-row {
-          flex-direction: column;
-        }
+    .mode-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      opacity: 0.6;
+    }
 
-        .search-row .search-main,
-        .search-row .search-small {
-          width: 100%;
-          max-width: 100%;
-        }
-      }
+    .mode-label.active {
+      color: var(--text-color);
+      opacity: 1;
+    }
 
-      /* Mode Toggle Styles */
-      .mode-toggle-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        margin-bottom: 16px;
-        padding: 10px 16px;
-        background: transparent;
-        border-radius: 12px;
-        border: 1px solid rgba(71, 85, 105, 0.3);
-        width: fit-content;
-        margin-left: auto;
-        margin-right: auto;
-      }
+    .mode-toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      cursor: pointer;
+    }
 
-      .mode-label {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        font-weight: 500;
-        transition: all 0.3s ease;
-        opacity: 0.6;
-      }
+    .mode-toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-      .mode-label.active {
-        color: var(--text-color);
-        opacity: 1;
-      }
+    .mode-toggle-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(71, 85, 105, 0.6);
+      border-radius: 26px;
+      transition: all 0.3s ease;
+    }
 
-      .mode-toggle-switch {
-        position: relative;
-        width: 50px;
-        height: 26px;
-        cursor: pointer;
-      }
+    .mode-toggle-slider::before {
+      content: "";
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background: #e2e8f0;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-      .mode-toggle-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-
-      .mode-toggle-slider {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(71, 85, 105, 0.6);
-        border-radius: 26px;
-        transition: all 0.3s ease;
-      }
-
-      .mode-toggle-slider::before {
-        content: "";
-        position: absolute;
-        height: 20px;
-        width: 20px;
-        left: 3px;
-        bottom: 3px;
-        background: #e2e8f0;
-        border-radius: 50%;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      }
-
-      .mode-toggle-switch input:checked + .mode-toggle-slider {
-        background: linear-gradient(
-          135deg,
+    .mode-toggle-switch input:checked+.mode-toggle-slider {
+      background: linear-gradient(135deg,
           rgba(139, 92, 246, 0.5),
-          rgba(99, 102, 241, 0.5)
-        );
-      }
+          rgba(99, 102, 241, 0.5));
+    }
 
-      .mode-toggle-switch input:checked + .mode-toggle-slider::before {
-        transform: translateX(24px);
-      }
+    .mode-toggle-switch input:checked+.mode-toggle-slider::before {
+      transform: translateX(24px);
+    }
 
-      /* Simple Mode - Hide elements */
-      body.simple-mode .routine-maker-container {
-        display: none !important;
-      }
+    /* Simple Mode - Hide elements */
+    body.simple-mode .routine-maker-container {
+      display: none !important;
+    }
 
-      body.simple-mode .details-column {
-        display: none !important;
-      }
+    body.simple-mode .details-column {
+      display: none !important;
+    }
 
-      body.simple-mode th:last-child,
-      body.simple-mode td:last-child {
-        display: none !important;
-      }
+    body.simple-mode th:last-child,
+    body.simple-mode td:last-child {
+      display: none !important;
+    }
 
-      /* Hide conflict legend and clash emojis in simple mode */
-      body.simple-mode .conflict-legend {
-        display: none !important;
-      }
+    /* Hide conflict legend and clash emojis in simple mode */
+    body.simple-mode .conflict-legend {
+      display: none !important;
+    }
 
-      body.simple-mode .plan-btn-warn,
-      body.simple-mode .modal-clash-icon,
-      body.simple-mode .clash-indicator,
-      body.simple-mode .course-routine-indicator {
-        display: none !important;
-      }
-    </style>
-  </head>
+    body.simple-mode .plan-btn-warn,
+    body.simple-mode .modal-clash-icon,
+    body.simple-mode .clash-indicator,
+    body.simple-mode .course-routine-indicator {
+      display: none !important;
+    }
+  </style>
+</head>
 
-  <body>
-    <script>
-      if (localStorage.getItem("rds2-theme-preference") === "light") {
-        document.body.classList.add("light-mode");
-      }
-    </script>
-    <!-- Theme Toggle Button injected by theme.js -->
-    <canvas id="particleCanvas"></canvas>
-    <div class="container">
-      <header>
-        <h1>RDS2 BUT FROM FUTURE</h1>
-        <nav class="nav-bar">
-          <a href="index.html" class="active">RDS2</a>
-          <a href="calendar.html">Academic Calendar</a>
-          <a href="finalexam.html">Final Exam Schedule</a>
-          <a href="resources.html" class="trending-link">Study Materials</a>
-          <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
-          <a href="routine.html">Routine Maker</a>
-          <a href="planner.html">Semester Planner</a>
-          <a href="freshman.html">Freshman Guides</a>
-          <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link"
-            >NSU Library Book Locator</a
-          >
-          <a href="shelf_search.html">Library Shelf Finder</a>
-          <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="new-feature-link">Retake Calculator</a>
-          <a href="gradeCalculator.html">Course Grade Calculator</a>
-          <a href="cleanpad.html" class="cleanpad-link">CleanPad</a>
-          <a href="blog.html" class="blog-nav-link">Blog Post</a>
-          <a href="about.html">About</a>
-        </nav>
-        <!-- <div id="pageActiveUsers" class="active-users-counter">
+<body>
+  <script>
+    if (localStorage.getItem("rds2-theme-preference") === "light") {
+      document.body.classList.add("light-mode");
+    }
+  </script>
+  <!-- Theme Toggle Button injected by theme.js -->
+  <canvas id="particleCanvas"></canvas>
+  <div class="container">
+    <header>
+      <h1>RDS2 BUT FROM FUTURE</h1>
+      <nav class="nav-bar">
+        <a href="index.html" class="active">RDS2</a>
+        <a href="calendar.html">Academic Calendar</a>
+        <a href="finalexam.html">Final Exam Schedule</a>
+        <a href="resources.html" class="trending-link">Study Materials</a>
+        <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
+        <a href="routine.html">Routine Maker</a>
+        <a href="planner.html">Semester Planner</a>
+        <a href="freshman.html">Freshman Guides</a>
+        <a href="coursemap.html">Course map</a>
+        <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+        <a href="shelf_search.html">Library Shelf Finder</a>
+        <a href="cgpa.html">CGPA Calculator</a>
+        <a href="retake.html" class="new-feature-link">Retake Calculator</a>
+        <a href="gradeCalculator.html">Course Grade Calculator</a>
+        <a href="cleanpad.html" class="cleanpad-link">CleanPad</a>
+        <a href="blog.html" class="blog-nav-link">Blog Post</a>
+        <a href="about.html">About</a>
+      </nav>
+      <!-- <div id="pageActiveUsers" class="active-users-counter">
           ?? 0 active viewers
         </div> -->
 
-        <!-- Compact Routine Maker -->
+      <!-- Compact Routine Maker -->
 
-        <div class="announcement-bar">
-          <span>Summer 26 loading...</span>
-          <a
-            href="https://t.me/nsu_advising_helper_bot_channel"
-            target="_blank"
-            class="view-extension-btn"
-          >
-            Join 1.8k+ NSUers community!</a
-          >
-        </div>
+      <div class="announcement-bar">
+        <span>Summer 26 loading...</span>
+        <a href="https://t.me/nsu_advising_helper_bot_channel" target="_blank" class="view-extension-btn">
+          Join 1.8k+ NSUers community!</a>
+      </div>
 
-        <!-- Upcoming Event Section -->
-        <div
-          id="upcomingEventSection"
-          class="upcoming-event-section"
-          style="display: none"
-        >
-          <a href="calendar.html" class="upcoming-event-link">
-            <div class="upcoming-event-content">
-              <span class="upcoming-event-icon"></span>
-              <div class="upcoming-event-info">
-                <span id="upcomingEventText" class="upcoming-event-text"></span>
-                <span id="upcomingEventDate" class="upcoming-event-date"></span>
-              </div>
-              <span
-                id="upcomingEventCountdown"
-                class="upcoming-event-countdown"
-              ></span>
+      <!-- Upcoming Event Section -->
+      <div id="upcomingEventSection" class="upcoming-event-section" style="display: none">
+        <a href="calendar.html" class="upcoming-event-link">
+          <div class="upcoming-event-content">
+            <span class="upcoming-event-icon"></span>
+            <div class="upcoming-event-info">
+              <span id="upcomingEventText" class="upcoming-event-text"></span>
+              <span id="upcomingEventDate" class="upcoming-event-date"></span>
             </div>
-          </a>
-        </div>
-
-        <!-- Mode Toggle -->
-        <div class="mode-toggle-container">
-          <span class="mode-label" id="simpleModeLabel">Simple</span>
-          <label class="mode-toggle-switch">
-            <input type="checkbox" id="modeToggle" checked />
-            <span class="mode-toggle-slider"></span>
-          </label>
-          <span class="mode-label active" id="plannerModeLabel">Planner</span>
-        </div>
-
-        <div id="routineMakerContainer" class="routine-maker-container">
-          <div class="routine-header">
-            <span class="routine-title-wrapper">
-              <span class="routine-color-dot" id="currentRoutineDot"></span>
-              Quick Planner
-            </span>
-            <div class="routine-header-actions">
-              <select id="routineSelector" class="routine-selector">
-                <option value="0">🔴 Plan 1</option>
-                <option value="1">🟠 Plan 2</option>
-                <option value="2">🟢 Plan 3</option>
-                <option value="3">🔵 Plan 4</option>
-                <option value="4">🟣 Plan 5</option>
-              </select>
-              <button
-                id="shareRoutineBtn"
-                class="routine-toggle-btn"
-                title="Share this routine"
-              >
-                <i class="fas fa-share-alt"></i> Share
-              </button>
-              <button
-                id="importRoutineBtn"
-                class="routine-toggle-btn"
-                title="Import a routine"
-              >
-                <i class="fas fa-download"></i> Import
-              </button>
-              <button id="toggleRoutineBtn" class="routine-toggle-btn">
-                Hide
-              </button>
-              <button id="downloadRoutinePdfBtn" class="routine-toggle-btn">
-                Download
-              </button>
-            </div>
+            <span id="upcomingEventCountdown" class="upcoming-event-countdown"></span>
           </div>
-          <div id="routineTableWrapper">
-            <table id="routineTable" class="routine-table">
-              <thead>
-                <tr>
-                  <th>Time</th>
-                  <th>Sat</th>
-                  <th>Sun</th>
-                  <th>Mon</th>
-                  <th>Tue</th>
-                  <th>Wed</th>
-                  <th>Thu</th>
-                  <th>Fri</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Routine rows will be generated by JS -->
-              </tbody>
-            </table>
-          </div>
-          <div
-            id="routineClashes"
-            style="margin-top: 10px; font-size: 0.95rem; color: #e2e8f0"
-          ></div>
-        </div>
-      </header>
+        </a>
+      </div>
 
-      <main>
-        <!-- Semester Selector -->
-        <div class="semester-selector">
-          <select id="semesterSelect" class="semester-select">
-            <option value="summer25.csv" data-name="Summer 2025">
-              Summer 2025
-            </option>
-            <option value="fall2025.csv" data-name="Fall 2025">
-              Fall 2025
-            </option>
-            <option value="261_v15.csv" data-name="Spring 2026" selected>
-              Spring 2026
-            </option>
-            <option value="" data-name="Summer 2026">Summer 2026</option>
-          </select>
-        </div>
+      <!-- Mode Toggle -->
+      <div class="mode-toggle-container">
+        <span class="mode-label" id="simpleModeLabel">Simple</span>
+        <label class="mode-toggle-switch">
+          <input type="checkbox" id="modeToggle" checked />
+          <span class="mode-toggle-slider"></span>
+        </label>
+        <span class="mode-label active" id="plannerModeLabel">Planner</span>
+      </div>
 
-        <div class="search-row">
-          <div class="search-container search-main">
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search courses or faculty..."
-            />
-            <i class="fas fa-search search-icon"></i>
-          </div>
-          <div class="search-container search-small">
-            <input
-              type="text"
-              id="timeSearchInput"
-              placeholder="Filter by time (e.g. ST, MW)"
-            />
-            <i class="fas fa-clock search-icon"></i>
-          </div>
-          <div class="search-container search-small">
-            <input
-              type="text"
-              id="facultySearchInput"
-              placeholder="Filter by faculty name"
-            />
-            <i class="fas fa-user search-icon"></i>
+      <div id="routineMakerContainer" class="routine-maker-container">
+        <div class="routine-header">
+          <span class="routine-title-wrapper">
+            <span class="routine-color-dot" id="currentRoutineDot"></span>
+            Quick Planner
+          </span>
+          <div class="routine-header-actions">
+            <select id="routineSelector" class="routine-selector">
+              <option value="0">🔴 Plan 1</option>
+              <option value="1">🟠 Plan 2</option>
+              <option value="2">🟢 Plan 3</option>
+              <option value="3">🔵 Plan 4</option>
+              <option value="4">🟣 Plan 5</option>
+            </select>
+            <button id="shareRoutineBtn" class="routine-toggle-btn" title="Share this routine">
+              <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button id="importRoutineBtn" class="routine-toggle-btn" title="Import a routine">
+              <i class="fas fa-download"></i> Import
+            </button>
+            <button id="toggleRoutineBtn" class="routine-toggle-btn">
+              Hide
+            </button>
+            <button id="downloadRoutinePdfBtn" class="routine-toggle-btn">
+              Download
+            </button>
           </div>
         </div>
+        <div id="routineTableWrapper">
+          <table id="routineTable" class="routine-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Sat</th>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Routine rows will be generated by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="routineClashes" style="margin-top: 10px; font-size: 0.95rem; color: #e2e8f0"></div>
+      </div>
+    </header>
 
-        <div id="semesterWarning" class="semester-warning">
-          <h3>? Data Not Available Yet</h3>
-          <p>
-            Our time-traveling elves are still working on this semester's data!
-            ????? <br />
-            <strong>Keep your patience and check back soon!</strong>
-          </p>
-          <p
-            style="
+    <main>
+      <!-- Semester Selector -->
+      <div class="semester-selector">
+        <select id="semesterSelect" class="semester-select">
+          <option value="summer25.csv" data-name="Summer 2025">
+            Summer 2025
+          </option>
+          <option value="fall2025.csv" data-name="Fall 2025">
+            Fall 2025
+          </option>
+          <option value="261_v15.csv" data-name="Spring 2026" selected>
+            Spring 2026
+          </option>
+          <option value="" data-name="Summer 2026">Summer 2026</option>
+        </select>
+      </div>
+
+      <div class="search-row">
+        <div class="search-container search-main">
+          <input type="text" id="searchInput" placeholder="Search courses or faculty..." />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="search-container search-small">
+          <input type="text" id="timeSearchInput" placeholder="Filter by time (e.g. ST, MW)" />
+          <i class="fas fa-clock search-icon"></i>
+        </div>
+        <div class="search-container search-small">
+          <input type="text" id="facultySearchInput" placeholder="Filter by faculty name" />
+          <i class="fas fa-user search-icon"></i>
+        </div>
+      </div>
+
+      <div id="semesterWarning" class="semester-warning">
+        <h3>? Data Not Available Yet</h3>
+        <p>
+          Our time-traveling elves are still working on this semester's data!
+          ????? <br />
+          <strong>Keep your patience and check back soon!</strong>
+        </p>
+        <p style="
               font-size: 0.85rem;
               color: var(--text-muted);
               margin-bottom: 15px;
-            "
-          >
-            (Seriously, they're working around the clock! ?)
-          </p>
-          <a
-            href="https://t.me/nsu_advising_helper_bot_channel"
-            target="_blank"
-            class="telegram-btn"
-          >
-            <i class="fab fa-telegram"></i> Join Our Community for Updates
-          </a>
-        </div>
+            ">
+          (Seriously, they're working around the clock! ?)
+        </p>
+        <a href="https://t.me/nsu_advising_helper_bot_channel" target="_blank" class="telegram-btn">
+          <i class="fab fa-telegram"></i> Join Our Community for Updates
+        </a>
+      </div>
 
-        <div
-          class="conflict-legend"
-          style="
+      <div class="conflict-legend" style="
             display: flex;
             gap: 20px;
             justify-content: center;
             margin-bottom: 10px;
             font-size: 0.9rem;
             color: var(--text-muted);
-          "
-        >
-          <span>🕛 Time conflict |</span>
-          <span>⚠️ Same day exam | based on quick routine</span>
-        </div>
+          ">
+        <span>🕛 Time conflict |</span>
+        <span>⚠️ Same day exam | based on quick routine</span>
+      </div>
 
-        <div class="table-container">
-          <table id="courseTable">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Course</th>
-                <th>Section</th>
-                <th>Faculty</th>
-                <th>Time</th>
-                <th>Room</th>
-                <th style="display: none">Predictions</th>
-                <th>Details</th>
-                <!-- New column for the View button -->
-              </tr>
-            </thead>
-            <tbody id="tableBody">
-              <!-- Data will be loaded dynamically -->
-            </tbody>
-          </table>
-          <div class="pagination">
-            <button id="prevPage">&laquo; Previous</button>
-            <span id="pageInfo"
-              >Page <span id="currentPage">1</span> of
-              <span id="totalPages">1</span></span
-            >
-            <button id="nextPage">Next &raquo;</button>
-          </div>
-          <div
-            id="totalEntries"
-            style="
+      <div class="table-container">
+        <table id="courseTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Course</th>
+              <th>Section</th>
+              <th>Faculty</th>
+              <th>Time</th>
+              <th>Room</th>
+              <th style="display: none">Predictions</th>
+              <th>Details</th>
+              <!-- New column for the View button -->
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Data will be loaded dynamically -->
+          </tbody>
+        </table>
+        <div class="pagination">
+          <button id="prevPage">&laquo; Previous</button>
+          <span id="pageInfo">Page <span id="currentPage">1</span> of
+            <span id="totalPages">1</span></span>
+          <button id="nextPage">Next &raquo;</button>
+        </div>
+        <div id="totalEntries" style="
               text-align: center;
               padding: 8px;
               color: var(--text-muted);
               font-size: 0.9rem;
-            "
-          >
-            Total entries: <span id="entryCount">0</span>
-          </div>
+            ">
+          Total entries: <span id="entryCount">0</span>
         </div>
+      </div>
 
-        <!-- Quick Tips Section -->
-        <div class="quick-tips-section" style="margin-top: 15px">
-          <div class="quick-tips-content">
-            <span class="tips-icon"></span>
-            <span id="tipText" class="tip-text"
-              >Use multiple plans to compare different schedule options before
-              advising.</span
-            >
-          </div>
+      <!-- Quick Tips Section -->
+      <div class="quick-tips-section" style="margin-top: 15px">
+        <div class="quick-tips-content">
+          <span class="tips-icon"></span>
+          <span id="tipText" class="tip-text">Use multiple plans to compare different schedule options before
+            advising.</span>
         </div>
+      </div>
 
-        <!-- Announcement Bar -->
-        <div class="announcement-bar">
-          <a
-            href="https://rds3.northsouth.edu/index.php"
-            target="_blank"
-            class="view-extension-btn"
-          >
-            RDS3</a
-          >
-          <a
-            href="https://www.northsouth.edu/nsu-announcements/"
-            target="_blank"
-            class="view-extension-btn"
-          >
-            NSU Announcements</a
-          >
-          <a
-            href="https://northsouth.edu/dept-notices/fao-noticebaord/"
-            target="_blank"
-            class="view-extension-btn"
-          >
-            NSU Notices</a
-          >
-        </div>
-        <div class="announcement-bar">
-          <a
-            href="https://forms.gle/LHJ9YfGUBTPLTbZo8"
-            target="_blank"
-            class="view-extension-btn"
-          >
-            Share Study material!</a
-          >
-          <a href="resources.html" target="_blank" class="view-extension-btn"
-            >Find Study material!</a
-          >
-        </div>
-        <div class="announcement-bar">
-          Play NSU Flappy Bus Game
-          <a
-            href="flappy-bus.html"
-            class="view-extension-btn"
-            title="Play NSU FLAPPY BUS"
-            >Play</a
-          >
-        </div>
-        <!-- Announcement Bar -->
-        <!--
+      <!-- Announcement Bar -->
+      <div class="announcement-bar">
+        <a href="https://rds3.northsouth.edu/index.php" target="_blank" class="view-extension-btn">
+          RDS3</a>
+        <a href="https://www.northsouth.edu/nsu-announcements/" target="_blank" class="view-extension-btn">
+          NSU Announcements</a>
+        <a href="https://northsouth.edu/dept-notices/fao-noticebaord/" target="_blank" class="view-extension-btn">
+          NSU Notices</a>
+      </div>
+      <div class="announcement-bar">
+        <a href="https://forms.gle/LHJ9YfGUBTPLTbZo8" target="_blank" class="view-extension-btn">
+          Share Study material!</a>
+        <a href="resources.html" target="_blank" class="view-extension-btn">Find Study material!</a>
+      </div>
+      <div class="announcement-bar">
+        Play NSU Flappy Bus Game
+        <a href="flappy-bus.html" class="view-extension-btn" title="Play NSU FLAPPY BUS">Play</a>
+      </div>
+      <!-- Announcement Bar -->
+      <!--
       <div class="announcement-bar">
         <span>?? Take a moment to drop a review</span>
         <a href="https://forms.gle/GGdP52Dhp2rhCsH19" target="_blank" class="view-extension-btn">
           Review Form</a>
       </div>-->
 
-        <!-- <div class="announcement-bar">
+      <!-- <div class="announcement-bar">
           <span>? Under Development for FALL 2025 Semester </span>
         </div> -->
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
-          crossorigin="anonymous"
-        ></script>
-        <!-- ad -->
-        <ins
-          class="adsbygoogle"
-          style="display: block"
-          data-ad-client="ca-pub-5572277246422121"
-          data-ad-slot="5845016719"
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        ></ins>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
+        crossorigin="anonymous"></script>
+      <!-- ad -->
+      <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-5572277246422121" data-ad-slot="5845016719"
+        data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
 
-        <!-- Review Section -->
-        <!-- <div
+      <!-- Review Section -->
+      <!-- <div
           id="commentSection"
           class="table-container"
           style="margin-top: 24px"
@@ -866,452 +774,390 @@
           </div>
           <div id="commentList"></div>
         </div> -->
-        <div id="loading" class="loading">Loading...</div>
-        <div id="noResults" class="no-results hidden">No results found</div>
-      </main>
-      <footer class="footer">
-        <p>
-          &copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin
-          <br />
-        </p>
-        <div class="social-links">
-          <span>Follow me on</span>
-          <a
-            href="https://www.facebook.com/share/19DGPCk2wr/"
-            target="_blank"
-            title="Facebook"
-          >
-            <i class="fab fa-facebook"></i>
-          </a>
-          <a
-            href="https://www.instagram.com/_shadhin_f"
-            target="_blank"
-            title="Instagram"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-            target="_blank"
-            title="LinkedIn"
-          >
-            <i class="fab fa-linkedin"></i>
-          </a>
-        </div>
+      <div id="loading" class="loading">Loading...</div>
+      <div id="noResults" class="no-results hidden">No results found</div>
+    </main>
+    <footer class="footer">
+      <p>
+        &copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin
         <br />
-      </footer>
+      </p>
+      <div class="social-links">
+        <span>Follow me on</span>
+        <a href="https://www.facebook.com/share/19DGPCk2wr/" target="_blank" title="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/_shadhin_f" target="_blank" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/tahshan-jamil-shadhin?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+          target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <br />
+    </footer>
 
-      <!-- Modal -->
-      <div id="detailsModal" class="modal hidden">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>Course Details</h2>
-            <button class="close-modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            <!-- Details will be inserted here -->
-          </div>
+    <!-- Modal -->
+    <div id="detailsModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Course Details</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <!-- Details will be inserted here -->
         </div>
       </div>
-      <!-- Add-to Modal -->
-      <div id="addToModal" class="modal hidden">
-        <div class="modal-content" style="max-width: 340px">
-          <div class="modal-header">
-            <h2>Add to Routine</h2>
-            <button class="close-modal" id="closeAddToModal">&times;</button>
-          </div>
-          <div
-            class="modal-body"
-            id="addToModalBody"
-            style="display: flex; flex-direction: column; gap: 18px"
-          >
-            <!-- Only the Add to Routine button will be injected here -->
-          </div>
+    </div>
+    <!-- Add-to Modal -->
+    <div id="addToModal" class="modal hidden">
+      <div class="modal-content" style="max-width: 340px">
+        <div class="modal-header">
+          <h2>Add to Routine</h2>
+          <button class="close-modal" id="closeAddToModal">&times;</button>
+        </div>
+        <div class="modal-body" id="addToModalBody" style="display: flex; flex-direction: column; gap: 18px">
+          <!-- Only the Add to Routine button will be injected here -->
         </div>
       </div>
+    </div>
 
-      <!-- Share Routine Modal -->
-      <div id="shareRoutineModal" class="modal hidden">
-        <div class="modal-content" style="max-width: 420px">
-          <div class="modal-header">
-            <h2><i class="fas fa-share-alt"></i> Share Routine</h2>
-            <button class="close-modal" id="closeShareModal">&times;</button>
-          </div>
-          <div
-            class="modal-body"
-            id="shareRoutineModalBody"
-            style="display: flex; flex-direction: column; gap: 14px"
-          >
-            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em">
-              Share this code with others to let them import your routine:
-            </p>
-            <textarea
-              id="shareCodeOutput"
-              class="share-code-textarea"
-              readonly
-              rows="4"
-              placeholder="Generating code..."
-            ></textarea>
-            <button
-              id="copyShareCodeBtn"
-              class="routine-toggle-btn"
-              style="align-self: flex-start"
-            >
-              <i class="fas fa-copy"></i> Copy Code
+    <!-- Share Routine Modal -->
+    <div id="shareRoutineModal" class="modal hidden">
+      <div class="modal-content" style="max-width: 420px">
+        <div class="modal-header">
+          <h2><i class="fas fa-share-alt"></i> Share Routine</h2>
+          <button class="close-modal" id="closeShareModal">&times;</button>
+        </div>
+        <div class="modal-body" id="shareRoutineModalBody" style="display: flex; flex-direction: column; gap: 14px">
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.9em">
+            Share this code with others to let them import your routine:
+          </p>
+          <textarea id="shareCodeOutput" class="share-code-textarea" readonly rows="4"
+            placeholder="Generating code..."></textarea>
+          <button id="copyShareCodeBtn" class="routine-toggle-btn" style="align-self: flex-start">
+            <i class="fas fa-copy"></i> Copy Code
+          </button>
+          <div id="shareCodeStatus" class="share-code-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Import Routine Modal -->
+    <div id="importRoutineModal" class="modal hidden">
+      <div class="modal-content" style="max-width: 420px">
+        <div class="modal-header">
+          <h2><i class="fas fa-download"></i> Import Routine</h2>
+          <button class="close-modal" id="closeImportModal">&times;</button>
+        </div>
+        <div class="modal-body" id="importRoutineModalBody" style="display: flex; flex-direction: column; gap: 14px">
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.9em">
+            Paste a shared routine code below to import it:
+          </p>
+          <textarea id="importCodeInput" class="share-code-textarea" rows="4"
+            placeholder="Paste routine code here..."></textarea>
+          <div id="importCodeStatus" class="share-code-status"></div>
+          <div style="display: flex; gap: 10px; justify-content: flex-end">
+            <button id="cancelImportBtn" class="routine-toggle-btn" style="background: var(--border-color)">
+              Cancel
             </button>
-            <div id="shareCodeStatus" class="share-code-status"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Import Routine Modal -->
-      <div id="importRoutineModal" class="modal hidden">
-        <div class="modal-content" style="max-width: 420px">
-          <div class="modal-header">
-            <h2><i class="fas fa-download"></i> Import Routine</h2>
-            <button class="close-modal" id="closeImportModal">&times;</button>
-          </div>
-          <div
-            class="modal-body"
-            id="importRoutineModalBody"
-            style="display: flex; flex-direction: column; gap: 14px"
-          >
-            <p style="margin: 0; color: var(--text-muted); font-size: 0.9em">
-              Paste a shared routine code below to import it:
-            </p>
-            <textarea
-              id="importCodeInput"
-              class="share-code-textarea"
-              rows="4"
-              placeholder="Paste routine code here..."
-            ></textarea>
-            <div id="importCodeStatus" class="share-code-status"></div>
-            <div style="display: flex; gap: 10px; justify-content: flex-end">
-              <button
-                id="cancelImportBtn"
-                class="routine-toggle-btn"
-                style="background: var(--border-color)"
-              >
-                Cancel
-              </button>
-              <button
-                id="confirmImportBtn"
-                class="routine-toggle-btn"
-                style="background: #10b981"
-              >
-                <i class="fas fa-check"></i> Import
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Import Confirmation Modal -->
-      <div id="importConfirmModal" class="modal hidden">
-        <div class="modal-content" style="max-width: 380px">
-          <div class="modal-header">
-            <h2>
-              <i class="fas fa-exclamation-triangle" style="color: #f59e0b"></i>
-              Confirm Import
-            </h2>
-            <button class="close-modal" id="closeImportConfirmModal">
-              &times;
+            <button id="confirmImportBtn" class="routine-toggle-btn" style="background: #10b981">
+              <i class="fas fa-check"></i> Import
             </button>
-          </div>
-          <div
-            class="modal-body"
-            style="display: flex; flex-direction: column; gap: 14px"
-          >
-            <p style="margin: 0; color: var(--text-color)">
-              This will <strong>replace</strong> your current routine with the
-              imported one. <br /><br />
-              <span style="color: #f59e0b"
-                >??� This action cannot be undone.</span
-              >
-            </p>
-            <div id="importPreview" class="import-preview"></div>
-            <div
-              style="
-                display: flex;
-                gap: 10px;
-                justify-content: flex-end;
-                margin-top: 8px;
-              "
-            >
-              <button
-                id="cancelConfirmImportBtn"
-                class="routine-toggle-btn"
-                style="background: var(--border-color)"
-              >
-                Cancel
-              </button>
-              <button
-                id="finalConfirmImportBtn"
-                class="routine-toggle-btn"
-                style="background: #e11d48"
-              >
-                <i class="fas fa-check"></i> Yes, Replace
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Floating Help Button -->
-      <button id="helpBtn" class="floating-help-btn" title="Help & Tutorial">
-        <i class="fas fa-question"></i>
-      </button>
-
-      <!-- Tutorial Modal -->
-      <div id="tutorialModal" class="modal hidden">
-        <div class="modal-content tutorial-modal-content">
-          <div class="modal-header">
-            <h2>
-              <i class="fas fa-graduation-cap"></i> How to Use RDS2 But From
-              Future
-            </h2>
-            <button class="close-modal" id="closeTutorialModal">&times;</button>
-          </div>
-          <div class="modal-body tutorial-body">
-            <!-- Section 1: Overview -->
-            <div class="tutorial-section">
-              <h3><i class="fas fa-home"></i> Overview</h3>
-              <p>
-                Welcome to <strong>RDS2 BUT FROM FUTURE</strong> - your ultimate
-                NSU course planning companion! This tool helps you search
-                courses, plan your routine, detect conflicts, and share your
-                plans with friends.
-              </p>
-            </div>
-
-            <!-- Section 2: Search & Filter -->
-            <div class="tutorial-section">
-              <h3><i class="fas fa-search"></i> Search & Filter Courses</h3>
-              <div class="tutorial-content">
-                <p>
-                  <strong>Main Search:</strong> Type course code (e.g.,
-                  "CSE115") or faculty name to find courses.
-                </p>
-                <p>
-                  <strong>Time Filter:</strong> Filter by class days using
-                  codes:
-                </p>
-                <ul class="tutorial-list">
-                  <li><code>ST</code> = Sunday + Tuesday</li>
-                  <li><code>MW</code> = Monday + Wednesday</li>
-                  <li><code>RA</code> = Thursday (R) + Saturday (A)</li>
-                </ul>
-                <p>
-                  <strong>Faculty Filter:</strong> Search specifically by
-                  faculty name.
-                </p>
-                <div class="tutorial-example">
-                  <strong>Example:</strong> Search "CSE115" + Time "ST" to find
-                  all CSE115 sections on Sun-Tue.
-                </div>
-              </div>
-            </div>
-
-            <!-- Section 3: Quick Planner -->
-            <div class="tutorial-section">
-              <h3>
-                <i class="fas fa-calendar-alt"></i> Quick Planner (5 Routines)
-              </h3>
-              <div class="tutorial-content">
-                <p>
-                  Plan up to
-                  <strong>5 different routines</strong> simultaneously! Each
-                  routine has a unique color:
-                </p>
-                <div class="tutorial-colors">
-                  <span class="color-dot" style="background: #e11d48"></span>
-                  Plan 1 (Red)
-                  <span class="color-dot" style="background: #f59e0b"></span>
-                  Plan 2 (Orange)
-                  <span class="color-dot" style="background: #10b981"></span>
-                  Plan 3 (Green)
-                  <span class="color-dot" style="background: #3b82f6"></span>
-                  Plan 4 (Blue)
-                  <span class="color-dot" style="background: #8b5cf6"></span>
-                  Plan 5 (Purple)
-                </div>
-                <p>
-                  <strong>Switch Routines:</strong> Use the dropdown menu to
-                  switch between your 5 plans.
-                </p>
-                <p>
-                  <strong>Keyboard Shortcuts:</strong> Press
-                  <code>Alt + 1</code> to <code>Alt + 5</code> to quickly switch
-                  between routines!
-                </p>
-                <p>
-                  <strong>Color Indicators:</strong> Small colored dots appear
-                  next to course names showing which routines they're in.
-                </p>
-              </div>
-            </div>
-
-            <!-- Section 4: Adding/Removing Courses -->
-            <div class="tutorial-section">
-              <h3>
-                <i class="fas fa-plus-circle"></i> Adding & Removing Courses
-              </h3>
-              <div class="tutorial-content">
-                <p>
-                  <strong>To Add:</strong> Click the <code>Add</code> button on
-                  any course row. A popup will let you choose which routine(s)
-                  to add it to.
-                </p>
-                <p>
-                  <strong>To Remove:</strong> In the same popup, click
-                  <code>Remove</code> next to any routine that has the course.
-                </p>
-                <p>
-                  <strong>Quick Remove:</strong> Click the <code>?</code> button
-                  directly on a course block in the routine table.
-                </p>
-                <div class="tutorial-example">
-                  <strong>Tip:</strong> You can add the same course to multiple
-                  routines to compare different schedules!
-                </div>
-              </div>
-            </div>
-
-            <!-- Section 5: Conflict Detection -->
-            <div class="tutorial-section">
-              <h3>
-                <i class="fas fa-exclamation-triangle"></i> Conflict Detection
-              </h3>
-              <div class="tutorial-content">
-                <p>The system automatically detects two types of conflicts:</p>
-                <div class="tutorial-conflict">
-                  <span>⚠️ <strong>Time Conflict:</strong></span> Course
-                  overlaps with another class in your current routine.
-                </div>
-                <div class="tutorial-conflict">
-                  <span>📅 <strong>Exam Clash:</strong></span> Course has final
-                  exam on the same day & slot as another course.
-                </div>
-                <p>
-                  Conflict warnings appear in the routine table when detected.
-                </p>
-              </div>
-            </div>
-
-            <!-- Section 6: Share & Import -->
-            <div class="tutorial-section">
-              <h3><i class="fas fa-share-alt"></i> Share & Import Routines</h3>
-              <div class="tutorial-content">
-                <p>
-                  <strong>Share:</strong> Click the <code>Share</code> button to
-                  generate a unique code for your current routine. Copy and send
-                  it to friends!
-                </p>
-                <p>
-                  <strong>Import:</strong> Click <code>Import</code>, paste a
-                  shared code, and click Import. A preview will show what
-                  courses will be imported.
-                </p>
-                <div class="tutorial-example">
-                  <strong>Note:</strong> Importing replaces the currently
-                  selected routine. You'll be asked to confirm before changes
-                  are made.
-                </div>
-              </div>
-            </div>
-
-            <!-- Section 7: Download PDF -->
-            <div class="tutorial-section">
-              <h3><i class="fas fa-file-pdf"></i> Download as PDF</h3>
-              <div class="tutorial-content">
-                <p>
-                  Click the <code>Download</code> button to export your current
-                  routine as a professional PDF file.
-                </p>
-                <p>The PDF includes:</p>
-                <ul class="tutorial-list">
-                  <li>Weekly schedule grid</li>
-                  <li>All course details (code, section, faculty)</li>
-                  <li>Timestamp and branding</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Section 8: Semester Selection -->
-            <div class="tutorial-section">
-              <h3><i class="fas fa-calendar"></i> Semester Selection</h3>
-              <div class="tutorial-content">
-                <p>
-                  Use the semester dropdown above the search bar to switch
-                  between available semesters.
-                </p>
-                <p>Course data and availability varies by semester.</p>
-              </div>
-            </div>
-
-            <!-- Section 9: Course Details -->
-            <div class="tutorial-section">
-              <h3><i class="fas fa-info-circle"></i> Course Details</h3>
-              <div class="tutorial-content">
-                <p>
-                  Click the <code>View</code> button on any course to see
-                  detailed information including:
-                </p>
-                <ul class="tutorial-list">
-                  <li>Course code and section</li>
-                  <li>Faculty name</li>
-                  <li>Class timing and days</li>
-                  <li>Available seats</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Section 10: Tips -->
-            <div class="tutorial-section tips-section">
-              <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
-              <div class="tutorial-content">
-                <ul class="tutorial-list tips-list">
-                  <li>
-                    Use multiple plans to compare different schedule options
-                    before advising.
-                  </li>
-                  <li>
-                    Share your routine code with friends to coordinate class
-                    schedules.
-                  </li>
-                  <li>
-                    Pay attention to exam clash warnings - they can save you
-                    during finals!
-                  </li>
-                  <li>
-                    Download your final routine as PDF to have it handy during
-                    registration.
-                  </li>
-                  <li>
-                    The routine data is saved locally, so it persists even if
-                    you close the browser.
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="tutorial-footer">
-              <p>
-                Need more help? Join our
-                <a
-                  href="https://t.me/nsu_advising_helper_bot_channel"
-                  target="_blank"
-                  ><i class="fab fa-telegram"></i> Telegram Community</a
-                >
-              </p>
-            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Floating Chat Popup -->
-    <!-- <div id="chatPopup" class="chat-popup">
+    <!-- Import Confirmation Modal -->
+    <div id="importConfirmModal" class="modal hidden">
+      <div class="modal-content" style="max-width: 380px">
+        <div class="modal-header">
+          <h2>
+            <i class="fas fa-exclamation-triangle" style="color: #f59e0b"></i>
+            Confirm Import
+          </h2>
+          <button class="close-modal" id="closeImportConfirmModal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 14px">
+          <p style="margin: 0; color: var(--text-color)">
+            This will <strong>replace</strong> your current routine with the
+            imported one. <br /><br />
+            <span style="color: #f59e0b">??� This action cannot be undone.</span>
+          </p>
+          <div id="importPreview" class="import-preview"></div>
+          <div style="
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+                margin-top: 8px;
+              ">
+            <button id="cancelConfirmImportBtn" class="routine-toggle-btn" style="background: var(--border-color)">
+              Cancel
+            </button>
+            <button id="finalConfirmImportBtn" class="routine-toggle-btn" style="background: #e11d48">
+              <i class="fas fa-check"></i> Yes, Replace
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Help Button -->
+    <button id="helpBtn" class="floating-help-btn" title="Help & Tutorial">
+      <i class="fas fa-question"></i>
+    </button>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="modal hidden">
+      <div class="modal-content tutorial-modal-content">
+        <div class="modal-header">
+          <h2>
+            <i class="fas fa-graduation-cap"></i> How to Use RDS2 But From
+            Future
+          </h2>
+          <button class="close-modal" id="closeTutorialModal">&times;</button>
+        </div>
+        <div class="modal-body tutorial-body">
+          <!-- Section 1: Overview -->
+          <div class="tutorial-section">
+            <h3><i class="fas fa-home"></i> Overview</h3>
+            <p>
+              Welcome to <strong>RDS2 BUT FROM FUTURE</strong> - your ultimate
+              NSU course planning companion! This tool helps you search
+              courses, plan your routine, detect conflicts, and share your
+              plans with friends.
+            </p>
+          </div>
+
+          <!-- Section 2: Search & Filter -->
+          <div class="tutorial-section">
+            <h3><i class="fas fa-search"></i> Search & Filter Courses</h3>
+            <div class="tutorial-content">
+              <p>
+                <strong>Main Search:</strong> Type course code (e.g.,
+                "CSE115") or faculty name to find courses.
+              </p>
+              <p>
+                <strong>Time Filter:</strong> Filter by class days using
+                codes:
+              </p>
+              <ul class="tutorial-list">
+                <li><code>ST</code> = Sunday + Tuesday</li>
+                <li><code>MW</code> = Monday + Wednesday</li>
+                <li><code>RA</code> = Thursday (R) + Saturday (A)</li>
+              </ul>
+              <p>
+                <strong>Faculty Filter:</strong> Search specifically by
+                faculty name.
+              </p>
+              <div class="tutorial-example">
+                <strong>Example:</strong> Search "CSE115" + Time "ST" to find
+                all CSE115 sections on Sun-Tue.
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Quick Planner -->
+          <div class="tutorial-section">
+            <h3>
+              <i class="fas fa-calendar-alt"></i> Quick Planner (5 Routines)
+            </h3>
+            <div class="tutorial-content">
+              <p>
+                Plan up to
+                <strong>5 different routines</strong> simultaneously! Each
+                routine has a unique color:
+              </p>
+              <div class="tutorial-colors">
+                <span class="color-dot" style="background: #e11d48"></span>
+                Plan 1 (Red)
+                <span class="color-dot" style="background: #f59e0b"></span>
+                Plan 2 (Orange)
+                <span class="color-dot" style="background: #10b981"></span>
+                Plan 3 (Green)
+                <span class="color-dot" style="background: #3b82f6"></span>
+                Plan 4 (Blue)
+                <span class="color-dot" style="background: #8b5cf6"></span>
+                Plan 5 (Purple)
+              </div>
+              <p>
+                <strong>Switch Routines:</strong> Use the dropdown menu to
+                switch between your 5 plans.
+              </p>
+              <p>
+                <strong>Keyboard Shortcuts:</strong> Press
+                <code>Alt + 1</code> to <code>Alt + 5</code> to quickly switch
+                between routines!
+              </p>
+              <p>
+                <strong>Color Indicators:</strong> Small colored dots appear
+                next to course names showing which routines they're in.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 4: Adding/Removing Courses -->
+          <div class="tutorial-section">
+            <h3>
+              <i class="fas fa-plus-circle"></i> Adding & Removing Courses
+            </h3>
+            <div class="tutorial-content">
+              <p>
+                <strong>To Add:</strong> Click the <code>Add</code> button on
+                any course row. A popup will let you choose which routine(s)
+                to add it to.
+              </p>
+              <p>
+                <strong>To Remove:</strong> In the same popup, click
+                <code>Remove</code> next to any routine that has the course.
+              </p>
+              <p>
+                <strong>Quick Remove:</strong> Click the <code>?</code> button
+                directly on a course block in the routine table.
+              </p>
+              <div class="tutorial-example">
+                <strong>Tip:</strong> You can add the same course to multiple
+                routines to compare different schedules!
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Conflict Detection -->
+          <div class="tutorial-section">
+            <h3>
+              <i class="fas fa-exclamation-triangle"></i> Conflict Detection
+            </h3>
+            <div class="tutorial-content">
+              <p>The system automatically detects two types of conflicts:</p>
+              <div class="tutorial-conflict">
+                <span>⚠️ <strong>Time Conflict:</strong></span> Course
+                overlaps with another class in your current routine.
+              </div>
+              <div class="tutorial-conflict">
+                <span>📅 <strong>Exam Clash:</strong></span> Course has final
+                exam on the same day & slot as another course.
+              </div>
+              <p>
+                Conflict warnings appear in the routine table when detected.
+              </p>
+            </div>
+          </div>
+
+          <!-- Section 6: Share & Import -->
+          <div class="tutorial-section">
+            <h3><i class="fas fa-share-alt"></i> Share & Import Routines</h3>
+            <div class="tutorial-content">
+              <p>
+                <strong>Share:</strong> Click the <code>Share</code> button to
+                generate a unique code for your current routine. Copy and send
+                it to friends!
+              </p>
+              <p>
+                <strong>Import:</strong> Click <code>Import</code>, paste a
+                shared code, and click Import. A preview will show what
+                courses will be imported.
+              </p>
+              <div class="tutorial-example">
+                <strong>Note:</strong> Importing replaces the currently
+                selected routine. You'll be asked to confirm before changes
+                are made.
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 7: Download PDF -->
+          <div class="tutorial-section">
+            <h3><i class="fas fa-file-pdf"></i> Download as PDF</h3>
+            <div class="tutorial-content">
+              <p>
+                Click the <code>Download</code> button to export your current
+                routine as a professional PDF file.
+              </p>
+              <p>The PDF includes:</p>
+              <ul class="tutorial-list">
+                <li>Weekly schedule grid</li>
+                <li>All course details (code, section, faculty)</li>
+                <li>Timestamp and branding</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 8: Semester Selection -->
+          <div class="tutorial-section">
+            <h3><i class="fas fa-calendar"></i> Semester Selection</h3>
+            <div class="tutorial-content">
+              <p>
+                Use the semester dropdown above the search bar to switch
+                between available semesters.
+              </p>
+              <p>Course data and availability varies by semester.</p>
+            </div>
+          </div>
+
+          <!-- Section 9: Course Details -->
+          <div class="tutorial-section">
+            <h3><i class="fas fa-info-circle"></i> Course Details</h3>
+            <div class="tutorial-content">
+              <p>
+                Click the <code>View</code> button on any course to see
+                detailed information including:
+              </p>
+              <ul class="tutorial-list">
+                <li>Course code and section</li>
+                <li>Faculty name</li>
+                <li>Class timing and days</li>
+                <li>Available seats</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 10: Tips -->
+          <div class="tutorial-section tips-section">
+            <h3><i class="fas fa-lightbulb"></i> Pro Tips</h3>
+            <div class="tutorial-content">
+              <ul class="tutorial-list tips-list">
+                <li>
+                  Use multiple plans to compare different schedule options
+                  before advising.
+                </li>
+                <li>
+                  Share your routine code with friends to coordinate class
+                  schedules.
+                </li>
+                <li>
+                  Pay attention to exam clash warnings - they can save you
+                  during finals!
+                </li>
+                <li>
+                  Download your final routine as PDF to have it handy during
+                  registration.
+                </li>
+                <li>
+                  The routine data is saved locally, so it persists even if
+                  you close the browser.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tutorial-footer">
+            <p>
+              Need more help? Join our
+              <a href="https://t.me/nsu_advising_helper_bot_channel" target="_blank"><i class="fab fa-telegram"></i>
+                Telegram Community</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Chat Popup -->
+  <!-- <div id="chatPopup" class="chat-popup">
       <div class="chat-header">
         <span>?? Chat</span>
         <span
@@ -1370,95 +1216,85 @@
     </div>
     <button id="openChatBtn" class="open-chat-btn" title="Open Chat">??</button> -->
 
-    <!-- Floating Navigation Buttons -->
-    <button
-      id="goToReviews"
-      class="float-btn reviews-btn"
-      title="Go to Reviews"
-      style="display: none"
-    >
-      ?
-    </button>
-    <button id="backToTop" class="float-btn top-btn" title="Back to Top">
-      ?
-    </button>
+  <!-- Floating Navigation Buttons -->
+  <button id="goToReviews" class="float-btn reviews-btn" title="Go to Reviews" style="display: none">
+    ?
+  </button>
+  <button id="backToTop" class="float-btn top-btn" title="Back to Top">
+    ?
+  </button>
 
-    <script src="script.js"></script>
-    <!-- PDF generation libraries -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+  <script src="script.js"></script>
+  <!-- PDF generation libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <!-- <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-database-compat.js"></script>
     <script src="activeUsers.js"></script> -->
-    <!-- <script>
+  <!-- <script>
       window.addEventListener("load", () => {
         initializeActiveUsers("facultyPrediction");
       });
     </script> -->
-    <!-- <script src="chat.js"></script> -->
-    <!-- <script src="comments.js"></script> -->
-    <script src="buttons.js"></script>
+  <!-- <script src="chat.js"></script> -->
+  <!-- <script src="comments.js"></script> -->
+  <script src="buttons.js"></script>
 
-    <script src="theme.js"></script>
-    <script>
-      // Simple/Planner Mode Toggle
-      (function () {
-        const MODE_KEY = "rds2-view-mode";
-        const modeToggle = document.getElementById("modeToggle");
-        const simpleLabel = document.getElementById("simpleModeLabel");
-        const plannerLabel = document.getElementById("plannerModeLabel");
-        const body = document.body;
+  <script src="theme.js"></script>
+  <script>
+    // Simple/Planner Mode Toggle
+    (function () {
+      const MODE_KEY = "rds2-view-mode";
+      const modeToggle = document.getElementById("modeToggle");
+      const simpleLabel = document.getElementById("simpleModeLabel");
+      const plannerLabel = document.getElementById("plannerModeLabel");
+      const body = document.body;
 
-        if (!modeToggle) return;
+      if (!modeToggle) return;
 
-        // Load saved mode preference
-        function loadMode() {
-          const savedMode = localStorage.getItem(MODE_KEY);
-          // Default is 'planner' (advanced mode)
-          if (savedMode === "simple") {
-            modeToggle.checked = false;
-            body.classList.add("simple-mode");
-            simpleLabel.classList.add("active");
-            plannerLabel.classList.remove("active");
-          } else {
-            modeToggle.checked = true;
-            body.classList.remove("simple-mode");
-            simpleLabel.classList.remove("active");
-            plannerLabel.classList.add("active");
-          }
+      // Load saved mode preference
+      function loadMode() {
+        const savedMode = localStorage.getItem(MODE_KEY);
+        // Default is 'planner' (advanced mode)
+        if (savedMode === "simple") {
+          modeToggle.checked = false;
+          body.classList.add("simple-mode");
+          simpleLabel.classList.add("active");
+          plannerLabel.classList.remove("active");
+        } else {
+          modeToggle.checked = true;
+          body.classList.remove("simple-mode");
+          simpleLabel.classList.remove("active");
+          plannerLabel.classList.add("active");
         }
+      }
 
-        // Toggle mode
-        function toggleMode() {
-          if (modeToggle.checked) {
-            // Planner mode (advanced)
-            body.classList.remove("simple-mode");
-            localStorage.setItem(MODE_KEY, "planner");
-            simpleLabel.classList.remove("active");
-            plannerLabel.classList.add("active");
-          } else {
-            // Simple mode
-            body.classList.add("simple-mode");
-            localStorage.setItem(MODE_KEY, "simple");
-            simpleLabel.classList.add("active");
-            plannerLabel.classList.remove("active");
-          }
+      // Toggle mode
+      function toggleMode() {
+        if (modeToggle.checked) {
+          // Planner mode (advanced)
+          body.classList.remove("simple-mode");
+          localStorage.setItem(MODE_KEY, "planner");
+          simpleLabel.classList.remove("active");
+          plannerLabel.classList.add("active");
+        } else {
+          // Simple mode
+          body.classList.add("simple-mode");
+          localStorage.setItem(MODE_KEY, "simple");
+          simpleLabel.classList.add("active");
+          plannerLabel.classList.remove("active");
         }
+      }
 
-        // Initialize
-        loadMode();
-        modeToggle.addEventListener("change", toggleMode);
-      })();
-    </script>
+      // Initialize
+      loadMode();
+      modeToggle.addEventListener("change", toggleMode);
+    })();
+  </script>
 
-    <script src="typewriter.js"></script>
-  </body>
+  <script src="typewriter.js"></script>
+</body>
+
 </html>
