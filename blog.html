@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR0D2D6C35"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-DR0D2D6C35");
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blogs</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/index.png" />
+  <link rel="stylesheet" href="styles.css?v=1.1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color);
+      transition: opacity 0.2s ease;
+      box-shadow: none;
+      letter-spacing: 0.5px;
+    }
+
+    .theme-toggle:hover {
+      opacity: 0.8;
+    }
+
+    body.light-mode .theme-toggle {
+      background: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Blog Specific Styles */
+    .blog-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+
+    .search-wrapper {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 20px 16px 48px;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+      color: var(--text-color);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--text-color);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-icon-blog {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .blog-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .blog-card {
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+      transition: border-color 0.2s;
+    }
+
+    .blog-card:hover {
+      border-color: var(--text-muted);
+    }
+
+    .blog-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+
+    .blog-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .blog-topic {
+      background: var(--text-color);
+      color: var(--bg-color);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .blog-date {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .blog-share {
+      margin-left: auto;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s, transform 0.2s;
+      font-size: 1.1rem;
+    }
+
+    .blog-share:hover {
+      color: var(--text-color);
+      transform: scale(1.1);
+    }
+
+    .blog-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-color);
+      margin: 0;
+      font-family: "Georgia", serif;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+    }
+
+    .blog-content {
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      overflow: hidden;
+      transition: max-height 0.6s ease;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 999;
+    }
+
+    .blog-content.collapsed {
+      -webkit-line-clamp: 3;
+      max-height: 5.4em;
+    }
+
+    .blog-content p {
+      margin-bottom: 16px;
+    }
+
+    .blog-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .code-block {
+      background: #111111;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+      border: 1px solid #333;
+    }
+
+    body.light-mode .code-block {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .code-block code {
+      font-family: 'Consolas', 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    body.light-mode .code-block code {
+      color: #0f172a;
+    }
+
+    .blog-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .blog-hashtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hashtag {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .hashtag:hover {
+      color: var(--text-color);
+    }
+
+    .blog-author {
+      flex-basis: 100%;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .blog-author a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .blog-author a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    .batch-tag {
+      background: var(--surface-color);
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid var(--border-color);
+      margin-left: 4px;
+    }
+
+    .read-more-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-color);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .read-more-btn:hover {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    .no-results-msg {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 60px 20px;
+      font-size: 1.1rem;
+      display: none;
+      background: var(--surface-color);
+      border-radius: 16px;
+      border: 1px dashed var(--border-color);
+    }
+
+    mark {
+      background-color: rgba(250, 204, 21, 0.4);
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    @media (max-width: 768px) {
+      .blog-card {
+        padding: 24px;
+      }
+
+      .blog-title {
+        font-size: 1.5rem;
+      }
+
+      .blog-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .read-more-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: var(--text-color);
+      color: var(--bg-color);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .back-to-top {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <script>if (localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+  <canvas id="particleCanvas"></canvas>
+  <div class="container">
+    <header>
+      <h1>BLOG POST</h1>
+      <nav class="nav-bar">
+        <a href="index.html">RDS2</a>
+        <a href="calendar.html">Academic Calendar</a>
+        <a href="finalexam.html">Final Exam Schedule</a>
+        <a href="resources.html">Study Materials</a>
+        <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
+        <a href="routine.html">Routine Maker</a>
+        <a href="planner.html">Semester Planner</a>
+        <a href="freshman.html">Freshman Guides</a>
+        <a href="coursemap.html">Course map</a>
+        <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+        <a href="shelf_search.html">Library Shelf Finder</a>
+        <a href="cgpa.html">CGPA Calculator</a>
+        <a href="retake.html" class="new-feature-link">Retake Calculator</a>
+        <a href="gradeCalculator.html">Course Grade Calculator</a>
+        <a href="cleanpad.html" class="cleanpad-link">CleanPad</a>
+        <a href="blog.html" class="active blog-nav-link">Blog Post</a>
+        <a href="about.html">About</a>
+      </nav>
+    </header>
+
+    <div class="blog-container">
+      <div class="search-wrapper">
+        <i class="fas fa-search search-icon-blog"></i>
+        <input type="text" id="blogSearch" class="search-input" placeholder="Search by topic, title, or hashtag...">
+      </div>
+
+      <div class="blog-posts" id="blogPostsContainer">
+        <!-- ----------Post Start------------>
+        <div class="blog-card" id="post-1" data-topic="planning advising" data-title="mastering advising with the quick planner"
+          data-hashtags="#advising #planning #courses">
+          <div class="blog-header">
+            <div class="blog-meta">
+              <span class="blog-topic">Advising</span>
+              <span class="blog-date"><i class="far fa-calendar-alt"></i> May 05, 2026</span>
+              <span class="blog-share" onclick="sharePost('post-1')" title="Share this blog"><i class="fas fa-share-alt"></i></span>
+            </div>
+            <h2 class="blog-title">Read these points if it's your first time advising </h2>
+          </div>
+
+          <div class="blog-content collapsed">
+            <p>If it's your 2nd semester or first time advising, here are few points to consider-</p>
+            <ol>
+              <li><strong>Make sure to save after selecting each course:</strong> It's better to select one course and
+                click save. It might take a while but it's normal. </li>
+              <li><strong>If you select all courses at once and then save, other students who have saved first will
+                  take the seat.</strong> </li>
+              <li><strong> If you have lab course with the core course- select both and then save.</strong> For exam
+                CSE115 and CSE115L, you have to select both first, and make sure to take the same section and then save.
+              </li>
+              <li><strong> Try to avoid taking the sections, that will have finals on the same day. You can check
+                  the final exams schedule online.</strong> <br> You can easily check on this website using quick
+                routine if those sections will have same day final or not.
+                <a href="https://shadhin-f.github.io/rds2-but-from-future/index.html"
+                  style="color: var(--text-color); text-decoration: none; font-weight: 600;">Click here</a>
+              </li>
+              <li> Also even if you don't get your desired faculties section, it's better to advise any available
+                section, and then try to change the section on 2nd phase or 3rd phase (Personal Opinion). Some students
+                drop courses during 2nd & 3rd phase and seats are also extended, new sections may open.</li>
+            </ol>
+            <p><strong>Try to stay calm,</strong> If you can't advise any core course, it's normal!!! We all have faced
+              this. During 3rd
+              phase you can visit department chairs office for core courses.
+
+              <br>Good luck!!
+
+            </p>
+          </div>
+
+          <div class="blog-footer">
+            <div class="blog-hashtags">
+              <span class="hashtag">#advising</span>
+              <span class="hashtag">#freshers</span>
+              <span class="hashtag">#2ndSem</span>
+            </div>
+            <button class="read-more-btn" onclick="togglePost(this)">Read More <i
+                class="fas fa-chevron-down"></i></button>
+            <div class="blog-author">
+              <i>Author:</i> <a href="https://www.facebook.com/tahshanjamil.shadhin" target="_blank">Tahshan Jamil
+                Shadhin</a><span class="batch-tag">223</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ----------Post end---------- -->
+
+        <!-- ----------Post Start---------- -->
+        <div class="blog-card" id="post-2" data-topic="planning advising" data-title="mastering advising with the quick planner"
+          data-hashtags="#advising #planning #courses">
+          <div class="blog-header">
+            <div class="blog-meta">
+              <span class="blog-topic">Advising</span>
+              <span class="blog-date"><i class="far fa-calendar-alt"></i> May 05, 2026</span>
+              <span class="blog-share" onclick="sharePost('post-2')" title="Share this blog"><i class="fas fa-share-alt"></i></span>
+            </div>
+            <h2 class="blog-title">FAQs for freshers advising </h2>
+          </div>
+
+          <div class="blog-content collapsed">
+            <p>Welcome to NSU! Here are the most common queries of freshers.<br>
+              <strong> Q: What is faculty evaluation or preadvising? </strong><br> Ans: Freshers advising are done on
+              campus. So no
+              need
+              to
+              get confused or worried seeing all the terms like
+              preadvising or faculty evaluation. <br><br>
+              <strong>Q: Date of offline advising for freshers? </strong><br> Ans: Keep eye on <a target="_blank"
+                style="text-decoration: none; color: var(--text-color); font-weight: 600;"
+                href="https://www.northsouth.edu/nsu-announcements/">NSU announcements</a> web page and
+              the email
+              you provided.
+              Also keep eye on the advising related FB groups (Bonus).<br><br>
+              <strong>Q: When do I need to arrive on camous for offline advising? </strong><br> Ans: Arrive at campus as
+              early as
+              possible. Usually advising starts at 9 AM or 10 AM. But arrive early to get your advising done smoothly.
+              There
+              are chances if you are late and sections are full. <br><br>
+              <strong>Q: Do I get to choose faculty or course of my choice? </strong><br> Ans: Unfortunately no.
+              Assigned Faculty
+              will do the advising for you.<br><br>
+              <strong>Q: Can I select timimg of my courses? </strong><br> Ans: yes and no. Depends on the faculty. He or
+              She might
+              ask for your prefereces. You can request to not give sections with long gaps or in the morning, in that
+              case you need provide a valid excuse eg. you live far from the campus.<br><br>
+              <strong>Q: Can I drop courses? </strong><br> Ans: Yes, you absolutely can. After the payment dates starts.
+              Make the
+              full
+              payment and drop through RDS3.<br><br>
+              <strong>Q: What is this <a target="_blank"
+                  style="text-decoration: none; color: var(--text-color); font-weight: 600;"
+                  href="https://rds3.northsouth.edu/">RDS3</a> thing?</strong><br> Ans: It's a student portal for North
+              South University.
+              You can
+              view your results, cgpa, advising, enrollment and many more things.<br><br>
+              <strong>Q: When do I get my student portal access?</strong><br> Ans: You will get step by step guide
+              through email, so no need to worry!<br><br><br>
+              <strong>Few tips: </strong> Always follow updated <a target="_blank"
+                style="text-decoration: none; color: var(--text-color); font-weight: 600;"
+                href="https://www.northsouth.edu/academic/academic-calendar/">NSU Academic calendar</a> dates for
+              payment to avoid late fees. By
+              the end of
+              first semester make sure to check you have completed your faculty evaluation and pre-advising.
+
+              <br><b>Good Luck!</b>
+            </p>
+
+          </div>
+
+          <div class="blog-footer">
+            <div class="blog-hashtags">
+              <span class="hashtag">#advising</span>
+              <span class="hashtag">#freshers</span>
+              <span class="hashtag">#faq</span>
+            </div>
+            <button class="read-more-btn" onclick="togglePost(this)">Read More <i
+                class="fas fa-chevron-down"></i></button>
+            <div class="blog-author">
+              <i>Author:</i> <a href="https://www.facebook.com/tahshanjamil.shadhin" target="_blank">Tahshan Jamil
+                Shadhin</a><span class="batch-tag">223</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ----------Post end---------- -->
+
+
+    </div> <!-- container ends-->
+
+    <div class="no-results-msg" id="noResultsMsg">
+      <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 16px; color: var(--border-color);"></i><br>
+      No blog posts found matching your search. Try different keywords.
+    </div>
+  </div>
+
+  <footer
+    style="text-align: center; padding: 30px 0; border-top: 3px double var(--border-color); color: var(--text-muted); font-size: 0.85rem; font-style: italic; margin-top: 40px;">
+    <p>&copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin</p>
+  </footer>
+  </div>
+
+  <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+  <script src="script.js"></script>
+  <script src="theme.js"></script>
+  <script src="typewriter.js"></script>
+  <script>
+    function sharePost(postId) {
+      const url = `https://shadhin-f.github.io/rds2-but-from-future/blog.html#${postId}`;
+      navigator.clipboard.writeText(url).then(() => {
+        const shareIcon = document.querySelector(`#${postId} .blog-share i`);
+        shareIcon.className = 'fas fa-check';
+        shareIcon.style.color = '#10b981';
+        setTimeout(() => {
+          shareIcon.className = 'fas fa-share-alt';
+          shareIcon.style.color = '';
+        }, 2000);
+      }).catch(err => console.error('Failed to copy text: ', err));
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hash) {
+        const targetPost = document.querySelector(window.location.hash);
+        if (targetPost && targetPost.classList.contains('blog-card')) {
+          const btn = targetPost.querySelector('.read-more-btn');
+          if (btn) {
+            setTimeout(() => {
+              togglePost(btn);
+              targetPost.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+          }
+        }
+      }
+    });
+
+    // Toggle post content expand/collapse
+    function togglePost(btn) {
+      const content = btn.parentElement.previousElementSibling;
+      const isCurrentlyCollapsed = content.classList.contains('collapsed');
+
+      // Collapse all other posts
+      document.querySelectorAll('.blog-content').forEach(c => {
+        if (!c.classList.contains('collapsed') && c !== content) {
+          c.style.maxHeight = c.scrollHeight + 'px';
+          void c.offsetWidth; // Force reflow
+          c.style.maxHeight = '5.4em';
+
+          setTimeout(() => {
+            if (c.style.maxHeight === '5.4em') {
+              c.classList.add('collapsed');
+              c.style.maxHeight = null;
+            }
+          }, 600);
+        }
+      });
+      document.querySelectorAll('.read-more-btn').forEach(b => {
+        if (b !== btn) {
+          b.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+        }
+      });
+
+      // Expand or collapse the clicked one
+      if (isCurrentlyCollapsed) {
+        content.style.maxHeight = content.offsetHeight + 'px';
+        content.classList.remove('collapsed');
+        void content.offsetWidth; // Force reflow
+        content.style.maxHeight = content.scrollHeight + 'px';
+        btn.innerHTML = 'Hide <i class="fas fa-chevron-up"></i>';
+
+        setTimeout(() => {
+          if (!content.classList.contains('collapsed') && content.style.maxHeight !== '5.4em') {
+            content.style.maxHeight = 'none';
+          }
+        }, 600);
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        void content.offsetWidth; // Force reflow
+        content.style.maxHeight = '5.4em';
+        btn.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+
+        setTimeout(() => {
+          if (content.style.maxHeight === '5.4em') {
+            content.classList.add('collapsed');
+            content.style.maxHeight = null;
+          }
+        }, 600);
+      }
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('blogSearch');
+    const posts = document.querySelectorAll('.blog-card');
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    // Back to top functionality
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlightContent(post, searchTerm) {
+      const elementsToHighlight = post.querySelectorAll('.blog-title, .blog-content p, .blog-content li, .blog-author, .hashtag');
+
+      elementsToHighlight.forEach(el => {
+        if (!el.hasAttribute('data-original-html')) {
+          el.setAttribute('data-original-html', el.innerHTML);
+        }
+
+        const originalHtml = el.getAttribute('data-original-html');
+
+        if (!searchTerm) {
+          el.innerHTML = originalHtml;
+          return;
+        }
+
+        const regex = new RegExp(`(${escapeRegExp(searchTerm)})(?![^<]*>)`, 'gi');
+        el.innerHTML = originalHtml.replace(regex, '<mark>$1</mark>');
+      });
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      let hasVisiblePosts = false;
+
+      posts.forEach(post => {
+        const title = post.getAttribute('data-title') || '';
+        const topic = (post.getAttribute('data-topic') || '').toLowerCase();
+        const hashtags = post.getAttribute('data-hashtags') || '';
+        const textContent = post.textContent.toLowerCase();
+
+        if (title.includes(searchTerm) || topic.includes(searchTerm) || hashtags.includes(searchTerm) || textContent.includes(searchTerm)) {
+          post.style.display = 'block';
+          hasVisiblePosts = true;
+          highlightContent(post, searchTerm);
+        } else {
+          post.style.display = 'none';
+        }
+      });
+
+      if (hasVisiblePosts) {
+        noResultsMsg.style.display = 'none';
+      } else {
+        noResultsMsg.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -3682,8 +3682,220 @@ body.light-mode .import-preview {
 
 body.light-mode .import-preview-item {
   background: var(--bg-color);
+  background-color: #f8fafc;
+}
+
+body.light-mode table tr:nth-child(odd) {
+  background-color: #f8fafc;
+}
+
+body.light-mode table tr:hover {
+  background: var(--tr-hover-color);
+}
+
+body.light-mode .modal-content {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .modal-header {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .modal-header h2 {
+  color: var(--text-color);
+}
+
+body.light-mode .close-modal {
+  color: var(--text-color);
+}
+
+body.light-mode .modal-body {
+  color: var(--text-color);
+}
+
+body.light-mode .modal-body p {
+  color: var(--text-color);
+}
+
+body.light-mode .modal-body strong {
+  color: var(--text-muted);
+}
+
+body.light-mode .pagination button {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .footer {
+  color: var(--text-muted);
+}
+
+body.light-mode .announcement-bar {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .announcement-bar .view-extension-btn {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
+body.light-mode .float-btn {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
+body.light-mode .floating-help-btn {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
+body.light-mode .theme-toggle {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .routine-maker-container {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .routine-header {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .routine-table th,
+body.light-mode .routine-table td {
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .routine-toggle-btn {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .routine-course-block {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
+body.light-mode .quick-tips-section {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .social-links a {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+body.light-mode .social-links a:hover {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .new-feature-link,
+body.light-mode .trending-link {
+  border-color: var(--text-muted) !important;
+  color: var(--text-color) !important;
+  background: transparent !important;
+}
+
+body.light-mode .new-feature-link:hover,
+body.light-mode .trending-link:hover {
+  background: var(--text-color) !important;
+  color: var(--bg-color) !important;
+}
+
+body.light-mode .semester-select {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .semester-select option {
+  background: var(--surface-color);
+  color: var(--text-color);
+}
+
+body.light-mode .view-details-btn {
+  background: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .upcoming-event-link {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+}
+
+body.light-mode .upcoming-event-link:hover {
+  background: var(--tr-hover-color);
+  border-color: var(--text-muted);
+}
+
+body.light-mode .semester-warning {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.08),
+    rgba(79, 70, 229, 0.08)
+  );
+  border: 1px solid var(--border-color);
+}
+
+body.light-mode .semester-warning h3 {
+  color: var(--text-color);
+}
+
+body.light-mode .semester-warning p {
+  color: var(--text-muted);
+}
+
+body.light-mode .upcoming-event-countdown {
+  background: var(--text-color);
+  color: var(--bg-color);
+}
+
+body.light-mode .share-code-textarea {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+body.light-mode .import-preview {
+  background: var(--surface-color);
+}
+
+body.light-mode .import-preview-item {
+  background: var(--bg-color);
 }
 
 body.light-mode #routineClashes {
   color: var(--text-color) !important;
+}
+
+/* Blog Nav Link Glowing Effect */
+.nav-bar a.blog-nav-link {
+  border-color: #a0522d !important;
+  animation: navBlogBorderGlow 1.5s infinite alternate;
+}
+
+@keyframes navBlogBorderGlow {
+  from {
+    box-shadow: 0 0 4px rgba(160, 82, 45, 0.3);
+    border-color: rgba(160, 82, 45, 0.6) !important;
+  }
+  to {
+    box-shadow: 0 0 12px rgba(160, 82, 45, 0.8);
+    border-color: #a0522d !important;
+  }
 }

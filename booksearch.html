@@ -784,6 +784,7 @@
         <a href="retake.html" class="new-feature-link">Retake Calculator</a>
         <a href="gradeCalculator.html">Course Grade Calculator</a>
         <a href="cleanpad.html" class="cleanpad-link">CleanPad</a>
+        <a href="blog.html" class="blog-nav-link">Blog Post</a>
         <a href="about.html">About</a>
       </nav>
     </header>
@@ -863,7 +864,7 @@
       if (state.shelvesError || state.booksError) {
         const text = [state.shelvesError, state.booksError]
           .filter(Boolean)
-          .join(" · ");
+          .join(" ï¿½ ");
         els.message.innerHTML = `
             <div class="status-pill error">
               <i class="fas fa-triangle-exclamation"></i> ${text}
@@ -886,7 +887,7 @@
       els.message.innerHTML = `
           <div class="status-pill success">
             <i class="fas fa-circle-check"></i>
-            Loaded ${state.books.length.toLocaleString()} books · ${state.shelves.length} shelf rows
+            Loaded ${state.books.length.toLocaleString()} books ï¿½ ${state.shelves.length} shelf rows
           </div>`;
     }
 
@@ -993,7 +994,7 @@
         .split("|")
         .map((token) => token.trim())
         .filter(Boolean);
-      return tokens.join(" · ");
+      return tokens.join(" ï¿½ ");
     }
 
     function highlightText(text, searchTokens) {
@@ -1367,7 +1368,7 @@
   </script>
   <footer class="footer">
     <p>
-      © 2025 RDS2 BUT FROM FUTURE · Created by Tahshan Jamil Shadhin
+      &copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin
       <br />
     </p>
     <div class="social-links">
