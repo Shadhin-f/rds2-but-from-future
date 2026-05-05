@@ -278,6 +278,33 @@ function triggerPageShake() {
     }, 4000);
 }
 
+// Easter egg: Make page flash sun/moon mode
+let isFlashing = false;
+function triggerPageFlash() {
+    if (isFlashing) return;
+    isFlashing = true;
+    const body = document.body;
+    let flashCount = 0;
+    const originalTheme = localStorage.getItem("rds2-theme-preference") === "light" ? "light" : "dark";
+    
+    const flashInterval = setInterval(() => {
+        body.classList.toggle('light-mode');
+        flashCount++;
+        
+        // 5 seconds total at 100ms interval = 50 flashes
+        if (flashCount >= 50) {
+            clearInterval(flashInterval);
+            isFlashing = false;
+            // Restore to the original theme after flashing
+            if (originalTheme === "light") {
+                body.classList.add("light-mode");
+            } else {
+                body.classList.remove("light-mode");
+            }
+        }
+    }, 100);
+}
+
 // Add the search initialization to DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize search functionality
@@ -316,6 +343,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Easter egg: Check if search term is "thank you" or "thanks"
         if (searchTerm === 'thank you' || searchTerm === 'thanks') {
             alert('You are welcome!! 😊');
+        }
+
+        // Easter egg: Check if search term is "flash", "fuck", or "nsu"
+        if (searchTerm === 'flash' || searchTerm === 'fuck' || searchTerm === 'nsu') {
+            triggerPageFlash();
         }
 
         filteredData = courseData.filter(course => {
