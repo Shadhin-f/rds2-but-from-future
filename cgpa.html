@@ -92,7 +92,7 @@
       }
       table.cgpa-table {
         width: 100%;
-        min-width: 480px;
+        min-width: 700px;
         border-collapse: collapse;
         table-layout: fixed;
       }
@@ -109,16 +109,22 @@
         white-space: nowrap;
       }
       table.cgpa-table th:nth-child(1) {
-        width: 38%;
+        width: 28%;
       }
       table.cgpa-table th:nth-child(2) {
-        width: 22%;
+        width: 12%;
       }
       table.cgpa-table th:nth-child(3) {
-        width: 22%;
+        width: 14%;
       }
       table.cgpa-table th:nth-child(4) {
         width: 18%;
+      }
+      table.cgpa-table th:nth-child(5) {
+        width: 18%;
+      }
+      table.cgpa-table th:nth-child(6) {
+        width: 10%;
       }
       table.cgpa-table td {
         padding: 0.6rem 0.5rem;
@@ -309,13 +315,13 @@
             >Join now</a
           >
         </div>
-        <section class="calculator-hero">
+        <!-- <section class="calculator-hero">
           <p>
             Calculate your updated CGPA instantly. Add course grades, include
             previous credits, and let the calculator crunch accurate results
             without waiting for RDS updates.
           </p>
-        </section>
+        </section> -->
 
         <section class="calc-card">
           <h2>Previous Summary</h2>
@@ -354,7 +360,9 @@
                 <tr>
                   <th>Course Initial</th>
                   <th>Credits</th>
-                  <th>Grade</th>
+                  <th>Type</th>
+                  <th>Prev Grade</th>
+                  <th>New Grade</th>
                   <th style="width: 70px">Remove</th>
                 </tr>
               </thead>
@@ -443,16 +451,40 @@
 
       let courseCount = 0;
 
-      function createSelect(id) {
+      function formatGradePoint(point) {
+        return Number(point).toFixed(1).replace(/\.0$/, "");
+      }
+
+      function createSelect(id, defaultGrade) {
         const select = document.createElement("select");
         select.id = id;
         select.className = "form-control";
-        for (const grade of Object.keys(gradePoints)) {
+        for (const [grade, point] of Object.entries(gradePoints)) {
           const option = document.createElement("option");
           option.value = grade;
-          option.textContent = grade;
+          option.textContent = `${grade}(${formatGradePoint(point)})`;
+          if (defaultGrade && grade === defaultGrade) {
+            option.selected = true;
+          }
           select.appendChild(option);
         }
+        return select;
+      }
+
+      function createTypeSelect(id) {
+        const select = document.createElement("select");
+        select.id = id;
+        select.className = "form-control";
+        const options = [
+          { value: "new", label: "New" },
+          { value: "retake", label: "Retake" },
+        ];
+        options.forEach((item) => {
+          const option = document.createElement("option");
+          option.value = item.value;
+          option.textContent = item.label;
+          select.appendChild(option);
+        });
         return select;
       }
 
@@ -462,7 +494,9 @@
         row.className = "course-row";
         row.dataset.index = courseCount;
         const creditId = `cr${courseCount}`;
-        const gradeId = `gr${courseCount}`;
+        const modeId = `mode${courseCount}`;
+        const prevGradeId = `prevGr${courseCount}`;
+        const newGradeId = `newGr${courseCount}`;
 
         row.innerHTML = `
           <td>
@@ -483,7 +517,9 @@
               placeholder="Cr"
             />
           </td>
-          <td id="${gradeId}-cell"></td>
+          <td id="${modeId}-cell"></td>
+          <td id="${prevGradeId}-cell"></td>
+          <td id="${newGradeId}-cell"></td>
           <td class="remove-cell">
             <button type="button" class="remove-course" aria-label="Remove course">
               <i class="fas fa-xmark"></i>
@@ -492,12 +528,37 @@
         `;
 
         courseRows.appendChild(row);
-        const gradeCell = document.getElementById(`${gradeId}-cell`);
-        const select = createSelect(gradeId);
-        gradeCell.appendChild(select);
+        const modeCell = document.getElementById(`${modeId}-cell`);
+        const typeSelect = createTypeSelect(modeId);
+        modeCell.appendChild(typeSelect);
+
+        const prevGradeCell = document.getElementById(`${prevGradeId}-cell`);
+        const prevSelect = createSelect(prevGradeId, "F");
+        prevSelect.classList.add("prev-grade");
+        prevGradeCell.appendChild(prevSelect);
+
+        const newGradeCell = document.getElementById(`${newGradeId}-cell`);
+        const newSelect = createSelect(newGradeId, "A");
+        newSelect.classList.add("new-grade");
+        newGradeCell.appendChild(newSelect);
+
+        setRowMode(row, "new");
+        typeSelect.addEventListener("change", () => {
+          setRowMode(row, typeSelect.value);
+        });
         row.querySelector(".remove-course").addEventListener("click", () => {
           removeCourseRow(row);
         });
+      }
+
+      function setRowMode(row, mode) {
+        const prevSelect = row.querySelector(".prev-grade");
+        if (!prevSelect) return;
+        const isRetake = mode === "retake";
+        prevSelect.disabled = !isRetake;
+        prevSelect.title = isRetake
+          ? "Previous grade"
+          : "Previous grade not used for new courses";
       }
 
       function removeCourseRow(row) {
@@ -522,25 +583,37 @@
 
         let semesterCredits = 0;
         let semesterGradePoints = 0;
-        let hasInput = false;
+        let retakeAdjustment = 0;
+        let hasNew = false;
+        let hasRetake = false;
 
         for (let i = 1; i <= courseCount; i += 1) {
           const creditInput = document.getElementById(`cr${i}`);
-          const gradeSelect = document.getElementById(`gr${i}`);
-          if (!creditInput || !gradeSelect) continue;
+          const modeSelect = document.getElementById(`mode${i}`);
+          const prevGradeSelect = document.getElementById(`prevGr${i}`);
+          const newGradeSelect = document.getElementById(`newGr${i}`);
+          if (!creditInput || !modeSelect || !prevGradeSelect || !newGradeSelect)
+            continue;
 
           const credits = Number(creditInput.value);
           if (!credits) continue;
-          hasInput = true;
-          const grade = gradeSelect.value;
-          const point = gradePoints[grade] ?? 0;
-          semesterCredits += credits;
-          semesterGradePoints += credits * point;
+          const mode = modeSelect.value;
+          const newPoint = gradePoints[newGradeSelect.value] ?? 0;
+
+          if (mode === "retake") {
+            const prevPoint = gradePoints[prevGradeSelect.value] ?? 0;
+            retakeAdjustment += credits * (newPoint - prevPoint);
+            hasRetake = true;
+          } else {
+            semesterCredits += credits;
+            semesterGradePoints += credits * newPoint;
+            hasNew = true;
+          }
         }
 
         const previousPoints = prevCredits * prevCgpa;
         const totalCredits = prevCredits + semesterCredits;
-        const totalPoints = previousPoints + semesterGradePoints;
+        const totalPoints = previousPoints + semesterGradePoints + retakeAdjustment;
 
         if (!totalCredits) {
           messageEl.textContent =
@@ -551,7 +624,7 @@
         }
 
         const finalCgpa = totalPoints / totalCredits;
-        messageEl.textContent = hasInput
+        messageEl.textContent = hasNew || hasRetake
           ? "CGPA updated successfully."
           : "Using previous record only.";
         creditPassedEl.textContent = totalCredits.toFixed(2);
