@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
+    <meta http-equiv="refresh" content="0; url=https://rds2-bff.vercel.app/" />
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
@@ -160,7 +161,9 @@
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         padding: 0.85rem 1.4rem;
       }
       .btn:hover {
@@ -236,7 +239,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.2s ease, transform 0.2s ease;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease;
       }
       .remove-course:hover {
         background: rgba(248, 113, 113, 0.15);
@@ -281,7 +286,9 @@
         border-radius: 12px;
         padding: 1rem;
         text-align: center;
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease;
       }
 
       .stat-card:hover {
@@ -368,7 +375,11 @@
     </style>
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -376,17 +387,21 @@
         <nav class="nav-bar">
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
-        <a href="finalexam.html">Final Exam Schedule</a>
+          <a href="finalexam.html">Final Exam Schedule</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
           <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
           <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+          <a href="booksearch.html" class="new-feature-link"
+            >NSU Library Book Locator</a
+          >
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
-          <a href="retake.html" class="active new-feature-link">Retake Calculator</a>
+          <a href="retake.html" class="active new-feature-link"
+            >Retake Calculator</a
+          >
           <a href="gradeCalculator.html">Course Grade Calculator</a>
           <a href="cleanpad.html" class="cleanpad-link">CleanPad</a>
           <a href="blog.html" class="blog-nav-link">Blog Post</a>
@@ -719,7 +734,8 @@
       </main>
 
       <footer class="footer">
-        <p>&copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin
+        <p>
+          &copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin
           <br />
         </p>
         <div class="social-links">
@@ -920,7 +936,7 @@
         const qualityPointsPerRetake = 3 * 4.0; // 3 credits * 4.0 (A grade)
 
         const retakesNeeded = Math.ceil(
-          (neededQualityPoints - currentQualityPoints) / qualityPointsPerRetake
+          (neededQualityPoints - currentQualityPoints) / qualityPointsPerRetake,
         );
         return retakesNeeded;
       }
@@ -929,7 +945,7 @@
         currentCredits,
         currentCgpa,
         targetCgpa,
-        fromGrade
+        fromGrade,
       ) {
         // fromGrade: the grade being replaced (B-, C, D)
         // toGrade: A (4.0)
@@ -972,19 +988,19 @@
               currentCredits,
               currentCgpa,
               target,
-              "B-"
+              "B-",
             );
             const retakesC = calculateRetakesForScenario(
               currentCredits,
               currentCgpa,
               target,
-              "C"
+              "C",
             );
             const retakesD = calculateRetakesForScenario(
               currentCredits,
               currentCgpa,
               target,
-              "D"
+              "D",
             );
 
             const creditsBMinus = retakesBMinus * 3;
@@ -1067,7 +1083,7 @@
 
         if (targetCurrentCgpa >= targetCgpa) {
           targetResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(
-            2
+            2,
           )}</strong>!`;
           targetResultDiv.style.background =
             "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
@@ -1083,19 +1099,19 @@
           targetCredits,
           targetCurrentCgpa,
           targetCgpa,
-          "B-"
+          "B-",
         );
         const retakesC = calculateRetakesForScenario(
           targetCredits,
           targetCurrentCgpa,
           targetCgpa,
-          "C"
+          "C",
         );
         const retakesD = calculateRetakesForScenario(
           targetCredits,
           targetCurrentCgpa,
           targetCgpa,
-          "D"
+          "D",
         );
 
         const creditsBMinus = retakesBMinus * 3;
@@ -1110,7 +1126,7 @@
         const costD8000 = creditsD * 8000;
 
         targetResultText.innerHTML = `📚 To reach a CGPA of <strong>${targetCgpa.toFixed(
-          2
+          2,
         )}</strong>, you need:`;
         targetResultDiv.style.background = "rgba(109, 40, 217, 0.1)";
         targetResultDiv.style.borderColor = "rgba(109, 40, 217, 0.3)";
@@ -1189,11 +1205,11 @@
               (currentQualityPoints - maxDropQP) / totalCredits;
 
             gradResultText.innerHTML = `🎉 You have already reached your target CGPA of <strong>${targetCgpa.toFixed(
-              2
+              2,
             )}</strong>!<br>
               You can graduate by completing the remaining <strong>${remainingCredits}</strong> credits with any passing grades (even all D's will keep you at <strong>${targetCgpa.toFixed(
-              2
-            )}</strong>).`;
+                2,
+              )}</strong>).`;
             gradResultDiv.style.background =
               "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
             gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
@@ -1269,11 +1285,11 @@
           }
 
           gradResultText.innerHTML = `✅ Current CGPA: <strong>${currentCgpa.toFixed(
-            2
+            2,
           )}</strong> (Target: <strong>${targetCgpa.toFixed(2)}</strong>)<br>
             To <strong>maintain</strong> your target CGPA, complete the remaining <strong>${remainingCredits}</strong> credits with an average of at least <strong>${avgGradeNeeded.toFixed(
-            2
-          )}</strong> (${gradeText}).${gradeBreakdown}`;
+              2,
+            )}</strong> (${gradeText}).${gradeBreakdown}`;
           gradResultDiv.style.background =
             "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
           gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
@@ -1285,7 +1301,7 @@
         if (bestPossibleCGPA < targetCgpa) {
           // Cannot reach target even with all A's - need retakes
           gradResultText.innerHTML = `⚠️  Cannot reach target CGPA of <strong>${targetCgpa.toFixed(
-            2
+            2,
           )}</strong> even with all A's in remaining courses.<br>
             Best possible: <strong>${bestPossibleCGPA.toFixed(2)}</strong><br>
             <strong>Retakes are required:</strong>`;
@@ -1297,19 +1313,19 @@
             currentCredits,
             currentCgpa,
             targetCgpa,
-            "B-"
+            "B-",
           );
           const retakesC = calculateRetakesForScenario(
             currentCredits,
             currentCgpa,
             targetCgpa,
-            "C"
+            "C",
           );
           const retakesD = calculateRetakesForScenario(
             currentCredits,
             currentCgpa,
             targetCgpa,
-            "D"
+            "D",
           );
 
           const creditsBMinus = retakesBMinus * 3;
@@ -1408,11 +1424,11 @@
           }
 
           gradResultText.innerHTML = `✅ You can graduate with your target CGPA of <strong>${targetCgpa.toFixed(
-            2
+            2,
           )}</strong> without retakes!<br>
             Complete the remaining <strong>${remainingCredits}</strong> credits with an average of <strong>${avgGradeNeeded.toFixed(
-            2
-          )}</strong> (${gradeText}).${gradeBreakdown}`;
+              2,
+            )}</strong> (${gradeText}).${gradeBreakdown}`;
           gradResultDiv.style.background =
             "linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15))";
           gradResultDiv.style.borderColor = "rgba(34, 197, 94, 0.4)";
@@ -1443,4 +1459,3 @@
     <script src="typewriter.js"></script>
   </body>
 </html>
-

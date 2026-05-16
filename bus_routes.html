@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
+    <meta http-equiv="refresh" content="0; url=https://rds2-bff.vercel.app/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dhaka Bus Routes</title>
@@ -288,7 +289,7 @@
 
       /* Connector line between stops */
       .timeline-stop::after {
-        content: '';
+        content: "";
         position: absolute;
         top: 9px;
         left: calc(50% + 14px);
@@ -318,17 +319,23 @@
 
       .timeline-stop:first-child .stop-marker {
         border-color: #10b981;
-        box-shadow: 0 0 8px rgba(16, 185, 129, 0.35), 0 0 0 3px rgba(30, 41, 59, 0.9);
+        box-shadow:
+          0 0 8px rgba(16, 185, 129, 0.35),
+          0 0 0 3px rgba(30, 41, 59, 0.9);
       }
 
       .timeline-stop:last-child .stop-marker {
         border-color: #ef4444;
-        box-shadow: 0 0 8px rgba(239, 68, 68, 0.35), 0 0 0 3px rgba(30, 41, 59, 0.9);
+        box-shadow:
+          0 0 8px rgba(239, 68, 68, 0.35),
+          0 0 0 3px rgba(30, 41, 59, 0.9);
       }
-      
+
       .timeline-stop.transfer .stop-marker {
         border-color: #f59e0b;
-        box-shadow: 0 0 8px rgba(245, 158, 11, 0.35), 0 0 0 3px rgba(30, 41, 59, 0.9);
+        box-shadow:
+          0 0 8px rgba(245, 158, 11, 0.35),
+          0 0 0 3px rgba(30, 41, 59, 0.9);
       }
 
       .stop-content {
@@ -364,13 +371,13 @@
         margin: 8px 0 16px 0;
         color: var(--text-muted);
       }
-      
+
       .transfer-line {
         height: 1px;
         background: rgba(255, 255, 255, 0.08);
         flex-grow: 1;
       }
-      
+
       .transfer-badge {
         background: rgba(245, 158, 11, 0.9);
         color: #000;
@@ -402,7 +409,7 @@
           margin: 8px auto;
           transform: rotate(90deg);
         }
-        
+
         .swap-btn:hover {
           transform: rotate(270deg);
         }
@@ -423,7 +430,7 @@
         .route-meta {
           text-align: left;
         }
-        
+
         /* Mobile: vertical timeline */
         .timeline-container {
           flex-direction: column;
@@ -439,11 +446,11 @@
           margin-bottom: 6px;
           gap: 10px;
         }
-        
+
         .timeline-stop::after {
-          display: none; 
+          display: none;
         }
-        
+
         .stop-marker {
           margin-bottom: 0;
         }
@@ -453,7 +460,6 @@
         .route-search-container {
           padding: 16px 14px 14px;
         }
-
 
         .stop-marker {
           width: 14px; /* Smaller circle for mobile */
@@ -510,23 +516,31 @@
     </style>
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
-    
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
+
     <div class="container">
       <header>
         <h1>Dhaka Local Bus Routes</h1>
-        <p class="page-subtitle">Find the best bus routes between any two locations</p>
+        <p class="page-subtitle">
+          Find the best bus routes between any two locations
+        </p>
         <nav class="nav-bar">
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
-        <a href="finalexam.html">Final Exam Schedule</a>
+          <a href="finalexam.html">Final Exam Schedule</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
           <a href="bus_routes.html" class="active">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
           <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+          <a href="booksearch.html" class="new-feature-link"
+            >NSU Library Book Locator</a
+          >
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html">CGPA Calculator</a>
           <a href="retake.html" class="new-feature-link">Retake Calculator</a>
@@ -545,8 +559,19 @@
 
           <div class="route-inputs-row">
             <div class="input-group">
-              <label><i class="fas fa-circle" style="color: #10b981; font-size: 0.55rem;"></i> From</label>
-              <input type="text" id="fromInput" placeholder="e.g. Mirpur 10" autocomplete="off">
+              <label
+                ><i
+                  class="fas fa-circle"
+                  style="color: #10b981; font-size: 0.55rem"
+                ></i>
+                From</label
+              >
+              <input
+                type="text"
+                id="fromInput"
+                placeholder="e.g. Mirpur 10"
+                autocomplete="off"
+              />
               <div id="fromSuggestions" class="autocomplete-items"></div>
             </div>
 
@@ -555,8 +580,19 @@
             </button>
 
             <div class="input-group">
-              <label><i class="fas fa-circle" style="color: #ef4444; font-size: 0.55rem;"></i> To</label>
-              <input type="text" id="toInput" placeholder="e.g. Bashundhara R/A Gate" autocomplete="off">
+              <label
+                ><i
+                  class="fas fa-circle"
+                  style="color: #ef4444; font-size: 0.55rem"
+                ></i>
+                To</label
+              >
+              <input
+                type="text"
+                id="toInput"
+                placeholder="e.g. Bashundhara R/A Gate"
+                autocomplete="off"
+              />
               <div id="toSuggestions" class="autocomplete-items"></div>
             </div>
           </div>
@@ -568,299 +604,347 @@
 
         <div id="resultsArea">
           <div class="no-routes" id="initialMessage">
-            <i class="fas fa-bus fa-2x" style="color: #6366f1;"></i>
-            <p>Enter your start &amp; end locations above to discover available bus routes.</p>
+            <i class="fas fa-bus fa-2x" style="color: #6366f1"></i>
+            <p>
+              Enter your start &amp; end locations above to discover available
+              bus routes.
+            </p>
           </div>
         </div>
       </main>
 
-      <footer class="footer" style="text-align: center; margin-top: 50px; color: var(--text-muted);">
-        <p>&copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin</p>
+      <footer
+        class="footer"
+        style="text-align: center; margin-top: 50px; color: var(--text-muted)"
+      >
+        <p>
+          &copy; 2025 RDS2 BUT FROM FUTURE | Created by Tahshan Jamil Shadhin
+        </p>
       </footer>
     </div>
 
     <script>
       // DOM Elements
-      const fromInput = document.getElementById('fromInput');
-      const toInput = document.getElementById('toInput');
-      const swapBtn = document.getElementById('swapBtn');
-      const findRouteBtn = document.getElementById('findRouteBtn');
-      const resultsArea = document.getElementById('resultsArea');
-      const fromSuggestions = document.getElementById('fromSuggestions');
-      const toSuggestions = document.getElementById('toSuggestions');
-      
+      const fromInput = document.getElementById("fromInput");
+      const toInput = document.getElementById("toInput");
+      const swapBtn = document.getElementById("swapBtn");
+      const findRouteBtn = document.getElementById("findRouteBtn");
+      const resultsArea = document.getElementById("resultsArea");
+      const fromSuggestions = document.getElementById("fromSuggestions");
+      const toSuggestions = document.getElementById("toSuggestions");
+
       let allBuses = []; // Will store parsed bus data
       let allStops = new Set(); // Unique stops for autocomplete
 
       // --- CSV Parsing Logic ---
       async function loadBusData() {
         try {
-            const response = await fetch('Local Bus Routes.csv');
-            const data = await response.text();
-            parseCSV(data);
+          const response = await fetch("Local Bus Routes.csv");
+          const data = await response.text();
+          parseCSV(data);
         } catch (error) {
-            console.error('Error loading bus data:', error);
-            resultsArea.innerHTML = '<div class="no-routes">Error loading bus data. Please try again later.</div>';
+          console.error("Error loading bus data:", error);
+          resultsArea.innerHTML =
+            '<div class="no-routes">Error loading bus data. Please try again later.</div>';
         }
       }
 
       function parseCSV(csvText) {
-          const lines = csvText.split('\n');
-          // Skip header (index 0)
-          for (let i = 1; i < lines.length; i++) {
-              const line = lines[i].trim();
-              if (!line) continue;
+        const lines = csvText.split("\n");
+        // Skip header (index 0)
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
 
-              // Extract Bus Name (everything before the first comma)
-              const firstCommaIndex = line.indexOf(',');
-              if (firstCommaIndex === -1) continue;
+          // Extract Bus Name (everything before the first comma)
+          const firstCommaIndex = line.indexOf(",");
+          if (firstCommaIndex === -1) continue;
 
-              const busName = line.substring(0, firstCommaIndex).trim();
-              let routeData = line.substring(firstCommaIndex + 1).trim();
+          const busName = line.substring(0, firstCommaIndex).trim();
+          let routeData = line.substring(firstCommaIndex + 1).trim();
 
-              // Extract Metadata (Time and Type)
-              // Looks for ⏰ and 🚌
-              let startTime = "N/A";
-              let closingTime = "N/A";
-              let serviceType = "Local";
-              
-              // Extract Times
-              const timeMatch = routeData.match(/⏰ Starting Time: (.*?) & Closing Time: (.*?)($|🚌)/);
-              if (timeMatch) {
-                  startTime = timeMatch[1].trim();
-                  closingTime = timeMatch[2].trim();
-                  // Remove the time string from routeData to clean it up
-                  // Be careful not to remove too much from the middle if regex matched loosely
-              }
-              
-              // Extract Service Type
-              const typeMatch = routeData.match(/🚌 Seating Service Type: (.*)/);
-              if (typeMatch) {
-                  serviceType = typeMatch[1].trim();
-              }
+          // Extract Metadata (Time and Type)
+          // Looks for ⏰ and 🚌
+          let startTime = "N/A";
+          let closingTime = "N/A";
+          let serviceType = "Local";
 
-              // Clean Route String: Remove metadata parts
-              // Usually metadata is at the end. We can split by ⏰ if it exists
-              let routeString = routeData.split('⏰')[0];
-              // Also remove 🚌 if ⏰ wasn't there but 🚌 was (rare but possible)
-              routeString = routeString.split('🚌')[0];
-              
-              // Helper to clean stop names
-              const cleanStop = (s) => s.replace(/^[⇄\s]+|[⇄\s]+$/g, '').trim();
-
-              // Split by ⇄
-              // The CSV uses specific arrow characters. 
-              let stops = routeString.split('⇄').map(s => cleanStop(s)).filter(s => s.length > 0);
-              
-              if (stops.length > 0) {
-                  allBuses.push({
-                      id: i,
-                      name: busName,
-                      stops: stops,
-                      startTime: startTime,
-                      closingTime: closingTime,
-                      type: serviceType
-                  });
-                  
-                  // Add stops to set
-                  stops.forEach(stop => allStops.add(stop));
-              }
+          // Extract Times
+          const timeMatch = routeData.match(
+            /⏰ Starting Time: (.*?) & Closing Time: (.*?)($|🚌)/,
+          );
+          if (timeMatch) {
+            startTime = timeMatch[1].trim();
+            closingTime = timeMatch[2].trim();
+            // Remove the time string from routeData to clean it up
+            // Be careful not to remove too much from the middle if regex matched loosely
           }
-          console.log(`Loaded ${allBuses.length} buses and ${allStops.size} unique stops.`);
+
+          // Extract Service Type
+          const typeMatch = routeData.match(/🚌 Seating Service Type: (.*)/);
+          if (typeMatch) {
+            serviceType = typeMatch[1].trim();
+          }
+
+          // Clean Route String: Remove metadata parts
+          // Usually metadata is at the end. We can split by ⏰ if it exists
+          let routeString = routeData.split("⏰")[0];
+          // Also remove 🚌 if ⏰ wasn't there but 🚌 was (rare but possible)
+          routeString = routeString.split("🚌")[0];
+
+          // Helper to clean stop names
+          const cleanStop = (s) => s.replace(/^[⇄\s]+|[⇄\s]+$/g, "").trim();
+
+          // Split by ⇄
+          // The CSV uses specific arrow characters.
+          let stops = routeString
+            .split("⇄")
+            .map((s) => cleanStop(s))
+            .filter((s) => s.length > 0);
+
+          if (stops.length > 0) {
+            allBuses.push({
+              id: i,
+              name: busName,
+              stops: stops,
+              startTime: startTime,
+              closingTime: closingTime,
+              type: serviceType,
+            });
+
+            // Add stops to set
+            stops.forEach((stop) => allStops.add(stop));
+          }
+        }
+        console.log(
+          `Loaded ${allBuses.length} buses and ${allStops.size} unique stops.`,
+        );
       }
 
       // --- Autocomplete Logic ---
       function setupAutocomplete(input, suggestionBox) {
-          input.addEventListener('input', function() {
-              const val = this.value.toLowerCase();
-              suggestionBox.innerHTML = '';
-              suggestionBox.style.display = 'none';
-              
-              if (!val) return;
+        input.addEventListener("input", function () {
+          const val = this.value.toLowerCase();
+          suggestionBox.innerHTML = "";
+          suggestionBox.style.display = "none";
 
-              const matches = Array.from(allStops).filter(stop => 
-                  stop.toLowerCase().includes(val)
-              );
+          if (!val) return;
 
-              // Limit to 10 suggestions
-              const topMatches = matches.slice(0, 10);
+          const matches = Array.from(allStops).filter((stop) =>
+            stop.toLowerCase().includes(val),
+          );
 
-              if (topMatches.length > 0) {
-                  suggestionBox.style.display = 'block';
-                  topMatches.forEach(match => {
-                      const div = document.createElement('div');
-                      div.className = 'autocomplete-item';
-                      // Highlight matching part
-                      const regex = new RegExp(`(${val})`, 'gi');
-                      div.innerHTML = match.replace(regex, '<strong>$1</strong>');
-                      div.addEventListener('click', function() {
-                          input.value = match;
-                          suggestionBox.style.display = 'none';
-                      });
-                      suggestionBox.appendChild(div);
-                  });
-              }
-          });
+          // Limit to 10 suggestions
+          const topMatches = matches.slice(0, 10);
 
-          // Close dropdown when clicking outside
-          document.addEventListener('click', function(e) {
-              if (e.target !== input && e.target !== suggestionBox) {
-                  suggestionBox.style.display = 'none';
-              }
-          });
+          if (topMatches.length > 0) {
+            suggestionBox.style.display = "block";
+            topMatches.forEach((match) => {
+              const div = document.createElement("div");
+              div.className = "autocomplete-item";
+              // Highlight matching part
+              const regex = new RegExp(`(${val})`, "gi");
+              div.innerHTML = match.replace(regex, "<strong>$1</strong>");
+              div.addEventListener("click", function () {
+                input.value = match;
+                suggestionBox.style.display = "none";
+              });
+              suggestionBox.appendChild(div);
+            });
+          }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (e) {
+          if (e.target !== input && e.target !== suggestionBox) {
+            suggestionBox.style.display = "none";
+          }
+        });
       }
 
       // --- Route Finding Logic ---
       function findRoutes() {
-          const start = fromInput.value.trim();
-          const end = toInput.value.trim();
+        const start = fromInput.value.trim();
+        const end = toInput.value.trim();
 
-          if (!start || !end) {
-              alert('Please enter both start and end locations.');
-              return;
-          }
-          
-          if (start === end) {
-              alert('Start and destination cannot be the same.');
-              return;
-          }
+        if (!start || !end) {
+          alert("Please enter both start and end locations.");
+          return;
+        }
 
-          resultsArea.innerHTML = '<div class="loading-state"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Finding best routes...</div>';
+        if (start === end) {
+          alert("Start and destination cannot be the same.");
+          return;
+        }
 
-          // 1. Direct Routes
-          const directRoutes = allBuses.filter(bus => {
-              const startIndex = bus.stops.findIndex(s => s.toLowerCase() === start.toLowerCase());
-              const endIndex = bus.stops.findIndex(s => s.toLowerCase() === end.toLowerCase());
-              
-              // Assuming bidirectional: if both exist, it's a match.
-              return startIndex !== -1 && endIndex !== -1;
-          }).map(bus => {
-              // Determine direction and slice stops for display
-              // We want to show only the stops between start and end
-              const sIdx = bus.stops.findIndex(s => s.toLowerCase() === start.toLowerCase());
-              const eIdx = bus.stops.findIndex(s => s.toLowerCase() === end.toLowerCase());
-              
-              let pathStops = [];
-              if (sIdx < eIdx) {
-                  pathStops = bus.stops.slice(sIdx, eIdx + 1);
-              } else {
-                  pathStops = bus.stops.slice(eIdx, sIdx + 1).reverse();
-              }
-              
-              return {
-                  ...bus,
-                  displayStops: pathStops
-              };
+        resultsArea.innerHTML =
+          '<div class="loading-state"><i class="fas fa-spinner fa-spin fa-2x"></i><br>Finding best routes...</div>';
+
+        // 1. Direct Routes
+        const directRoutes = allBuses
+          .filter((bus) => {
+            const startIndex = bus.stops.findIndex(
+              (s) => s.toLowerCase() === start.toLowerCase(),
+            );
+            const endIndex = bus.stops.findIndex(
+              (s) => s.toLowerCase() === end.toLowerCase(),
+            );
+
+            // Assuming bidirectional: if both exist, it's a match.
+            return startIndex !== -1 && endIndex !== -1;
+          })
+          .map((bus) => {
+            // Determine direction and slice stops for display
+            // We want to show only the stops between start and end
+            const sIdx = bus.stops.findIndex(
+              (s) => s.toLowerCase() === start.toLowerCase(),
+            );
+            const eIdx = bus.stops.findIndex(
+              (s) => s.toLowerCase() === end.toLowerCase(),
+            );
+
+            let pathStops = [];
+            if (sIdx < eIdx) {
+              pathStops = bus.stops.slice(sIdx, eIdx + 1);
+            } else {
+              pathStops = bus.stops.slice(eIdx, sIdx + 1).reverse();
+            }
+
+            return {
+              ...bus,
+              displayStops: pathStops,
+            };
           });
 
-          // 2. Indirect Routes (2-hop)
-          // Find buses that possess 'start'
-          // Find buses that possess 'end'
-          // Find intersection of their stops
-          let indirectRoutes = [];
-          
-          // Search for indirect routes
-          const startBuses = allBuses.filter(b => b.stops.some(s => s.toLowerCase() === start.toLowerCase()));
-          const endBuses = allBuses.filter(b => b.stops.some(s => s.toLowerCase() === end.toLowerCase()));
-          
-          // Optimization: Map intersection node -> [BusA, BusB] pairs
-          for (const busA of startBuses) {
-              for (const busB of endBuses) {
-                  if (busA.id === busB.id) continue; // Skip same bus (already covered by direct)
+        // 2. Indirect Routes (2-hop)
+        // Find buses that possess 'start'
+        // Find buses that possess 'end'
+        // Find intersection of their stops
+        let indirectRoutes = [];
 
-                  // Find common stops
-                  const commonStops = busA.stops.filter(s => busB.stops.includes(s));
-                  
-                  for (const transferStop of commonStops) {
-                      // Allow transfer only if it makes sense (not the start or end node itself)
-                       if (transferStop.toLowerCase() === start.toLowerCase() || 
-                           transferStop.toLowerCase() === end.toLowerCase()) continue;
+        // Search for indirect routes
+        const startBuses = allBuses.filter((b) =>
+          b.stops.some((s) => s.toLowerCase() === start.toLowerCase()),
+        );
+        const endBuses = allBuses.filter((b) =>
+          b.stops.some((s) => s.toLowerCase() === end.toLowerCase()),
+        );
 
-                      // Construct path info
-                      // Path A: Start -> Transfer
-                      const sIdxA = busA.stops.findIndex(s => s.toLowerCase() === start.toLowerCase());
-                      const tIdxA = busA.stops.findIndex(s => s === transferStop); // Exact match from filter
-                      let pathA = (sIdxA < tIdxA) ? busA.stops.slice(sIdxA, tIdxA + 1) : busA.stops.slice(tIdxA, sIdxA + 1).reverse();
+        // Optimization: Map intersection node -> [BusA, BusB] pairs
+        for (const busA of startBuses) {
+          for (const busB of endBuses) {
+            if (busA.id === busB.id) continue; // Skip same bus (already covered by direct)
 
-                      // Path B: Transfer -> End
-                      const tIdxB = busB.stops.findIndex(s => s === transferStop);
-                      const eIdxB = busB.stops.findIndex(s => s.toLowerCase() === end.toLowerCase());
-                      let pathB = (tIdxB < eIdxB) ? busB.stops.slice(tIdxB, eIdxB + 1) : busB.stops.slice(eIdxB, tIdxB + 1).reverse();
+            // Find common stops
+            const commonStops = busA.stops.filter((s) =>
+              busB.stops.includes(s),
+            );
 
-                      indirectRoutes.push({
-                          firstBus: { ...busA, displayStops: pathA },
-                          secondBus: { ...busB, displayStops: pathB },
-                          transferStop: transferStop
-                      });
-                      
-                      // Finding all transfer points to ensure finding the shortest path
-                      // Removed break to find all options then sort
-                  }
-                  // Removed break to find all options then sort
-              }
+            for (const transferStop of commonStops) {
+              // Allow transfer only if it makes sense (not the start or end node itself)
+              if (
+                transferStop.toLowerCase() === start.toLowerCase() ||
+                transferStop.toLowerCase() === end.toLowerCase()
+              )
+                continue;
+
+              // Construct path info
+              // Path A: Start -> Transfer
+              const sIdxA = busA.stops.findIndex(
+                (s) => s.toLowerCase() === start.toLowerCase(),
+              );
+              const tIdxA = busA.stops.findIndex((s) => s === transferStop); // Exact match from filter
+              let pathA =
+                sIdxA < tIdxA
+                  ? busA.stops.slice(sIdxA, tIdxA + 1)
+                  : busA.stops.slice(tIdxA, sIdxA + 1).reverse();
+
+              // Path B: Transfer -> End
+              const tIdxB = busB.stops.findIndex((s) => s === transferStop);
+              const eIdxB = busB.stops.findIndex(
+                (s) => s.toLowerCase() === end.toLowerCase(),
+              );
+              let pathB =
+                tIdxB < eIdxB
+                  ? busB.stops.slice(tIdxB, eIdxB + 1)
+                  : busB.stops.slice(eIdxB, tIdxB + 1).reverse();
+
+              indirectRoutes.push({
+                firstBus: { ...busA, displayStops: pathA },
+                secondBus: { ...busB, displayStops: pathB },
+                transferStop: transferStop,
+              });
+
+              // Finding all transfer points to ensure finding the shortest path
               // Removed break to find all options then sort
+            }
+            // Removed break to find all options then sort
           }
+          // Removed break to find all options then sort
+        }
 
-          // Sort indirect routes by total stops (shortest first)
-          indirectRoutes.sort((a, b) => {
-              const countA = a.firstBus.displayStops.length + a.secondBus.displayStops.length;
-              const countB = b.firstBus.displayStops.length + b.secondBus.displayStops.length;
-              return countA - countB;
-          });
-          
-          // Keep only top 20 shortest
-          indirectRoutes = indirectRoutes.slice(0, 20);
+        // Sort indirect routes by total stops (shortest first)
+        indirectRoutes.sort((a, b) => {
+          const countA =
+            a.firstBus.displayStops.length + a.secondBus.displayStops.length;
+          const countB =
+            b.firstBus.displayStops.length + b.secondBus.displayStops.length;
+          return countA - countB;
+        });
 
-          renderResults(directRoutes, indirectRoutes);
+        // Keep only top 20 shortest
+        indirectRoutes = indirectRoutes.slice(0, 20);
+
+        renderResults(directRoutes, indirectRoutes);
       }
 
       function renderResults(direct, indirect) {
-          resultsArea.innerHTML = '';
+        resultsArea.innerHTML = "";
 
-          if (direct.length === 0 && indirect.length === 0) {
-              resultsArea.innerHTML = `<div class="no-routes">
+        if (direct.length === 0 && indirect.length === 0) {
+          resultsArea.innerHTML = `<div class="no-routes">
                   <i class="fas fa-exclamation-circle fa-2x" style="margin-bottom:10px; color:#f59e0b"></i>
                   <p>No routes found between <strong>${fromInput.value}</strong> and <strong>${toInput.value}</strong>.</p>
                   <p>Try similar locations or use shorter distances.</p>
               </div>`;
-              return;
-          }
+          return;
+        }
 
-          // Render Direct Routes
-          if (direct.length > 0) {
-              const directHeader = document.createElement('div');
-              directHeader.className = 'results-section';
-              directHeader.innerHTML = `<h2><i class="fas fa-map-signs" style="color:#10b981"></i> Direct Routes (${direct.length})</h2>`;
-              resultsArea.appendChild(directHeader);
+        // Render Direct Routes
+        if (direct.length > 0) {
+          const directHeader = document.createElement("div");
+          directHeader.className = "results-section";
+          directHeader.innerHTML = `<h2><i class="fas fa-map-signs" style="color:#10b981"></i> Direct Routes (${direct.length})</h2>`;
+          resultsArea.appendChild(directHeader);
 
-              direct.forEach(bus => {
-                  resultsArea.appendChild(createRouteCard(bus));
-              });
-          }
+          direct.forEach((bus) => {
+            resultsArea.appendChild(createRouteCard(bus));
+          });
+        }
 
-          // Render Indirect Routes
-          if (indirect.length > 0) {
-              const indirectHeader = document.createElement('div');
-              indirectHeader.className = 'results-section';
-              indirectHeader.style.marginTop = '40px';
-              indirectHeader.innerHTML = `<h2><i class="fas fa-random" style="color:#f59e0b"></i> Connecting Routes (${indirect.length})</h2>`;
-              resultsArea.appendChild(indirectHeader);
+        // Render Indirect Routes
+        if (indirect.length > 0) {
+          const indirectHeader = document.createElement("div");
+          indirectHeader.className = "results-section";
+          indirectHeader.style.marginTop = "40px";
+          indirectHeader.innerHTML = `<h2><i class="fas fa-random" style="color:#f59e0b"></i> Connecting Routes (${indirect.length})</h2>`;
+          resultsArea.appendChild(indirectHeader);
 
-              indirect.forEach(route => {
-                  resultsArea.appendChild(createIndirectRouteCard(route));
-              });
-          }
+          indirect.forEach((route) => {
+            resultsArea.appendChild(createIndirectRouteCard(route));
+          });
+        }
       }
 
       function createRouteCard(bus) {
-          const card = document.createElement('div');
-          card.className = 'route-card';
-          
-          let stopsHtml = '';
-          const stops = bus.displayStops;
+        const card = document.createElement("div");
+        card.className = "route-card";
 
-          stops.forEach((stop, index) => {
-              stopsHtml += `
+        let stopsHtml = "";
+        const stops = bus.displayStops;
+
+        stops.forEach((stop, index) => {
+          stopsHtml += `
                   <div class="timeline-stop">
                       <div class="stop-marker"></div>
                       <div class="stop-content">
@@ -868,9 +952,9 @@
                       </div>
                   </div>
               `;
-          });
+        });
 
-          card.innerHTML = `
+        card.innerHTML = `
               <div class="route-header">
                   <div class="route-title">
                       <span class="bus-name">${bus.name}</span>
@@ -885,14 +969,14 @@
                   ${stopsHtml}
               </div>
           `;
-          return card;
+        return card;
       }
 
       function createIndirectRouteCard(route) {
-          const card = document.createElement('div');
-          card.className = 'route-card';
-          
-          card.innerHTML = `
+        const card = document.createElement("div");
+        card.className = "route-card";
+
+        card.innerHTML = `
                <div class="route-header">
                   <div class="route-title">
                       <span class="bus-name text-sm" style="font-size:1.1rem">${route.firstBus.name} + ${route.secondBus.name}</span>
@@ -905,14 +989,16 @@
                     <i class="fas fa-bus"></i> Ride ${route.firstBus.name}
                </div>
                <div class="timeline-container">
-                    ${route.firstBus.displayStops.map((stop, i) => {
+                    ${route.firstBus.displayStops
+                      .map((stop, i) => {
                         return `
-                            <div class="timeline-stop ${i === route.firstBus.displayStops.length - 1 ? 'transfer' : ''}">
+                            <div class="timeline-stop ${i === route.firstBus.displayStops.length - 1 ? "transfer" : ""}">
                                 <div class="stop-marker"></div>
                                 <div class="stop-content"><span class="stop-name" title="${stop}">${stop}</span></div>
                             </div>
                         `;
-                    }).join('')}
+                      })
+                      .join("")}
                </div>
 
                <div class="transfer-separator">
@@ -928,31 +1014,32 @@
                     <i class="fas fa-bus"></i> Switch to ${route.secondBus.name}
                </div>
                <div class="timeline-container">
-                    ${route.secondBus.displayStops.map((stop, i) => {
+                    ${route.secondBus.displayStops
+                      .map((stop, i) => {
                         return `
-                            <div class="timeline-stop ${i === 0 ? 'transfer' : ''}">
+                            <div class="timeline-stop ${i === 0 ? "transfer" : ""}">
                                 <div class="stop-marker"></div>
                                 <div class="stop-content"><span class="stop-name" title="${stop}">${stop}</span></div>
                             </div>
                         `;
-                    }).join('')}
+                      })
+                      .join("")}
                </div>
           `;
-          return card;
+        return card;
       }
-
 
       // --- Event Listeners ---
       setupAutocomplete(fromInput, fromSuggestions);
       setupAutocomplete(toInput, toSuggestions);
 
-      swapBtn.addEventListener('click', () => {
-          const temp = fromInput.value;
-          fromInput.value = toInput.value;
-          toInput.value = temp;
+      swapBtn.addEventListener("click", () => {
+        const temp = fromInput.value;
+        fromInput.value = toInput.value;
+        toInput.value = temp;
       });
 
-      findRouteBtn.addEventListener('click', findRoutes);
+      findRouteBtn.addEventListener("click", findRoutes);
 
       // Initialization
       loadBusData();
@@ -961,4 +1048,3 @@
     <script src="typewriter.js"></script>
   </body>
 </html>
-

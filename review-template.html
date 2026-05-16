@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
+    <meta http-equiv="refresh" content="0; url=https://rds2-bff.vercel.app/" />
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
@@ -25,8 +26,8 @@
         margin: 0;
         background: #181a20; /* VS Code/Dark GitHub background */
         color: #e2e8f0;
-        font-family: "Segoe UI", "Fira Mono", "Consolas", "monospace",
-          "sans-serif";
+        font-family:
+          "Segoe UI", "Fira Mono", "Consolas", "monospace", "sans-serif";
       }
       .review-template-container {
         max-width: 900px;
@@ -109,7 +110,9 @@
         position: relative;
         overflow: hidden;
         border: 1.5px solid #30363d;
-        transition: background 0.3s, border 0.3s;
+        transition:
+          background 0.3s,
+          border 0.3s;
         box-sizing: border-box;
       }
       .review-card-table {
@@ -191,7 +194,9 @@
         color: #e11d48;
         border: 1.5px solid #e11d48;
         font-weight: 600;
-        transition: background 0.2s, color 0.2s;
+        transition:
+          background 0.2s,
+          color 0.2s;
       }
       .remove-course-list .remove-course-btn:hover {
         background: #e11d48;
@@ -233,7 +238,9 @@
         cursor: pointer;
         margin-top: 12px;
         box-shadow: 0 2px 8px rgba(30, 41, 59, 0.1);
-        transition: background 0.2s, box-shadow 0.2s;
+        transition:
+          background 0.2s,
+          box-shadow 0.2s;
       }
       .download-btn:hover {
         background: #2ea043;
@@ -417,7 +424,11 @@
     </style>
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -425,7 +436,7 @@
         <nav class="nav-bar">
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
-        <a href="finalexam.html">Final Exam Schedule</a>
+          <a href="finalexam.html">Final Exam Schedule</a>
           <a href="resources.html">Study Materials</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
@@ -907,7 +918,7 @@
             courseData
               .filter((row) => row.Course === course)
               .map((row) => row.Section)
-              .filter(Boolean)
+              .filter(Boolean),
           ),
         ];
         sectionSelect.innerHTML =
@@ -928,7 +939,7 @@
             courseData
               .filter((row) => row.Course === course)
               .map((row) => row.Faculty)
-              .filter(Boolean)
+              .filter(Boolean),
           ),
         ];
         facultySelect.innerHTML =
@@ -1075,15 +1086,15 @@
           cardCourses.forEach((c) => {
             table += `<tr>
                     <td style="color:${tableTextColor}">${
-              c.Course
-                ? `<span class="highlight-course">${c.Course}</span>`
-                : ""
-            }</td>
+                      c.Course
+                        ? `<span class="highlight-course">${c.Course}</span>`
+                        : ""
+                    }</td>
                     <td style="color:${tableTextColor}">${
-              c.Faculty
-                ? `<span class="highlight-faculty">${c.Faculty}</span>`
-                : ""
-            }</td>
+                      c.Faculty
+                        ? `<span class="highlight-faculty">${c.Faculty}</span>`
+                        : ""
+                    }</td>
                 </tr>`;
           });
           table += `</tbody></table>`;
@@ -1133,4 +1144,3 @@
     <script src="typewriter.js"></script>
   </body>
 </html>
-

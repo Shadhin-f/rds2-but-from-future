@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
+    <meta http-equiv="refresh" content="0; url=https://rds2-bff.vercel.app/" />
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5572277246422121"
@@ -168,7 +169,9 @@
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         padding: 0.85rem 1.4rem;
       }
       .btn:hover {
@@ -244,7 +247,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        transition: background 0.2s ease, transform 0.2s ease;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease;
       }
       .remove-course:hover {
         background: rgba(248, 113, 113, 0.15);
@@ -279,7 +284,11 @@
     </style>
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
     <canvas id="particleCanvas"></canvas>
     <div class="container">
       <header>
@@ -287,14 +296,16 @@
         <nav class="nav-bar">
           <a href="index.html">RDS2</a>
           <a href="calendar.html">Academic Calendar</a>
-        <a href="finalexam.html">Final Exam Schedule</a>
+          <a href="finalexam.html">Final Exam Schedule</a>
           <a href="resources.html" class="trending-link">Study Materials</a>
           <a href="bus_routes.html" class="new-feature-link">Bus Routes</a>
           <a href="routine.html">Routine Maker</a>
           <a href="planner.html">Semester Planner</a>
           <a href="freshman.html">Freshman Guides</a>
           <a href="coursemap.html">Course map</a>
-          <a href="booksearch.html" class="new-feature-link">NSU Library Book Locator</a>
+          <a href="booksearch.html" class="new-feature-link"
+            >NSU Library Book Locator</a
+          >
           <a href="shelf_search.html">Library Shelf Finder</a>
           <a href="cgpa.html" class="active">CGPA Calculator</a>
           <a href="retake.html" class="new-feature-link">Retake Calculator</a>
@@ -592,7 +603,12 @@
           const modeSelect = document.getElementById(`mode${i}`);
           const prevGradeSelect = document.getElementById(`prevGr${i}`);
           const newGradeSelect = document.getElementById(`newGr${i}`);
-          if (!creditInput || !modeSelect || !prevGradeSelect || !newGradeSelect)
+          if (
+            !creditInput ||
+            !modeSelect ||
+            !prevGradeSelect ||
+            !newGradeSelect
+          )
             continue;
 
           const credits = Number(creditInput.value);
@@ -613,7 +629,8 @@
 
         const previousPoints = prevCredits * prevCgpa;
         const totalCredits = prevCredits + semesterCredits;
-        const totalPoints = previousPoints + semesterGradePoints + retakeAdjustment;
+        const totalPoints =
+          previousPoints + semesterGradePoints + retakeAdjustment;
 
         if (!totalCredits) {
           messageEl.textContent =
@@ -624,9 +641,10 @@
         }
 
         const finalCgpa = totalPoints / totalCredits;
-        messageEl.textContent = hasNew || hasRetake
-          ? "CGPA updated successfully."
-          : "Using previous record only.";
+        messageEl.textContent =
+          hasNew || hasRetake
+            ? "CGPA updated successfully."
+            : "Using previous record only.";
         creditPassedEl.textContent = totalCredits.toFixed(2);
         cgpaValueEl.textContent = finalCgpa.toFixed(2);
       }
@@ -646,4 +664,3 @@
     <script src="typewriter.js"></script>
   </body>
 </html>
-

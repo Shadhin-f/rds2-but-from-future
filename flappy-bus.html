@@ -1,6 +1,7 @@
 ﻿<!doctype html>
 <html lang="en">
   <head>
+    <meta http-equiv="refresh" content="0; url=https://rds2-bff.vercel.app/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
@@ -19,7 +20,11 @@
     <link rel="stylesheet" href="flappy.css" />
   </head>
   <body>
-  <script>if(localStorage.getItem('rds2-theme-preference') === 'light') { document.body.classList.add('light-mode'); }</script>
+    <script>
+      if (localStorage.getItem("rds2-theme-preference") === "light") {
+        document.body.classList.add("light-mode");
+      }
+    </script>
     <div id="game-container">
       <a id="game-title" href="index.html" title="Back to main page"
         >NSU FLAPPY BUS</a
@@ -32,10 +37,12 @@
       <div id="start-screen">
         <div class="menu-decoration"></div>
         <div class="menu-glow"></div>
-        <div class="total-coin-display">ðŸª™ <span class="total-coin-value">0</span></div>
+        <div class="total-coin-display">
+          ðŸª™ <span class="total-coin-value">0</span>
+        </div>
         <h1 class="game-title-animated">ðŸš NSU FLAPPY BUS</h1>
         <p class="tagline">Navigate through the pillars of Dhaka!</p>
-        
+
         <div class="shop-container">
           <h2 class="shop-title">Select or Unlock Your Ride:</h2>
           <div id="shop-grid" class="shop-grid">
@@ -56,20 +63,25 @@
       <div id="game-over" style="display: none">
         <div class="menu-decoration"></div>
         <div class="menu-glow gameover-glow"></div>
-        <div class="total-coin-display">ðŸª™ <span class="total-coin-value">0</span></div>
+        <div class="total-coin-display">
+          ðŸª™ <span class="total-coin-value">0</span>
+        </div>
         <h2 class="gameover-title">ðŸ’¥ Game Over</h2>
         <div class="final-score-container">
           <div class="final-score-label">Your Score</div>
           <div id="final-score" class="final-score-value">0</div>
         </div>
         <div class="final-coins-container">
-          <span class="coin-icon">ðŸª™</span> Collected: <span id="final-session-coins">0</span>
+          <span class="coin-icon">ðŸª™</span> Collected:
+          <span id="final-session-coins">0</span>
         </div>
         <div class="high-score-container">
           <span class="trophy">ðŸ†</span>
           <span id="final-high-score">Best: 0</span>
         </div>
-        <div id="new-record" class="new-record" style="display: none;"> New Record! </div>
+        <div id="new-record" class="new-record" style="display: none">
+          New Record!
+        </div>
         <button id="restart-btn">
           <span class="btn-icon">ðŸ”„</span>
           <span class="btn-text">Try Again</span>
